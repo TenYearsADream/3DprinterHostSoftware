@@ -12,6 +12,10 @@ namespace RepetierHost.view
     public delegate void onObjectMoved(float dx, float dy);
     public delegate void onObjectSelected(ThreeDModel selModel);
 
+    /// <summary>
+    /// ThreeDView uses 3D vectors to represent the position of the camera, the position to look at, the front and rear clip planes, the 
+    /// rotational orientation of the view. 
+    /// </summary>
     public class ThreeDView
     {
         FormPrinterSettings ps = Main.printerSettings;

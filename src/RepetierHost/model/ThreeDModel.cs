@@ -24,6 +24,9 @@ using OpenTK;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// 3D cordinate. Not sure why this is needed because it is essentially a 3D vector which I think there is a OpenGL class for. 
+    /// </summary>
     public class Coord3D
     {
         public float x = 0, y = 0, z = 0;
@@ -35,6 +38,10 @@ namespace RepetierHost.model
             z = _z;
         }
     }
+
+    /// <summary>
+    /// Contains information about a model. Position, Rotation, Scale, isSelected, min and max positions in all cordinates, is it being animated. 
+    /// </summary>
     public abstract class ThreeDModel
     {
         private bool selected = false;

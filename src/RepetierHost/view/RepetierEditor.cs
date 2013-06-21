@@ -32,6 +32,10 @@ using RepetierHost.model;
 namespace RepetierHost.view
 {
     public delegate void ContentChangedEvent();
+
+    /// <summary>
+    /// The Windows Form that lets you Edit the G-code. 
+    /// </summary>
     public partial class RepetierEditor : UserControl
     {
         public enum UndoAction
@@ -360,6 +364,10 @@ namespace RepetierHost.view
 
         [DllImport("User32.dll")]
         static extern bool HideCaret(IntPtr hWnd); 
+
+        /// <summary>
+        /// Make a new RepetierEditor which is the Window that lets you edit the G-code. 
+        /// </summary>
         public RepetierEditor()
         {
             InitializeComponent();

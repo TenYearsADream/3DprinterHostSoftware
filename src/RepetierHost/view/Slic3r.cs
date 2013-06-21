@@ -31,6 +31,9 @@ using RepetierHost.model;
 
 namespace RepetierHost.view
 {
+    /// <summary>
+    /// The Windows form that lets you set all of the advanced settings for the Slic3r
+    /// </summary>
     public partial class Slic3r : Form
     {
         RegistryKey rconfigs;
@@ -41,6 +44,9 @@ namespace RepetierHost.view
 
         string slicefile = null;
 
+        /// <summary>
+        /// Makes a new windows form that lets you seal all of the advnaced settings for the internal slic3r
+        /// </summary>
         public Slic3r()
         {
             InitializeComponent();

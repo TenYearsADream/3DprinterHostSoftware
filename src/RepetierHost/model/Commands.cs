@@ -53,6 +53,10 @@ namespace RepetierHost.model
             catch { }
         }
     }
+
+    /// <summary>
+    /// Containts a set of command related to reading and wiriting firmware versions. 
+    /// </summary>
     public class Commands
     {
         public Dictionary<string, CommandDescription> commands;

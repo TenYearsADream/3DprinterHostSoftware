@@ -61,6 +61,13 @@ namespace RepetierHost.model
 
             file.Close();
         }
+
+        /// <summary>
+        /// Returns the requested value that is designed by the "string name"
+        /// </summary>
+        /// <param name="name">Value to get</param>
+        /// <param name="def">If fail to get value, then this is the default</param>
+        /// <returns></returns>
         public static bool GetBool(string name, bool def)
         {
             if (!dic.ContainsKey(name)) return def;

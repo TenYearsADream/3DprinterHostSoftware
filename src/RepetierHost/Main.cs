@@ -77,6 +77,9 @@ namespace RepetierHost
         public double gcodePrintingTime = 0;
         public FileAddOrRemove fileAddOrRemove = null;
 
+        public enum ThreeDViewOptions { STLeditor, gcode, printing };
+        public ThreeDViewOptions current3Dview = ThreeDViewOptions.STLeditor;
+
         public class JobUpdater
         {
             GCodeVisual visual = null;
@@ -251,43 +254,54 @@ namespace RepetierHost
             logView = new LogView();
             logView.Dock = DockStyle.Fill;
             //splitLog.Panel2.Controls.Add(logView);
+            
+            // TODO: Remomve this. 
             skeinforge = new Skeinforge();
+
             PrinterChanged(printerSettings.currentPrinterKey, true);
-            printerSettings.eventPrinterChanged += PrinterChanged;
-            // GCode print preview
+            printerSettings.eventPrinterChanged += PrinterChanged;     
 
-            // NOTE: The treedview must be part of the control for the to have any models show up. 
+            
 
+            /// Threedview is the part that shows either the .stl files, g-code analysis results, or the print preview (showing the travel path of the print head). 
+            /// See the Method assign3DView() to get an adea of how it works. 
             threedview = new ThreeDControlOld();
             threedview.Dock = DockStyle.Fill;
-                
-            panel2.Controls.Add(threedview);
+            panel2.Controls.Add(threedview); // Add the OpenGL panel to the panel2 from the Windows Form
             //tabPage3DView.Controls.Add(threedview);
 
+            // PrintPreview is the G-code openGL viewer controller. To view the results of slicing this must be initialized and add as a controller. 
+
+            // Make a new View. 
             printPreview = new ThreeDView();
-           // printPreview.Dock = DockStyle.Fill;
-          //  splitContainerPrinterGraphic.Panel2.Controls.Add(printPreview);
             printPreview.SetEditor(false);
             printPreview.autoupdateable = true;
+
+            // Print visualzation is dependent on the connection to the printer being active. (ie the printer is connected)
             printVisual = new GCodeVisual(conn.analyzer);
             printVisual.liveView = true;
-            printPreview.models.AddLast(printVisual);
+            printPreview.models.AddLast(printVisual); // Add a new model to the view
             basicTitle = Text;
+
             jobPreview = new ThreeDView();
-         //   jobPreview.Dock = DockStyle.Fill;
-         //   splitJob.Panel2.Controls.Add(jobPreview);
             jobPreview.SetEditor(false);
-            jobPreview.models.AddLast(jobVisual);
-            //editor.contentChangedEvent += JobPreview;
-            //editor.commands = new Commands();
-            //editor.commands.Read("default", "en");
+            jobPreview.models.AddLast(jobVisual); // Add a g-code visualzation model to the view
+            editor.contentChangedEvent += JobPreview;
+            editor.commands = new Commands();
+            editor.commands.Read("default", "en");
             UpdateHistory();
             UpdateConnections();
+
+
+            // Why is this here twice?????
+            // TODO: Investigate this double initialization
+            // On is called slic3r and the other slicer. Why two??
             Main.slic3r = new Slic3r();
-            slicer = new Slicer();
+            Main.slicer = new Slicer();
+
             //toolShowLog_CheckedChanged(null, null);
             updateShowFilament();
-            assign3DView();
+            update3DviewSelection();
             //history = new TemperatureHistory();
             //tempView = new TemperatureView();
             //tempView.Dock = DockStyle.Fill;
@@ -314,11 +328,15 @@ namespace RepetierHost
                 Text = basicTitle;
             }
             //slicerPanel.UpdateSelection();
+
+            // Determine whether to check for updates or not based on the users check preferences in advances settings. 
             if (Custom.GetBool("removeUpdates", false))
                 checkForUpdatesToolStripMenuItem.Visible = false;
             else
                 RHUpdater.checkForUpdates(true);
             UpdateToolbarSize();
+
+            // Determine which languages should appear in the languages menu. 
             // Add languages
             foreach (Translation t in trans.translations.Values)
             {
@@ -328,10 +346,15 @@ namespace RepetierHost
             }
             languageChanged += translate;
             translate();
+
+
+            // Set which slicer to use. Remeber the users's preference before. 
             if (Custom.GetBool("removeSkeinforge", false))
             {
-                Main.slicer.ActiveSlicer = Slicer.SlicerID.Slic3r;
+                Main.slicer.ActiveSlicer = Slicer.SlicerID.Slic3r; // set it to slic3r
             }
+
+            // Sets whether to show the button for support (i.e Help) in the help menough. 
             if(Custom.GetBool("extraSupportButton",false)) {
                 supportToolStripMenuItem.Text = Custom.GetString("extraSupportText","Support");
             } else supportToolStripMenuItem.Visible = false;
@@ -345,23 +368,45 @@ namespace RepetierHost
             {
                 toolStripButtonSupport.Visible = false;
             }
+
+            // Tool tip text
             toolAction.Text = Trans.T("L_IDLE");
             toolConnection.Text = Trans.T("L_DISCONNECTED");
             updateTravelMoves();
+
+            // Allow for Drag and drop
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
-        }
+        
+        } // End Main()
+
+        /// <summary>
+        /// Control the Drag Enter actions.
+        /// Basically copy the file to the clip board??
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Form1_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
         }
 
+        /// <summary>
+        /// Control the dragdrop drop action. Try loading the file. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in files) this.fileAddOrRemove.LoadGCodeOrSTL(file);
         }
+
+        /// <summary>
+        /// Translate all the menus
+        /// TODO: Update this. 
+        /// </summary>
         public void translate()
         {
             fileToolStripMenuItem.Text = Trans.T("M_FILE");
@@ -503,6 +548,10 @@ namespace RepetierHost
             //toolParallelProjection.ToolTipText = Trans.T("L_USE_PARALLEL_PROJECTION");
 
         }
+
+        /// <summary>
+        /// If we need to make everything smaller, than in the menus remove the text and only show the image. 
+        /// </summary>
         public void UpdateToolbarSize()
         {
             if (globalSettings == null) return;
@@ -515,6 +564,12 @@ namespace RepetierHost
                     it.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             }
         }
+
+        /// <summary>
+        /// Handle for the change language event. Basically if it is a different language than the current, than you should change languages. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void languageSelected(object sender, EventArgs e)
         {
             ToolStripItem it = (ToolStripItem)sender;
@@ -522,6 +577,10 @@ namespace RepetierHost
             if (languageChanged != null)
                 languageChanged();
         }
+
+        /// <summary>
+        /// Updates the SplitButton Dropdown menu to include the recent printers that were used. 
+        /// </summary>
         public void UpdateConnections()
         {
             connectToolStripSplitButton.DropDownItems.Clear();
@@ -574,6 +633,11 @@ namespace RepetierHost
             }
         }
 
+        /// <summary>
+        /// When clicked on a history item in the file menu, load that file. First we must recall which item it actually is from the history. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HistoryHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
@@ -581,6 +645,12 @@ namespace RepetierHost
             this.fileAddOrRemove.LoadGCodeOrSTL(f.file);
             // Take some action based on the data in clickedItem
         }
+
+        /// <summary>
+        /// When clicking on recent printers/printer settings update the printer settings objects. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ConnectHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
@@ -598,11 +668,21 @@ namespace RepetierHost
                 editor.UpdatePrependAppend();
             }
         }
+
+        /// <summary>
+        /// Gets and sets the Title for the application that shows in the top left corner near the icon. It will always say
+        /// the basic title plus the name of the current models. 
+        /// </summary>
         public string Title
         {
             set { Text = basicTitle + " - " + value; }
             get { return Text; }
         }
+
+        /// <summary>
+        /// Bring to the front a particular form. 
+        /// </summary>
+        /// <param name="f"></param>
         private void FormToFront(Form f)
         {
             // Make this form the active form and make it TopMost
@@ -612,10 +692,21 @@ namespace RepetierHost
             f.BringToFront();
             // f.TopMost = false;
         }
+
+        /// <summary>
+        /// Exit the application on click "quit"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
+        /// <summary>
+        /// If the connection to the prnter changes then update what is available to click. 
+        /// </summary>
+        /// <param name="msg"></param>
         private void OnPrinterConnectionChange(string msg)
         {
             toolConnection.Text = msg;
@@ -659,15 +750,30 @@ namespace RepetierHost
                 SDCard.Disconnected();
             }
         }
+
+        /// <summary>
+        /// Update the toolAction text based on some msg
+        /// </summary>
+        /// <param name="msg"></param>
         private void OnPrinterAction(string msg)
         {
             toolAction.Text = msg;
         }
+
+        /// <summary>
+        /// Update the progress bar. 
+        /// </summary>
+        /// <param name="per"></param>
         private void OnJobProgress(float per)
         {
             toolProgress.Value = (int)per;
         }
 
+        /// <summary>
+        /// Configure what is available to click based on the printer connection type. Related ot the eeprom on the printer. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (conn.isRepetier)
@@ -711,7 +817,11 @@ namespace RepetierHost
         }
 
 
-
+        /// <summary>
+        /// Load g-code or .stl when you click file, load. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolGCodeLoad_Click(object sender, EventArgs e)
         {
             if (openGCode.ShowDialog() == DialogResult.OK)
@@ -736,6 +846,7 @@ namespace RepetierHost
             else
             {
                 //tab.SelectedTab = tabPrint;
+                current3Dview = ThreeDViewOptions.printing;
                 //conn.analyzer.StartJob();
                 toolRunJob.Image = imageList.Images[3];
                 job.BeginJob();
@@ -1100,24 +1211,29 @@ namespace RepetierHost
             slic3r.Show();
             slic3r.BringToFront();
         }
-        public void assign3DView()
+
+        /// <summary>
+        /// Updates the SetView. 
+        /// Not sure if this is really needed. It is only on line of code to set the to correct view. 
+        /// </summary>
+        public void update3DviewSelection()
         {
             //if (tab == null) return;
-            //switch (tab.SelectedIndex)
-            //{
-            //    case 0:
-            //    case 1:
-                //threedview.SetView(stlComposer1.cont);
-                threedview.SetView(fileAddOrRemove.cont);
-            //        break;
-            //    case 2:
-            //        threedview.SetView(jobPreview);
-            //        break;
-            //    case 3:
-            //        threedview.SetView(printPreview);
-            //        break;
-            //}
+            switch (current3Dview)
+            {
+                case ThreeDViewOptions.STLeditor:               
+                    threedview.SetView(fileAddOrRemove.cont);
+                    break;
+                case ThreeDViewOptions.gcode:
+                    threedview.SetView(jobPreview);
+                    break;
+                case ThreeDViewOptions.printing:
+                    threedview.SetView(printPreview);
+                    break;           
+            }
         }
+
+
         private void tab_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Console.WriteLine("index changed " + Environment.OSVersion.Platform + " Mac=" + PlatformID.MacOSX);
@@ -1144,7 +1260,7 @@ namespace RepetierHost
             //{
             //    tabControlView.SelectedIndex = 0;
             //}
-            assign3DView();
+            update3DviewSelection();
         }
 
         private void Main_Resize(object sender, EventArgs e)
@@ -1197,6 +1313,11 @@ namespace RepetierHost
                 ce.run();
             }
         }
+
+        /// <summary>
+        /// Toggles whether the show filament visualization is on or off. 
+        /// TODO: Update this with the new pictures in teh image list. 
+        /// </summary>
         public void updateShowFilament()
         {
             if (threeDSettings.checkDisableFilamentVisualization.Checked)
@@ -1212,6 +1333,11 @@ namespace RepetierHost
                 toolShowFilament.Text = Trans.T("M_SHOW_FILAMENT"); // "Hide filament";
             }
         }
+
+        /// <summary>
+        /// Toggles the Update Travel on or off. 
+        /// TODO: Update the images with custom images. 
+        /// </summary>
         public void updateTravelMoves()
         {
             if (threeDSettings == null) return;
@@ -1641,6 +1767,8 @@ namespace RepetierHost
 
         private void viewSlicedObjectToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            // TODO: This isn't working. 
+            // We want to show the sliced results by default when the slicer finishes. 
             threeDSettings.checkDisableFilamentVisualization.Checked = !threeDSettings.checkDisableFilamentVisualization.Checked;
         }
 
@@ -1652,31 +1780,7 @@ namespace RepetierHost
 
         private void sliceToolSplitButton3_ButtonClick(object sender, EventArgs e)
         {
-            string dir = Main.globalSettings.Workdir;
-            if (!Directory.Exists(dir))
-            {
-                MessageBox.Show(Trans.T("L_EXISTING_WORKDIR_REQUIRED"), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Main.globalSettings.Show();
-                return;
-            }
-            if (listSTLObjects.Items.Count == 0) return;
-            bool itemsOutide = false;
-            foreach (STL stl in listSTLObjects.Items)
-            {
-                if (stl.outside) itemsOutide = true;
-            }
-            if (itemsOutide)
-            {
-                if (MessageBox.Show(Trans.T("L_OBJECTS_OUTSIDE_SLICE_QUEST"), Trans.T("L_WARNING"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                    return;
-            }
-            string t = listSTLObjects.Items[0].ToString();
-            if (listSTLObjects.Items.Count > 1)
-                t += " + " + (listSTLObjects.Items.Count - 1).ToString();
-            Main.main.Title = t;
-            dir += Path.DirectorySeparatorChar + "composition.stl";
-            this.fileAddOrRemove.saveComposition(dir);
-            Main.slicer.RunSlice(dir); // Slice it and load
+            this.fileAddOrRemove.buttonSlice_Click(sender, e);
         }
 
         private void removeObjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1696,6 +1800,7 @@ namespace RepetierHost
 
         private void centerObjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // TODO: Error when moving to a new location. The box doesn't follow it. 
             this.fileAddOrRemove.CenterObject();
         }
 
@@ -1712,6 +1817,67 @@ namespace RepetierHost
         private void setPathToSlicerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Slic3rSetup.Execute();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            current3Dview = ThreeDViewOptions.gcode;
+            update3DviewSelection();
+            //threedview.SetView(jobPreview);
+            //JobPreview();
+            //threedview.SetView(fileAddOrRemove.cont);
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            threedview.SetView(fileAddOrRemove.cont);
+        }
+
+        /// <summary>
+        /// What to do when the print button is clicked. 
+        /// TODO: Change the availablity of being able to click this and the image based on whether g-code that an be printed is avaible. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void printStripSplitButton4_ButtonClick(object sender, EventArgs e)
+        {
+            Printjob job = conn.job;
+            if (job.dataComplete)
+            {
+                conn.pause(Trans.T("L_PAUSE_MSG")); //"Press OK to continue.\n\nYou can add pauses in your code with\n@pause Some text like this");
+            }
+            else
+            {
+                //tab.SelectedTab = tabPrint;
+                //conn.analyzer.StartJob();
+
+                // TODO: Uncomment this section. The button should not be pushed unless a job is ready. 
+                //toolRunJob.Image = imageList.Images[3];
+                //job.BeginJob();
+                //job.PushGCodeShortArray(editor.getContentArray(1));
+                //job.PushGCodeShortArray(editor.getContentArray(0));
+                //job.PushGCodeShortArray(editor.getContentArray(2));
+                //job.EndJob();
+            }
+        }
+
+        private void killJobToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            conn.job.KillJob();
+        }
+
+        private void positionToolSplitButton2_ButtonClick(object sender, EventArgs e)
+        {
+            //TODO: Remove the option to click this when in G-code mode. 
+        }
+
+        private void importSTLToolSplitButton1_ButtonClick_1(object sender, EventArgs e)
+        {
+            if (openGCode.ShowDialog() == DialogResult.OK)
+            {
+                this.fileAddOrRemove.LoadGCodeOrSTL(openGCode.FileName);
+                // LoadGCodeOrSTL(openGCode.FileName);
+            }
         }
 
        

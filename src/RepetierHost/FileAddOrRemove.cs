@@ -49,25 +49,18 @@ namespace RepetierHost
             this.main.UpdateHistory();
             if (file.ToLower().EndsWith(".stl"))
             {
-                /*  if (MessageBox.Show("Do you want to slice the STL-File? No adds it to the object grid.", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                  {
-                      slicer.RunSlice(file); // Slice it and load
-                  }
-                  else
-                  {*/
-                //tab.SelectTab(tabModel);
-
-                openAndAddObject(file);
-                //stlComposer1.openAndAddObject(file);
-                //}
+                 openAndAddObject(file);                
             }
             else
             {
+                this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
+                this.main.update3DviewSelection();
                 //tab.SelectTab(tabGCode);
                 this.main.editor.selectContent(0);
                 this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
             }
         }
+
         public void LoadGCode(string file)
         {
             try
@@ -89,6 +82,7 @@ namespace RepetierHost
                 MessageBox.Show(e.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         public void LoadGCodeText(string text)
         {
             try

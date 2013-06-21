@@ -33,6 +33,11 @@ namespace RepetierHost.view
 {
     //public delegate void onObjectMoved(float dx, float dy);
     //public delegate void onObjectSelected(ThreeDModel selModel);
+
+
+    /// <summary>
+    /// ThreeDControlOld is the .stl OpenGl frame and Controller. It must be initialzed and added as the controller for some panal for the .stl viewer to show up. 
+    /// </summary>
     public partial class ThreeDControlOld : UserControl
     {
         FormPrinterSettings ps = Main.printerSettings;
