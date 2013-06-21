@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Repetier-Host
 
 ![Startscreen](https://github.com/repetier/Repetier-Host/blob/master/screenshots/startpage.png?raw=true)
@@ -21,3 +22,9 @@ Read the wiki at [http://www.repetier.com/documentation/repetier-host/](http://w
 # Installation:
 
 [http://www.repetier.com/documentation/repetier-host/rh-installation-and-configuration/](http://www.repetier.com/documentation/repetier-host/rh-installation-and-configuration/)
+=======
+3DprinterHostSoftware
+=====================
+
+Modification of Repeiter Host 
+>>>>>>> 5ca882f9546ecb123c90bd4d41e6a91d0bc01060
