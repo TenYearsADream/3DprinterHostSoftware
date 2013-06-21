@@ -1580,6 +1580,7 @@
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
             this.loggingToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.loggingToolStripMenuItem.Text = "Logging";
+            this.loggingToolStripMenuItem.Click += new System.EventHandler(this.loggingToolStripMenuItem_Click);
             // 
             // manualControlToolStripMenuItem
             // 

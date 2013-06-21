@@ -251,8 +251,9 @@ namespace RepetierHost
             printPanel.Dock = DockStyle.Fill;
             //tabPrint.Controls.Add(printPanel);
             printerSettings.formToCon();
+
             logView = new LogView();
-            logView.Dock = DockStyle.Fill;
+            //logView.Dock = DockStyle.Fill;
             //splitLog.Panel2.Controls.Add(logView);
             
             // TODO: Remomve this. 
@@ -1878,6 +1879,14 @@ namespace RepetierHost
                 this.fileAddOrRemove.LoadGCodeOrSTL(openGCode.FileName);
                 // LoadGCodeOrSTL(openGCode.FileName);
             }
+        }
+
+        private void loggingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form editform = new Form();
+            editform.Controls.Add(logView);
+            editform.Show();
+            //logView.Show();
         }
 
        
