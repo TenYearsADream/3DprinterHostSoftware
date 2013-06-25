@@ -71,6 +71,7 @@ namespace RepetierHost.view
         }
         private void translate()
         {
+            //
             //toolMove.ToolTipText = Trans.T("L_MOVE_CAMERA");
             //toolMoveObject.ToolTipText = Trans.T("L_MOVE_OBJECT");
             //toolMoveViewpoint.ToolTipText = Trans.T("L_MOVE_VIEWPOINT");
@@ -86,10 +87,10 @@ namespace RepetierHost.view
             this.view = view;
             toolStripClear.Visible = view.autoupdateable;
             if (view.editor)
-            {
+            //{
                 //toolMoveObject.Visible = true;
                 //toolStripClear.Enabled = false;
-            }
+            //}
             //toolMoveObject.Enabled = view.objectsSelected;
             toolStripClear.Enabled = view.objectsSelected;
             UpdateChanges();
@@ -499,9 +500,11 @@ namespace RepetierHost.view
                     GL.End();
                 }
                 //if (Main.main.tab.SelectedIndex > 1)
+                if(Main.main.current3Dview == Main.ThreeDViewOptions.gcode || Main.main.current3Dview == Main.ThreeDViewOptions.printing)
                     GL.Enable(EnableCap.CullFace);
-                //else
-                //    GL.Disable(EnableCap.CullFace);
+                else
+                    GL.Disable(EnableCap.CullFace);
+
                 GL.Disable(EnableCap.LineSmooth);
                 foreach (ThreeDModel model in view.models)
                 {

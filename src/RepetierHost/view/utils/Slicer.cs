@@ -59,6 +59,9 @@ namespace RepetierHost.view.utils
         public delegate void LoadGCode(String myString);
         string postprocessFile = null;
         Process postproc=null;
+
+
+
         public void Postprocess(string file)
         {
             string dir = Main.globalSettings.Workdir;
@@ -67,8 +70,12 @@ namespace RepetierHost.view.utils
                 SlicingInfo.f.Invoke(SlicingInfo.f.StopInfo);
 
                 //TODO: Fix this comment out
+               //LoadGCode lg = Main.main.fileAddOrRemove.LoadGCode(file);
+                LoadGCode lg= Main.main.LoadGCode;
                 //LoadGCode lg = Main.main.LoadGCode;
-               // Main.main.Invoke(lg, file);
+                //Main.main.fileAddOrRemove .Invoke(lg, file);
+                Main.main.Invoke(lg, file);
+
                 if (SlicingInfo.f.checkStartBoxAfterSlicing.Checked && Main.conn.connected)
                     Main.main.Invoke(Main.main.StartJob);
                 return; // Nothing to do
@@ -120,8 +127,9 @@ namespace RepetierHost.view.utils
             postproc = null;
             SlicingInfo.f.Invoke(SlicingInfo.f.StopInfo);
             // TODO: Fix this
-            //LoadGCode lg = Main.main.LoadGCode;
-            //Main.main.Invoke(lg, postprocessFile);
+            LoadGCode lg = Main.main.LoadGCode;
+            Main.main.Invoke(lg, postprocessFile);
+
             if (SlicingInfo.f.checkStartBoxAfterSlicing.Checked && Main.conn.connected)
                 Main.main.Invoke(Main.main.StartJob);
         }
@@ -201,19 +209,19 @@ namespace RepetierHost.view.utils
         /// <summary>
         /// Convert STL in GCode and load into editor
         /// </summary>
-        /// <param name="file"></param>
-        public void RunSlice(string file)
+        /// <param name="stlFile"></param>
+        public void RunSlice(string stlFile)
         {
             switch (_ActiveSlicer)
             {
                 case SlicerID.Slic3r:
-                    Main.slic3r.RunSliceNew(file, Main.printerSettings.PrintAreaWidth / 2, Main.printerSettings.PrintAreaDepth / 2);
+                    Main.slic3r.RunSliceNew(stlFile, Main.printerSettings.PrintAreaWidth / 2, Main.printerSettings.PrintAreaDepth / 2);
                     break;
                 /*case SlicerID.Slic3rExternal:
                     Main.slic3r.RunSliceExternal(file, Main.printerSettings.PrintAreaWidth / 2, Main.printerSettings.PrintAreaDepth / 2);
                     break;*/
                 case SlicerID.Skeinforge:
-                    skein.RunSlice(file,Main.printerModel.SkeinforgeProfile);
+                    skein.RunSlice(stlFile,Main.printerModel.SkeinforgeProfile);
                     break;
             }
         }

@@ -50,6 +50,8 @@ namespace RepetierHost
         public static Slic3r slic3r = null;
         public static bool IsMac = false;
 
+        public Form extraForm = null;
+        public Form logform = null;
         public Skeinforge skeinforge = null;
         public EEPROMRepetier eepromSettings = null;
         public EEPROMMarlin eepromSettingsm = null;
@@ -192,12 +194,18 @@ namespace RepetierHost
             threeDSettings = new ThreeDSettings();
             InitializeComponent();
             editor = new RepetierEditor();
-            //editor.Dock = DockStyle.Fill;
+            editor.Dock = DockStyle.Fill;
             //panel1.Controls.Add(editor);
             updateShowFilament();
             RegMemory.RestoreWindowPos("mainWindow", this);
 
+
+            extraForm = new Form();
+
             fileAddOrRemove = new FileAddOrRemove(this);
+            main.listSTLObjects.Visible = false;
+
+
             // Anthony, Maximize the window
             WindowState = FormWindowState.Maximized;
 
@@ -237,9 +245,9 @@ namespace RepetierHost
             }
             //slicerToolStripMenuItem.Visible = false;
             //splitLog.Panel2Collapsed = !RegMemory.GetBool("logShow", true);
-            //conn.eventConnectionChange += OnPrinterConnectionChange;
-            //conn.eventPrinterAction += OnPrinterAction;
-            //conn.eventJobProgress += OnJobProgress;
+            conn.eventConnectionChange += OnPrinterConnectionChange;
+            conn.eventPrinterAction += OnPrinterAction;
+            conn.eventJobProgress += OnJobProgress;
 
 
             //stlComposer1 = new STLComposer();
@@ -252,7 +260,16 @@ namespace RepetierHost
             //tabPrint.Controls.Add(printPanel);
             printerSettings.formToCon();
 
+            extraForm = new Form();
+            extraForm.Dock = DockStyle.Fill;
+
+
             logView = new LogView();
+            logform = new Form();
+            logView.Dock = DockStyle.Fill;
+            logform.StartPosition = FormStartPosition.WindowsDefaultBounds;            
+
+            logform.Controls.Add(logView);
             //logView.Dock = DockStyle.Fill;
             //splitLog.Panel2.Controls.Add(logView);
             
@@ -328,7 +345,8 @@ namespace RepetierHost
                 basicTitle = basicTitle.Substring(0, p) + titleAdd + basicTitle.Substring(p);
                 Text = basicTitle;
             }
-            //slicerPanel.UpdateSelection();
+            update3DviewSelection();
+           //slicerPanel.UpdateSelection();
 
             // Determine whether to check for updates or not based on the users check preferences in advances settings. 
             if (Custom.GetBool("removeUpdates", false))
@@ -362,12 +380,12 @@ namespace RepetierHost
             string supportImage = Custom.GetString("extraSupportToolbarImage", "");
             if (supportImage.Length > 0 && File.Exists(Application.StartupPath + Path.DirectorySeparatorChar + supportImage))
             {
-                toolStripButtonSupport.Image = Image.FromFile(Application.StartupPath + Path.DirectorySeparatorChar + Custom.GetString("extraSupportToolbarImage", ""));
-                toolStripButtonSupport.Text = Custom.GetString("extraSupportText", "Support");
+                helpSplitButton3.Image = Image.FromFile(Application.StartupPath + Path.DirectorySeparatorChar + Custom.GetString("extraSupportToolbarImage", ""));
+                helpSplitButton3.Text = Custom.GetString("extraSupportText", "Support");
             }
             else
             {
-                toolStripButtonSupport.Visible = false;
+                helpSplitButton3.Visible = false;
             }
 
             // Tool tip text
@@ -477,20 +495,22 @@ namespace RepetierHost
             //tabSlicer.Text = Trans.T("TAB_SLICER");
             //tabGCode.Text = Trans.T("TAB_GCODE_EDITOR");
             //tabPrint.Text = Trans.T("TAB_MANUAL_CONTROL");
-            toolPrinterSettings.Text = Trans.T("M_PRINTER_SETTINGS");
-            toolPrinterSettings.ToolTipText = Trans.T("M_PRINTER_SETTINGS");
-            toolStripEmergencyButton.Text = Trans.T("M_EMERGENCY_STOP");
-            toolStripSDCard.Text = Trans.T("M_SD_CARD");
-            toolStripSDCard.ToolTipText = Trans.T("L_SD_CARD_MANAGEMENT");
-            toolStripEmergencyButton.ToolTipText = Trans.T("M_EMERGENCY_STOP");
+            printerOptionsToolStripMenuItem.Text = Trans.T("M_PRINTER_SETTINGS");
+            printerOptionsToolStripMenuItem.ToolTipText = Trans.T("M_PRINTER_SETTINGS");
+            emergencyStopStripButton6.Text = Trans.T("M_EMERGENCY_STOP");
+            sDCardToolStripMenuItem.Text = Trans.T("M_SD_CARD");
+            sDCardToolStripMenuItem.ToolTipText = Trans.T("L_SD_CARD_MANAGEMENT");
+            emergencyStopStripButton6.ToolTipText = Trans.T("M_EMERGENCY_STOP");
             
             // TODO: Add the translation information back in for my new tools. 
             importSTLToolSplitButton1.Text = Trans.T("M_LOAD");
             //toolStripSaveJob.Text = Trans.T("M_SAVE_JOB");
-            toolKillJob.Text = Trans.T("M_KILL_JOB");
-            toolStripSDCard.Text = Trans.T("M_SD_CARD");
+            killJobToolStripMenuItem.Text = Trans.T("M_KILL_JOB");
+            sDCardToolStripMenuItem.Text = Trans.T("M_SD_CARD");
             //toolShowLog.Text = toolShowLog.ToolTipText = Trans.T("M_TOGGLE_LOG");
-            toolShowFilament.Text = Trans.T("M_SHOW_FILAMENT");
+
+            // TODO: Update this to be something other than "show filament"
+            viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_SHOW_FILAMENT");
 
             
             if (conn.connected)
@@ -505,27 +525,31 @@ namespace RepetierHost
             }
             if (threeDSettings.checkDisableFilamentVisualization.Checked)
             {
-                toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_DISABLED"); // "Filament visualization disabled";
-                toolShowFilament.Text = Trans.T("M_SHOW_FILAMENT"); // "Show filament";
+                // TODO: Update this to be something other than "show filament"
+                viewSlicedObjectToolStripMenuItem1.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_DISABLED"); // "Filament visualization disabled";
+                viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_SHOW_FILAMENT"); // "Show filament";
             }
             else
             {
-                toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
-                toolShowFilament.Text = Trans.T("M_HIDE_FILAMENT"); // "Hide filament";
+                // TODO: Update this to be something other than "show filament"
+                viewSlicedObjectToolStripMenuItem1.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
+                viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_HIDE_FILAMENT"); // "Hide filament";
             }
             if (conn.job.mode != 1)
             {
-                Main.main.toolRunJob.ToolTipText = Trans.T("M_RUN_JOB"); // "Run job";
-                Main.main.toolRunJob.Text = Trans.T("M_RUN_JOB"); //"Run job";
+                Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_RUN_JOB"); // "Run job";
+                Main.main.printStripSplitButton4.Text = Trans.T("M_RUN_JOB"); //"Run job";
             }
             else
             {
-                Main.main.toolRunJob.ToolTipText = Trans.T("M_PAUSE_JOB"); //"Pause job";
-                Main.main.toolRunJob.Text = Trans.T("M_PAUSE_JOB"); //"Pause job";
+                Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_PAUSE_JOB"); //"Pause job";
+                Main.main.printStripSplitButton4.Text = Trans.T("M_PAUSE_JOB"); //"Pause job";
             }
             importSTLToolSplitButton1.ToolTipText = Trans.T("L_LOAD_FILE"); // Load file
             //toolStripSaveJob.ToolTipText = Trans.T("M_SAVE_JOB");
-            openGCode.Title = Trans.T("L_IMPORT_G_CODE"); // Import G-Code
+            
+            // TODO change to open g-code or .stl translation
+            openFileSTLorGcode.Title = Trans.T("L_IMPORT_G_CODE"); // Import G-Code
             saveJobDialog.Title = Trans.T("L_SAVE_G_CODE"); //Save G-Code
             updateTravelMoves();
             updateShowFilament();
@@ -536,8 +560,6 @@ namespace RepetierHost
 
 
             // Not sure if this goes here, but it needs to go somewhere. , Anthony Garland
-
-
             //toolMove.ToolTipText = Trans.T("L_MOVE_CAMERA");
             //toolMoveObject.ToolTipText = Trans.T("L_MOVE_OBJECT");
             //toolMoveViewpoint.ToolTipText = Trans.T("L_MOVE_VIEWPOINT");
@@ -557,7 +579,7 @@ namespace RepetierHost
         {
             if (globalSettings == null) return;
             bool mini = globalSettings.ReduceToolbarSize;
-            foreach (ToolStripItem it in toolStrip.Items)
+            foreach (ToolStripItem it in this.toolStrip1.Items)
             {
                 if (mini)
                     it.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -662,6 +684,12 @@ namespace RepetierHost
             Update3D();
             conn.open();
         }
+
+        public void LoadGCode(string fileName)
+        {
+            main.fileAddOrRemove.LoadGCode(fileName);
+        }
+
         public void PrinterChanged(RegistryKey pkey, bool printerChanged)
         {
             if (printerChanged && editor!=null)
@@ -724,7 +752,7 @@ namespace RepetierHost
                 foreach (ToolStripItem it in connectToolStripSplitButton.DropDownItems)
                     it.Enabled = false;
                 //eeprom.Enabled = true;
-                toolStripEmergencyButton.Enabled = true;
+                emergencyStopStripButton6.Enabled = true;
             }
             else
             {
@@ -747,7 +775,7 @@ namespace RepetierHost
                 }
                 foreach (ToolStripItem it in connectToolStripSplitButton.DropDownItems)
                     it.Enabled = true;
-                toolStripEmergencyButton.Enabled = false;
+                emergencyStopStripButton6.Enabled = false;
                 SDCard.Disconnected();
             }
         }
@@ -825,9 +853,9 @@ namespace RepetierHost
         /// <param name="e"></param>
         private void toolGCodeLoad_Click(object sender, EventArgs e)
         {
-            if (openGCode.ShowDialog() == DialogResult.OK)
+            if (openFileSTLorGcode.ShowDialog() == DialogResult.OK)
             {
-                this.fileAddOrRemove.LoadGCodeOrSTL(openGCode.FileName);
+               this.fileAddOrRemove.LoadGCodeOrSTL(openFileSTLorGcode.FileName);
                 // LoadGCodeOrSTL(openGCode.FileName);
             }
         }
@@ -849,7 +877,7 @@ namespace RepetierHost
                 //tab.SelectedTab = tabPrint;
                 current3Dview = ThreeDViewOptions.printing;
                 //conn.analyzer.StartJob();
-                toolRunJob.Image = imageList.Images[3];
+                printStripSplitButton4.Image = imageList.Images[3];
                 job.BeginJob();
                 job.PushGCodeShortArray(editor.getContentArray(1));
                 job.PushGCodeShortArray(editor.getContentArray(0));
@@ -959,6 +987,7 @@ namespace RepetierHost
         }
         private void repetierHostHomepageToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // TODO: Change this. 
             openLink("http://www.repetier.com");
         }
 
@@ -978,19 +1007,19 @@ namespace RepetierHost
         {
             if (conn.job.mode != 1)
             {
-                Main.main.toolKillJob.Enabled = false;
-                Main.main.toolRunJob.Enabled = conn.connected;
-                Main.main.toolRunJob.ToolTipText = Trans.T("M_RUN_JOB"); // "Run job";
-                Main.main.toolRunJob.Text = Trans.T("M_RUN_JOB"); //"Run job";
-                Main.main.toolRunJob.Image = Main.main.imageList.Images[2];
+                Main.main.killJobToolStripMenuItem.Enabled = false;
+                Main.main.printStripSplitButton4.Enabled = conn.connected;
+                Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_RUN_JOB"); // "Run job";
+                Main.main.printStripSplitButton4.Text = Trans.T("M_RUN_JOB"); //"Run job";
+                Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[2];
             }
             else
-            {                
-                Main.main.toolRunJob.Enabled = true;
-                Main.main.toolKillJob.Enabled = true;
-                Main.main.toolRunJob.Image = Main.main.imageList.Images[3];
-                Main.main.toolRunJob.ToolTipText = Trans.T("M_PAUSE_JOB"); //"Pause job";
-                Main.main.toolRunJob.Text = Trans.T("M_PAUSE_JOB"); //"Pause job";
+            {
+                Main.main.printStripSplitButton4.Enabled = true;
+                Main.main.killJobToolStripMenuItem.Enabled = true;
+                Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[3];
+                Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_PAUSE_JOB"); //"Pause job";
+                Main.main.printStripSplitButton4.Text = Trans.T("M_PAUSE_JOB"); //"Pause job";
                 Main.main.printVisual.Clear();
             }
         };
@@ -1222,47 +1251,52 @@ namespace RepetierHost
             //if (tab == null) return;
             switch (current3Dview)
             {
-                case ThreeDViewOptions.STLeditor:               
-                    threedview.SetView(fileAddOrRemove.cont);
+                case ThreeDViewOptions.STLeditor:
+                    toolStripStatusLabel1.Text = "stl editor";
+                    threedview.SetView(fileAddOrRemove.stleditorView);
                     break;
                 case ThreeDViewOptions.gcode:
+                    main.toolStripStatusLabel1.Text = "gcode editor";
+                    listSTLObjects.Visible = false;
                     threedview.SetView(jobPreview);
                     break;
                 case ThreeDViewOptions.printing:
+                    main.toolStripStatusLabel1.Text = "printPreview";
+                    listSTLObjects.Visible = false;
                     threedview.SetView(printPreview);
-                    break;           
+                    break; 
             }
-        }
+       }
 
 
-        private void tab_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Console.WriteLine("index changed " + Environment.OSVersion.Platform + " Mac=" + PlatformID.MacOSX);
-            //if (Environment.OSVersion.Platform == PlatformID.MacOSX )
-            if (IsMac)
-            {
-                // In MacOSX the OpenGL windows shine through the
-                // tabs, so we need to disable all GL windows except the active.
-                //if (tab.SelectedTab != tabModel)
-                //{
-                //    if (tabModel.Controls.Contains(stlComposer1))
-                //    {
-                //        tabModel.Controls.Remove(stlComposer1);
-                //    }
-                //}
-                //if (tab.SelectedTab == tabModel)
-                //{
-                //    if (!tabModel.Controls.Contains(stlComposer1))
-                //        tabModel.Controls.Add(stlComposer1);
-                //}
-                refreshCounter = 6;
-            }
-            //if (tab.SelectedTab == tabModel || tab.SelectedTab == tabSlicer)
-            //{
-            //    tabControlView.SelectedIndex = 0;
-            //}
-            update3DviewSelection();
-        }
+        //private void tab_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    //Console.WriteLine("index changed " + Environment.OSVersion.Platform + " Mac=" + PlatformID.MacOSX);
+        //    //if (Environment.OSVersion.Platform == PlatformID.MacOSX )
+        //    if (IsMac)
+        //    {
+        //        // In MacOSX the OpenGL windows shine through the
+        //        // tabs, so we need to disable all GL windows except the active.
+        //        //if (tab.SelectedTab != tabModel)
+        //        //{
+        //        //    if (tabModel.Controls.Contains(stlComposer1))
+        //        //    {
+        //        //        tabModel.Controls.Remove(stlComposer1);
+        //        //    }
+        //        //}
+        //        //if (tab.SelectedTab == tabModel)
+        //        //{
+        //        //    if (!tabModel.Controls.Contains(stlComposer1))
+        //        //        tabModel.Controls.Add(stlComposer1);
+        //        //}
+        //        refreshCounter = 6;
+        //    }
+        //    //if (tab.SelectedTab == tabModel || tab.SelectedTab == tabSlicer)
+        //    //{
+        //    //    tabControlView.SelectedIndex = 0;
+        //    //}
+        //    update3DviewSelection();
+        //}
 
         private void Main_Resize(object sender, EventArgs e)
         {
@@ -1321,18 +1355,19 @@ namespace RepetierHost
         /// </summary>
         public void updateShowFilament()
         {
-            if (threeDSettings.checkDisableFilamentVisualization.Checked)
-            {
-                toolShowFilament.Image = imageList.Images[5];
-                toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_DISABLED"); // "Filament visualization disabled";
-                toolShowFilament.Text = Trans.T("M_HIDE_FILAMENT"); // "Show filament";
-            }
-            else
-            {
-                toolShowFilament.Image = imageList.Images[4];
-                toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
-                toolShowFilament.Text = Trans.T("M_SHOW_FILAMENT"); // "Hide filament";
-            }
+            // TODO: Don't need this any more. Maybe we could put an icon at the bottom that indicates the current configuration of the filament. 
+            //if (threeDSettings.checkDisableFilamentVisualization.Checked)
+            //{
+            //    toolShowFilament.Image = imageList.Images[5];
+            //    toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_DISABLED"); // "Filament visualization disabled";
+            //    toolShowFilament.Text = Trans.T("M_HIDE_FILAMENT"); // "Show filament";
+            //}
+            //else
+            //{
+            //    toolShowFilament.Image = imageList.Images[4];
+            //    toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
+            //    toolShowFilament.Text = Trans.T("M_SHOW_FILAMENT"); // "Hide filament";
+            //}
         }
 
         /// <summary>
@@ -1344,17 +1379,21 @@ namespace RepetierHost
             if (threeDSettings == null) return;
             if (threeDSettings.checkDisableTravelMoves.Checked)
             {
-                toolShowTravel.Image = imageList.Images[5];
-                toolShowTravel.ToolTipText = Trans.T("L_TRAVEL_VISUALIZATION_DISABLED"); // "Travel visualization disabled";
-                toolShowTravel.Text = Trans.T("M_HIDE_TRAVEL"); // "Hide Travel";
+                // TODO: Might need to fix this
+                //toolShowTravel.Image = imageList.Images[5];
+                //toolShowTravel.ToolTipText = Trans.T("L_TRAVEL_VISUALIZATION_DISABLED"); // "Travel visualization disabled";
+                //toolShowTravel.Text = Trans.T("M_HIDE_TRAVEL"); // "Hide Travel";
             }
             else
             {
-                toolShowTravel.Image = imageList.Images[4];
-                toolShowTravel.ToolTipText = Trans.T("L_TRAVEL_VISUALIZATION_ENABLED"); // "Travel visualization enabled";
-                toolShowTravel.Text = Trans.T("M_SHOW_TRAVEL"); // "Show Travel";
+                // TODO might need to fix this. 
+                //toolShowTravel.Image = imageList.Images[4];
+                //toolShowTravel.ToolTipText = Trans.T("L_TRAVEL_VISUALIZATION_ENABLED"); // "Travel visualization enabled";
+                //toolShowTravel.Text = Trans.T("M_SHOW_TRAVEL"); // "Show Travel";
             }
-            toolShowTravel.Visible = threeDSettings.drawMethod == 2;
+
+            // TODO might need to update this. Might be imprtant related to how it draws things. 
+            // toolShowTravel.Visible = threeDSettings.drawMethod == 2;
         }
         private void toolShowFilament_Click(object sender, EventArgs e)
         {
@@ -1495,7 +1534,7 @@ namespace RepetierHost
         {
             //if (tabControlView.SelectedIndex == 0)
             //{
-            //    threedview.ThreeDControl_KeyDown(sender, e);
+                threedview.ThreeDControl_KeyDown(sender, e);
             //}
         }
 
@@ -1658,9 +1697,9 @@ namespace RepetierHost
 
         private void importSTLToolSplitButton1_ButtonClick(object sender, EventArgs e)
         {
-            if (openGCode.ShowDialog() == DialogResult.OK)
+            if (openFileSTLorGcode.ShowDialog() == DialogResult.OK)
             {
-                this.fileAddOrRemove.LoadGCodeOrSTL(openGCode.FileName);
+                this.fileAddOrRemove.LoadGCodeOrSTL(openFileSTLorGcode.FileName);
                 // LoadGCodeOrSTL(openGCode.FileName);
             }
 
@@ -1726,7 +1765,22 @@ namespace RepetierHost
 
         private void emergencyStopStripButton6_Click(object sender, EventArgs e)
         {
-
+            if (!conn.connected) return;
+            conn.injectManualCommandFirst("M112");
+            conn.job.KillJob();
+            conn.serial.DtrEnable = false;
+            //conn.serial.RtsEnable = true;
+            Thread.Sleep(200);
+            //conn.serial.RtsEnable = false;
+            conn.serial.DtrEnable = true;
+            Thread.Sleep(200);
+            conn.serial.DtrEnable = false;
+            conn.log(Trans.T("L_EMERGENCY_STOP_MSG"), false, 3);
+            while (conn.hasInjectedMCommand(112))
+            {
+                Application.DoEvents();
+            }
+            //conn.close();
         }
 
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
@@ -1787,6 +1841,7 @@ namespace RepetierHost
         private void removeObjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.fileAddOrRemove.removeObject();
+            fileAddOrRemove.changeSelectionBoxSize();
         }
 
         private void copyObjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1831,7 +1886,7 @@ namespace RepetierHost
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            threedview.SetView(fileAddOrRemove.cont);
+            threedview.SetView(fileAddOrRemove.stleditorView);
         }
 
         /// <summary>
@@ -1869,27 +1924,67 @@ namespace RepetierHost
 
         private void positionToolSplitButton2_ButtonClick(object sender, EventArgs e)
         {
+            // TODO: When the position tab is selected, the Slicer-options are not avaible, When the Slicer mode is selected, the position options are not avaible. 
+            // The print tab is not avaible when in the position mode and only after you slice the model. Also the print tab is not available unless connected. 
             //TODO: Remove the option to click this when in G-code mode. 
         }
 
         private void importSTLToolSplitButton1_ButtonClick_1(object sender, EventArgs e)
         {
-            if (openGCode.ShowDialog() == DialogResult.OK)
+            if (openFileSTLorGcode.ShowDialog() == DialogResult.OK)
             {
-                this.fileAddOrRemove.LoadGCodeOrSTL(openGCode.FileName);
+                this.fileAddOrRemove.LoadGCodeOrSTL(openFileSTLorGcode.FileName);
                 // LoadGCodeOrSTL(openGCode.FileName);
             }
         }
 
         private void loggingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form editform = new Form();
-            editform.Controls.Add(logView);
-            editform.Show();
+            logform.Visible = !logform.Visible;
+            //logform.Show();
             //logView.Show();
         }
 
-       
+        private void sDCardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SDCard.Execute();
+        }
+
+        private void printerOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            printerSettings.Show(this);
+            printerSettings.UpdatePorts();
+            FormToFront(printerSettings);
+        }
+
+        private void helpSplitButton3_ButtonClick(object sender, EventArgs e)
+        {
+            openLink(Custom.GetString("extraSupportURL", "http://www.by3dp.com  "));
+        }
+
+        private void advancedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            extraForm.Controls.Add(editor);
+            extraForm.Size = new Size(640, 530);
+            extraForm.Visible = !extraForm.Visible;
+        }
+
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            if (current3Dview == ThreeDViewOptions.STLeditor)
+            {
+                current3Dview = ThreeDViewOptions.gcode;
+                
+            }
+            else if (current3Dview == ThreeDViewOptions.gcode)
+            {
+                current3Dview = ThreeDViewOptions.STLeditor;
+                
+            }
+            update3DviewSelection();
+        }
+
+           
 
     }
 }

@@ -78,6 +78,10 @@ namespace RepetierHost.model
             jobStarted = DateTime.Now;
             con.firePrinterAction(Trans.T("L_PRINTING..."));
         }
+
+        /// <summary>
+        /// Stops the current job by injecting M29
+        /// </summary>
         public void KillJob()
         {
             mode = 3;
@@ -100,6 +104,8 @@ namespace RepetierHost.model
             DoEndKillActions();
             Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobKilled);
         }
+
+
         public void DoEndKillActions()
         {
             if (exclusive) // not a normal print job

@@ -118,23 +118,8 @@
             this.toolAction = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.fpsLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolRunJob = new System.Windows.Forms.ToolStripButton();
-            this.toolKillJob = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSDCard = new System.Windows.Forms.ToolStripButton();
-            this.toolShowFilament = new System.Windows.Forms.ToolStripButton();
-            this.toolStripEmergencyButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonSupport = new System.Windows.Forms.ToolStripButton();
-            this.toolPrinterSettings = new System.Windows.Forms.ToolStripButton();
-            this.toolShowTravel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSplitButton2 = new System.Windows.Forms.ToolStripSplitButton();
-            this.stopSlicerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configureSlicerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewSlicedObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewPrintPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewGcodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.openGCode = new System.Windows.Forms.OpenFileDialog();
             this.saveJobDialog = new System.Windows.Forms.SaveFileDialog();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
@@ -173,7 +158,9 @@
             this.viewGcodeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.printStripSplitButton4 = new System.Windows.Forms.ToolStripSplitButton();
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.killJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transferFilesToSDCardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.emergencyStopStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.helpSplitButton3 = new System.Windows.Forms.ToolStripSplitButton();
             this.baoyanAutomationWebsiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -225,22 +212,18 @@
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.openFileSTL = new System.Windows.Forms.OpenFileDialog();
-            this.saveSTL = new System.Windows.Forms.SaveFileDialog();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.killJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.transferFilesToSDCardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.openFileSTLorGcode = new System.Windows.Forms.OpenFileDialog();
+            this.saveSTL = new System.Windows.Forms.SaveFileDialog();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
-            this.toolStrip.SuspendLayout();
             this.panel2.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -275,7 +258,7 @@
             this.loadGCodeToolStripMenuItem.Name = "loadGCodeToolStripMenuItem";
             this.loadGCodeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
             this.loadGCodeToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.loadGCodeToolStripMenuItem.Text = "&Load G-Code";
+            this.loadGCodeToolStripMenuItem.Text = "&Load STL file or G-code";
             this.loadGCodeToolStripMenuItem.Click += new System.EventHandler(this.toolGCodeLoad_Click);
             // 
             // showWorkdirectoryToolStripMenuItem
@@ -915,7 +898,8 @@
             this.toolTempReading,
             this.toolAction,
             this.toolProgress,
-            this.fpsLabel});
+            this.fpsLabel,
+            this.toolStripStatusLabel1});
             this.status.Location = new System.Drawing.Point(0, 527);
             this.status.Name = "status";
             this.status.Padding = new System.Windows.Forms.Padding(1, 0, 15, 0);
@@ -959,165 +943,12 @@
             this.fpsLabel.Size = new System.Drawing.Size(34, 17);
             this.fpsLabel.Text = "- FPS";
             // 
-            // toolStrip
+            // toolStripStatusLabel1
             // 
-            this.toolStrip.BackColor = System.Drawing.Color.Transparent;
-            this.toolStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolRunJob,
-            this.toolKillJob,
-            this.toolStripSDCard,
-            this.toolShowFilament,
-            this.toolStripEmergencyButton,
-            this.toolStripButtonSupport,
-            this.toolPrinterSettings,
-            this.toolShowTravel,
-            this.toolStripSplitButton2,
-            this.toolStripButton1,
-            this.toolStripButton2});
-            this.toolStrip.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1017, 54);
-            this.toolStrip.TabIndex = 2;
-            this.toolStrip.Text = "toolStrip1";
-            // 
-            // toolRunJob
-            // 
-            this.toolRunJob.Image = ((System.Drawing.Image)(resources.GetObject("toolRunJob.Image")));
-            this.toolRunJob.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolRunJob.Name = "toolRunJob";
-            this.toolRunJob.Size = new System.Drawing.Size(52, 51);
-            this.toolRunJob.Text = "Run job";
-            this.toolRunJob.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolRunJob.Click += new System.EventHandler(this.toolPrintJob_Click);
-            // 
-            // toolKillJob
-            // 
-            this.toolKillJob.Enabled = false;
-            this.toolKillJob.Image = ((System.Drawing.Image)(resources.GetObject("toolKillJob.Image")));
-            this.toolKillJob.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolKillJob.Name = "toolKillJob";
-            this.toolKillJob.Size = new System.Drawing.Size(47, 51);
-            this.toolKillJob.Text = "Kill job";
-            this.toolKillJob.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolKillJob.Click += new System.EventHandler(this.toolKillJob_Click);
-            // 
-            // toolStripSDCard
-            // 
-            this.toolStripSDCard.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSDCard.Image")));
-            this.toolStripSDCard.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSDCard.Name = "toolStripSDCard";
-            this.toolStripSDCard.Size = new System.Drawing.Size(51, 51);
-            this.toolStripSDCard.Text = "SD card";
-            this.toolStripSDCard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripSDCard.ToolTipText = "SDCard management";
-            this.toolStripSDCard.Click += new System.EventHandler(this.toolStripSDCard_Click);
-            // 
-            // toolShowFilament
-            // 
-            this.toolShowFilament.Image = ((System.Drawing.Image)(resources.GetObject("toolShowFilament.Image")));
-            this.toolShowFilament.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolShowFilament.Name = "toolShowFilament";
-            this.toolShowFilament.Size = new System.Drawing.Size(87, 51);
-            this.toolShowFilament.Text = "Show filament";
-            this.toolShowFilament.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolShowFilament.Click += new System.EventHandler(this.toolShowFilament_Click);
-            // 
-            // toolStripEmergencyButton
-            // 
-            this.toolStripEmergencyButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripEmergencyButton.AutoToolTip = false;
-            this.toolStripEmergencyButton.BackColor = System.Drawing.Color.White;
-            this.toolStripEmergencyButton.Enabled = false;
-            this.toolStripEmergencyButton.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolStripEmergencyButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.toolStripEmergencyButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStripEmergencyButton.Image")));
-            this.toolStripEmergencyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripEmergencyButton.Name = "toolStripEmergencyButton";
-            this.toolStripEmergencyButton.Size = new System.Drawing.Size(96, 51);
-            this.toolStripEmergencyButton.Text = "Emergency stop";
-            this.toolStripEmergencyButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripEmergencyButton.Click += new System.EventHandler(this.toolStripEmergencyButton_Click);
-            // 
-            // toolStripButtonSupport
-            // 
-            this.toolStripButtonSupport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonSupport.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSupport.Image")));
-            this.toolStripButtonSupport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSupport.Name = "toolStripButtonSupport";
-            this.toolStripButtonSupport.Size = new System.Drawing.Size(53, 51);
-            this.toolStripButtonSupport.Text = "Support";
-            this.toolStripButtonSupport.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.toolStripButtonSupport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButtonSupport.Click += new System.EventHandler(this.supportToolStripMenuItem_Click);
-            // 
-            // toolPrinterSettings
-            // 
-            this.toolPrinterSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolPrinterSettings.Image = ((System.Drawing.Image)(resources.GetObject("toolPrinterSettings.Image")));
-            this.toolPrinterSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolPrinterSettings.Name = "toolPrinterSettings";
-            this.toolPrinterSettings.Size = new System.Drawing.Size(90, 51);
-            this.toolPrinterSettings.Text = "Printer settings";
-            this.toolPrinterSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolPrinterSettings.Click += new System.EventHandler(this.printerSettingsToolStripMenuItem_Click);
-            // 
-            // toolShowTravel
-            // 
-            this.toolShowTravel.Image = ((System.Drawing.Image)(resources.GetObject("toolShowTravel.Image")));
-            this.toolShowTravel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolShowTravel.Name = "toolShowTravel";
-            this.toolShowTravel.Size = new System.Drawing.Size(72, 51);
-            this.toolShowTravel.Text = "ShowTravel";
-            this.toolShowTravel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolShowTravel.Click += new System.EventHandler(this.toolShowTravel_Click);
-            // 
-            // toolStripSplitButton2
-            // 
-            this.toolStripSplitButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stopSlicerToolStripMenuItem,
-            this.configureSlicerToolStripMenuItem,
-            this.viewSlicedObjectToolStripMenuItem,
-            this.viewPrintPathToolStripMenuItem,
-            this.viewGcodeToolStripMenuItem});
-            this.toolStripSplitButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton2.Image")));
-            this.toolStripSplitButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton2.Name = "toolStripSplitButton2";
-            this.toolStripSplitButton2.Size = new System.Drawing.Size(48, 51);
-            this.toolStripSplitButton2.Text = "Slice";
-            this.toolStripSplitButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // stopSlicerToolStripMenuItem
-            // 
-            this.stopSlicerToolStripMenuItem.Name = "stopSlicerToolStripMenuItem";
-            this.stopSlicerToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.stopSlicerToolStripMenuItem.Text = "Stop Slicer";
-            // 
-            // configureSlicerToolStripMenuItem
-            // 
-            this.configureSlicerToolStripMenuItem.Name = "configureSlicerToolStripMenuItem";
-            this.configureSlicerToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.configureSlicerToolStripMenuItem.Text = "Configure Slicer";
-            // 
-            // viewSlicedObjectToolStripMenuItem
-            // 
-            this.viewSlicedObjectToolStripMenuItem.Name = "viewSlicedObjectToolStripMenuItem";
-            this.viewSlicedObjectToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.viewSlicedObjectToolStripMenuItem.Text = "View Sliced Object";
-            // 
-            // viewPrintPathToolStripMenuItem
-            // 
-            this.viewPrintPathToolStripMenuItem.Name = "viewPrintPathToolStripMenuItem";
-            this.viewPrintPathToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.viewPrintPathToolStripMenuItem.Text = "View Print Path";
-            // 
-            // viewGcodeToolStripMenuItem
-            // 
-            this.viewGcodeToolStripMenuItem.Name = "viewGcodeToolStripMenuItem";
-            this.viewGcodeToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.viewGcodeToolStripMenuItem.Text = "View G-code";
+            this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // imageList
             // 
@@ -1131,12 +962,6 @@
             this.imageList.Images.SetKeyName(5, "previewoff32.png");
             this.imageList.Images.SetKeyName(6, "switch_on.png");
             this.imageList.Images.SetKeyName(7, "switch_off.png");
-            // 
-            // openGCode
-            // 
-            this.openGCode.DefaultExt = "gcode";
-            this.openGCode.Filter = "GCode/STL-Files|*.gcode;*.gco;*.stl;*.STL|All files|*.*";
-            this.openGCode.Title = "Import G-Code";
             // 
             // saveJobDialog
             // 
@@ -1156,21 +981,22 @@
             this.panel2.Controls.Add(this.toolStrip2);
             this.panel2.Controls.Add(this.toolStrip1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 78);
+            this.panel2.Location = new System.Drawing.Point(0, 24);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1017, 449);
+            this.panel2.Size = new System.Drawing.Size(1017, 503);
             this.panel2.TabIndex = 6;
             // 
             // listSTLObjects
             // 
-            this.listSTLObjects.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.listSTLObjects.BackColor = System.Drawing.SystemColors.Menu;
+            this.listSTLObjects.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.listSTLObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.listSTLObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listSTLObjects.ForeColor = System.Drawing.Color.Transparent;
             this.listSTLObjects.FormattingEnabled = true;
-            this.listSTLObjects.Location = new System.Drawing.Point(717, 130);
+            this.listSTLObjects.Location = new System.Drawing.Point(716, 57);
             this.listSTLObjects.Name = "listSTLObjects";
             this.listSTLObjects.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listSTLObjects.Size = new System.Drawing.Size(301, 316);
+            this.listSTLObjects.Size = new System.Drawing.Size(301, 13);
             this.listSTLObjects.TabIndex = 13;
             this.listSTLObjects.TabStop = false;
             this.listSTLObjects.SelectedIndexChanged += new System.EventHandler(this.listSTLObjects_SelectedIndexChanged);
@@ -1186,9 +1012,9 @@
             this.frontStripButton1,
             this.viewsStripSplitButton6});
             this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.toolStrip2.Location = new System.Drawing.Point(0, 157);
+            this.toolStrip2.Location = new System.Drawing.Point(0, 184);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(49, 227);
+            this.toolStrip2.Size = new System.Drawing.Size(49, 246);
             this.toolStrip2.TabIndex = 1;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -1291,7 +1117,8 @@
             this.printStripSplitButton4,
             this.emergencyStopStripButton6,
             this.helpSplitButton3,
-            this.advancedConfigStripSplitButton3});
+            this.advancedConfigStripSplitButton3,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1017, 54);
@@ -1436,6 +1263,7 @@
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.advancedToolStripMenuItem.Text = "Advanced";
+            this.advancedToolStripMenuItem.Click += new System.EventHandler(this.advancedToolStripMenuItem_Click);
             // 
             // setPathToSlicerToolStripMenuItem
             // 
@@ -1449,7 +1277,7 @@
             this.viewSlicedObjectToolStripMenuItem1.Name = "viewSlicedObjectToolStripMenuItem1";
             this.viewSlicedObjectToolStripMenuItem1.Size = new System.Drawing.Size(173, 22);
             this.viewSlicedObjectToolStripMenuItem1.Text = "View Sliced Results";
-            this.viewSlicedObjectToolStripMenuItem1.Click += new System.EventHandler(this.viewSlicedObjectToolStripMenuItem1_Click);
+            //this.viewSlicedObjectToolStripMenuItem1.Click += new System.EventHandler(this.viewSlicedObjectToolStripMenuItem1_Click);
             // 
             // viewPrintPathToolStripMenuItem1
             // 
@@ -1482,14 +1310,27 @@
             // printToolStripMenuItem
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.printToolStripMenuItem.Text = "Print";
+            // 
+            // killJobToolStripMenuItem
+            // 
+            this.killJobToolStripMenuItem.Name = "killJobToolStripMenuItem";
+            this.killJobToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.killJobToolStripMenuItem.Text = "Kill Job";
+            this.killJobToolStripMenuItem.Click += new System.EventHandler(this.killJobToolStripMenuItem_Click);
             // 
             // printSettingsToolStripMenuItem
             // 
             this.printSettingsToolStripMenuItem.Name = "printSettingsToolStripMenuItem";
-            this.printSettingsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.printSettingsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.printSettingsToolStripMenuItem.Text = "Print Settings";
+            // 
+            // transferFilesToSDCardToolStripMenuItem
+            // 
+            this.transferFilesToSDCardToolStripMenuItem.Name = "transferFilesToSDCardToolStripMenuItem";
+            this.transferFilesToSDCardToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.transferFilesToSDCardToolStripMenuItem.Text = "Transfer Files to SD Card";
             // 
             // emergencyStopStripButton6
             // 
@@ -1517,6 +1358,7 @@
             this.helpSplitButton3.Size = new System.Drawing.Size(48, 51);
             this.helpSplitButton3.Text = "Help";
             this.helpSplitButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.helpSplitButton3.ButtonClick += new System.EventHandler(this.helpSplitButton3_ButtonClick);
             // 
             // baoyanAutomationWebsiteToolStripMenuItem
             // 
@@ -1574,6 +1416,7 @@
             this.sDCardToolStripMenuItem.Name = "sDCardToolStripMenuItem";
             this.sDCardToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.sDCardToolStripMenuItem.Text = "SD Card";
+            this.sDCardToolStripMenuItem.Click += new System.EventHandler(this.sDCardToolStripMenuItem_Click);
             // 
             // loggingToolStripMenuItem
             // 
@@ -1593,6 +1436,7 @@
             this.printerOptionsToolStripMenuItem.Name = "printerOptionsToolStripMenuItem";
             this.printerOptionsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.printerOptionsToolStripMenuItem.Text = "Printer Options";
+            this.printerOptionsToolStripMenuItem.Click += new System.EventHandler(this.printerOptionsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem22
             // 
@@ -1879,23 +1723,6 @@
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
-            // errorProvider
-            // 
-            this.errorProvider.ContainerControl = this;
-            // 
-            // openFileSTL
-            // 
-            this.openFileSTL.DefaultExt = "stl";
-            this.openFileSTL.Filter = "STL-Files|*.stl;*.STL|All files|*.*";
-            this.openFileSTL.Multiselect = true;
-            this.openFileSTL.Title = "Add STL file";
-            // 
-            // saveSTL
-            // 
-            this.saveSTL.DefaultExt = "stl";
-            this.saveSTL.Filter = "STL-Files|*.stl;*.STL";
-            this.saveSTL.Title = "Save composition";
-            // 
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1904,30 +1731,24 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(36, 51);
             this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
-            // toolStripButton2
+            // errorProvider
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(36, 51);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.errorProvider.ContainerControl = this;
             // 
-            // killJobToolStripMenuItem
+            // openFileSTLorGcode
             // 
-            this.killJobToolStripMenuItem.Name = "killJobToolStripMenuItem";
-            this.killJobToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.killJobToolStripMenuItem.Text = "Kill Job";
-            this.killJobToolStripMenuItem.Click += new System.EventHandler(this.killJobToolStripMenuItem_Click);
+            this.openFileSTLorGcode.DefaultExt = "stl";
+            this.openFileSTLorGcode.Filter = "STL-Files/Gcode|*.stl;*.STL;*.gcode;*GCODE;*.gco;*GCO;|All files|*.*";
+            this.openFileSTLorGcode.Multiselect = true;
+            this.openFileSTLorGcode.Title = "Add STL or Gcode file";
             // 
-            // transferFilesToSDCardToolStripMenuItem
+            // saveSTL
             // 
-            this.transferFilesToSDCardToolStripMenuItem.Name = "transferFilesToSDCardToolStripMenuItem";
-            this.transferFilesToSDCardToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.transferFilesToSDCardToolStripMenuItem.Text = "Transfer Files to SD Card";
+            this.saveSTL.DefaultExt = "stl";
+            this.saveSTL.Filter = "STL-Files|*.stl;*.STL";
+            this.saveSTL.Title = "Save composition";
             // 
             // Main
             // 
@@ -1936,13 +1757,12 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1017, 549);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.status);
             this.Controls.Add(this.menu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Name = "Main";
-            this.Text = "Repetier-Host-mod V0.85c";
+            this.Text = "Baoyan Automation v0.2 beta";
             this.Activated += new System.EventHandler(this.Main_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
@@ -1954,16 +1774,14 @@
             this.menu.PerformLayout();
             this.status.ResumeLayout(false);
             this.status.PerformLayout();
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1984,7 +1802,6 @@
         private System.Windows.Forms.ToolStripProgressBar toolProgress;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerSettingsToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openGCode;
         private System.Windows.Forms.ToolStripMenuItem printerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerInformationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repetierSettingsToolStripMenuItem;
@@ -1992,12 +1809,9 @@
         private System.Windows.Forms.ToolStripMenuItem repetierHostHomepageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manualToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        public System.Windows.Forms.ToolStripButton toolRunJob;
-        public System.Windows.Forms.ToolStripButton toolKillJob;
         public System.Windows.Forms.ToolStripStatusLabel fpsLabel;
         private System.Windows.Forms.ToolStripMenuItem testCaseGeneratorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem internalSlicingParameterToolStripMenuItem;
-        public System.Windows.Forms.ToolStripButton toolStripSDCard;
         public System.Windows.Forms.ToolStripMenuItem menuSDCardManager;
         public System.Windows.Forms.SaveFileDialog saveJobDialog;
         private System.Windows.Forms.Timer timer;
@@ -2019,11 +1833,8 @@
         public System.Windows.Forms.ToolStripMenuItem slic3rToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem skeinforgeToolStripMenuItem1;
         public System.Windows.Forms.ToolStripMenuItem skeinforgeConfigurationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolShowFilament;
-        private System.Windows.Forms.ToolStripButton toolStripEmergencyButton;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem killSlicingProcessToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolPrinterSettings;
         public System.Windows.Forms.ToolStripMenuItem eeprom;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem externalSlic3rSetupToolStripMenuItem;
@@ -2066,19 +1877,10 @@
         private System.Windows.Forms.ToolStripMenuItem sendScript4ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendScript5ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
-        public System.Windows.Forms.ToolStrip toolStrip;
         public System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem donateToolStripMenuItem;
-        public System.Windows.Forms.ToolStripButton toolShowTravel;
         private System.Windows.Forms.ToolStripMenuItem supportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSupport;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton2;
-        private System.Windows.Forms.ToolStripMenuItem stopSlicerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configureSlicerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewSlicedObjectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewPrintPathToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewGcodeToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripSplitButton positionToolSplitButton2;
@@ -2101,7 +1903,6 @@
         private System.Windows.Forms.ToolStripMenuItem zoomStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem perspectiveStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem resetStripMenuItem15;
-        private System.Windows.Forms.ToolStripSplitButton printStripSplitButton4;
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printSettingsToolStripMenuItem;
         private System.Windows.Forms.BindingSource bindingSource1;
@@ -2118,7 +1919,6 @@
         private System.Windows.Forms.ToolStripSplitButton connectToolStripSplitButton;
         private System.Windows.Forms.ToolStripMenuItem viewGcodeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSplitButton advancedConfigStripSplitButton3;
-        private System.Windows.Forms.ToolStripMenuItem sDCardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loggingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manualControlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerOptionsToolStripMenuItem;
@@ -2164,16 +1964,18 @@
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.SaveFileDialog saveSTL;
         public System.Windows.Forms.ListBox listSTLObjects;
-        public System.Windows.Forms.OpenFileDialog openFileSTL;
+        public System.Windows.Forms.OpenFileDialog openFileSTLorGcode;
         private System.Windows.Forms.ToolStripSplitButton importSTLToolSplitButton1;
         private System.Windows.Forms.ToolStripMenuItem removeObjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autopositionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setPathToSlicerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripMenuItem killJobToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem transferFilesToSDCardToolStripMenuItem;
+        public System.Windows.Forms.ToolStripSplitButton printStripSplitButton4;
+        public System.Windows.Forms.ToolStripMenuItem sDCardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

@@ -15,7 +15,7 @@ namespace RepetierHost
     {
         Main main;
         private bool writeSTLBinary = true;
-        public ThreeDView cont;
+        public ThreeDView stleditorView;
         private bool autosizeFailed = false;
         private CopyObjectsDialog copyDialog = new CopyObjectsDialog();
 
@@ -24,7 +24,8 @@ namespace RepetierHost
             this.main = main1;
             try
             {
-                cont = new ThreeDView();
+                //main.threedview
+                stleditorView = new ThreeDView();
             }
             catch { }
 
@@ -52,26 +53,37 @@ namespace RepetierHost
                  openAndAddObject(file);                
             }
             else
-            {
+            {  
+
                 this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
-                this.main.update3DviewSelection();
+                //this.main.update3DviewSelection();
                 //tab.SelectTab(tabGCode);
                 this.main.editor.selectContent(0);
                 this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
             }
+            changeSelectionBoxSize();
         }
 
         public void LoadGCode(string file)
         {
             try
             {
-                this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
+                 this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
+                
                 //tab.SelectTab(tabGCode);
-
-                // TODO: The file update history should be in the fileAddOrRemove file and not the main. 
                 this.main.editor.selectContent(0);
-                this.main.fileHistory.Save(file);
-                this.main.UpdateHistory();
+                this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
+                this.main.update3DviewSelection();
+                
+                
+                
+                //this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
+                ////tab.SelectTab(tabGCode);
+
+                //// TODO: The file update history should be in the fileAddOrRemove file and not the main. 
+                //this.main.editor.selectContent(0);
+                //this.main.fileHistory.Save(file);
+                //this.main.UpdateHistory();
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -87,6 +99,7 @@ namespace RepetierHost
         {
             try
             {
+                this.main.current3Dview = Main.ThreeDViewOptions.gcode;
                 this.main.editor.setContent(0, text);
                 //tab.SelectTab(tabGCode);
                 this.main.editor.selectContent(0);
@@ -98,11 +111,28 @@ namespace RepetierHost
         }
         public void AddAFile()
         {
-            if (this.main.openFileSTL.ShowDialog() == DialogResult.OK)
+            if (this.main.openFileSTLorGcode.ShowDialog() == DialogResult.OK)
             {
-                foreach (string fname in this.main.openFileSTL.FileNames)
+                foreach (string fname in this.main.openFileSTLorGcode.FileNames)
                     openAndAddObject(fname);
             }
+            changeSelectionBoxSize();
+        }
+
+        public void changeSelectionBoxSize()
+        {
+            if (main.listSTLObjects.Items.Count > 0 && main.current3Dview == Main.ThreeDViewOptions.STLeditor)
+            {
+                main.listSTLObjects.Visible = true;
+                // = this.main.listSTLObjects.ItemHeight * (this.main.listSTLObjects.Items.Count+1);
+                main.listSTLObjects.Height = main.listSTLObjects.PreferredHeight;
+            }
+            else
+                main.listSTLObjects.Visible = false;
+           // main.listSTLObjects.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+
+            //main.listSTLObjects.Invalidate();
+           main.listSTLObjects.Update();
         }
 
         public void openAndAddObject(string file)
@@ -113,13 +143,21 @@ namespace RepetierHost
             stl.Land();
             if (stl.list.Count > 0)
             {
+               
                 this.main.listSTLObjects.Items.Add(stl);
-                cont.models.AddLast(stl);
+                
+                stleditorView.models.AddLast(stl);
                 this.main.listSTLObjects.SelectedItem = stl;
                 Autoposition();
                 stl.addAnimation(new DropAnimation("drop"));
                 updateSTLState(stl);
             }
+            else
+            {
+                main.listSTLObjects.Visible = false;
+            }
+               
+                   
         }
 
         public void removeObject()
@@ -130,7 +168,7 @@ namespace RepetierHost
                 list.AddLast(stl);
             foreach (STL stl in list)
             {
-                cont.models.Remove(stl);
+                stleditorView.models.Remove(stl);
                 this.main.listSTLObjects.Items.Remove(stl);
                 autosizeFailed = false; // Reset autoposition
             }
@@ -138,6 +176,7 @@ namespace RepetierHost
             if (this.main.listSTLObjects.Items.Count > 0)
                 this.main.listSTLObjects.SelectedIndex = 0;
             Main.main.threedview.UpdateChanges();
+            changeSelectionBoxSize();
 
         }
 
@@ -306,7 +345,7 @@ namespace RepetierHost
         {
             updateEnabled();
             STL stl = (STL)this.main.listSTLObjects.SelectedItem;
-            foreach (STL s in cont.models)
+            foreach (STL s in stleditorView.models)
             {
                 s.Selected = this.main.listSTLObjects.SelectedItems.Contains(s);
             }
@@ -470,7 +509,7 @@ namespace RepetierHost
                 list.AddLast(stl);
             foreach (STL stl in list)
             {
-                cont.models.Remove(stl);
+                stleditorView.models.Remove(stl);
                 this.main.listSTLObjects.Items.Remove(stl);
                 autosizeFailed = false; // Reset autoposition
             }
@@ -684,9 +723,11 @@ namespace RepetierHost
             if (this.main.listSTLObjects.Items.Count > 1)
                 t += " + " + (this.main.listSTLObjects.Items.Count - 1).ToString();
             Main.main.Title = t;
-            dir += Path.DirectorySeparatorChar + "composition.stl";
-            saveComposition(dir);
-            Main.slicer.RunSlice(dir); // Slice it and load
+
+            string newStlFile = dir + Path.DirectorySeparatorChar + "composition.stl";
+            //dir += Path.DirectorySeparatorChar + "composition.stl";
+            saveComposition(newStlFile);
+            Main.slicer.RunSlice(newStlFile); // Slice it and load
         }
 
         // TODO: Not sure what this is
@@ -762,6 +803,10 @@ namespace RepetierHost
         private void buttonAutoplace_Click(object sender, EventArgs e)
         {
             Autoposition();
+            foreach (STL stl in this.main.listSTLObjects.Items)
+            {
+                stl.UpdateBoundingBox();
+            }
         }
 
         /// <summary>
@@ -786,7 +831,7 @@ namespace RepetierHost
             foreach (STL stl in newSTL)
             {
                 this.main.listSTLObjects.Items.Add(stl);
-                cont.models.AddLast(stl);
+                stleditorView.models.AddLast(stl);
             }
             if (copyDialog.checkAutoposition.Checked)
             {
@@ -810,6 +855,7 @@ namespace RepetierHost
             foreach (STL stl in this.main.listSTLObjects.SelectedItems)
             {
                 stl.Center(Main.printerSettings.BedLeft + Main.printerSettings.PrintAreaWidth / 2, Main.printerSettings.BedFront + Main.printerSettings.PrintAreaDepth / 2);
+                stl.UpdateBoundingBox();
                 listSTLObjects_SelectedIndexChanged(null, null);
 
             }

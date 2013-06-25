@@ -715,7 +715,7 @@ namespace RepetierHost.view
         }
 
 
-        public bool RunSliceNew(string file, float centerx, float centery)
+        public bool RunSliceNew(string STLfileToSlice, float centerx, float centery)
         {
             if (procConvert != null)
             {
@@ -734,7 +734,7 @@ namespace RepetierHost.view
             try
             {
                 STL stl = new STL();
-                stl.Load(file);
+                stl.Load(STLfileToSlice);
                 stl.UpdateBoundingBox();
                 if (stl.xMin > ps.BedLeft && stl.yMin > ps.BedFront && stl.xMax < ps.BedLeft + ps.PrintAreaWidth && stl.yMax < ps.BedFront+ps.PrintAreaDepth)
                 {
@@ -789,10 +789,11 @@ namespace RepetierHost.view
                 string exe = basedir + Path.DirectorySeparatorChar + "Slic3r" + Path.DirectorySeparatorChar + exname;
                 if (File.Exists(BasicConfiguration.basicConf.Slic3rExecutable))
                     exe = BasicConfiguration.basicConf.Slic3rExecutable;*/
-                slicefile = file;
-                string target = StlToGCode(file);
-                if (File.Exists(target))
-                    File.Delete(target);
+
+                slicefile = STLfileToSlice; // TODO: Not needed??
+                string targetGcodeFile = StlToGCode(STLfileToSlice);
+                if (File.Exists(targetGcodeFile))
+                    File.Delete(targetGcodeFile);
                 procConvert.EnableRaisingEvents = true;
                 procConvert.Exited += new EventHandler(ConversionExited);
                 procConvert.StartInfo.FileName = Main.IsMono ? exe : wrapQuotes(exe);
@@ -804,9 +805,9 @@ namespace RepetierHost.view
                 sb.Append(",");
                 sb.Append(centery.ToString("0", GCode.format));
                 sb.Append(" -o ");
-                sb.Append(wrapQuotes(StlToGCode(file)));
+                sb.Append(wrapQuotes(targetGcodeFile));
                 sb.Append(" ");
-                sb.Append(wrapQuotes(file));
+                sb.Append(wrapQuotes(STLfileToSlice));
                 procConvert.StartInfo.Arguments = sb.ToString();
                 procConvert.StartInfo.UseShellExecute = false;
                 procConvert.StartInfo.RedirectStandardOutput = true;
@@ -826,12 +827,19 @@ namespace RepetierHost.view
             return true;
         }
         
+        /// <summary>
+        /// Takes the name of the .stl file, removes .stl, and then adds .gcode to make a gcode type file. 
+        /// </summary>
+        /// <param name="stl"></param>
+        /// <returns></returns>
         public string StlToGCode(string stl)
         {
             int p = stl.LastIndexOf('.');
             if (p > 0) stl = stl.Substring(0, p);
             return stl + ".gcode";
         }
+
+
         public delegate void LoadGCode(String myString);
         private void ConversionExited(object sender, System.EventArgs e)
         {

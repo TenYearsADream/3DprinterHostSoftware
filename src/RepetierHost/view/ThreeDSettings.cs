@@ -46,7 +46,7 @@ namespace RepetierHost.view
             comboDrawMethod.SelectedIndex = 0;
             repetierKey = Custom.BaseKey; //  Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");
             threedKey = repetierKey.CreateSubKey("3D");
-            if (comboFilamentVisualization.SelectedIndex < 0) comboFilamentVisualization.SelectedIndex = 1;
+            //if (comboFilamentVisualization.SelectedIndex < 0) comboFilamentVisualization.SelectedIndex = 1;
             RegistryToForm();
             translate();
             Main.main.languageChanged += translate;
@@ -333,10 +333,10 @@ Immediate (slow)*/
             }
         }
 
-        private void comboFilamentVisualization_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Main.main.Update3D();
-        }
+        //private void comboFilamentVisualization_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    Main.main.Update3D();
+        //}
 
         private void textLayerHeight_TextChanged(object sender, EventArgs e)
         {
@@ -380,11 +380,11 @@ Immediate (slow)*/
             }
         }
 
-        private void checkDisableFilamentVisualization_CheckedChanged(object sender, EventArgs e)
-        {
-            Main.main.updateShowFilament();
-            Main.main.Update3D();
-        }
+        //private void checkDisableFilamentVisualization_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    Main.main.updateShowFilament();
+        //    Main.main.Update3D();
+        //}
 
         private void comboDrawMethod_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -6,6 +6,9 @@ using System.Globalization;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// Helps manage the individual lines in the G-code text. 
+    /// </summary>
     public class GCodeShort
     {
         public float x, y, z, e,f,emax;

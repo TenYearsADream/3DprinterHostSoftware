@@ -496,7 +496,7 @@
             this.checkDisableFilamentVisualization.TabIndex = 14;
             this.checkDisableFilamentVisualization.Text = "Disable filament visualization";
             this.checkDisableFilamentVisualization.UseVisualStyleBackColor = true;
-            this.checkDisableFilamentVisualization.CheckedChanged += new System.EventHandler(this.checkDisableFilamentVisualization_CheckedChanged);
+            //this.checkDisableFilamentVisualization.CheckedChanged += new System.EventHandler(this.checkDisableFilamentVisualization_CheckedChanged);
             // 
             // labelFilamentVisInfo
             // 
@@ -608,7 +608,7 @@
             this.comboFilamentVisualization.Name = "comboFilamentVisualization";
             this.comboFilamentVisualization.Size = new System.Drawing.Size(129, 21);
             this.comboFilamentVisualization.TabIndex = 0;
-            this.comboFilamentVisualization.SelectedIndexChanged += new System.EventHandler(this.comboFilamentVisualization_SelectedIndexChanged);
+            //this.comboFilamentVisualization.SelectedIndexChanged += new System.EventHandler(this.comboFilamentVisualization_SelectedIndexChanged);
             // 
             // showPrintbed
             // 

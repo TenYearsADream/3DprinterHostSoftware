@@ -281,8 +281,8 @@ namespace RepetierHost.view
         }
         public void UpdateConStatus(bool c)
         {
-            Main.main.toolRunJob.Enabled = c;
-            Main.main.toolStripSDCard.Enabled = c;
+            Main.main.printStripSplitButton4.Enabled = c;
+            Main.main.sDCardToolStripMenuItem.Enabled = c;
             Main.main.menuSDCardManager.Enabled = c;
            // switchConnect.On = c;
             textGCode.Enabled = c;

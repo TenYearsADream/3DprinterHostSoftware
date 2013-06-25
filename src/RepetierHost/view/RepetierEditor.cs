@@ -187,6 +187,12 @@ namespace RepetierHost.view
                 e.Changed();
             }
         }
+
+        /// <summary>
+        /// Helps manage the content of the g-code editor
+        /// The G-code editor can have several g-code texts available to edit. However only the current one that is selected in the dropdown menu
+        /// can be edited. This g-code text is the current Content. Hence the name of the class. 
+        /// </summary>
         public class Content
         {
             //public string Text;
@@ -198,7 +204,7 @@ namespace RepetierHost.view
             LinkedList<Undo> redo = new LinkedList<Undo>();
             RepetierEditor editor = null;
             public string name;
-            public int etype; // 0 = G-Code, 1 = prepend, 2 = append
+            public int etype; /// 0 = G-Code, 1 = prepend, 2 = append
             public Content(RepetierEditor e, int tp, string _name)
             {
                 name = _name;
@@ -208,6 +214,10 @@ namespace RepetierHost.view
                 editor = e;
                 etype = tp;
             }
+
+            /// <summary>
+            /// The actual text of the G-code, but it is immediately put into the textArray as GCodeShort
+            /// </summary>
             public string Text
             {
                 get
@@ -226,7 +236,7 @@ namespace RepetierHost.view
                     {
                         textArray.Add(new GCodeShort(s));
                     }
-                    row = col = topRow = topCol = selRow = selCol = 0;
+                    row = col = topRow = topCol = selRow = selCol = 0; // Set the cursor at the very beginning. 
                 }
             }
 
@@ -306,6 +316,9 @@ namespace RepetierHost.view
                 UpdateUndoButtons();
             }
         }
+        // End class Content
+
+
         Content cur = null;
         public Commands commands = null;
         public event ContentChangedEvent contentChangedEvent=null;
@@ -615,7 +628,7 @@ namespace RepetierHost.view
             get
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (GCodeShort code in lines)
+                foreach (GCodeShort code in lines) // Build up the text from the list of GCodeShort
                     sb.AppendLine(code.text);
                 return sb.ToString();
             }

@@ -193,6 +193,9 @@
       <DependentUpon>LogView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="view\positionModelGUIInterface.resx">
+      <DependentUpon>positionModelGUIInterface.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="view\Preferences.resx">
       <DependentUpon>Preferences.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -371,6 +374,12 @@
     </Compile>
     <Compile Include="view\LogView.Designer.cs">
       <DependentUpon>LogView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="view\positionModelGUIInterface.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="view\positionModelGUIInterface.Designer.cs">
+      <DependentUpon>positionModelGUIInterface.cs</DependentUpon>
     </Compile>
     <Compile Include="view\Preferences.cs">
       <SubType>Form</SubType>
