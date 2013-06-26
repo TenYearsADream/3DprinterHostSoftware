@@ -279,7 +279,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 background.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
+                //Main.main.Update3D();
             }
         }
 
@@ -289,7 +290,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 faces.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                //Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
             }
         }
         private void edges_Click(object sender, EventArgs e)
@@ -298,7 +300,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 edges.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                //Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
             }
         }
 
@@ -308,7 +311,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 selectedFaces.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                //Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
             }
         }
 
@@ -319,7 +323,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 p.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                //Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
             }
         }
 
@@ -329,7 +334,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 printerBase.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                //Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
             }
         }
 
@@ -340,16 +346,19 @@ Immediate (slow)*/
 
         private void textLayerHeight_TextChanged(object sender, EventArgs e)
         {
-            Main.main.Update3D();
+            //Main.main.Update3D();
+            Main.main.mainHelp.UpdateEverythingInMain();
         }
         private void light_TextChanged(object sender, EventArgs e)
         {
-            Main.main.Update3D();
+            //Main.main.Update3D();
+            Main.main.mainHelp.UpdateEverythingInMain();
         }
 
         private void showEdges_CheckedChanged(object sender, EventArgs e)
         {
-            Main.main.Update3D();
+            //Main.main.Update3D();
+            Main.main.mainHelp.UpdateEverythingInMain();
         }
         private void float_Validating(object sender, CancelEventArgs e)
         {
@@ -376,7 +385,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 hotFilament.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                //Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
             }
         }
 
@@ -397,7 +407,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 outsidePrintbed.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                //Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
             }
         }
         private void lightcolor_Click(object sender, EventArgs e)
@@ -407,7 +418,8 @@ Immediate (slow)*/
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 p.BackColor = colorDialog.Color;
-                Main.main.Update3D();
+                //Main.main.Update3D();
+                Main.main.mainHelp.UpdateEverythingInMain();
             }
         }
         private float[] toGLColor(Color c)
@@ -446,13 +458,14 @@ Immediate (slow)*/
         public void checkDisableTravelMoves_CheckedChanged(object sender, EventArgs e)
         {
             Main.main.updateTravelMoves();
-            Main.main.Update3D();
+            //Main.main.Update3D();
+            Main.main.mainHelp.UpdateEverythingInMain();
         }
 
         private void checkCorrectNormals_CheckedChanged(object sender, EventArgs e)
         {
             GCodePath.correctNorms = checkCorrectNormals.Checked;
-            Main.main.Update3D();
+            //Main.main.Update3D();
         }
     }
 }

@@ -425,8 +425,8 @@ namespace RepetierHost.view
             UpdateDimensions();
             Hide();
             //Main.main.slicerPanel.UpdateSelection();
-            Main.main.Update3D();
-            Main.main.UpdateConnections();
+            //Main.main.Update3D();
+            Main.main.mainHelp.UpdateEverythingInMain();
             if (Main.main != null && Main.main.editor != null)
                 Main.main.editor.Changed();
         }
@@ -436,8 +436,9 @@ namespace RepetierHost.view
             load(con.printerName);
             UpdateDimensions();
             Hide();
-            Main.main.Update3D();
-            Main.main.UpdateConnections();
+            //Main.main.Update3D();
+            //Main.main.UpdateConnections();
+            Main.main.mainHelp.UpdateEverythingInMain();
         }
 
         public void UpdatePorts()
@@ -470,8 +471,9 @@ namespace RepetierHost.view
                 comboPrinter.Items.Add(name);
                 comboPrinter.SelectedIndex = comboPrinter.Items.IndexOf(name);
             }
-            Main.main.Update3D();
-            Main.main.UpdateConnections();
+            //Main.main.Update3D();
+            //Main.main.mUpdateConnections();
+            Main.main.mainHelp.UpdateEverythingInMain();
         }
 
         private void comboPrinter_SelectedIndexChanged(object sender, EventArgs e)

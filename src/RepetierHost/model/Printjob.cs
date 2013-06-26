@@ -35,7 +35,7 @@ namespace RepetierHost.model
         public int linesSend;
         public bool exclusive = false;
         public int maxLayer = -1;
-        public int mode = 0; // 0 = no job defines, 1 = printing, 2 = finished, 3 = aborted
+        public int mode = 0; /// 0 = no job defines, 1 = printing, 2 = finished, 3 = aborted
         public double computedPrintingTime = 0;
         public DateTime jobStarted, jobFinished;
         LinkedList<GCodeCompressed> jobList = new LinkedList<GCodeCompressed>();
@@ -62,7 +62,10 @@ namespace RepetierHost.model
             mode = 1;
             ana = new GCodeAnalyzer(true);
             con.analyzer.StartJob();
-            Main.main.Invoke(Main.main.UpdateJobButtons);
+            
+            //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
+            UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+            Main.main.Invoke(updateAll);
         }
         public void EndJob()
         {
@@ -70,7 +73,11 @@ namespace RepetierHost.model
             {
                 mode = 0;
                 con.firePrinterAction(Trans.T("L_IDLE"));
-                Main.main.Invoke(Main.main.UpdateJobButtons);
+                //Main.main.Invoke(Main.main.UpdateJobButtons);
+                //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
+                UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+                Main.main.Invoke(updateAll);
+
                 Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobFinished);
                 return;
             }
@@ -99,7 +106,11 @@ namespace RepetierHost.model
             {
                 con.injectManualCommand(code.text);
             }
-            Main.main.Invoke(Main.main.UpdateJobButtons);
+            //Main.main.Invoke(Main.main.UpdateJobButtons);
+            //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
+            UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+            Main.main.Invoke(updateAll);
+
             con.firePrinterAction(Trans.T("L_JOB_KILLED")); //"Job killed");
             DoEndKillActions();
             Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobKilled);
@@ -225,7 +236,11 @@ namespace RepetierHost.model
                 Main.conn.log(Trans.T1("L_LINES_SEND:X",linesSend.ToString()), false, 3);
                 Main.conn.firePrinterAction(Trans.T1("L_FINISHED_IN",s.ToString()));
                 DoEndKillActions();
-                Main.main.Invoke(Main.main.UpdateJobButtons);
+                //.main.Invoke(Main.main.UpdateJobButtons);
+                //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
+                UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+                Main.main.Invoke(updateAll);
+
                 Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobFinished);
                 RepetierHost.view.SoundConfig.PlayPrintFinished(false);
             }

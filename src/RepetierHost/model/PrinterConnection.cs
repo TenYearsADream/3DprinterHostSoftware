@@ -710,7 +710,9 @@ namespace RepetierHost.model
                     virtualPrinter.receiveLine(gc);
                     if (eventConnectionChange != null)
                         eventConnectionChange(Trans.T("L_CONNECTED") + ":" + printerName);
-                    Main.main.Invoke(Main.main.UpdateJobButtons);
+                    //Main.main.Invoke(Main.main.UpdateJobButtons);
+                    UpdateAll update = Main.main.mainHelp.UpdateEverythingInMain;
+                    Main.main.Invoke(update);
                     return;
                 }
                 isVirtualActive = false;
@@ -719,7 +721,8 @@ namespace RepetierHost.model
                 else
                     serial = new ProtectedSerialPort();
                 garbageCleared = false;
-                serial.PortName = port;
+                serial.PortName = "COM2";
+                //serial.PortName = port;
                 serial.BaudRate = baud;
                 serial.Parity = parity;
                 serial.DataBits = databits;
@@ -729,6 +732,8 @@ namespace RepetierHost.model
                 serial.ErrorReceived += error;
                 serial.RtsEnable = false;
                 serial.DtrEnable = false;
+                
+                
                 serial.Open();
                 serial.DtrEnable = true;
                 Thread.Sleep(200);
@@ -763,7 +768,9 @@ namespace RepetierHost.model
                 ReturnInjectLock();
                 if (eventConnectionChange != null)
                     eventConnectionChange(Trans.T("L_CONNECTED"));
-                Main.main.Invoke(Main.main.UpdateJobButtons);
+                //Main.main.Invoke(Main.main.UpdateJobButtons);
+                UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+                Main.main.Invoke(updateAll);
             }
             catch (IOException ex)
             {
@@ -777,6 +784,7 @@ namespace RepetierHost.model
 
         public bool close()
         {
+            UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
             if (serial == null && !isVirtualActive) return true;
             // Test if we should warn about heaters still on.
             bool heateron = false;
@@ -820,7 +828,9 @@ namespace RepetierHost.model
                     }
                     catch { } // Closing the app can cause an exception, if event comes after Main handle is destroyed
                 firePrinterAction(Trans.T("L_IDLE"));
-                Main.main.Invoke(Main.main.UpdateJobButtons);
+                //Main.main.Invoke(Main.main.UpdateJobButtons);
+                
+                Main.main.Invoke(updateAll);
                 return true;
             }
 
@@ -858,7 +868,9 @@ namespace RepetierHost.model
                 }
                 catch { } // Closing the app can cause an exception, if event comes after Main handle is destroyed
             firePrinterAction(Trans.T("L_IDLE"));
-            Main.main.Invoke(Main.main.UpdateJobButtons);
+            //Main.main.Invoke(Main.main.UpdateJobButtons);
+            //UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+            Main.main.Invoke(updateAll);
             return true;
         }
 

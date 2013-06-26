@@ -113,6 +113,7 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainHelper.cs" />
     <Compile Include="model\BasicConfiguration.cs" />
     <Compile Include="model\Commands.cs" />
     <Compile Include="model\Custom.cs" />
@@ -193,8 +194,8 @@
       <DependentUpon>LogView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\positionModelGUIInterface.resx">
-      <DependentUpon>positionModelGUIInterface.cs</DependentUpon>
+    <EmbeddedResource Include="view\PositionSTLGUI.resx">
+      <DependentUpon>PositionSTLGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="view\Preferences.resx">
       <DependentUpon>Preferences.cs</DependentUpon>
@@ -242,10 +243,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="view\SoundConfig.resx">
       <DependentUpon>SoundConfig.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="view\STLComposer.resx">
-      <DependentUpon>STLComposer.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="view\StoreCode.resx">
@@ -375,11 +372,8 @@
     <Compile Include="view\LogView.Designer.cs">
       <DependentUpon>LogView.cs</DependentUpon>
     </Compile>
-    <Compile Include="view\positionModelGUIInterface.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="view\positionModelGUIInterface.Designer.cs">
-      <DependentUpon>positionModelGUIInterface.cs</DependentUpon>
+    <Compile Include="view\PositionSTLGUI.Designer.cs">
+      <DependentUpon>PositionSTLGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="view\Preferences.cs">
       <SubType>Form</SubType>
@@ -453,11 +447,8 @@
     <Compile Include="view\SoundConfig.Designer.cs">
       <DependentUpon>SoundConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="view\STLComposer.cs">
+    <Compile Include="view\PositionSTLGUI.cs">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="view\STLComposer.Designer.cs">
-      <DependentUpon>STLComposer.cs</DependentUpon>
     </Compile>
     <Compile Include="view\StoreCode.cs">
       <SubType>Form</SubType>

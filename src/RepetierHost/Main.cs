@@ -50,8 +50,11 @@ namespace RepetierHost
         public static Slic3r slic3r = null;
         public static bool IsMac = false;
 
+        public PositionSTLGUI postionGUI = null;
+        //public positionModelGUIInterface positionModelGUI = null;
         public Form extraForm = null;
         public Form logform = null;
+        public MainHelper mainHelp = null;
         public Skeinforge skeinforge = null;
         public EEPROMRepetier eepromSettings = null;
         public EEPROMMarlin eepromSettingsm = null;
@@ -63,7 +66,7 @@ namespace RepetierHost
         public ThreeDView printPreview = null;
         public GCodeVisual jobVisual = new GCodeVisual();
         public GCodeVisual printVisual = null;
-       // public STLComposer stlComposer1 = null;
+        // public STLComposer stlComposer1 = null;
         public volatile GCodeVisual newVisual = null;
         public volatile bool jobPreviewThreadFinished = true;
         public volatile Thread previewThread = null;
@@ -79,8 +82,10 @@ namespace RepetierHost
         public double gcodePrintingTime = 0;
         public FileAddOrRemove fileAddOrRemove = null;
 
-        public enum ThreeDViewOptions { STLeditor, gcode, printing };
-        public ThreeDViewOptions current3Dview = ThreeDViewOptions.STLeditor;
+        public enum ThreeDViewOptions { loadAFile, STLeditor, gcode, printing };
+        public ThreeDViewOptions current3Dview = ThreeDViewOptions.loadAFile;
+
+        public bool DeveloperMode = false;
 
         public class JobUpdater
         {
@@ -89,7 +94,7 @@ namespace RepetierHost
             public void DoWork()
             {
                 RepetierEditor ed = Main.main.editor;
-                
+
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
                 visual = new GCodeVisual();
@@ -108,9 +113,9 @@ namespace RepetierHost
                         visual.maxLayer = ed.ShowMaxLayer;
                         break;
                 }
-                visual.parseGCodeShortArray(Main.main.previewArray0, true,0);
-                visual.parseGCodeShortArray(Main.main.previewArray1, false,1);
-                visual.parseGCodeShortArray(Main.main.previewArray2, false,2);
+                visual.parseGCodeShortArray(Main.main.previewArray0, true, 0);
+                visual.parseGCodeShortArray(Main.main.previewArray1, false, 1);
+                visual.parseGCodeShortArray(Main.main.previewArray2, false, 2);
                 Main.main.previewArray0 = Main.main.previewArray1 = Main.main.previewArray2 = null;
                 visual.Reduce();
                 Main.main.gcodePrintingTime = visual.ana.printingTime;
@@ -149,15 +154,17 @@ namespace RepetierHost
         }
         private void Main_Load(object sender, EventArgs e)
         {
-        /*    RegMemory.RestoreWindowPos("mainWindow", this);
-           // if (WindowState == FormWindowState.Maximized)
-           //     Application.DoEvents(); // This crashes mono if run here
-            splitLog.SplitterDistance = RegMemory.GetInt("logSplitterDistance", splitLog.SplitterDistance);
-            splitInfoEdit.SplitterDistance = RegMemory.GetInt("infoEditSplitterDistance", Width - 470);
-            //A bug causes the splitter to throw an exception if the PanelMinSize is set too soon.
-            splitInfoEdit.Panel2MinSize = Main.InfoPanel2MinSize;
-            //splitInfoEdit.SplitterDistance = (splitInfoEdit.Width - splitInfoEdit.Panel2MinSize);
-         * */
+            /*    RegMemory.RestoreWindowPos("mainWindow", this);
+               // if (WindowState == FormWindowState.Maximized)
+               //     Application.DoEvents(); // This crashes mono if run here
+                splitLog.SplitterDistance = RegMemory.GetInt("logSplitterDistance", splitLog.SplitterDistance);
+                splitInfoEdit.SplitterDistance = RegMemory.GetInt("infoEditSplitterDistance", Width - 470);
+                //A bug causes the splitter to throw an exception if the PanelMinSize is set too soon.
+                splitInfoEdit.Panel2MinSize = Main.InfoPanel2MinSize;
+                //splitInfoEdit.SplitterDistance = (splitInfoEdit.Width - splitInfoEdit.Panel2MinSize);
+             * */
+            mainHelp.UpdateEverythingInMain();
+            //Main.main.Invoke(UpdateJobButtons);
         }
         [System.Runtime.InteropServices.DllImport("libc")]
         static extern int uname(IntPtr buf);
@@ -182,6 +189,7 @@ namespace RepetierHost
                 lastcom = s;
             }*/
             main = this;
+            mainHelp = new MainHelper(this);
             SplashScreen.run();
             trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + "data" + Path.DirectorySeparatorChar + "translations");
             SwitchButton.imageOffset = RegMemory.GetInt("onOffImageOffset", 0);
@@ -201,6 +209,14 @@ namespace RepetierHost
 
 
             extraForm = new Form();
+            postionGUI = new PositionSTLGUI();
+
+            //positionModelGUI = new positionModelGUIInterface();
+            postionGUI.Left = this.Width - postionGUI.Width;
+            postionGUI.Top = (this.Height - postionGUI.Height) / 2;
+            postionGUI.Visible = false;
+            Main.main.Controls.Add(postionGUI);
+            
 
             fileAddOrRemove = new FileAddOrRemove(this);
             main.listSTLObjects.Visible = false;
@@ -212,7 +228,7 @@ namespace RepetierHost
             if (WindowState == FormWindowState.Maximized)
                 Application.DoEvents();
             //splitLog.SplitterDistance = RegMemory.GetInt("logSplitterDistance", splitLog.SplitterDistance);
-           // splitInfoEdit.SplitterDistance = RegMemory.GetInt("infoEditSplitterDistance", Width-470);
+            // splitInfoEdit.SplitterDistance = RegMemory.GetInt("infoEditSplitterDistance", Width-470);
             if (IsMono)
             {
                 if (!IsMac)
@@ -267,19 +283,19 @@ namespace RepetierHost
             logView = new LogView();
             logform = new Form();
             logView.Dock = DockStyle.Fill;
-            logform.StartPosition = FormStartPosition.WindowsDefaultBounds;            
+            logform.StartPosition = FormStartPosition.WindowsDefaultBounds;
 
             logform.Controls.Add(logView);
             //logView.Dock = DockStyle.Fill;
             //splitLog.Panel2.Controls.Add(logView);
-            
+
             // TODO: Remomve this. 
             skeinforge = new Skeinforge();
 
             PrinterChanged(printerSettings.currentPrinterKey, true);
-            printerSettings.eventPrinterChanged += PrinterChanged;     
+            printerSettings.eventPrinterChanged += PrinterChanged;
 
-            
+
 
             /// Threedview is the part that shows either the .stl files, g-code analysis results, or the print preview (showing the travel path of the print head). 
             /// See the Method assign3DView() to get an adea of how it works. 
@@ -307,9 +323,9 @@ namespace RepetierHost
             editor.contentChangedEvent += JobPreview;
             editor.commands = new Commands();
             editor.commands.Read("default", "en");
-            UpdateHistory();
-            UpdateConnections();
-
+            this.fileAddOrRemove.UpdateHistory();
+            //UpdateConnections();
+            mainHelp.UpdateEverythingInMain();
 
             // Why is this here twice?????
             // TODO: Investigate this double initialization
@@ -319,7 +335,8 @@ namespace RepetierHost
 
             //toolShowLog_CheckedChanged(null, null);
             updateShowFilament();
-            update3DviewSelection();
+            //update3DviewSelection();
+            mainHelp.UpdateEverythingInMain();
             //history = new TemperatureHistory();
             //tempView = new TemperatureView();
             //tempView.Dock = DockStyle.Fill;
@@ -334,7 +351,8 @@ namespace RepetierHost
 
             // Customizations
 
-            if(Custom.GetBool("removeTestgenerator",false)) {
+            if (Custom.GetBool("removeTestgenerator", false))
+            {
                 internalSlicingParameterToolStripMenuItem.Visible = false;
                 testCaseGeneratorToolStripMenuItem.Visible = false;
             }
@@ -345,8 +363,9 @@ namespace RepetierHost
                 basicTitle = basicTitle.Substring(0, p) + titleAdd + basicTitle.Substring(p);
                 Text = basicTitle;
             }
-            update3DviewSelection();
-           //slicerPanel.UpdateSelection();
+            mainHelp.UpdateEverythingInMain();
+            //update3DviewSelection();
+            //slicerPanel.UpdateSelection();
 
             // Determine whether to check for updates or not based on the users check preferences in advances settings. 
             if (Custom.GetBool("removeUpdates", false))
@@ -359,7 +378,7 @@ namespace RepetierHost
             // Add languages
             foreach (Translation t in trans.translations.Values)
             {
-                ToolStripMenuItem item = new ToolStripMenuItem(t.language,null, languageSelected);
+                ToolStripMenuItem item = new ToolStripMenuItem(t.language, null, languageSelected);
                 item.Tag = t;
                 languageToolStripMenuItem.DropDownItems.Add(item);
             }
@@ -374,9 +393,11 @@ namespace RepetierHost
             }
 
             // Sets whether to show the button for support (i.e Help) in the help menough. 
-            if(Custom.GetBool("extraSupportButton",false)) {
-                supportToolStripMenuItem.Text = Custom.GetString("extraSupportText","Support");
-            } else supportToolStripMenuItem.Visible = false;
+            if (Custom.GetBool("extraSupportButton", false))
+            {
+                supportToolStripMenuItem.Text = Custom.GetString("extraSupportText", "Support");
+            }
+            else supportToolStripMenuItem.Visible = false;
             string supportImage = Custom.GetString("extraSupportToolbarImage", "");
             if (supportImage.Length > 0 && File.Exists(Application.StartupPath + Path.DirectorySeparatorChar + supportImage))
             {
@@ -397,7 +418,9 @@ namespace RepetierHost
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
-        
+
+            //Main.main.Invoke(UpdateJobButtons);
+
         } // End Main()
 
         /// <summary>
@@ -501,7 +524,7 @@ namespace RepetierHost
             sDCardToolStripMenuItem.Text = Trans.T("M_SD_CARD");
             sDCardToolStripMenuItem.ToolTipText = Trans.T("L_SD_CARD_MANAGEMENT");
             emergencyStopStripButton6.ToolTipText = Trans.T("M_EMERGENCY_STOP");
-            
+
             // TODO: Add the translation information back in for my new tools. 
             importSTLToolSplitButton1.Text = Trans.T("M_LOAD");
             //toolStripSaveJob.Text = Trans.T("M_SAVE_JOB");
@@ -512,7 +535,7 @@ namespace RepetierHost
             // TODO: Update this to be something other than "show filament"
             viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_SHOW_FILAMENT");
 
-            
+
             if (conn.connected)
             {
                 connectToolStripSplitButton.ToolTipText = Trans.T("L_DISCONNECT_PRINTER"); // "Disconnect printer";
@@ -547,7 +570,7 @@ namespace RepetierHost
             }
             importSTLToolSplitButton1.ToolTipText = Trans.T("L_LOAD_FILE"); // Load file
             //toolStripSaveJob.ToolTipText = Trans.T("M_SAVE_JOB");
-            
+
             // TODO change to open g-code or .stl translation
             openFileSTLorGcode.Title = Trans.T("L_IMPORT_G_CODE"); // Import G-Code
             saveJobDialog.Title = Trans.T("L_SAVE_G_CODE"); //Save G-Code
@@ -601,90 +624,26 @@ namespace RepetierHost
                 languageChanged();
         }
 
-        /// <summary>
-        /// Updates the SplitButton Dropdown menu to include the recent printers that were used. 
-        /// </summary>
-        public void UpdateConnections()
-        {
-            connectToolStripSplitButton.DropDownItems.Clear();
-            foreach (string s in printerSettings.printerKey.GetSubKeyNames())
-            {
-                connectToolStripSplitButton.DropDownItems.Add(s, null, ConnectHandler);
-            }
-            foreach (ToolStripItem it in connectToolStripSplitButton.DropDownItems)
-                it.Enabled = !conn.connected;
-        }
 
-        /// <summary>
-        /// Updates the recent file history in the fileToolStripMenu to include the 
-        /// </summary>
-        public void UpdateHistory()
-        {
-            bool delFlag = false;
-            LinkedList<ToolStripItem> delArray = new LinkedList<ToolStripItem>();
-            int pos = 0;
-            foreach (ToolStripItem c in fileToolStripMenuItem.DropDownItems)
-            {
-                if (c == toolStripEndHistory) break;
-                if (!delFlag) pos++;
-                if (c == toolStripStartHistory)
-                {
-                    delFlag = true;
-                    continue;
-                }
-                if (delFlag)
-                    delArray.AddLast(c);
-            }
-            foreach (ToolStripItem i in delArray)
-                fileToolStripMenuItem.DropDownItems.Remove(i);
-            importSTLToolSplitButton1.DropDownItems.Clear();
-            foreach (RegMemory.HistoryFile f in fileHistory.list)
-            {
-                ToolStripMenuItem item = new ToolStripMenuItem(); // You would obviously calculate this value at runtime
-                item = new ToolStripMenuItem();
-                item.Name = "file" + pos;
-                item.Tag = f;
-                item.Text = f.ToString();
-                item.Click += new EventHandler(HistoryHandler);
-                fileToolStripMenuItem.DropDownItems.Insert(pos++, item);
-                item = new ToolStripMenuItem();
-                item.Name = "filet" + pos;
-                item.Tag = f;
-                item.Text = f.ToString();
-                item.Click += new EventHandler(HistoryHandler);
-                importSTLToolSplitButton1.DropDownItems.Add(item);
-            }
-        }
 
-        /// <summary>
-        /// When clicked on a history item in the file menu, load that file. First we must recall which item it actually is from the history. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HistoryHandler(object sender, EventArgs e)
-        {
-            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            RegMemory.HistoryFile f = (RegMemory.HistoryFile)clickedItem.Tag;
-            this.fileAddOrRemove.LoadGCodeOrSTL(f.file);
-            // Take some action based on the data in clickedItem
-        }
+
 
         /// <summary>
         /// When clicking on recent printers/printer settings update the printer settings objects. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ConnectHandler(object sender, EventArgs e)
+        public void ConnectHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             printerSettings.load(clickedItem.Text);
             printerSettings.formToCon();
             //slicerPanel.UpdateSelection();
             printerSettings.UpdateDimensions();
-            Update3D();
+            //main.Update3D();
+            Main.main.mainHelp.UpdateEverythingInMain();
             conn.open();
         }
-
         public void LoadGCode(string fileName)
         {
             main.fileAddOrRemove.LoadGCode(fileName);
@@ -692,7 +651,7 @@ namespace RepetierHost
 
         public void PrinterChanged(RegistryKey pkey, bool printerChanged)
         {
-            if (printerChanged && editor!=null)
+            if (printerChanged && editor != null)
             {
                 editor.UpdatePrependAppend();
             }
@@ -714,12 +673,7 @@ namespace RepetierHost
         /// <param name="f"></param>
         private void FormToFront(Form f)
         {
-            // Make this form the active form and make it TopMost
-            //f.ShowInTaskbar = false;
-            /*f.TopMost = true;
-            f.Focus();*/
             f.BringToFront();
-            // f.TopMost = false;
         }
 
         /// <summary>
@@ -855,12 +809,12 @@ namespace RepetierHost
         {
             if (openFileSTLorGcode.ShowDialog() == DialogResult.OK)
             {
-               this.fileAddOrRemove.LoadGCodeOrSTL(openFileSTLorGcode.FileName);
+                this.fileAddOrRemove.LoadGCodeOrSTL(openFileSTLorGcode.FileName);
                 // LoadGCodeOrSTL(openGCode.FileName);
             }
         }
 
-       
+
         public MethodInvoker StartJob = delegate
         {
             Main.main.toolPrintJob_Click(null, null);
@@ -913,7 +867,7 @@ namespace RepetierHost
 
         private void threeDSettingsMenu_Click(object sender, EventArgs e)
         {
-            
+
         }
         private PrinterInfo printerInfo = null;
         private void printerInformationsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -926,7 +880,7 @@ namespace RepetierHost
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (conn.job.mode==1)
+            if (conn.job.mode == 1)
             {
                 if (MessageBox.Show(Trans.T("L_REALLY_QUIT"), Trans.T("L_SECURITY_QUESTION"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 {
@@ -943,7 +897,7 @@ namespace RepetierHost
             //RegMemory.SetInt("logSplitterDistance", splitLog.SplitterDistance);
             //RegMemory.SetInt("infoEditSplitterDistance", splitInfoEdit.SplitterDistance);
 
-           // RegMemory.SetBool("logShow", !splitLog.Panel2Collapsed);
+            // RegMemory.SetBool("logShow", !splitLog.Panel2Collapsed);
 
             if (previewThread != null)
                 previewThread.Join();
@@ -1003,26 +957,8 @@ namespace RepetierHost
                 Main.main.continuousMonitoringMenuItem.Enabled = true;
             }
         };
-        public MethodInvoker UpdateJobButtons = delegate
-        {
-            if (conn.job.mode != 1)
-            {
-                Main.main.killJobToolStripMenuItem.Enabled = false;
-                Main.main.printStripSplitButton4.Enabled = conn.connected;
-                Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_RUN_JOB"); // "Run job";
-                Main.main.printStripSplitButton4.Text = Trans.T("M_RUN_JOB"); //"Run job";
-                Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[2];
-            }
-            else
-            {
-                Main.main.printStripSplitButton4.Enabled = true;
-                Main.main.killJobToolStripMenuItem.Enabled = true;
-                Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[3];
-                Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_PAUSE_JOB"); //"Pause job";
-                Main.main.printStripSplitButton4.Text = Trans.T("M_PAUSE_JOB"); //"Pause job";
-                Main.main.printVisual.Clear();
-            }
-        };
+
+
         public MethodInvoker UpdateEEPROM = delegate
         {
             if (conn.isMarlin || conn.isRepetier) // Activate special menus and function
@@ -1074,11 +1010,7 @@ namespace RepetierHost
             Main.conn.log(duration.ToString(), false, 3);
             jobPreview.UpdateChanges();*/
         }
-        public void Update3D()
-        {
-            if(threedview!=null)
-                threedview.UpdateChanges();
-        }
+
 
         private void testCaseGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1242,31 +1174,8 @@ namespace RepetierHost
             slic3r.BringToFront();
         }
 
-        /// <summary>
-        /// Updates the SetView. 
-        /// Not sure if this is really needed. It is only on line of code to set the to correct view. 
-        /// </summary>
-        public void update3DviewSelection()
-        {
-            //if (tab == null) return;
-            switch (current3Dview)
-            {
-                case ThreeDViewOptions.STLeditor:
-                    toolStripStatusLabel1.Text = "stl editor";
-                    threedview.SetView(fileAddOrRemove.stleditorView);
-                    break;
-                case ThreeDViewOptions.gcode:
-                    main.toolStripStatusLabel1.Text = "gcode editor";
-                    listSTLObjects.Visible = false;
-                    threedview.SetView(jobPreview);
-                    break;
-                case ThreeDViewOptions.printing:
-                    main.toolStripStatusLabel1.Text = "printPreview";
-                    listSTLObjects.Visible = false;
-                    threedview.SetView(printPreview);
-                    break; 
-            }
-       }
+
+
 
 
         //private void tab_SelectedIndexChanged(object sender, EventArgs e)
@@ -1321,7 +1230,7 @@ namespace RepetierHost
                 if (File.Exists(file))
                     // TODO: Fix this
                     //LoadGCodeOrSTL(file);
-                RegMemory.SetBool("gcodeExampleShown", true);
+                    RegMemory.SetBool("gcodeExampleShown", true);
             }
         }
         public void executeHostCommand(GCode code)
@@ -1448,7 +1357,7 @@ namespace RepetierHost
         private void Main_Activated(object sender, EventArgs e)
         {
             fileAddOrRemove.recheckChangedFiles();
-            
+
             //slicerPanel.UpdateSelection();
         }
         public void selectTimePeriod(object sender, EventArgs e)
@@ -1534,13 +1443,13 @@ namespace RepetierHost
         {
             //if (tabControlView.SelectedIndex == 0)
             //{
-                threedview.ThreeDControl_KeyDown(sender, e);
+            threedview.ThreeDControl_KeyDown(sender, e);
             //}
         }
 
         public void repetierHostDownloadPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openLink(Custom.GetString("downloadUrl","http://www.repetier.com/download/"));
+            openLink(Custom.GetString("downloadUrl", "http://www.repetier.com/download/"));
         }
 
         private void sendScript1ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1592,7 +1501,8 @@ namespace RepetierHost
         static bool firstSizeCall = true;
         private void Main_SizeChanged(object sender, EventArgs e)
         {
-            if(firstSizeCall) {
+            if (firstSizeCall)
+            {
                 firstSizeCall = false;
                 //splitLog.SplitterDistance = RegMemory.GetInt("logSplitterDistance", splitLog.SplitterDistance);
                 //splitInfoEdit.SplitterDistance = RegMemory.GetInt("infoEditSplitterDistance", Width - 470);
@@ -1636,16 +1546,16 @@ namespace RepetierHost
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 2;
             openFileDialog1.RestoreDirectory = true;
-            
+
 
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    
+
                     //stlComposer1.openAndAddObject(openFileDialog1.FileName);
-                        
+
                 }
                 catch (Exception ex)
                 {
@@ -1653,13 +1563,13 @@ namespace RepetierHost
                 }
             }
 
-        
+
         }
 
         private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Set the Control to RorateMode
-            this.threedview.SetMode(0); 
+            this.threedview.SetMode(0);
 
             // string message = sender.ToString();        
             //const string caption = "Test";
@@ -1667,33 +1577,33 @@ namespace RepetierHost
             //                     MessageBoxButtons.YesNo,
             //                     MessageBoxIcon.Question);
 
-        }        
+        }
 
         private void moveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
-       
+
 
         private void perspectiveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
-       
 
-       
+
+
 
         private void importSTLToolSplitButton1_ButtonClick(object sender, EventArgs e)
         {
@@ -1711,11 +1621,11 @@ namespace RepetierHost
             //this.fileAddOrRemove.AddAFile();
         }
 
-        
+
 
         private void listSTLObjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.fileAddOrRemove.listSTLObjects_SelectedIndexChanged(sender, e);
+            this.postionGUI.listSTLObjects_SelectedIndexChanged(sender, e);           
         }
 
         public void listSTLObjects_KeyDown(object sender, KeyEventArgs e)
@@ -1733,10 +1643,7 @@ namespace RepetierHost
             }
         }
 
-        private void copySelectedModelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.fileAddOrRemove.CopyObjects();
-        }
+        
 
         private void moveToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -1785,7 +1692,7 @@ namespace RepetierHost
 
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
         {
-            this.threedview.SetMode(0); 
+            this.threedview.SetMode(0);
         }
 
         private void moveStripMenuItem12_Click(object sender, EventArgs e)
@@ -1835,40 +1742,43 @@ namespace RepetierHost
 
         private void sliceToolSplitButton3_ButtonClick(object sender, EventArgs e)
         {
-            this.fileAddOrRemove.buttonSlice_Click(sender, e);
+            this.fileAddOrRemove.Slice();
         }
 
         private void removeObjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // TODO: Remove this button. Make it so if you select an objet and then hit delete, that it removes it. 
+            // Maybe also pop up with a text box asking if you really want to remove it. 
             this.fileAddOrRemove.removeObject();
-            fileAddOrRemove.changeSelectionBoxSize();
+            //fileAddOrRemove.changeSelectionBoxSize();
+            main.mainHelp.UpdateEverythingInMain();
         }
 
-        private void copyObjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.fileAddOrRemove.CopyObjects();
-        }
+        //private void copyObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    this.postionGUI.CopyObjects();
+        //}
 
-        private void autopositionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.fileAddOrRemove.Autoposition();
-        }
+        //private void autopositionToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    this.postionGUI.Autoposition();
+        //}
 
-        private void centerObjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // TODO: Error when moving to a new location. The box doesn't follow it. 
-            this.fileAddOrRemove.CenterObject();
-        }
+        //private void centerObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    // TODO: Error when moving to a new location. The box doesn't follow it. 
+        //    this.fileAddOrRemove.CenterObject();
+        //}
 
-        private void scaleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //TODO: Make something here about scaling
-        }
+        //private void scaleToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    //TODO: Make something here about scaling
+        //}
 
-        private void rotateToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            //TODO: Make something here about rotating
-        }
+        //private void rotateToolStripMenuItem1_Click(object sender, EventArgs e)
+        //{
+        //    //TODO: Make something here about rotating
+        //}
 
         private void setPathToSlicerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1878,7 +1788,8 @@ namespace RepetierHost
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             current3Dview = ThreeDViewOptions.gcode;
-            update3DviewSelection();
+            //update3DviewSelection();
+            mainHelp.UpdateEverythingInMain();
             //threedview.SetView(jobPreview);
             //JobPreview();
             //threedview.SetView(fileAddOrRemove.cont);
@@ -1905,15 +1816,15 @@ namespace RepetierHost
             else
             {
                 //tab.SelectedTab = tabPrint;
-                //conn.analyzer.StartJob();
+                conn.analyzer.StartJob();
 
                 // TODO: Uncomment this section. The button should not be pushed unless a job is ready. 
-                //toolRunJob.Image = imageList.Images[3];
-                //job.BeginJob();
-                //job.PushGCodeShortArray(editor.getContentArray(1));
-                //job.PushGCodeShortArray(editor.getContentArray(0));
-                //job.PushGCodeShortArray(editor.getContentArray(2));
-                //job.EndJob();
+                printStripSplitButton4.Image = imageList.Images[3];
+                job.BeginJob();
+                job.PushGCodeShortArray(editor.getContentArray(1));
+                job.PushGCodeShortArray(editor.getContentArray(0));
+                job.PushGCodeShortArray(editor.getContentArray(2));
+                job.EndJob();
             }
         }
 
@@ -1924,6 +1835,18 @@ namespace RepetierHost
 
         private void positionToolSplitButton2_ButtonClick(object sender, EventArgs e)
         {
+            //positionModelGUI.Dock = DockStyle.Right;
+            //positionModelGUIInterface.
+            //positionModelGUI.
+            //positionModelGUI.Size = new System.Drawing.Size(200, 200);
+            //positionModelGUI.Location = new Point(200, 200);
+            //System.Drawing.Size s =  positionModelGUI.Size;
+
+            //mainHelp.updatePositionControlLocation();
+            //positionModelGUI.Visible = !positionModelGUI.Visible;
+            //positionModelGUI.BringToFront();
+            
+            //positionModelGUI.Show();
             // TODO: When the position tab is selected, the Slicer-options are not avaible, When the Slicer mode is selected, the position options are not avaible. 
             // The print tab is not avaible when in the position mode and only after you slice the model. Also the print tab is not available unless connected. 
             //TODO: Remove the option to click this when in G-code mode. 
@@ -1934,7 +1857,6 @@ namespace RepetierHost
             if (openFileSTLorGcode.ShowDialog() == DialogResult.OK)
             {
                 this.fileAddOrRemove.LoadGCodeOrSTL(openFileSTLorGcode.FileName);
-                // LoadGCodeOrSTL(openGCode.FileName);
             }
         }
 
@@ -1972,19 +1894,54 @@ namespace RepetierHost
         private void toolStripButton1_Click_1(object sender, EventArgs e)
         {
             if (current3Dview == ThreeDViewOptions.STLeditor)
-            {
                 current3Dview = ThreeDViewOptions.gcode;
-                
-            }
             else if (current3Dview == ThreeDViewOptions.gcode)
-            {
                 current3Dview = ThreeDViewOptions.STLeditor;
-                
-            }
-            update3DviewSelection();
+
+            
+            //update3DviewSelection();
+            mainHelp.UpdateEverythingInMain();
         }
 
-           
+        private void connectToolStripSplitButton_ButtonClick(object sender, EventArgs e)
+        {
+            // TODO: Select COM port
+            if (conn.connected)
+            {
+                conn.close();
+            }
+            else
+            {
+                conn.open();
+            }
+        }
 
+        private void languageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void manualControlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            extraForm.Controls.Clear();
+            extraForm.Controls.Add(printPanel);
+            extraForm.Size = new Size(800, 600);
+            extraForm.Visible = !extraForm.Visible;
+        }
+
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void positionToolSplitButton2_Click(object sender, EventArgs e)
+        {
+
+            mainHelp.updatePositionControlLocation();
+
+            postionGUI.Visible = !postionGUI.Visible;
+            postionGUI.BringToFront();
+        }
     }
 }
