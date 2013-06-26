@@ -210,17 +210,16 @@ namespace RepetierHost
 
             extraForm = new Form();
             postionGUI = new PositionSTLGUI();
-
-            //positionModelGUI = new positionModelGUIInterface();
             postionGUI.Left = this.Width - postionGUI.Width;
             postionGUI.Top = (this.Height - postionGUI.Height) / 2;
             postionGUI.Visible = false;
             Main.main.Controls.Add(postionGUI);
-            
+
+
 
             fileAddOrRemove = new FileAddOrRemove(this);
             main.listSTLObjects.Visible = false;
-
+            
 
             // Anthony, Maximize the window
             WindowState = FormWindowState.Maximized;
@@ -325,11 +324,10 @@ namespace RepetierHost
             editor.commands.Read("default", "en");
             this.fileAddOrRemove.UpdateHistory();
             //UpdateConnections();
-            mainHelp.UpdateEverythingInMain();
+            //mainHelp.UpdateEverythingInMain();
 
-            // Why is this here twice?????
-            // TODO: Investigate this double initialization
-            // On is called slic3r and the other slicer. Why two??
+            
+            // TODO: One is called slic3r and the other slicer. Why two??
             Main.slic3r = new Slic3r();
             Main.slicer = new Slicer();
 
@@ -337,6 +335,8 @@ namespace RepetierHost
             updateShowFilament();
             //update3DviewSelection();
             mainHelp.UpdateEverythingInMain();
+
+            // TODO: Add temperature controls
             //history = new TemperatureHistory();
             //tempView = new TemperatureView();
             //tempView.Dock = DockStyle.Fill;
@@ -1444,6 +1444,7 @@ namespace RepetierHost
             //if (tabControlView.SelectedIndex == 0)
             //{
             threedview.ThreeDControl_KeyDown(sender, e);
+            this.postionGUI.listSTLObjects_SelectedIndexChanged(sender, e);           
             //}
         }
 
@@ -1638,7 +1639,9 @@ namespace RepetierHost
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
+                this.fileAddOrRemove.removeObject();
                 //buttonRemoveSTL_Click(sender, null);
+                fileAddOrRemove.removeObject();
                 e.Handled = true;
             }
         }
@@ -1943,5 +1946,7 @@ namespace RepetierHost
             postionGUI.Visible = !postionGUI.Visible;
             postionGUI.BringToFront();
         }
+
+     
     }
 }

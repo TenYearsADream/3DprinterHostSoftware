@@ -1327,12 +1327,13 @@ namespace RepetierHost.view
                 gl.Invalidate();
                 e.Handled = true;
             }
-            //if (Main.main.tab.SelectedTab == Main.main.tabModel && e.Handled == false)
-            {
-                // TODO: Fix this. 
-                //Main.main.fileAddOrRemove.listSTLObjects_SelectedIndexChanged
-                //Main.main.stlComposer1.listSTLObjects_KeyDown(sender, e);
-            }
+
+            // If the event hasn't been handled, then send it on to the listSTLObjects key down to see if we should delete something. 
+            // Basically we are making a way to delele objects. 
+            if (Main.main.current3Dview == Main.ThreeDViewOptions.STLeditor && e.Handled == false)
+            {  
+                Main.main.listSTLObjects_KeyDown(sender, e);
+             }
         }
 
         public void ChangeProspectiveMode()

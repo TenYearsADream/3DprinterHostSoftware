@@ -241,6 +241,7 @@ namespace RepetierHost
             if (this.main.listSTLObjects.Items.Count > 0)
                 this.main.listSTLObjects.SelectedIndex = 0;
            // Update is called from the parent caller. 
+            Main.main.mainHelp.UpdateEverythingInMain();
 
         }
 

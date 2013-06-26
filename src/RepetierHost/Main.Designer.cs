@@ -138,6 +138,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.connectToolStripSplitButton = new System.Windows.Forms.ToolStripSplitButton();
             this.importSTLToolSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.positionToolSplitButton2 = new System.Windows.Forms.ToolStripButton();
             this.sliceToolSplitButton3 = new System.Windows.Forms.ToolStripSplitButton();
             this.stopSlicerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.configureSlicerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -209,7 +210,6 @@
             this.openFileSTLorGcode = new System.Windows.Forms.OpenFileDialog();
             this.saveSTL = new System.Windows.Forms.SaveFileDialog();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.positionToolSplitButton2 = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -983,17 +983,20 @@
             // listSTLObjects
             // 
             this.listSTLObjects.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.listSTLObjects.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.listSTLObjects.BackColor = System.Drawing.Color.Gray;
             this.listSTLObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listSTLObjects.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listSTLObjects.ForeColor = System.Drawing.Color.Transparent;
             this.listSTLObjects.FormattingEnabled = true;
+            this.listSTLObjects.ItemHeight = 16;
             this.listSTLObjects.Location = new System.Drawing.Point(716, 57);
             this.listSTLObjects.Name = "listSTLObjects";
             this.listSTLObjects.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listSTLObjects.Size = new System.Drawing.Size(301, 13);
+            this.listSTLObjects.Size = new System.Drawing.Size(301, 16);
             this.listSTLObjects.TabIndex = 13;
             this.listSTLObjects.TabStop = false;
             this.listSTLObjects.SelectedIndexChanged += new System.EventHandler(this.listSTLObjects_SelectedIndexChanged);
+            this.listSTLObjects.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listSTLObjects_KeyDown);
             // 
             // toolStrip2
             // 
@@ -1139,6 +1142,16 @@
             this.importSTLToolSplitButton1.Text = "Import";
             this.importSTLToolSplitButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.importSTLToolSplitButton1.ButtonClick += new System.EventHandler(this.importSTLToolSplitButton1_ButtonClick_1);
+            // 
+            // positionToolSplitButton2
+            // 
+            this.positionToolSplitButton2.Image = ((System.Drawing.Image)(resources.GetObject("positionToolSplitButton2.Image")));
+            this.positionToolSplitButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.positionToolSplitButton2.Name = "positionToolSplitButton2";
+            this.positionToolSplitButton2.Size = new System.Drawing.Size(54, 51);
+            this.positionToolSplitButton2.Text = "Position";
+            this.positionToolSplitButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.positionToolSplitButton2.Click += new System.EventHandler(this.positionToolSplitButton2_Click);
             // 
             // sliceToolSplitButton3
             // 
@@ -1678,16 +1691,6 @@
             this.saveSTL.DefaultExt = "stl";
             this.saveSTL.Filter = "STL-Files|*.stl;*.STL";
             this.saveSTL.Title = "Save composition";
-            // 
-            // positionToolSplitButton2
-            // 
-            this.positionToolSplitButton2.Image = ((System.Drawing.Image)(resources.GetObject("positionToolSplitButton2.Image")));
-            this.positionToolSplitButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.positionToolSplitButton2.Name = "positionToolSplitButton2";
-            this.positionToolSplitButton2.Size = new System.Drawing.Size(54, 51);
-            this.positionToolSplitButton2.Text = "Position";
-            this.positionToolSplitButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.positionToolSplitButton2.Click += new System.EventHandler(this.positionToolSplitButton2_Click);
             // 
             // Main
             // 

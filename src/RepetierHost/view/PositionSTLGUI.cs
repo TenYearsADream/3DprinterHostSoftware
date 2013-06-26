@@ -31,6 +31,8 @@ namespace RepetierHost.view
 {
     public partial class PositionSTLGUI : UserControl
     {
+        // TODO: Add increment buttons so you can easily change the positon. Also for the rotation.
+        // TODO: Enable the sliders and get them to work. 
         private bool writeSTLBinary = true;
         //public ThreeDView cont;
         private bool autosizeFailed = false;
@@ -149,12 +151,12 @@ namespace RepetierHost.view
                 //buttonLand.Enabled = n > 0;
                 if (Main.main.threedview != null)
                     Main.main.threedview.SetObjectSelected(n > 0);
-                buttonCopyObjects.Enabled = n > 0;
+                buttonCopy.Enabled = n > 0;
             }
             else
             {
                 buttonAutoplace.Enabled = Main.main.listSTLObjects.Items.Count > 1;
-                buttonCopyObjects.Enabled = true;
+                buttonCopy.Enabled = true;
                 textRotX.Enabled = true;
                 textRotY.Enabled = true;
                 textRotZ.Enabled = true;
@@ -419,18 +421,7 @@ namespace RepetierHost.view
             Main.main.threedview.UpdateChanges();
         }
 
-        private void buttonCenter_Click(object sender, EventArgs e)
-        {
-            //STL stl = (STL)listSTLObjects.SelectedItem;
-            //if (stl == null) return;
-            foreach (STL stl in Main.main.listSTLObjects.SelectedItems)
-            {
-                stl.Center(Main.printerSettings.BedLeft + Main.printerSettings.PrintAreaWidth / 2, Main.printerSettings.BedFront + Main.printerSettings.PrintAreaDepth / 2);
-                listSTLObjects_SelectedIndexChanged(null, null);
-
-            }
-            Main.main.threedview.UpdateChanges();
-        }
+       
 
         
 
@@ -507,8 +498,8 @@ namespace RepetierHost.view
 
         private void buttonCopyObjects_Click(object sender, EventArgs e)
         {
-            if (copyDialog.ShowDialog(Main.main) == DialogResult.Cancel) return;
-            int numberOfCopies = (int)copyDialog.numericCopies.Value;
+            //if (copyDialog.ShowDialog(Main.main) == DialogResult.Cancel) return;
+            int numberOfCopies = (int)this.numericCopies.Value; // (int)copyDialog.numericCopies.Value;
 
             List<STL> newSTL = new List<STL>();
             foreach (STL act in Main.main.listSTLObjects.SelectedItems)
@@ -530,6 +521,7 @@ namespace RepetierHost.view
             {
                 Autoposition();
             }
+            Main.main.mainHelp.UpdateEverythingInMain();
             Main.main.threedview.UpdateChanges();
         }
         static bool inRecheckFiles = false;
@@ -557,6 +549,17 @@ namespace RepetierHost.view
 
         private void buttonCenter_Click_1(object sender, EventArgs e)
         {
+           
+            STL stl1 = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl1 == null) return;
+            foreach (STL stl in Main.main.listSTLObjects.SelectedItems)
+            {
+                stl.Center(Main.printerSettings.BedLeft + Main.printerSettings.PrintAreaWidth / 2, Main.printerSettings.BedFront + Main.printerSettings.PrintAreaDepth / 2);
+                listSTLObjects_SelectedIndexChanged(null, null);
+
+            }
+            Main.main.threedview.UpdateChanges();
+        
 
         }
 
@@ -564,6 +567,8 @@ namespace RepetierHost.view
         {
             this.Visible = false;
         }
+
+       
     }
     public class EnglishStreamWriter : StreamWriter
     {

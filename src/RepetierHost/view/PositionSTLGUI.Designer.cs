@@ -67,7 +67,10 @@
             this.label18 = new System.Windows.Forms.Label();
             this.xAxisScaleSliderControl = new System.Windows.Forms.TrackBar();
             this.copyModelTab = new System.Windows.Forms.TabPage();
-            this.buttonCopyObjects = new System.Windows.Forms.Button();
+            this.buttonCopy = new System.Windows.Forms.Button();
+            this.checkAutoposition = new System.Windows.Forms.CheckBox();
+            this.numericCopies = new System.Windows.Forms.NumericUpDown();
+            this.labelNumberOfCopies = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.PositionTabControl.SuspendLayout();
             this.movetabPage1.SuspendLayout();
@@ -83,6 +86,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.yAxisScaleSliderControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xAxisScaleSliderControl)).BeginInit();
             this.copyModelTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericCopies)).BeginInit();
             this.SuspendLayout();
             // 
             // checkScaleAll
@@ -239,6 +243,7 @@
             this.buttonAutoplace.TabIndex = 20;
             this.buttonAutoplace.Text = "Auto Place";
             this.buttonAutoplace.UseVisualStyleBackColor = true;
+            this.buttonAutoplace.Click += new System.EventHandler(this.buttonAutoplace_Click);
             // 
             // buttonCenter
             // 
@@ -463,7 +468,10 @@
             // 
             // copyModelTab
             // 
-            this.copyModelTab.Controls.Add(this.buttonCopyObjects);
+            this.copyModelTab.Controls.Add(this.buttonCopy);
+            this.copyModelTab.Controls.Add(this.checkAutoposition);
+            this.copyModelTab.Controls.Add(this.numericCopies);
+            this.copyModelTab.Controls.Add(this.labelNumberOfCopies);
             this.copyModelTab.Location = new System.Drawing.Point(4, 25);
             this.copyModelTab.Name = "copyModelTab";
             this.copyModelTab.Padding = new System.Windows.Forms.Padding(3);
@@ -472,14 +480,59 @@
             this.copyModelTab.Text = "Copy";
             this.copyModelTab.UseVisualStyleBackColor = true;
             // 
-            // buttonCopyObjects
+            // buttonCopy
             // 
-            this.buttonCopyObjects.Location = new System.Drawing.Point(6, 23);
-            this.buttonCopyObjects.Name = "buttonCopyObjects";
-            this.buttonCopyObjects.Size = new System.Drawing.Size(97, 40);
-            this.buttonCopyObjects.TabIndex = 0;
-            this.buttonCopyObjects.Text = "Temp Copy";
-            this.buttonCopyObjects.UseVisualStyleBackColor = true;
+            this.buttonCopy.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonCopy.Location = new System.Drawing.Point(3, 76);
+            this.buttonCopy.Name = "buttonCopy";
+            this.buttonCopy.Size = new System.Drawing.Size(75, 23);
+            this.buttonCopy.TabIndex = 8;
+            this.buttonCopy.Text = "Copy";
+            this.buttonCopy.UseVisualStyleBackColor = true;
+            this.buttonCopy.Click += new System.EventHandler(this.buttonCopyObjects_Click);
+            // 
+            // checkAutoposition
+            // 
+            this.checkAutoposition.AutoSize = true;
+            this.checkAutoposition.Checked = true;
+            this.checkAutoposition.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkAutoposition.Location = new System.Drawing.Point(6, 38);
+            this.checkAutoposition.Name = "checkAutoposition";
+            this.checkAutoposition.Size = new System.Drawing.Size(183, 17);
+            this.checkAutoposition.TabIndex = 7;
+            this.checkAutoposition.Text = "Auto position after adding objects";
+            this.checkAutoposition.UseVisualStyleBackColor = true;
+            // 
+            // numericCopies
+            // 
+            this.numericCopies.Location = new System.Drawing.Point(103, 4);
+            this.numericCopies.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.numericCopies.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericCopies.Name = "numericCopies";
+            this.numericCopies.Size = new System.Drawing.Size(51, 20);
+            this.numericCopies.TabIndex = 6;
+            this.numericCopies.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // labelNumberOfCopies
+            // 
+            this.labelNumberOfCopies.AutoSize = true;
+            this.labelNumberOfCopies.Location = new System.Drawing.Point(3, 4);
+            this.labelNumberOfCopies.Name = "labelNumberOfCopies";
+            this.labelNumberOfCopies.Size = new System.Drawing.Size(93, 13);
+            this.labelNumberOfCopies.TabIndex = 5;
+            this.labelNumberOfCopies.Text = "Number of copies:";
             // 
             // PositionSTLGUI
             // 
@@ -507,6 +560,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.yAxisScaleSliderControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xAxisScaleSliderControl)).EndInit();
             this.copyModelTab.ResumeLayout(false);
+            this.copyModelTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericCopies)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -551,6 +606,9 @@
         private System.Windows.Forms.TabPage copyModelTab;
         private System.Windows.Forms.Button buttonCenter;
         private System.Windows.Forms.Button buttonAutoplace;
-        private System.Windows.Forms.Button buttonCopyObjects;
+        private System.Windows.Forms.Button buttonCopy;
+        public System.Windows.Forms.CheckBox checkAutoposition;
+        public System.Windows.Forms.NumericUpDown numericCopies;
+        private System.Windows.Forms.Label labelNumberOfCopies;
     }
 }
