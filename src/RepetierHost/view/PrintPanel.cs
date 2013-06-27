@@ -893,5 +893,10 @@ namespace RepetierHost.view
             con.injectManualCommand("T" + comboExtruder.SelectedIndex);
         }
 
+        private void PrintPanel_Leave(object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
+
      }
 }

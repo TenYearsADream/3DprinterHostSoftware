@@ -133,23 +133,31 @@ namespace RepetierHost
                     Main.main.positionToolSplitButton2.Enabled = false;
                     Main.main.sliceToolSplitButton3.Enabled = false;
                     Main.main.printStripSplitButton4.Enabled = false;
+                    Main.main.saveGCodeToolStripMenuItem.Enabled = false;
+                    Main.main.saveNewSTLMenuItem11.Enabled = false;
                     break;
 
                 case RepetierHost.Main.ThreeDViewOptions.STLeditor:
                     Main.main.positionToolSplitButton2.Enabled = true;
                     Main.main.sliceToolSplitButton3.Enabled = true;
                     Main.main.printStripSplitButton4.Enabled = false;
+                    Main.main.saveGCodeToolStripMenuItem.Enabled = false;
+                    Main.main.saveNewSTLMenuItem11.Enabled = true;
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.gcode:
                     Main.main.positionToolSplitButton2.Enabled = false;
                     Main.main.sliceToolSplitButton3.Enabled = false;
                     if (Main.conn.connected == true)
                         Main.main.printStripSplitButton4.Enabled = true;
+                    Main.main.saveGCodeToolStripMenuItem.Enabled = true;
+                    Main.main.saveNewSTLMenuItem11.Enabled = true;
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.printing:
                     Main.main.positionToolSplitButton2.Enabled = false;
                     Main.main.sliceToolSplitButton3.Enabled = false;
                     Main.main.printStripSplitButton4.Enabled = Main.conn.connected;
+                    Main.main.saveGCodeToolStripMenuItem.Enabled = true;
+                    Main.main.saveNewSTLMenuItem11.Enabled = false;
                     break;
             }
 

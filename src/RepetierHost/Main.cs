@@ -271,8 +271,9 @@ namespace RepetierHost
             //panel1.Controls.Add(stlComposer1);
 
             printPanel = new PrintPanel();
-            printPanel.Dock = DockStyle.Fill;
-            //tabPrint.Controls.Add(printPanel);
+            //printPanel.Dock = DockStyle.Fill;
+            this.Controls.Add(printPanel);
+            printPanel.Visible = false;
             printerSettings.formToCon();
 
             extraForm = new Form();
@@ -282,6 +283,7 @@ namespace RepetierHost
             logView = new LogView();
             logform = new Form();
             logView.Dock = DockStyle.Fill;
+            
             logform.StartPosition = FormStartPosition.WindowsDefaultBounds;
 
             logform.Controls.Add(logView);
@@ -1641,7 +1643,7 @@ namespace RepetierHost
             {
                 this.fileAddOrRemove.removeObject();
                 //buttonRemoveSTL_Click(sender, null);
-                fileAddOrRemove.removeObject();
+                //fileAddOrRemove.removeObject();
                 e.Handled = true;
             }
         }
@@ -1865,7 +1867,17 @@ namespace RepetierHost
 
         private void loggingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            logform.Visible = !logform.Visible;
+            if (logform.IsDisposed == true)
+            {
+                logView = new LogView();
+                logform = new Form();
+                logView.Dock = DockStyle.Fill;
+                logform.Controls.Add(logView);
+                logform.Visible = true;
+
+            }
+            else
+                logform.Visible = !logform.Visible;
             //logform.Show();
             //logView.Show();
         }
@@ -1927,10 +1939,16 @@ namespace RepetierHost
         private void manualControlToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            extraForm.Controls.Clear();
-            extraForm.Controls.Add(printPanel);
-            extraForm.Size = new Size(800, 600);
-            extraForm.Visible = !extraForm.Visible;
+            //extraForm.Controls.Clear();
+            //extraForm.Controls.Add(printPanel);
+            //extraForm.Size = new Size(800, 600);
+            //extraForm.Visible = !extraForm.Visible;
+            printPanel.Left = (this.Width - printPanel.Width) / 2;
+            printPanel.Top = (this.Height - printPanel.Height) / 2;
+            printPanel.Visible = !printPanel.Visible;
+
+           // if(printPanel.Visible==true)
+                printPanel.BringToFront();
         }
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1945,6 +1963,19 @@ namespace RepetierHost
 
             postionGUI.Visible = !postionGUI.Visible;
             postionGUI.BringToFront();
+        }
+
+        private void toolStripMenuItem11_Click_1(object sender, EventArgs e)
+        {
+            if (saveSTL.ShowDialog() == DialogResult.OK)
+            {
+                this.fileAddOrRemove.saveComposition(saveSTL.FileName);
+            }
+        }
+
+        private void advancedConfigStripSplitButton3_ButtonClick(object sender, EventArgs e)
+        {
+
         }
 
      

@@ -150,7 +150,6 @@
             this.viewPrintPathToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.viewGcodeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.printStripSplitButton4 = new System.Windows.Forms.ToolStripSplitButton();
-            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.killJobToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transferFilesToSDCardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -161,8 +160,9 @@
             this.aboutSoftwareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedConfigStripSplitButton3 = new System.Windows.Forms.ToolStripSplitButton();
-            this.saveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sDCardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveNewSTLMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.loggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manualControlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1235,7 +1235,6 @@
             // printStripSplitButton4
             // 
             this.printStripSplitButton4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.printToolStripMenuItem,
             this.killJobToolStripMenuItem,
             this.printSettingsToolStripMenuItem,
             this.transferFilesToSDCardToolStripMenuItem});
@@ -1246,13 +1245,6 @@
             this.printStripSplitButton4.Text = "Print";
             this.printStripSplitButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.printStripSplitButton4.ButtonClick += new System.EventHandler(this.printStripSplitButton4_ButtonClick);
-            // 
-            // printToolStripMenuItem
-            // 
-            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.printToolStripMenuItem.Text = "Print";
-            this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // killJobToolStripMenuItem
             // 
@@ -1329,8 +1321,9 @@
             // 
             this.advancedConfigStripSplitButton3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.advancedConfigStripSplitButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveProjectToolStripMenuItem,
+            this.saveGCodeToolStripMenuItem,
             this.sDCardToolStripMenuItem,
+            this.saveNewSTLMenuItem11,
             this.loggingToolStripMenuItem,
             this.manualControlToolStripMenuItem,
             this.printerOptionsToolStripMenuItem,
@@ -1344,39 +1337,48 @@
             this.advancedConfigStripSplitButton3.Size = new System.Drawing.Size(76, 51);
             this.advancedConfigStripSplitButton3.Text = "Advanced";
             this.advancedConfigStripSplitButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.advancedConfigStripSplitButton3.ButtonClick += new System.EventHandler(this.advancedConfigStripSplitButton3_ButtonClick);
             // 
-            // saveProjectToolStripMenuItem
+            // saveGCodeToolStripMenuItem
             // 
-            this.saveProjectToolStripMenuItem.Name = "saveProjectToolStripMenuItem";
-            this.saveProjectToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.saveProjectToolStripMenuItem.Text = "Save Project";
-            this.saveProjectToolStripMenuItem.Click += new System.EventHandler(this.saveProjectToolStripMenuItem_Click);
+            this.saveGCodeToolStripMenuItem.Name = "saveGCodeToolStripMenuItem";
+            this.saveGCodeToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.saveGCodeToolStripMenuItem.Text = "Save G-code";
+            this.saveGCodeToolStripMenuItem.Click += new System.EventHandler(this.saveProjectToolStripMenuItem_Click);
             // 
             // sDCardToolStripMenuItem
             // 
             this.sDCardToolStripMenuItem.Name = "sDCardToolStripMenuItem";
-            this.sDCardToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.sDCardToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.sDCardToolStripMenuItem.Text = "SD Card";
+            this.sDCardToolStripMenuItem.Visible = false;
             this.sDCardToolStripMenuItem.Click += new System.EventHandler(this.sDCardToolStripMenuItem_Click);
+            // 
+            // saveNewSTLMenuItem11
+            // 
+            this.saveNewSTLMenuItem11.Name = "saveNewSTLMenuItem11";
+            this.saveNewSTLMenuItem11.Size = new System.Drawing.Size(189, 22);
+            this.saveNewSTLMenuItem11.Text = "Save as new stl model";
+            this.saveNewSTLMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click_1);
             // 
             // loggingToolStripMenuItem
             // 
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
-            this.loggingToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.loggingToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.loggingToolStripMenuItem.Text = "Logging";
             this.loggingToolStripMenuItem.Click += new System.EventHandler(this.loggingToolStripMenuItem_Click);
             // 
             // manualControlToolStripMenuItem
             // 
             this.manualControlToolStripMenuItem.Name = "manualControlToolStripMenuItem";
-            this.manualControlToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.manualControlToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.manualControlToolStripMenuItem.Text = "Manual Control";
             this.manualControlToolStripMenuItem.Click += new System.EventHandler(this.manualControlToolStripMenuItem_Click);
             // 
             // printerOptionsToolStripMenuItem
             // 
             this.printerOptionsToolStripMenuItem.Name = "printerOptionsToolStripMenuItem";
-            this.printerOptionsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.printerOptionsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.printerOptionsToolStripMenuItem.Text = "Printer Options";
             this.printerOptionsToolStripMenuItem.Click += new System.EventHandler(this.printerOptionsToolStripMenuItem_Click);
             // 
@@ -1395,7 +1397,7 @@
             this.toolStripMenuItem37,
             this.toolStripMenuItem42});
             this.toolStripMenuItem22.Name = "toolStripMenuItem22";
-            this.toolStripMenuItem22.Size = new System.Drawing.Size(157, 22);
+            this.toolStripMenuItem22.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItem22.Text = "&Temperature";
             // 
             // toolStripMenuItem23
@@ -1589,7 +1591,7 @@
             this.toolStripMenuItem20,
             this.toolStripMenuItem21});
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(157, 22);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(189, 22);
             this.toolStripMenuItem7.Text = "&Printer";
             // 
             // toolStripMenuItem8
@@ -1657,12 +1659,12 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(154, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(186, 6);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // toolStripButton1
@@ -1834,7 +1836,6 @@
         private System.Windows.Forms.ToolStripMenuItem zoomStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem perspectiveStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem resetStripMenuItem15;
-        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printSettingsToolStripMenuItem;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ToolStripSplitButton helpSplitButton3;
@@ -1894,7 +1895,6 @@
         private System.Windows.Forms.SaveFileDialog saveSTL;
         public System.Windows.Forms.ListBox listSTLObjects;
         public System.Windows.Forms.OpenFileDialog openFileSTLorGcode;
-        private System.Windows.Forms.ToolStripMenuItem saveProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setPathToSlicerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem transferFilesToSDCardToolStripMenuItem;
         public System.Windows.Forms.ToolStripSplitButton printStripSplitButton4;
@@ -1912,6 +1912,8 @@
         public System.Windows.Forms.ToolStripSplitButton connectToolStripSplitButton;
         public System.Windows.Forms.ToolStripMenuItem killJobToolStripMenuItem;
         public System.Windows.Forms.ToolStripButton positionToolSplitButton2;
+        public System.Windows.Forms.ToolStripMenuItem saveGCodeToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem saveNewSTLMenuItem11;
     }
 }
 

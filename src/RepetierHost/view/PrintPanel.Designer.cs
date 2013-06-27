@@ -250,7 +250,7 @@
             this.groupExtruder.Controls.Add(this.buttonExtrude);
             this.groupExtruder.Controls.Add(this.labelExtruderTemp);
             this.groupExtruder.Controls.Add(this.switchExtruderHeatOn);
-            this.groupExtruder.Location = new System.Drawing.Point(7, 451);
+            this.groupExtruder.Location = new System.Drawing.Point(434, 172);
             this.groupExtruder.Name = "groupExtruder";
             this.groupExtruder.Size = new System.Drawing.Size(240, 171);
             this.groupExtruder.TabIndex = 41;
@@ -419,7 +419,7 @@
             this.groupPrintbed.Controls.Add(this.labelPrintbedTemp);
             this.groupPrintbed.Controls.Add(this.switchBedHeat);
             this.groupPrintbed.Controls.Add(this.labelTemp2);
-            this.groupPrintbed.Location = new System.Drawing.Point(253, 451);
+            this.groupPrintbed.Location = new System.Drawing.Point(680, 172);
             this.groupPrintbed.Name = "groupPrintbed";
             this.groupPrintbed.Size = new System.Drawing.Size(197, 79);
             this.groupPrintbed.TabIndex = 42;
@@ -467,7 +467,7 @@
             this.groupBox_Fan.Controls.Add(this.trackFanVoltage);
             this.groupBox_Fan.Controls.Add(this.labelVoltage);
             this.groupBox_Fan.Controls.Add(this.switchFanOn);
-            this.groupBox_Fan.Location = new System.Drawing.Point(253, 535);
+            this.groupBox_Fan.Location = new System.Drawing.Point(680, 266);
             this.groupBox_Fan.Name = "groupBox_Fan";
             this.groupBox_Fan.Size = new System.Drawing.Size(197, 87);
             this.groupBox_Fan.TabIndex = 43;
@@ -614,7 +614,7 @@
             this.groupDebugOptions.Controls.Add(this.switchErrors);
             this.groupDebugOptions.Controls.Add(this.switchDryRun);
             this.groupDebugOptions.Controls.Add(this.buttonSimulateOK);
-            this.groupDebugOptions.Location = new System.Drawing.Point(8, 624);
+            this.groupDebugOptions.Location = new System.Drawing.Point(211, 359);
             this.groupDebugOptions.Name = "groupDebugOptions";
             this.groupDebugOptions.Size = new System.Drawing.Size(442, 50);
             this.groupDebugOptions.TabIndex = 54;
@@ -629,7 +629,7 @@
             this.groupSpeedMultiply.Controls.Add(this.numericUpDownSpeed);
             this.groupSpeedMultiply.Controls.Add(this.sliderFlowrate);
             this.groupSpeedMultiply.Controls.Add(this.sliderSpeed);
-            this.groupSpeedMultiply.Location = new System.Drawing.Point(8, 362);
+            this.groupSpeedMultiply.Location = new System.Drawing.Point(434, 83);
             this.groupSpeedMultiply.Name = "groupSpeedMultiply";
             this.groupSpeedMultiply.Size = new System.Drawing.Size(442, 83);
             this.groupSpeedMultiply.TabIndex = 55;
@@ -679,8 +679,8 @@
             // 
             // sliderFlowrate
             // 
-            this.sliderFlowrate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.sliderFlowrate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.sliderFlowrate.BackColor = System.Drawing.Color.Transparent;
             this.sliderFlowrate.BarInnerColor = System.Drawing.Color.DimGray;
             this.sliderFlowrate.BarOuterColor = System.Drawing.Color.LightGray;
@@ -702,8 +702,8 @@
             // 
             // sliderSpeed
             // 
-            this.sliderSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.sliderSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.sliderSpeed.BackColor = System.Drawing.Color.Transparent;
             this.sliderSpeed.BarInnerColor = System.Drawing.Color.DimGray;
             this.sliderSpeed.BarOuterColor = System.Drawing.Color.LightGray;
@@ -815,8 +815,8 @@
             this.arrowButtonXPlus.Title = "+X";
             this.arrowButtonXPlus.TitleFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.arrowButtonXPlus.UseVisualStyleBackColor = true;
-            this.arrowButtonXPlus.Click += new System.EventHandler(this.arrowButtonXPlus_Click);
             this.arrowButtonXPlus.arrowValueChanged += new RepetierHost.view.utils.ArrowValueChanged(this.XY_arrowValueChanged);
+            this.arrowButtonXPlus.Click += new System.EventHandler(this.arrowButtonXPlus_Click);
             // 
             // arrowButtonXMinus
             // 
@@ -838,8 +838,8 @@
             this.arrowButtonXMinus.Title = "-X";
             this.arrowButtonXMinus.TitleFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.arrowButtonXMinus.UseVisualStyleBackColor = true;
-            this.arrowButtonXMinus.Click += new System.EventHandler(this.arrowButtonXMinus_Click);
             this.arrowButtonXMinus.arrowValueChanged += new RepetierHost.view.utils.ArrowValueChanged(this.XY_arrowValueChanged);
+            this.arrowButtonXMinus.Click += new System.EventHandler(this.arrowButtonXMinus_Click);
             // 
             // arrowButtonZPlus
             // 
@@ -861,8 +861,8 @@
             this.arrowButtonZPlus.Title = "+Z";
             this.arrowButtonZPlus.TitleFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.arrowButtonZPlus.UseVisualStyleBackColor = true;
-            this.arrowButtonZPlus.Click += new System.EventHandler(this.arrowButtonZPlus_Click);
             this.arrowButtonZPlus.arrowValueChanged += new RepetierHost.view.utils.ArrowValueChanged(this.Z_arrowValueChanged);
+            this.arrowButtonZPlus.Click += new System.EventHandler(this.arrowButtonZPlus_Click);
             // 
             // arrowButtonZMinus
             // 
@@ -884,8 +884,8 @@
             this.arrowButtonZMinus.Title = "-Z";
             this.arrowButtonZMinus.TitleFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.arrowButtonZMinus.UseVisualStyleBackColor = true;
-            this.arrowButtonZMinus.Click += new System.EventHandler(this.arrowButtonZMinus_Click);
             this.arrowButtonZMinus.arrowValueChanged += new RepetierHost.view.utils.ArrowValueChanged(this.Z_arrowValueChanged);
+            this.arrowButtonZMinus.Click += new System.EventHandler(this.arrowButtonZMinus_Click);
             // 
             // arrowButtonYPlus
             // 
@@ -907,8 +907,8 @@
             this.arrowButtonYPlus.Title = "+Y";
             this.arrowButtonYPlus.TitleFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.arrowButtonYPlus.UseVisualStyleBackColor = true;
-            this.arrowButtonYPlus.Click += new System.EventHandler(this.arrowButtonYPlus_Click);
             this.arrowButtonYPlus.arrowValueChanged += new RepetierHost.view.utils.ArrowValueChanged(this.XY_arrowValueChanged);
+            this.arrowButtonYPlus.Click += new System.EventHandler(this.arrowButtonYPlus_Click);
             // 
             // arrowButtonYMinus
             // 
@@ -930,8 +930,8 @@
             this.arrowButtonYMinus.Title = "-Y";
             this.arrowButtonYMinus.TitleFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.arrowButtonYMinus.UseVisualStyleBackColor = true;
-            this.arrowButtonYMinus.Click += new System.EventHandler(this.arrowButtonYMinus_Click);
             this.arrowButtonYMinus.arrowValueChanged += new RepetierHost.view.utils.ArrowValueChanged(this.XY_arrowValueChanged);
+            this.arrowButtonYMinus.Click += new System.EventHandler(this.arrowButtonYMinus_Click);
             // 
             // trackFanVoltage
             // 
@@ -1060,7 +1060,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.switchPower);
             this.Name = "PrintPanel";
-            this.Size = new System.Drawing.Size(453, 681);
+            this.Size = new System.Drawing.Size(884, 418);
+            this.Leave += new System.EventHandler(this.PrintPanel_Leave);
             this.groupExtruder.ResumeLayout(false);
             this.groupExtruder.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textRetractAmount)).EndInit();

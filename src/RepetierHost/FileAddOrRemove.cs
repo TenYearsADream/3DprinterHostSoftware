@@ -240,7 +240,9 @@ namespace RepetierHost
             list.Clear();
             if (this.main.listSTLObjects.Items.Count > 0)
                 this.main.listSTLObjects.SelectedIndex = 0;
-           // Update is called from the parent caller. 
+            else
+                this.main.current3Dview = Main.ThreeDViewOptions.loadAFile; // if there are no more in the list, then go to load a file mode. 
+            
             Main.main.mainHelp.UpdateEverythingInMain();
 
         }

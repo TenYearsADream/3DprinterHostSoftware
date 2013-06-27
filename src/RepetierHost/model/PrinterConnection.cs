@@ -721,8 +721,8 @@ namespace RepetierHost.model
                 else
                     serial = new ProtectedSerialPort();
                 garbageCleared = false;
-                serial.PortName = "COM2";
-                //serial.PortName = port;
+                //serial.PortName = "COM2";
+                serial.PortName = port;
                 serial.BaudRate = baud;
                 serial.Parity = parity;
                 serial.DataBits = databits;
@@ -774,7 +774,11 @@ namespace RepetierHost.model
             }
             catch (IOException ex)
             {
+                
+                //serial.Close();
+                serial.Dispose();
                 serial = null;
+                //readThread.Abort();
                 log(ex.Message, true, 2);
                 if (eventConnectionChange != null)
                     eventConnectionChange(Trans.T("L_CONNECTION_ERROR")); // "Conn. error");
