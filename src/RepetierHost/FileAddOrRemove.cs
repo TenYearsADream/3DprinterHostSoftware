@@ -74,8 +74,9 @@ namespace RepetierHost
                  this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
                 
                 //tab.SelectTab(tabGCode);
-                this.main.editor.selectContent(0);
+                
                 this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
+                this.main.editor.selectContent(0);
                 this.main.mainHelp.UpdateEverythingInMain();
                 //this.main.update3DviewSelection();
                 

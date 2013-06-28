@@ -62,7 +62,7 @@ namespace RepetierHost
         public PrintPanel printPanel = null;
         public RegistryKey repetierKey;
         public ThreeDControlOld threedview = null;
-        public ThreeDView jobPreview = null;
+        public ThreeDView gcodePreviewView = null;
         public ThreeDView printPreview = null;
         public GCodeVisual jobVisual = new GCodeVisual();
         public GCodeVisual printVisual = null;
@@ -189,7 +189,7 @@ namespace RepetierHost
                 lastcom = s;
             }*/
             main = this;
-            mainHelp = new MainHelper(this);
+          
             SplashScreen.run();
             trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + "data" + Path.DirectorySeparatorChar + "translations");
             SwitchButton.imageOffset = RegMemory.GetInt("onOffImageOffset", 0);
@@ -201,8 +201,13 @@ namespace RepetierHost
             conn.analyzer.start();
             threeDSettings = new ThreeDSettings();
             InitializeComponent();
+
             editor = new RepetierEditor();
-            editor.Dock = DockStyle.Fill;
+            this.Controls.Add(editor);
+            editor.Visible = false;
+            //editor.Left = this.Width - editor.Width;
+            //editor.Top = (this.Height - editor.Height) / 2;
+            
             //panel1.Controls.Add(editor);
             updateShowFilament();
             RegMemory.RestoreWindowPos("mainWindow", this);
@@ -283,6 +288,7 @@ namespace RepetierHost
             logView = new LogView();
             logform = new Form();
             logView.Dock = DockStyle.Fill;
+          
             
             logform.StartPosition = FormStartPosition.WindowsDefaultBounds;
 
@@ -305,7 +311,14 @@ namespace RepetierHost
             panel2.Controls.Add(threedview); // Add the OpenGL panel to the panel2 from the Windows Form
             //tabPage3DView.Controls.Add(threedview);
 
-            // PrintPreview is the G-code openGL viewer controller. To view the results of slicing this must be initialized and add as a controller. 
+            // 
+            gcodePreviewView = new ThreeDView();
+            gcodePreviewView.SetEditor(false);
+            gcodePreviewView.models.AddLast(jobVisual); // Add a g-code visualzation model to the view
+            editor.contentChangedEvent += JobPreview;
+            editor.commands = new Commands();
+            editor.commands.Read("default", "en");
+            this.fileAddOrRemove.UpdateHistory();
 
             // Make a new View. 
             printPreview = new ThreeDView();
@@ -318,17 +331,12 @@ namespace RepetierHost
             printPreview.models.AddLast(printVisual); // Add a new model to the view
             basicTitle = Text;
 
-            jobPreview = new ThreeDView();
-            jobPreview.SetEditor(false);
-            jobPreview.models.AddLast(jobVisual); // Add a g-code visualzation model to the view
-            editor.contentChangedEvent += JobPreview;
-            editor.commands = new Commands();
-            editor.commands.Read("default", "en");
-            this.fileAddOrRemove.UpdateHistory();
+
+          
             //UpdateConnections();
             //mainHelp.UpdateEverythingInMain();
 
-            
+           
             // TODO: One is called slic3r and the other slicer. Why two??
             Main.slic3r = new Slic3r();
             Main.slicer = new Slicer();
@@ -336,7 +344,8 @@ namespace RepetierHost
             //toolShowLog_CheckedChanged(null, null);
             updateShowFilament();
             //update3DviewSelection();
-            mainHelp.UpdateEverythingInMain();
+            mainHelp = new MainHelper(this);
+            // mainHelp.UpdateEverythingInMain(); called later. 
 
             // TODO: Add temperature controls
             //history = new TemperatureHistory();
@@ -455,7 +464,7 @@ namespace RepetierHost
         {
             fileToolStripMenuItem.Text = Trans.T("M_FILE");
             settingsToolStripMenuItem.Text = Trans.T("M_CONFIG");
-            slicerToolStripMenuItem.Text = Trans.T("M_SLICER");
+            //slicerToolStripMenuItem.Text = Trans.T("M_SLICER");
             printerToolStripMenuItem.Text = Trans.T("M_PRINTER");
             temperatureToolStripMenuItem.Text = Trans.T("M_TEMPERATURE");
             helpToolStripMenuItem.Text = Trans.T("M_HELP");
@@ -463,7 +472,7 @@ namespace RepetierHost
             showWorkdirectoryToolStripMenuItem.Text = Trans.T("M_SHOW_WORKDIRECTORY");
             languageToolStripMenuItem.Text = Trans.T("M_LANGUAGE");
             printerSettingsToolStripMenuItem.Text = Trans.T("M_PRINTER_SETTINGS");
-            eeprom.Text = Trans.T("M_EEPROM_SETTINGS");
+            //eeprom.Text = Trans.T("M_EEPROM_SETTINGS");
             advancedViewConfigurationToolStripMenuItem.Text = Trans.T("M_3D_VIEWER_CONFIGURATION");
             repetierSettingsToolStripMenuItem.Text = Trans.T("M_REPETIER_SETTINGS");
             internalSlicingParameterToolStripMenuItem.Text = Trans.T("M_TESTCASE_SETTINGS");
@@ -535,7 +544,7 @@ namespace RepetierHost
             //toolShowLog.Text = toolShowLog.ToolTipText = Trans.T("M_TOGGLE_LOG");
 
             // TODO: Update this to be something other than "show filament"
-            viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_SHOW_FILAMENT");
+            //viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_SHOW_FILAMENT");
 
 
             if (conn.connected)
@@ -551,14 +560,14 @@ namespace RepetierHost
             if (threeDSettings.checkDisableFilamentVisualization.Checked)
             {
                 // TODO: Update this to be something other than "show filament"
-                viewSlicedObjectToolStripMenuItem1.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_DISABLED"); // "Filament visualization disabled";
-                viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_SHOW_FILAMENT"); // "Show filament";
+                //viewSlicedObjectToolStripMenuItem1.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_DISABLED"); // "Filament visualization disabled";
+                //viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_SHOW_FILAMENT"); // "Show filament";
             }
             else
             {
                 // TODO: Update this to be something other than "show filament"
-                viewSlicedObjectToolStripMenuItem1.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
-                viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_HIDE_FILAMENT"); // "Hide filament";
+                //viewSlicedObjectToolStripMenuItem1.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
+                //viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_HIDE_FILAMENT"); // "Hide filament";
             }
             if (conn.job.mode != 1)
             {
@@ -715,7 +724,7 @@ namespace RepetierHost
                 connectToolStripSplitButton.Image = imageList.Images[1];
                 connectToolStripSplitButton.ToolTipText = Trans.T("L_CONNECT_PRINTER"); // "Connect printer";
                 connectToolStripSplitButton.Text = Trans.T("M_CONNECT"); // "Connect";
-                eeprom.Enabled = false;
+                //eeprom.Enabled = false;
                 continuousMonitoringMenuItem.Enabled = false;
                 if (eepromSettings != null && eepromSettings.Visible)
                 {
@@ -965,9 +974,9 @@ namespace RepetierHost
         {
             if (conn.isMarlin || conn.isRepetier) // Activate special menus and function
             {
-                main.eeprom.Enabled = true;
+                //main.eeprom.Enabled = true;
             }
-            else main.eeprom.Enabled = false;
+            //else main.eeprom.Enabled = false;
 
         };
         /*  private void toolStripSaveGCode_Click(object sender, EventArgs e)
@@ -1033,10 +1042,10 @@ namespace RepetierHost
         {
             if (newVisual != null)
             {
-                jobPreview.models.RemoveLast();
+                gcodePreviewView.models.RemoveLast();
                 jobVisual.Clear();
                 jobVisual = newVisual;
-                jobPreview.models.AddLast(jobVisual);
+                gcodePreviewView.models.AddLast(jobVisual);
                 threedview.UpdateChanges();
                 newVisual = null;
                 editor.toolUpdating.Text = "";
@@ -1976,6 +1985,52 @@ namespace RepetierHost
         private void advancedConfigStripSplitButton3_ButtonClick(object sender, EventArgs e)
         {
 
+        }
+
+        private void slicerSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Slic3rSetup.Execute();
+        }
+
+        private void gcodeEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editor.Left = (this.Width - editor.Width) / 2;
+            editor.Top = (this.Height - editor.Height) / 2;
+            editor.Visible = !editor.Visible;
+            editor.BringToFront();
+            
+
+        }
+
+        private void stopSlicingProcessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            skeinforge.KillSlice();
+            slic3r.KillSlice();
+            SlicingInfo.Stop();
+        }
+
+        private void loadAFileMenuModeMenuOption_Click(object sender, EventArgs e)
+        {
+            this.current3Dview = ThreeDViewOptions.loadAFile;
+            this.mainHelp.UpdateEverythingInMain();
+        }
+
+        private void STLEditorMenuOption_Click(object sender, EventArgs e)
+        {
+            this.current3Dview = ThreeDViewOptions.STLeditor;
+            this.mainHelp.UpdateEverythingInMain();
+        }
+
+        private void gCodeVisualizationMenuOption_Click(object sender, EventArgs e)
+        {
+            this.current3Dview = ThreeDViewOptions.gcode;
+            this.mainHelp.UpdateEverythingInMain();
+        }
+
+        private void livePrintingMenuOption_Click(object sender, EventArgs e)
+        {
+            this.current3Dview = ThreeDViewOptions.printing;
+            this.mainHelp.UpdateEverythingInMain();
         }
 
      

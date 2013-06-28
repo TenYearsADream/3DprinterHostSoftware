@@ -158,9 +158,9 @@ namespace RepetierHost.view.utils
                     Main.printerModel.ActiveSlicer = _ActiveSlicer;
                     //Main.main.repetierKey.SetValue("ActiveSlicer", (int)_ActiveSlicer);
                 }
-                Main.main.slic3rToolStripMenuItem.Checked = _ActiveSlicer == SlicerID.Slic3r;
-                Main.main.skeinforgeToolStripMenuItem1.Checked = _ActiveSlicer == SlicerID.Skeinforge;
-                Main.main.externalSlic3rToolStripMenuItem.Checked = _ActiveSlicer == SlicerID.Slic3rExternal;
+                //Main.main.slic3rToolStripMenuItem.Checked= _ActiveSlicer == SlicerID.Slic3r;
+                //Main.main.skeinforgeToolStripMenuItem1.Checked = _ActiveSlicer == SlicerID.Skeinforge;
+                //Main.main.externalSlic3rToolStripMenuItem.Checked = _ActiveSlicer == SlicerID.Slic3rExternal;
                 //Main.main.stlComposer1.buttonSlice.Text = Trans.T1("L_SLICE_WITH", SlicerName);
                 //if( Main.main.slicerPanel!=null)
                 //    Main.main.slicerPanel.UpdateSelection();
@@ -187,11 +187,11 @@ namespace RepetierHost.view.utils
                 _hasSkeinforge = File.Exists(skein.textPython.Text) && File.Exists(skein.textSkeinforge.Text) &&
                     File.Exists(skein.textSkeinforgeCraft.Text);
             }
-            Main.main.slic3rToolStripMenuItem.Enabled = _hasSlic3r;
-            Main.main.skeinforgeToolStripMenuItem1.Enabled = _hasSkeinforge;
-            Main.main.skeinforgeConfigurationToolStripMenuItem.Enabled = _hasSkeinforge;
-            Main.main.externalSlic3rToolStripMenuItem.Enabled = _hasSlic3rExternal;
-            Main.main.externalSlic3rConfigurationToolStripMenuItem.Enabled = _hasSlic3r || File.Exists(BasicConfiguration.basicConf.ExternalSlic3rPath);
+            //Main.main.slic3rToolStripMenuItem.Enabled = _hasSlic3r;
+            //Main.main.skeinforgeToolStripMenuItem1.Enabled = _hasSkeinforge;
+            //Main.main.skeinforgeConfigurationToolStripMenuItem.Enabled = _hasSkeinforge;
+            //Main.main.externalSlic3rToolStripMenuItem.Enabled = _hasSlic3rExternal;
+            //Main.main.externalSlic3rConfigurationToolStripMenuItem.Enabled = _hasSlic3r || File.Exists(BasicConfiguration.basicConf.ExternalSlic3rPath);
             // Check if active slicer is possible
             if (ActiveSlicer == SlicerID.Slic3r && !_hasSlic3r && _hasSkeinforge)
             {

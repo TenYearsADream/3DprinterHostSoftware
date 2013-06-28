@@ -93,7 +93,7 @@ namespace RepetierHost.view
             //}
             //toolMoveObject.Enabled = view.objectsSelected;
             toolStripClear.Enabled = view.objectsSelected;
-            UpdateChanges();
+            //UpdateChanges();
         }
         public void MakeVisible(bool vis)
         {

@@ -1697,5 +1697,10 @@ namespace RepetierHost.view
         {
             goLayer(ShowMaxLayer + 1);
         }
+
+        private void RepetierEditor_Leave_1(object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
     }
 }
