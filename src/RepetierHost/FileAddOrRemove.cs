@@ -71,11 +71,9 @@ namespace RepetierHost
         {
             try
             {
-                 this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
-                
-                //tab.SelectTab(tabGCode);
                 
                 this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
+                this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
                 this.main.editor.selectContent(0);
                 this.main.mainHelp.UpdateEverythingInMain();
                 //this.main.update3DviewSelection();
@@ -528,9 +526,27 @@ namespace RepetierHost
             }
             inRecheckFiles = false;
         }
-    
 
-        
+
+        public void saveAFile_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.S)
+            {
+                if(Main.main.current3Dview == Main.ThreeDViewOptions.gcode)
+                    StoreCode.Execute();
+
+                if (Main.main.current3Dview == Main.ThreeDViewOptions.STLeditor)
+                {
+                    if (Main.main.saveSTL.ShowDialog() == DialogResult.OK)
+                    {
+                        this.saveComposition(Main.main.saveSTL.FileName);
+                    }
+                }
+
+                e.Handled = true;
+            }
+         
+        }
     
     public class EnglishStreamWriter : StreamWriter
     {

@@ -136,16 +136,16 @@ namespace RepetierHost.view
             int n = Main.main.listSTLObjects.SelectedItems.Count;
             if (n != 1)
             {
-                textRotX.Enabled = false;
-                textRotY.Enabled = false;
-                textRotZ.Enabled = false;
+                this.xRotateControl.Enabled = false;
+                this.yRotateControl.Enabled = false;
+                this.zRotateControl.Enabled = false;                
                 textScaleX.Enabled = false;
                 textScaleY.Enabled = false;
                 textScaleZ.Enabled = false;
                 checkScaleAll.Enabled = false;
-                textTransX.Enabled = false;
-                textTransY.Enabled = false;
-                textTransZ.Enabled = false;
+                this.xTransValue.Enabled = false;
+                this.yTranNum.Enabled = false;
+                this.zTransNum.Enabled = false;               
                 buttonCenter.Enabled = false;
                 buttonAutoplace.Enabled = Main.main.listSTLObjects.Items.Count > 1;
                 //buttonLand.Enabled = n > 0;
@@ -157,16 +157,17 @@ namespace RepetierHost.view
             {
                 buttonAutoplace.Enabled = Main.main.listSTLObjects.Items.Count > 1;
                 buttonCopy.Enabled = true;
-                textRotX.Enabled = true;
-                textRotY.Enabled = true;
-                textRotZ.Enabled = true;
+                this.xRotateControl.Enabled = true;
+                this.yRotateControl.Enabled = true;
+                this.zRotateControl.Enabled = true;            
                 textScaleX.Enabled = true;
                 textScaleY.Enabled = !checkScaleAll.Checked;
                 textScaleZ.Enabled = !checkScaleAll.Checked;
                 checkScaleAll.Enabled = true;
-                textTransX.Enabled = true;
-                textTransY.Enabled = true;
-                textTransZ.Enabled = true;
+                this.xTransValue.Enabled = true;              
+                this.yTranNum.Enabled = true;
+                this.zTransNum.Enabled = true;
+               
                 buttonCenter.Enabled = true;
                 //buttonLand.Enabled = true;
                 if (Main.main.threedview != null)
@@ -217,47 +218,48 @@ namespace RepetierHost.view
             if (Main.main.listSTLObjects.SelectedItems.Count > 1) stl = null;
             if (stl != null)
             {
-                textRotX.Text = stl.Rotation.x.ToString(GCode.format);
-                textRotY.Text = stl.Rotation.y.ToString(GCode.format);
-                textRotZ.Text = stl.Rotation.z.ToString(GCode.format);
+                this.xRotateControl.Value = (decimal)stl.Rotation.x;
+                this.yRotateControl.Value = (decimal)stl.Rotation.y;
+                this.zRotateControl.Value = (decimal)stl.Rotation.z;               
                 textScaleX.Text = stl.Scale.x.ToString(GCode.format);
                 textScaleY.Text = stl.Scale.y.ToString(GCode.format);
                 textScaleZ.Text = stl.Scale.z.ToString(GCode.format);
-                textTransX.Text = stl.Position.x.ToString(GCode.format);
-                textTransY.Text = stl.Position.y.ToString(GCode.format);
-                textTransZ.Text = stl.Position.z.ToString(GCode.format);
+                this.xTransValue.Value = (decimal)stl.Position.x;
+                this.yTranNum.Value = (decimal)stl.Position.y;
+                this.zTransNum.Value = (decimal)stl.Position.z;             
                 checkScaleAll.Checked = (stl.Scale.x == stl.Scale.y && stl.Scale.x == stl.Scale.z);
             }
             //Main.main.threedview.UpdateChanges();
             Main.main.mainHelp.UpdateEverythingInMain();
         }
 
-        private void textTransX_TextChanged(object sender, EventArgs e)
-        {
-            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
-            if (stl == null) return;
-            float.TryParse(textTransX.Text, NumberStyles.Float, GCode.format, out stl.Position.x);
-            updateSTLState(stl);
-            Main.main.threedview.UpdateChanges();
-        }
+        //private void textTransX_TextChanged(object sender, EventArgs e)
+        //{
+        //    STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+        //    if (stl == null) return;
+        //    float.TryParse(textTransX.Text, NumberStyles.Float, GCode.format, out stl.Position.x);
+           
+        //    updateSTLState(stl);
+        //    Main.main.threedview.UpdateChanges();
+        //}
 
-        private void textTransY_TextChanged(object sender, EventArgs e)
-        {
-            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
-            if (stl == null) return;
-            float.TryParse(textTransY.Text, NumberStyles.Float, GCode.format, out stl.Position.y);
-            updateSTLState(stl);
-            Main.main.threedview.UpdateChanges();
-        }
+        //private void textTransY_TextChanged(object sender, EventArgs e)
+        //{
+        //    STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+        //    if (stl == null) return;
+        //    float.TryParse(textTransY.Text, NumberStyles.Float, GCode.format, out stl.Position.y);
+        //    updateSTLState(stl);
+        //    Main.main.threedview.UpdateChanges();
+        //}
 
-        private void textTransZ_TextChanged(object sender, EventArgs e)
-        {
-            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
-            if (stl == null) return;
-            float.TryParse(textTransZ.Text, NumberStyles.Float, GCode.format, out stl.Position.z);
-            updateSTLState(stl);
-            Main.main.threedview.UpdateChanges();
-        }
+        //private void textTransZ_TextChanged(object sender, EventArgs e)
+        //{
+        //    STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+        //    if (stl == null) return;
+        //    float.TryParse(textTransZ.Text, NumberStyles.Float, GCode.format, out stl.Position.z);
+        //    updateSTLState(stl);
+        //    Main.main.threedview.UpdateChanges();
+        //}
 
 
         private void objectMoved(float dx, float dy)
@@ -270,8 +272,9 @@ namespace RepetierHost.view
                 stl.Position.y += dy;
                 if (Main.main.listSTLObjects.SelectedItems.Count == 1)
                 {
-                    textTransX.Text = stl.Position.x.ToString(GCode.format);
-                    textTransY.Text = stl.Position.y.ToString(GCode.format);
+                    this.xTransValue.Value = (decimal)stl.Position.x;
+                    this.yTranNum.Value = (decimal)stl.Position.y;
+                   
                 }
                 updateSTLState(stl);
             }
@@ -333,32 +336,32 @@ namespace RepetierHost.view
             Main.main.threedview.UpdateChanges();
         }
 
-        private void textRotX_TextChanged(object sender, EventArgs e)
-        {
-            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
-            if (stl == null) return;
-            float.TryParse(textRotX.Text, NumberStyles.Float, GCode.format, out stl.Rotation.x);
-            updateSTLState(stl);
-            Main.main.threedview.UpdateChanges();
-        }
+        //private void textRotX_TextChanged(object sender, EventArgs e)
+        //{
+        //    STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+        //    if (stl == null) return;
+        //    float.TryParse(textRotX.Text, NumberStyles.Float, GCode.format, out stl.Rotation.x);
+        //    updateSTLState(stl);
+        //    Main.main.threedview.UpdateChanges();
+        //}
 
-        private void textRotY_TextChanged(object sender, EventArgs e)
-        {
-            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
-            if (stl == null) return;
-            float.TryParse(textRotY.Text, NumberStyles.Float, GCode.format, out stl.Rotation.y);
-            updateSTLState(stl);
-            Main.main.threedview.UpdateChanges();
-        }
+        //private void textRotY_TextChanged(object sender, EventArgs e)
+        //{
+        //    STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+        //    if (stl == null) return;
+        //    float.TryParse(textRotY.Text, NumberStyles.Float, GCode.format, out stl.Rotation.y);
+        //    updateSTLState(stl);
+        //    Main.main.threedview.UpdateChanges();
+        //}
 
-        private void textRotZ_TextChanged(object sender, EventArgs e)
-        {
-            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
-            if (stl == null) return;
-            float.TryParse(textRotZ.Text, NumberStyles.Float, GCode.format, out stl.Rotation.z);
-            updateSTLState(stl);
-            Main.main.threedview.UpdateChanges();
-        }
+        //private void textRotZ_TextChanged(object sender, EventArgs e)
+        //{
+        //    STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+        //    if (stl == null) return;
+        //    float.TryParse(textRotZ.Text, NumberStyles.Float, GCode.format, out stl.Rotation.z);
+        //    updateSTLState(stl);
+        //    Main.main.threedview.UpdateChanges();
+        //}
 
         public void buttonRemoveSTL_Click(object sender, EventArgs e)
         {
@@ -566,6 +569,152 @@ namespace RepetierHost.view
         private void PositionSTLGUI_Leave(object sender, EventArgs e)
         {
             this.Visible = false;
+        }
+
+       
+
+        private void xTransValue_ValueChanged(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+                if (stl == null) return;            
+            stl.Position.x = (float)xTransValue.Value;
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void yTranNum_ValueChanged(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            stl.Position.y = (float)this.yTranNum.Value;
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void zTransNum_ValueChanged(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            stl.Position.z = (float)this.zTransNum.Value;
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void xRotateControl_ValueChanged(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            stl.Rotation.x = (float)this.xRotateControl.Value;
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void yRotateControl_ValueChanged(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            stl.Rotation.y = (float)this.yRotateControl.Value;
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void zRotateControl_ValueChanged(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            stl.Rotation.z = (float)this.zRotateControl.Value;
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void rotate90X_Click(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            decimal currentValue = this.xRotateControl.Value;
+            currentValue += 90;
+            if (currentValue >= 360)
+                currentValue -= 360;
+
+            this.xRotateControl.Value = currentValue;
+            
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void rotateMinus90X_Click(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            decimal currentValue = this.xRotateControl.Value;
+            currentValue -= 90;
+            if (currentValue < 0)
+                currentValue += 360;
+
+            this.xRotateControl.Value = currentValue;
+
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void rotate90Y_Click(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            decimal currentValue = this.yRotateControl.Value;
+            currentValue += 90;
+            if (currentValue >= 360)
+                currentValue -= 360;
+
+            this.yRotateControl.Value = currentValue;
+
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void rotateMinus90Y_Click(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            decimal currentValue = this.yRotateControl.Value;
+            currentValue -= 90;
+            if (currentValue < 0)
+                currentValue += 360;
+
+            this.yRotateControl.Value = currentValue;
+
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void rotate90Z_Click(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            decimal currentValue = this.zRotateControl.Value;
+            currentValue += 90;
+            if (currentValue >= 360)
+                currentValue -= 360;
+
+            this.zRotateControl.Value = currentValue;
+
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
+        }
+
+        private void rotateMinus90Z_Click(object sender, EventArgs e)
+        {
+            STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl == null) return;
+            decimal currentValue = this.zRotateControl.Value;
+            currentValue -= 90;
+            if (currentValue < 0)
+                currentValue += 360;
+
+            this.zRotateControl.Value = currentValue;
+
+            updateSTLState(stl);
+            Main.main.threedview.UpdateChanges();
         }
 
        

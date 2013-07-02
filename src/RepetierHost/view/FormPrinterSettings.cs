@@ -424,7 +424,7 @@ namespace RepetierHost.view
             formToCon();
             UpdateDimensions();
             Hide();
-            //Main.main.slicerPanel.UpdateSelection();
+            Main.main.slicerPanel.UpdateSelection();
             //Main.main.Update3D();
             Main.main.mainHelp.UpdateEverythingInMain();
             if (Main.main != null && Main.main.editor != null)

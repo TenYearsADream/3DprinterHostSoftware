@@ -59,7 +59,6 @@ namespace RepetierHost
             {
 
                 case RepetierHost.Main.ThreeDViewOptions.loadAFile:
-
                     main.toolStripStatusLabel1.Text = "Load a file";
                     main.threedview.SetView(main.fileAddOrRemove.stleditorView);
                     break;
@@ -90,67 +89,67 @@ namespace RepetierHost
         private void SyncViews()
         {
            
-            if (main.current3Dview != oldviewMode)
-            {
+            //if (main.current3Dview != oldviewMode)
+            //{
 
-                switch (oldviewMode)
-                {
+            //    switch (oldviewMode)
+            //    {
 
-                    case RepetierHost.Main.ThreeDViewOptions.loadAFile:
-                        oldview = Main.main.threedview.view;
-                        break;
-                    case RepetierHost.Main.ThreeDViewOptions.STLeditor:
-                        oldview = Main.main.threedview.view;
-                        break;
-                    case RepetierHost.Main.ThreeDViewOptions.gcode:
-                        oldview = Main.main.gcodePreviewView;
-                        break;
-                    case RepetierHost.Main.ThreeDViewOptions.printing:
-                        oldview = Main.main.printPreview;
-                        break;
-                }
+            //        case RepetierHost.Main.ThreeDViewOptions.loadAFile:
+            //            oldview = Main.main.threedview.view;
+            //            break;
+            //        case RepetierHost.Main.ThreeDViewOptions.STLeditor:
+            //            oldview = Main.main.threedview.view;
+            //            break;
+            //        case RepetierHost.Main.ThreeDViewOptions.gcode:
+            //            oldview = Main.main.gcodePreviewView;
+            //            break;
+            //        case RepetierHost.Main.ThreeDViewOptions.printing:
+            //            oldview = Main.main.printPreview;
+            //            break;
+            //    }
 
-                switch (main.current3Dview)
-                {
+            //    switch (main.current3Dview)
+            //    {
 
-                    case RepetierHost.Main.ThreeDViewOptions.loadAFile:
-                        newThreedview = Main.main.threedview.view;                    
-                        break;
-                    case RepetierHost.Main.ThreeDViewOptions.STLeditor:
-                        newThreedview = Main.main.threedview.view;
-                        break;
-                    case RepetierHost.Main.ThreeDViewOptions.gcode:
-                        newThreedview = Main.main.gcodePreviewView;
-                        break;
-                    case RepetierHost.Main.ThreeDViewOptions.printing:
-                        newThreedview = Main.main.printPreview;
-                        break;
-                }
-                    //    FormPrinterSettings ps = Main.printerSettings;
-                //public onObjectMoved eventObjectMoved;
-                //public onObjectSelected eventObjectSelected;
-                newThreedview.zoom = oldview.zoom;
-                newThreedview.viewCenter = oldview.viewCenter;
-                newThreedview.userPosition = oldview.userPosition;    //public Vector3 userPosition;
-                newThreedview.lookAt = oldview.lookAt;
-                newThreedview.persp = oldview.persp;
-                newThreedview.modelView = oldview.modelView; //public Matrix4 lookAt, persp, modelView;
-                newThreedview.normX = oldview.normX;
-                newThreedview.normY = oldview.normY; //public double normX = 0, normY = 0;
-                newThreedview.nearDist = oldview.nearDist;
-                newThreedview.farDist = oldview.farDist;
-                newThreedview.aspectRatio = oldview.aspectRatio;
-                newThreedview.nearHeight = oldview.nearHeight; //public float nearDist, farDist, aspectRatio, nearHeight;
-                newThreedview.rotZ = oldview.rotZ;
-                newThreedview.rotX = oldview.rotX; //public float rotZ = 0, rotX = 0;
-                //public int mode = 0;
-                //public bool editor = false;
-                //public bool autoupdateable = false;
-                //public int slowCounter = 0; // Indicates slow framerates
-                //public uint timeCall = 0;
-            }
-            //oldview = newThreedview;
-            oldviewMode = main.current3Dview;
+            //        case RepetierHost.Main.ThreeDViewOptions.loadAFile:
+            //            newThreedview = Main.main.threedview.view;                    
+            //            break;
+            //        case RepetierHost.Main.ThreeDViewOptions.STLeditor:
+            //            newThreedview = Main.main.threedview.view;
+            //            break;
+            //        case RepetierHost.Main.ThreeDViewOptions.gcode:
+            //            newThreedview = Main.main.gcodePreviewView;
+            //            break;
+            //        case RepetierHost.Main.ThreeDViewOptions.printing:
+            //            newThreedview = Main.main.printPreview;
+            //            break;
+            //    }
+            //        //    FormPrinterSettings ps = Main.printerSettings;
+            //    //public onObjectMoved eventObjectMoved;
+            //    //public onObjectSelected eventObjectSelected;
+            //    newThreedview.zoom = oldview.zoom;
+            //    newThreedview.viewCenter = oldview.viewCenter;
+            //    newThreedview.userPosition = oldview.userPosition;    //public Vector3 userPosition;
+            //    newThreedview.lookAt = oldview.lookAt;
+            //    newThreedview.persp = oldview.persp;
+            //    newThreedview.modelView = oldview.modelView; //public Matrix4 lookAt, persp, modelView;
+            //    newThreedview.normX = oldview.normX;
+            //    newThreedview.normY = oldview.normY; //public double normX = 0, normY = 0;
+            //    newThreedview.nearDist = oldview.nearDist;
+            //    newThreedview.farDist = oldview.farDist;
+            //    newThreedview.aspectRatio = oldview.aspectRatio;
+            //    newThreedview.nearHeight = oldview.nearHeight; //public float nearDist, farDist, aspectRatio, nearHeight;
+            //    newThreedview.rotZ = oldview.rotZ;
+            //    newThreedview.rotX = oldview.rotX; //public float rotZ = 0, rotX = 0;
+            //    //public int mode = 0;
+            //    //public bool editor = false;
+            //    //public bool autoupdateable = false;
+            //    //public int slowCounter = 0; // Indicates slow framerates
+            //    //public uint timeCall = 0;
+            //}
+            ////oldview = newThreedview;
+            //oldviewMode = main.current3Dview;
 
         }
 
@@ -295,13 +294,13 @@ namespace RepetierHost
                 //Main.main.printStripSplitButton4.Enabled = Main.conn.connected;
                 Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_RUN_JOB"); // "Run job";
                 Main.main.printStripSplitButton4.Text = Trans.T("M_RUN_JOB"); //"Run job";
-                Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[2];
+                //Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[2];
             }
             else
             {
                 Main.main.printStripSplitButton4.Enabled = true;
                 Main.main.killJobToolStripMenuItem.Enabled = true;
-                Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[3];
+                //Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[3];
                 Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_PAUSE_JOB"); //"Pause job";
                 Main.main.printStripSplitButton4.Text = Trans.T("M_PAUSE_JOB"); //"Pause job";
                 Main.main.printVisual.Clear();
@@ -312,14 +311,14 @@ namespace RepetierHost
 
         public void updatePositionControlLocation()
         {
-            if (Main.main.current3Dview != Main.ThreeDViewOptions.STLeditor)
-                this.main.postionGUI.Visible = false;
+            //if (Main.main.current3Dview != Main.ThreeDViewOptions.STLeditor)
+            //    this.main.postionGUI.Visible = false;
 
-            if (this.main.postionGUI.Visible == true)
-            {
-                this.main.postionGUI.Left = this.main.Width - this.main.postionGUI.Width;
-                this.main.postionGUI.Top = (this.main.Height - this.main.postionGUI.Height) / 2;
-            }
+            //if (this.main.postionGUI.Visible == true)
+            //{
+            //    this.main.postionGUI.Left = this.main.Width - this.main.postionGUI.Width;
+            //    this.main.postionGUI.Top = (this.main.Height - this.main.postionGUI.Height) / 2;
+            //}
         }
     }
 }

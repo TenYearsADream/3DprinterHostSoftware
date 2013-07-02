@@ -204,7 +204,7 @@ namespace RepetierHost.view
             LinkedList<Undo> redo = new LinkedList<Undo>();
             RepetierEditor editor = null;
             public string name;
-            public int etype; /// 0 = G-Code, 1 = prepend, 2 = append
+            public int etype; // 0 = G-Code, 1 = prepend, 2 = append
             public Content(RepetierEditor e, int tp, string _name)
             {
                 name = _name;

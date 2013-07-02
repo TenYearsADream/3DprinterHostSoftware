@@ -46,7 +46,7 @@ namespace RepetierHost.view
             comboDrawMethod.SelectedIndex = 0;
             repetierKey = Custom.BaseKey; //  Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");
             threedKey = repetierKey.CreateSubKey("3D");
-            //if (comboFilamentVisualization.SelectedIndex < 0) comboFilamentVisualization.SelectedIndex = 1;
+            if (comboFilamentVisualization.SelectedIndex < 0) comboFilamentVisualization.SelectedIndex = 1;
             RegistryToForm();
             translate();
             Main.main.languageChanged += translate;

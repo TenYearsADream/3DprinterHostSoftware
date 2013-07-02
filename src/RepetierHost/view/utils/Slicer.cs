@@ -60,8 +60,6 @@ namespace RepetierHost.view.utils
         string postprocessFile = null;
         Process postproc=null;
 
-
-
         public void Postprocess(string file)
         {
             string dir = Main.globalSettings.Workdir;
@@ -75,7 +73,6 @@ namespace RepetierHost.view.utils
                 //LoadGCode lg = Main.main.LoadGCode;
                 //Main.main.fileAddOrRemove .Invoke(lg, file);
                 Main.main.Invoke(lg, file);
-
                 if (SlicingInfo.f.checkStartBoxAfterSlicing.Checked && Main.conn.connected)
                     Main.main.Invoke(Main.main.StartJob);
                 return; // Nothing to do
@@ -126,10 +123,8 @@ namespace RepetierHost.view.utils
             postproc.Close();
             postproc = null;
             SlicingInfo.f.Invoke(SlicingInfo.f.StopInfo);
-            // TODO: Fix this
             LoadGCode lg = Main.main.LoadGCode;
             Main.main.Invoke(lg, postprocessFile);
-
             if (SlicingInfo.f.checkStartBoxAfterSlicing.Checked && Main.conn.connected)
                 Main.main.Invoke(Main.main.StartJob);
         }

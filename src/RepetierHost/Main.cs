@@ -48,9 +48,11 @@ namespace RepetierHost
         public string basicTitle = "";
         public static bool IsMono = Type.GetType("Mono.Runtime") != null;
         public static Slicer slicer = null;
-        public static Slic3r slic3r = null;
+        public static Slic3r slic3r = null;         
         public static bool IsMac = false;
 
+        public Form slicerPanaelForm = null;
+        public SlicerPanel slicerPanel = null;
         public PositionSTLGUI postionGUI = null;
         //public positionModelGUIInterface positionModelGUI = null;
         public Form extraForm = null;
@@ -62,7 +64,7 @@ namespace RepetierHost
         public LogView logView = null;
         public PrintPanel printPanel = null;
         public RegistryKey repetierKey;
-        public ThreeDControlOld threedview = null;
+        public ThreeDControl threedview = null;
         public ThreeDView gcodePreviewView = null;
         public ThreeDView printPreview = null;
         public GCodeVisual jobVisual = new GCodeVisual();
@@ -203,6 +205,7 @@ namespace RepetierHost
             threeDSettings = new ThreeDSettings();
             InitializeComponent();
 
+
             editor = new RepetierEditor();
             this.Controls.Add(editor);
             editor.Visible = false;
@@ -282,6 +285,9 @@ namespace RepetierHost
             printPanel.Visible = false;
             printerSettings.formToCon();
 
+
+
+
             extraForm = new Form();
             extraForm.Dock = DockStyle.Fill;
 
@@ -300,6 +306,16 @@ namespace RepetierHost
             // TODO: Remomve this. 
             skeinforge = new Skeinforge();
 
+            slicerPanel = new SlicerPanel();
+            slicerPanaelForm = new Form();
+            slicerPanaelForm.Visible = false;
+            slicerPanaelForm.Width = 620;
+            slicerPanaelForm.Height = 500;
+            slicerPanaelForm.Controls.Add(slicerPanel);
+            slicerPanaelForm.ControlBox = false;
+
+           
+
             PrinterChanged(printerSettings.currentPrinterKey, true);
             printerSettings.eventPrinterChanged += PrinterChanged;
 
@@ -307,7 +323,7 @@ namespace RepetierHost
 
             /// Threedview is the part that shows either the .stl files, g-code analysis results, or the print preview (showing the travel path of the print head). 
             /// See the Method assign3DView() to get an adea of how it works. 
-            threedview = new ThreeDControlOld();
+            threedview = new ThreeDControl();
             threedview.Dock = DockStyle.Fill;
             panel2.Controls.Add(threedview); // Add the OpenGL panel to the panel2 from the Windows Form
             //tabPage3DView.Controls.Add(threedview);
@@ -337,10 +353,11 @@ namespace RepetierHost
             //UpdateConnections();
             //mainHelp.UpdateEverythingInMain();
 
-           
+         
             // TODO: One is called slic3r and the other slicer. Why two??
             Main.slic3r = new Slic3r();
             Main.slicer = new Slicer();
+           
 
             //toolShowLog_CheckedChanged(null, null);
             updateShowFilament();
@@ -469,7 +486,7 @@ namespace RepetierHost
             printerToolStripMenuItem.Text = Trans.T("M_PRINTER");
             temperatureToolStripMenuItem.Text = Trans.T("M_TEMPERATURE");
             helpToolStripMenuItem.Text = Trans.T("M_HELP");
-            loadGCodeToolStripMenuItem.Text = Trans.T("M_LOAD_GCODE");
+            //loadGCodeToolStripMenuItem.Text = Trans.T("M_LOAD_GCODE_OR_STL_FILE");
             showWorkdirectoryToolStripMenuItem.Text = Trans.T("M_SHOW_WORKDIRECTORY");
             languageToolStripMenuItem.Text = Trans.T("M_LANGUAGE");
             printerSettingsToolStripMenuItem.Text = Trans.T("M_PRINTER_SETTINGS");
@@ -511,27 +528,27 @@ namespace RepetierHost
             sendScript3ToolStripMenuItem.Text = Trans.T("M_SEND_SCRIPT_3");
             sendScript4ToolStripMenuItem.Text = Trans.T("M_SEND_SCRIPT_4");
             sendScript5ToolStripMenuItem.Text = Trans.T("M_SEND_SCRIPT_5");
-            repetierHostHomepageToolStripMenuItem.Text = Trans.T("M_REPETIER_HOST_HOMEPAGE");
-            repetierHostDownloadPageToolStripMenuItem.Text = Trans.T("M_REPETIER_HOST_DOWNLOAD_PAGE");
+           // repetierHostHomepageToolStripMenuItem.Text = Trans.T("M_REPETIER_HOST_HOMEPAGE");
+           //// repetierHostDownloadPageToolStripMenuItem.Text = Trans.T("M_REPETIER_HOST_DOWNLOAD_PAGE");
             manualToolStripMenuItem.Text = Trans.T("M_MANUAL");
-            slic3rHomepageToolStripMenuItem.Text = Trans.T("M_SLIC3R_HOMEPAGE");
-            skeinforgeHomepageToolStripMenuItem.Text = Trans.T("M_SKEINFORGE_HOMEPAGE");
-            repRapWebsiteToolStripMenuItem.Text = Trans.T("M_REPRAP_WEBSITE");
-            repRapForumToolStripMenuItem.Text = Trans.T("M_REPRAP_FORUM");
+            //slic3rHomepageToolStripMenuItem.Text = Trans.T("M_SLIC3R_HOMEPAGE");
+            //skeinforgeHomepageToolStripMenuItem.Text = Trans.T("M_SKEINFORGE_HOMEPAGE");
+            //repRapWebsiteToolStripMenuItem.Text = Trans.T("M_REPRAP_WEBSITE");
+            //repRapForumToolStripMenuItem.Text = Trans.T("M_REPRAP_FORUM");
             thingiverseNewestToolStripMenuItem.Text = Trans.T("M_THINGIVERSE_NEWEST");
             thingiversePopularToolStripMenuItem.Text = Trans.T("M_THINGIVERSE_POPULAR");
-            aboutRepetierHostToolStripMenuItem.Text = Trans.T("M_ABOUT_REPETIER_HOST");
+            //aboutRepetierHostToolStripMenuItem.Text = Trans.T("M_ABOUT_REPETIER_HOST");
             checkForUpdatesToolStripMenuItem.Text = Trans.T("M_CHECK_FOR_UPDATES");
             quitToolStripMenuItem.Text = Trans.T("M_QUIT");
-            donateToolStripMenuItem.Text = Trans.T("M_DONATE");
+            //donateToolStripMenuItem.Text = Trans.T("M_DONATE");
             //tabPage3DView.Text = Trans.T("TAB_3D_VIEW");
             //tabPageTemp.Text = Trans.T("TAB_TEMPERATURE_CURVE");
             //tabModel.Text = Trans.T("TAB_OBJECT_PLACEMENT");
             //tabSlicer.Text = Trans.T("TAB_SLICER");
             //tabGCode.Text = Trans.T("TAB_GCODE_EDITOR");
             //tabPrint.Text = Trans.T("TAB_MANUAL_CONTROL");
-            printerOptionsToolStripMenuItem.Text = Trans.T("M_PRINTER_SETTINGS");
-            printerOptionsToolStripMenuItem.ToolTipText = Trans.T("M_PRINTER_SETTINGS");
+            //printerOptionsToolStripMenuItem.Text = Trans.T("M_PRINTER_SETTINGS");
+            //printerOptionsToolStripMenuItem.ToolTipText = Trans.T("M_PRINTER_SETTINGS");
             emergencyStopStripButton6.Text = Trans.T("M_EMERGENCY_STOP");
             sDCardToolStripMenuItem.Text = Trans.T("M_SD_CARD");
             sDCardToolStripMenuItem.ToolTipText = Trans.T("L_SD_CARD_MANAGEMENT");
@@ -712,7 +729,7 @@ namespace RepetierHost
             sendScript5ToolStripMenuItem.Enabled = conn.connected;
             if (conn.connected)
             {
-                connectToolStripSplitButton.Image = imageList.Images[0];
+                //connectToolStripSplitButton.Image = imageList.Images[0];
                 connectToolStripSplitButton.ToolTipText = Trans.T("L_DISCONNECT_PRINTER"); // "Disconnect printer";
                 connectToolStripSplitButton.Text = Trans.T("M_DISCONNECT"); // "Disconnect";
                 foreach (ToolStripItem it in connectToolStripSplitButton.DropDownItems)
@@ -722,7 +739,7 @@ namespace RepetierHost
             }
             else
             {
-                connectToolStripSplitButton.Image = imageList.Images[1];
+                //connectToolStripSplitButton.Image = imageList.Images[1];
                 connectToolStripSplitButton.ToolTipText = Trans.T("L_CONNECT_PRINTER"); // "Connect printer";
                 connectToolStripSplitButton.Text = Trans.T("M_CONNECT"); // "Connect";
                 //eeprom.Enabled = false;
@@ -843,7 +860,7 @@ namespace RepetierHost
                 //tab.SelectedTab = tabPrint;
                 current3Dview = ThreeDViewOptions.printing;
                 //conn.analyzer.StartJob();
-                printStripSplitButton4.Image = imageList.Images[3];
+                //printStripSplitButton4.Image = imageList.Images[3];
                 job.BeginJob();
                 job.PushGCodeShortArray(editor.getContentArray(1));
                 job.PushGCodeShortArray(editor.getContentArray(0));
@@ -959,7 +976,7 @@ namespace RepetierHost
 
         private void manualToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openLink("http://www.repetier.com/documentation/repetier-host/");
+            openLink("http://www.by3dp.com");
         }
         public MethodInvoker FirmwareDetected = delegate
         {
@@ -1969,8 +1986,10 @@ namespace RepetierHost
         private void positionToolSplitButton2_Click(object sender, EventArgs e)
         {
 
-            mainHelp.updatePositionControlLocation();
+            //mainHelp.updatePositionControlLocation();
 
+            this.postionGUI.Left = 100;
+            this.postionGUI.Top = 24+54;
             postionGUI.Visible = !postionGUI.Visible;
             postionGUI.BringToFront();
         }
@@ -2032,6 +2051,18 @@ namespace RepetierHost
         {
             this.current3Dview = ThreeDViewOptions.printing;
             this.mainHelp.UpdateEverythingInMain();
+        }
+
+        private void slicerConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           // Main.slic3r.RunConfig();
+            slicerPanel.UpdateSelection();
+            slicerPanaelForm.Visible = !slicerPanaelForm.Visible;
+            //slicerPanel.Width = 600;
+            //slicerPanel.Height = 400;
+           
+            if (slicerPanaelForm.Visible == true)
+                slicerPanaelForm.BringToFront();
         }
 
      

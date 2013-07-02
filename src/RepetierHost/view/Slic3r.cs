@@ -399,7 +399,7 @@ namespace RepetierHost.view
         {
             procSlic3r.Close();
             procSlic3r = null;
-            //Main.main.Invoke(Main.main.slicerPanel.UpdateSelectionInvoker);
+            Main.main.Invoke(Main.main.slicerPanel.UpdateSelectionInvoker);
         }
       /*  public void RunSlice(string file,float centerx,float centery)
         {
@@ -713,9 +713,7 @@ namespace RepetierHost.view
             }
             return null;
         }
-
-
-        public bool RunSliceNew(string STLfileToSlice, float centerx, float centery)
+        public bool RunSliceNew(string file, float centerx, float centery)
         {
             if (procConvert != null)
             {
@@ -734,7 +732,7 @@ namespace RepetierHost.view
             try
             {
                 STL stl = new STL();
-                stl.Load(STLfileToSlice);
+                stl.Load(file);
                 stl.UpdateBoundingBox();
                 if (stl.xMin > ps.BedLeft && stl.yMin > ps.BedFront && stl.xMax < ps.BedLeft + ps.PrintAreaWidth && stl.yMax < ps.BedFront+ps.PrintAreaDepth)
                 {
@@ -753,8 +751,12 @@ namespace RepetierHost.view
             SlicingInfo.SetAction(Trans.T("L_SLICING_STL"));
             string dir = Main.globalSettings.Workdir;
             string config = dir + Path.DirectorySeparatorChar + "slic3r.ini";
-            //string cdir = Main.main.slicerPanel.slic3rDirectory;
-            string cdir = dir;
+
+            // Problem is somewhere here. If I uncomment the next line and get rid of the other cdir declaration than it doesn't work. But as it is right now, it won't read the
+            // ini files. 
+            string cdir = Main.main.slicerPanel.slic3rDirectory;
+            //string cdir = dir;
+
             IniFile ini = new IniFile();
             //BasicConfiguration b = BasicConfiguration.basicConf;
             string fPrinter = cdir + Path.DirectorySeparatorChar + "print"+Path.DirectorySeparatorChar + Main.printerModel.Slic3rPrint + ".ini";
@@ -763,16 +765,16 @@ namespace RepetierHost.view
             ini2.read(cdir + Path.DirectorySeparatorChar + "printer" + Path.DirectorySeparatorChar + Main.printerModel.Slic3rPrinter + ".ini");
             IniFile ini3 = new IniFile();
             ini3.read(cdir + Path.DirectorySeparatorChar + "filament" + Path.DirectorySeparatorChar + Main.printerModel.Slic3rFilament1 + ".ini");
-            IniFile ini3_2 = new IniFile();
-            if(Main.conn.numberExtruder>1)
-                ini3_2.read(cdir + Path.DirectorySeparatorChar + "filament" + Path.DirectorySeparatorChar + Main.printerModel.Slic3rFilament2 + ".ini");
-            IniFile ini3_3 = new IniFile();
-            if (Main.conn.numberExtruder > 2)
-                ini3_3.read(cdir + Path.DirectorySeparatorChar + "filament" + Path.DirectorySeparatorChar + Main.printerModel.Slic3rFilament3 + ".ini");
-            if (Main.conn.numberExtruder > 1)
-                ini3.merge(ini3_2);
-            if (Main.conn.numberExtruder > 2)
-                ini3.merge(ini3_3);
+           // IniFile ini3_2 = new IniFile();
+            //if(Main.conn.numberExtruder>1)
+            //    ini3_2.read(cdir + Path.DirectorySeparatorChar + "filament" + Path.DirectorySeparatorChar + Main.printerModel.Slic3rFilament2 + ".ini");
+            //IniFile ini3_3 = new IniFile();
+            //if (Main.conn.numberExtruder > 2)
+            //    ini3_3.read(cdir + Path.DirectorySeparatorChar + "filament" + Path.DirectorySeparatorChar + Main.printerModel.Slic3rFilament3 + ".ini");
+            //if (Main.conn.numberExtruder > 1)
+            //    ini3.merge(ini3_2);
+            //if (Main.conn.numberExtruder > 2)
+            //    ini3.merge(ini3_3);
             ini.add(ini2);
             ini.add(ini3);
             ini.flatten();
@@ -790,10 +792,10 @@ namespace RepetierHost.view
                 if (File.Exists(BasicConfiguration.basicConf.Slic3rExecutable))
                     exe = BasicConfiguration.basicConf.Slic3rExecutable;*/
 
-                slicefile = STLfileToSlice; // TODO: Not needed??
-                string targetGcodeFile = StlToGCode(STLfileToSlice);
-                if (File.Exists(targetGcodeFile))
-                    File.Delete(targetGcodeFile);
+                slicefile = file; // TODO: Not needed??
+                string target = StlToGCode(file);
+                if (File.Exists(target))
+                    File.Delete(target);
                 procConvert.EnableRaisingEvents = true;
                 procConvert.Exited += new EventHandler(ConversionExited);
                 procConvert.StartInfo.FileName = Main.IsMono ? exe : wrapQuotes(exe);
@@ -805,9 +807,9 @@ namespace RepetierHost.view
                 sb.Append(",");
                 sb.Append(centery.ToString("0", GCode.format));
                 sb.Append(" -o ");
-                sb.Append(wrapQuotes(targetGcodeFile));
+                sb.Append(wrapQuotes(StlToGCode(file)));
                 sb.Append(" ");
-                sb.Append(wrapQuotes(STLfileToSlice));
+                sb.Append(wrapQuotes(file));
                 procConvert.StartInfo.Arguments = sb.ToString();
                 procConvert.StartInfo.UseShellExecute = false;
                 procConvert.StartInfo.RedirectStandardOutput = true;
@@ -838,8 +840,6 @@ namespace RepetierHost.view
             if (p > 0) stl = stl.Substring(0, p);
             return stl + ".gcode";
         }
-
-
         public delegate void LoadGCode(String myString);
         private void ConversionExited(object sender, System.EventArgs e)
         {

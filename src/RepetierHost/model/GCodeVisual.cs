@@ -1461,7 +1461,7 @@ namespace RepetierHost.model
                 GL.DeleteBuffers(1, colbuf);
                 colbufSize = 0;
             }
-            //if (Main.threeDSettings.checkDisableFilamentVisualization.Checked) return; // Disabled too much for card
+            if (Main.threeDSettings.checkDisableFilamentVisualization.Checked) return; // Disabled too much for card
             hotFilamentLength = Main.threeDSettings.hotFilamentLength;
             minHotDist = totalDist - hotFilamentLength;
             Reduce(); // Minimize number of VBO

@@ -41,12 +41,12 @@ namespace RepetierHost.view
                 translate();
                 if (Custom.GetBool("reverseSlicerOrder", false))
                 {
-                    Controls.Remove(panelSlic3rPos);
-                    Controls.Remove(panelTop);
+                    //Controls.Remove(panelSlic3rPos);
+                    //Controls.Remove(panelTop);
                     Controls.Remove(panelSkeinforgePos);
                     Controls.Add(panelSlic3rPos);
                     Controls.Add(panelSkeinforgePos);
-                    Controls.Add(panelTop);
+                    //Controls.Add(panelTop);
                 }
                 if (Custom.GetBool("removeSkeinforge", false))
                 {
@@ -58,7 +58,7 @@ namespace RepetierHost.view
             }
         }
         void translate() {
-            buttonKillSlicing.Text = Trans.T("B_KILL_SLICING_PROCESS");
+            //buttonKillSlicing.Text = Trans.T("B_KILL_SLICING_PROCESS");
             buttonSetupSkeinforge.Text = Trans.T("B_SETUP_SKEINFORGE");
             buttonSetupSlic3r.Text = Trans.T("B_SETUP_SLIC3R");
             buttonSkeinConfigure.Text = Trans.T("B_CONFIGURE_SKEINFORGE");
@@ -72,8 +72,8 @@ namespace RepetierHost.view
             labelSlic3rExtruder1.Text = Trans.T1("L_EXTRUDER_X:", "1");
             labelSlic3rExtruder2.Text = Trans.T1("L_EXTRUDER_X:", "2");
             labelSlic3rExtruder3.Text = Trans.T1("L_EXTRUDER_X:", "3");
-            if(Main.slicer!=null)
-                buttonStartSlicing.Text = Trans.T1("L_SLICE_WITH", Main.slicer.SlicerName);
+            //if(Main.slicer!=null)
+                //buttonStartSlicing.Text = Trans.T1("L_SLICE_WITH", Main.slicer.SlicerName);
         }
         private string noINI(string ini)
         {
@@ -106,10 +106,10 @@ namespace RepetierHost.view
                 return cdir; // +Path.DirectorySeparatorChar + "Slic3r";
             }
         }
-        //public MethodInvoker UpdateSelectionInvoker = delegate
-        //{
-        //    Main.main.slicerPanel.UpdateSelection();
-        //};
+        public MethodInvoker UpdateSelectionInvoker = delegate
+        {
+            Main.main.slicerPanel.UpdateSelection();
+        };
         public void UpdateSelection()
         {
             BasicConfiguration b = BasicConfiguration.basicConf;
@@ -251,15 +251,15 @@ namespace RepetierHost.view
             {
                 switchSlic3rActive.On = true;
                 switchSkeinforge.On = false;
-                //buttonStartSlicing.Text = "Slice with Slic3r\r\n\r\nPrinter = " + b.Slic3rPrinterSettings + "\r\nFilament = " + b.Slic3rFilamentSettings + "\r\nPrint = " + b.Slic3rPrintSettings;
+                label2.Text = "Slice with Slic3r\r\n\r\nPrinter = " + b.Slic3rPrinterSettings + "\r\nFilament = " + b.Slic3rFilamentSettings + "\r\nPrint = " + b.Slic3rPrintSettings;
             }
             else if (Main.slicer.ActiveSlicer == Slicer.SlicerID.Skeinforge)
             {
                 switchSlic3rActive.On = false;
                 switchSkeinforge.On = true;
-                //buttonStartSlicing.Text = "Slice with Skeinforge\r\n\r\nProfile = " + b.SkeinforgeProfile;
+                label2.Text = "Slice with Skeinforge\r\n\r\nProfile = " + b.SkeinforgeProfile;
             }
-            buttonStartSlicing.Text = Trans.T1("L_SLICE_WITH", Main.slicer.SlicerName);
+            //buttonStartSlicing.Text = Trans.T1("L_SLICE_WITH", Main.slicer.SlicerName);
             if (BasicConfiguration.basicConf.SkeinforgeProfileDir.ToLower().IndexOf("sfact") >= 0)
                 groupSkeinforge.Text = "SFACT";
             else groupSkeinforge.Text = "Skeinforge";
@@ -363,6 +363,11 @@ namespace RepetierHost.view
                 if (Main.IsMono && comboSlic3rFilamentSettings3.SelectedItem != null)
                     Main.printerModel.Slic3rFilament3 = (string)comboSlic3rFilamentSettings3.SelectedItem;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Main.main.slicerPanaelForm.Visible = false;
         }
     }
 }
