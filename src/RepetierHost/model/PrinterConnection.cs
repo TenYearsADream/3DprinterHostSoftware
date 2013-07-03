@@ -722,6 +722,7 @@ namespace RepetierHost.model
                     serial = new ProtectedSerialPort();
                 garbageCleared = false;
                 //serial.PortName = "COM2";
+
                 serial.PortName = port;
                 serial.BaudRate = baud;
                 serial.Parity = parity;
@@ -732,8 +733,8 @@ namespace RepetierHost.model
                 serial.ErrorReceived += error;
                 serial.RtsEnable = false;
                 serial.DtrEnable = false;
-                
-                
+
+
                 serial.Open();
                 serial.DtrEnable = true;
                 Thread.Sleep(200);
@@ -742,6 +743,7 @@ namespace RepetierHost.model
                 // If we didn't restart the connection we need to eat
                 // all unread data on this port.
                 serial.DiscardInBuffer();
+
                 /*while(serial.BytesToRead > 0)
                 {
                     string indata = serial.ReadExisting();
@@ -774,7 +776,7 @@ namespace RepetierHost.model
             }
             catch (IOException ex)
             {
-                
+
                 //serial.Close();
                 serial.Dispose();
                 serial = null;
@@ -783,6 +785,16 @@ namespace RepetierHost.model
                 if (eventConnectionChange != null)
                     eventConnectionChange(Trans.T("L_CONNECTION_ERROR")); // "Conn. error");
                 RepetierHost.view.SoundConfig.PlayError(false);
+            }
+            catch (System.UnauthorizedAccessException ex)
+            {
+                serial.Dispose();
+                log(ex.Message, true, 2);
+                serial = null;
+                if (eventConnectionChange != null)
+                    eventConnectionChange("ERROR: Unauthorized serial port access. Is another program accessing the port? Try  restarting computer"); // "Conn. error");
+                RepetierHost.view.SoundConfig.PlayError(false);
+
             }
         }
 

@@ -115,7 +115,6 @@
             this.zoomStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.perspectiveStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
-            this.advancedViewConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.connectToolStripSplitButton = new System.Windows.Forms.ToolStripSplitButton();
             this.importSTLToolSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
@@ -149,6 +148,7 @@
             this.openFileSTLorGcode = new System.Windows.Forms.OpenFileDialog();
             this.saveSTL = new System.Windows.Forms.SaveFileDialog();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.dViewSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -225,10 +225,11 @@
             this.repetierSettingsToolStripMenuItem,
             this.internalSlicingParameterToolStripMenuItem,
             this.soundConfigurationToolStripMenuItem,
-            this.slicerToolStripMenuItem1});
+            this.slicerToolStripMenuItem1,
+            this.dViewSettingsToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-            this.settingsToolStripMenuItem.Text = "&Config";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
+            this.settingsToolStripMenuItem.Text = "&Configuration";
             // 
             // languageToolStripMenuItem
             // 
@@ -732,8 +733,11 @@
             // 
             this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList.Images.SetKeyName(0, "3Slice.png");
-            this.imageList.Images.SetKeyName(1, "load.png");
+            this.imageList.Images.SetKeyName(0, "7Stop.png");
+            this.imageList.Images.SetKeyName(1, "8Pause.PNG");
+            this.imageList.Images.SetKeyName(2, "9Resume.png");
+            this.imageList.Images.SetKeyName(3, "disconnect32.png");
+            this.imageList.Images.SetKeyName(4, "connect32.png");
             // 
             // saveJobDialog
             // 
@@ -757,6 +761,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1017, 503);
             this.panel2.TabIndex = 6;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // listSTLObjects
             // 
@@ -830,8 +835,7 @@
             this.moveStripMenuItem12,
             this.zoomStripMenuItem13,
             this.perspectiveStripMenuItem14,
-            this.resetStripMenuItem15,
-            this.advancedViewConfigurationToolStripMenuItem});
+            this.resetStripMenuItem15});
             this.viewsStripSplitButton6.Image = ((System.Drawing.Image)(resources.GetObject("viewsStripSplitButton6.Image")));
             this.viewsStripSplitButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.viewsStripSplitButton6.Name = "viewsStripSplitButton6";
@@ -873,13 +877,6 @@
             this.resetStripMenuItem15.Size = new System.Drawing.Size(232, 22);
             this.resetStripMenuItem15.Text = "Reset";
             this.resetStripMenuItem15.Click += new System.EventHandler(this.resetStripMenuItem15_Click);
-            // 
-            // advancedViewConfigurationToolStripMenuItem
-            // 
-            this.advancedViewConfigurationToolStripMenuItem.Name = "advancedViewConfigurationToolStripMenuItem";
-            this.advancedViewConfigurationToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            this.advancedViewConfigurationToolStripMenuItem.Text = "Advanced View Configuration";
-            this.advancedViewConfigurationToolStripMenuItem.Click += new System.EventHandler(this.advancedViewConfigurationToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -949,12 +946,14 @@
             this.withRaftToolStripMenuItem1.Name = "withRaftToolStripMenuItem1";
             this.withRaftToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.withRaftToolStripMenuItem1.Text = "With Raft";
+            this.withRaftToolStripMenuItem1.Click += new System.EventHandler(this.withRaftToolStripMenuItem1_Click);
             // 
             // withSupportsToolStripMenuItem1
             // 
             this.withSupportsToolStripMenuItem1.Name = "withSupportsToolStripMenuItem1";
             this.withSupportsToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.withSupportsToolStripMenuItem1.Text = "With Supports";
+            this.withSupportsToolStripMenuItem1.Click += new System.EventHandler(this.withSupportsToolStripMenuItem1_Click);
             // 
             // printStripSplitButton4
             // 
@@ -1160,6 +1159,13 @@
             this.saveSTL.Filter = "STL-Files|*.stl;*.STL";
             this.saveSTL.Title = "Save composition";
             // 
+            // dViewSettingsToolStripMenuItem
+            // 
+            this.dViewSettingsToolStripMenuItem.Name = "dViewSettingsToolStripMenuItem";
+            this.dViewSettingsToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+            this.dViewSettingsToolStripMenuItem.Text = "3D View Settings";
+            this.dViewSettingsToolStripMenuItem.Click += new System.EventHandler(this.dViewSettingsToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1206,7 +1212,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolConnection;
         private System.Windows.Forms.ToolStripStatusLabel toolAction;
-        private System.Windows.Forms.ToolStripProgressBar toolProgress;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerToolStripMenuItem;
@@ -1276,7 +1281,6 @@
         private System.Windows.Forms.ToolStripSplitButton helpSplitButton3;
         private System.Windows.Forms.ToolStripMenuItem baoyanAutomationWebsiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userManualToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem advancedViewConfigurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton topViewStripButton1;
         private System.Windows.Forms.ToolStripButton sideViewStripButton1;
         private System.Windows.Forms.ToolStripButton frontStripButton1;
@@ -1310,8 +1314,6 @@
         private System.Windows.Forms.ToolStripMenuItem slicerSelectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gcodeEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopSlicingProcessToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem withRaftToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem withSupportsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
         public System.Windows.Forms.ToolStripMenuItem loadAFileMenuModeMenuOption;
         public System.Windows.Forms.ToolStripMenuItem STLEditorMenuOption;
@@ -1319,6 +1321,10 @@
         public System.Windows.Forms.ToolStripMenuItem livePrintingMenuOption;
         private System.Windows.Forms.ToolStripMenuItem slicerConfigurationToolStripMenuItem;
         public System.Windows.Forms.SaveFileDialog saveSTL;
+        public System.Windows.Forms.ToolStripMenuItem withRaftToolStripMenuItem1;
+        public System.Windows.Forms.ToolStripMenuItem withSupportsToolStripMenuItem1;
+        public System.Windows.Forms.ToolStripProgressBar toolProgress;
+        private System.Windows.Forms.ToolStripMenuItem dViewSettingsToolStripMenuItem;
     }
 }
 

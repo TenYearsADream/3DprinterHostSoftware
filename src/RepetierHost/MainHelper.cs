@@ -45,10 +45,20 @@ namespace RepetierHost
            update3DViewselection();
            SyncViews();
            UpdateConnections();
+           UpdateProgressBar();
            
            Update3D();
            updatePositionControlLocation();
        }
+
+        private void UpdateProgressBar()
+        {
+            if(RepetierHost.Main.conn.job.mode !=1 )
+                Main.main.toolProgress.Enabled = false;
+            else
+                Main.main.toolProgress.Enabled = true;
+            //throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Updates the current 3D view
@@ -63,16 +73,16 @@ namespace RepetierHost
                     main.threedview.SetView(main.fileAddOrRemove.stleditorView);
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.STLeditor:
-                    main.toolStripStatusLabel1.Text = "stl editor";
+                    main.toolStripStatusLabel1.Text = "stl Editor";
                     main.threedview.SetView(main.fileAddOrRemove.stleditorView);
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.gcode:
-                    main.toolStripStatusLabel1.Text = "gcode editor";
+                    main.toolStripStatusLabel1.Text = "Gcode Editor";
                     main.listSTLObjects.Visible = false;
                     main.threedview.SetView(main.gcodePreviewView);
                     break;
-                case RepetierHost.Main.ThreeDViewOptions.printing:
-                    main.toolStripStatusLabel1.Text = "printPreview";
+                case RepetierHost.Main.ThreeDViewOptions.livePrinting:
+                    main.toolStripStatusLabel1.Text = "Live Printing View";
                     main.listSTLObjects.Visible = false;
                     main.threedview.SetView(main.printPreview);
                     break;
@@ -224,6 +234,7 @@ namespace RepetierHost
                          Main.main.gCodeVisualizationMenuOption.Enabled = false;
 
                     Main.main.livePrintingMenuOption.Enabled = false;
+                    Main.main.emergencyStopStripButton6.Enabled = false;
 
 
                     break;
@@ -234,6 +245,7 @@ namespace RepetierHost
                     Main.main.positionToolSplitButton2.Enabled = true;
                     Main.main.sliceToolSplitButton3.Enabled = true;
                     Main.main.printStripSplitButton4.Enabled = false;
+
                     Main.main.saveGCodeToolStripMenuItem.Enabled = false;
                     Main.main.saveNewSTLMenuItem11.Enabled = true;
 
@@ -245,7 +257,8 @@ namespace RepetierHost
                     else
                          Main.main.gCodeVisualizationMenuOption.Enabled = false;
 
-                     Main.main.livePrintingMenuOption.Enabled = false;                    
+                     Main.main.livePrintingMenuOption.Enabled = false;
+                     Main.main.emergencyStopStripButton6.Enabled = false;
                     break;
 
                 case RepetierHost.Main.ThreeDViewOptions.gcode:
@@ -255,8 +268,13 @@ namespace RepetierHost
                     if (Main.conn.connected == true)
                     {
                         Main.main.printStripSplitButton4.Enabled = true;
-                        Main.main.livePrintingMenuOption.Enabled = true;     
+                        Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[2];
+                        Main.main.livePrintingMenuOption.Enabled = true;
+                        Main.main.emergencyStopStripButton6.Enabled = true;
                     }
+                    else
+                        Main.main.emergencyStopStripButton6.Enabled = false;
+
                     Main.main.saveGCodeToolStripMenuItem.Enabled = true;
                     Main.main.loadAFileMenuModeMenuOption.Enabled = true;
                     if (Main.main.listSTLObjects.Items.Count > 0)
@@ -266,7 +284,7 @@ namespace RepetierHost
                     }
 
                     break;
-                case RepetierHost.Main.ThreeDViewOptions.printing:
+                case RepetierHost.Main.ThreeDViewOptions.livePrinting:
                     Main.main.positionToolSplitButton2.Enabled = false;
                     Main.main.sliceToolSplitButton3.Enabled = false;
                     Main.main.printStripSplitButton4.Enabled = Main.conn.connected;
@@ -284,6 +302,7 @@ namespace RepetierHost
                         Main.main.STLEditorMenuOption.Enabled = true;
                         Main.main.saveNewSTLMenuItem11.Enabled = true;
                     }
+                    Main.main.emergencyStopStripButton6.Enabled = true;
 
                     break;
             }
@@ -294,13 +313,15 @@ namespace RepetierHost
                 //Main.main.printStripSplitButton4.Enabled = Main.conn.connected;
                 Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_RUN_JOB"); // "Run job";
                 Main.main.printStripSplitButton4.Text = Trans.T("M_RUN_JOB"); //"Run job";
-                //Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[2];
+
+                
+                Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[2]; // image "Play"
             }
             else
             {
                 Main.main.printStripSplitButton4.Enabled = true;
                 Main.main.killJobToolStripMenuItem.Enabled = true;
-                //Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[3];
+                Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[1]; // Image "pause"
                 Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_PAUSE_JOB"); //"Pause job";
                 Main.main.printStripSplitButton4.Text = Trans.T("M_PAUSE_JOB"); //"Pause job";
                 Main.main.printVisual.Clear();

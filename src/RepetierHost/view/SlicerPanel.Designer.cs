@@ -31,15 +31,20 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SlicerPanel));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.generateRaftCheckbox = new System.Windows.Forms.CheckBox();
+            this.generateSupportCheckbox = new System.Windows.Forms.CheckBox();
             this.buttonSetupSlic3r = new System.Windows.Forms.Button();
             this.buttonSlic3rConfigure = new System.Windows.Forms.Button();
             this.comboSlic3rPrinterSettings = new System.Windows.Forms.ComboBox();
+            this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboSlic3rFilamentSettings3 = new System.Windows.Forms.ComboBox();
             this.comboSlic3rFilamentSettings2 = new System.Windows.Forms.ComboBox();
             this.comboSlic3rFilamentSettings = new System.Windows.Forms.ComboBox();
             this.labelSlic3rExtruder3 = new System.Windows.Forms.Label();
             this.comboSlic3rPrintSettings = new System.Windows.Forms.ComboBox();
             this.labelSlic3rExtruder2 = new System.Windows.Forms.Label();
+            this.switchSlic3rActive = new RepetierHost.view.SwitchButton();
             this.labelSlic3rExtruder1 = new System.Windows.Forms.Label();
             this.labelPrinterSettings = new System.Windows.Forms.Label();
             this.labelFilamentSettings = new System.Windows.Forms.Label();
@@ -48,26 +53,26 @@
             this.buttonSetupSkeinforge = new System.Windows.Forms.Button();
             this.buttonSkeinConfigure = new System.Windows.Forms.Button();
             this.comboSkeinProfile = new System.Windows.Forms.ComboBox();
+            this.switchSkeinforge = new RepetierHost.view.SwitchButton();
             this.labelProfile = new System.Windows.Forms.Label();
             this.panelSlic3rPos = new System.Windows.Forms.Panel();
             this.panelSkeinforgePos = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.mainBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.switchSkeinforge = new RepetierHost.view.SwitchButton();
-            this.switchSlic3rActive = new RepetierHost.view.SwitchButton();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.groupSkeinforge.SuspendLayout();
             this.panelSlic3rPos.SuspendLayout();
             this.panelSkeinforgePos.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.generateRaftCheckbox);
+            this.groupBox2.Controls.Add(this.generateSupportCheckbox);
             this.groupBox2.Controls.Add(this.buttonSetupSlic3r);
             this.groupBox2.Controls.Add(this.buttonSlic3rConfigure);
             this.groupBox2.Controls.Add(this.comboSlic3rPrinterSettings);
@@ -84,10 +89,43 @@
             this.groupBox2.Controls.Add(this.labelPrintSettings);
             this.groupBox2.Location = new System.Drawing.Point(3, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(604, 211);
+            this.groupBox2.Size = new System.Drawing.Size(604, 283);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Slic3r";
+            // 
+            // label3
+            // 
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label3.Location = new System.Drawing.Point(3, 205);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(600, 36);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "The support and raft checkboxes will over ride specific slic3r configurations. Ad" +
+    "vanced users should uncheck the boxes and use their own custom slic3r settings. " +
+    "";
+            // 
+            // generateRaftCheckbox
+            // 
+            this.generateRaftCheckbox.AutoSize = true;
+            this.generateRaftCheckbox.Location = new System.Drawing.Point(151, 244);
+            this.generateRaftCheckbox.Name = "generateRaftCheckbox";
+            this.generateRaftCheckbox.Size = new System.Drawing.Size(93, 17);
+            this.generateRaftCheckbox.TabIndex = 5;
+            this.generateRaftCheckbox.Text = "Generate Raft";
+            this.generateRaftCheckbox.UseVisualStyleBackColor = true;
+            this.generateRaftCheckbox.CheckedChanged += new System.EventHandler(this.generateRaftCheckbox_CheckedChanged);
+            // 
+            // generateSupportCheckbox
+            // 
+            this.generateSupportCheckbox.AutoSize = true;
+            this.generateSupportCheckbox.Location = new System.Drawing.Point(16, 244);
+            this.generateSupportCheckbox.Name = "generateSupportCheckbox";
+            this.generateSupportCheckbox.Size = new System.Drawing.Size(110, 17);
+            this.generateSupportCheckbox.TabIndex = 4;
+            this.generateSupportCheckbox.Text = "Generate Support";
+            this.generateSupportCheckbox.UseVisualStyleBackColor = true;
+            this.generateSupportCheckbox.CheckedChanged += new System.EventHandler(this.generateSupportCheckbox_CheckedChanged);
             // 
             // buttonSetupSlic3r
             // 
@@ -126,6 +164,10 @@
             this.comboSlic3rPrinterSettings.Size = new System.Drawing.Size(163, 21);
             this.comboSlic3rPrinterSettings.TabIndex = 1;
             this.comboSlic3rPrinterSettings.SelectedIndexChanged += new System.EventHandler(this.comboSlic3rPrinterSettings_SelectedIndexChanged);
+            // 
+            // mainBindingSource
+            // 
+            this.mainBindingSource.DataSource = typeof(RepetierHost.model.PrinterModel);
             // 
             // comboSlic3rFilamentSettings3
             // 
@@ -193,6 +235,24 @@
             this.labelSlic3rExtruder2.TabIndex = 0;
             this.labelSlic3rExtruder2.Text = "Extruder 2:";
             // 
+            // switchSlic3rActive
+            // 
+            this.switchSlic3rActive.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.switchSlic3rActive.ButtonFlatBorderColor = System.Drawing.Color.Empty;
+            this.switchSlic3rActive.ButtonFlatBorderSize = 1;
+            this.switchSlic3rActive.ButtonFlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.switchSlic3rActive.ButtonTextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.switchSlic3rActive.Location = new System.Drawing.Point(10, 20);
+            this.switchSlic3rActive.MinimumSize = new System.Drawing.Size(90, 23);
+            this.switchSlic3rActive.Name = "switchSlic3rActive";
+            this.switchSlic3rActive.On = false;
+            this.switchSlic3rActive.Size = new System.Drawing.Size(100, 23);
+            this.switchSlic3rActive.TabIndex = 0;
+            this.switchSlic3rActive.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.switchSlic3rActive.TextOff = "Active";
+            this.switchSlic3rActive.TextOn = "Active";
+            this.switchSlic3rActive.OnChange += new RepetierHost.view.SwitchEventHandler(this.switchSlic3rActive_OnChange);
+            // 
             // labelSlic3rExtruder1
             // 
             this.labelSlic3rExtruder1.AutoSize = true;
@@ -239,7 +299,7 @@
             this.groupSkeinforge.Controls.Add(this.comboSkeinProfile);
             this.groupSkeinforge.Controls.Add(this.switchSkeinforge);
             this.groupSkeinforge.Controls.Add(this.labelProfile);
-            this.groupSkeinforge.Location = new System.Drawing.Point(3, 2);
+            this.groupSkeinforge.Location = new System.Drawing.Point(3, 5);
             this.groupSkeinforge.Name = "groupSkeinforge";
             this.groupSkeinforge.Size = new System.Drawing.Size(604, 86);
             this.groupSkeinforge.TabIndex = 2;
@@ -284,65 +344,6 @@
             this.comboSkeinProfile.TabIndex = 1;
             this.comboSkeinProfile.SelectedIndexChanged += new System.EventHandler(this.comboSkeinProfile_SelectedIndexChanged);
             // 
-            // labelProfile
-            // 
-            this.labelProfile.AutoSize = true;
-            this.labelProfile.Location = new System.Drawing.Point(10, 53);
-            this.labelProfile.Name = "labelProfile";
-            this.labelProfile.Size = new System.Drawing.Size(39, 13);
-            this.labelProfile.TabIndex = 0;
-            this.labelProfile.Text = "Profile:";
-            // 
-            // panelSlic3rPos
-            // 
-            this.panelSlic3rPos.Controls.Add(this.groupBox2);
-            this.panelSlic3rPos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSlic3rPos.Location = new System.Drawing.Point(0, 0);
-            this.panelSlic3rPos.Name = "panelSlic3rPos";
-            this.panelSlic3rPos.Size = new System.Drawing.Size(610, 219);
-            this.panelSlic3rPos.TabIndex = 5;
-            // 
-            // panelSkeinforgePos
-            // 
-            this.panelSkeinforgePos.Controls.Add(this.groupSkeinforge);
-            this.panelSkeinforgePos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSkeinforgePos.Location = new System.Drawing.Point(0, 219);
-            this.panelSkeinforgePos.Name = "panelSkeinforgePos";
-            this.panelSkeinforgePos.Size = new System.Drawing.Size(610, 96);
-            this.panelSkeinforgePos.TabIndex = 6;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(465, 363);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(142, 34);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Exit";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(293, 374);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Changes are Automatically Saved";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 327);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "label2";
-            // 
-            // mainBindingSource
-            // 
-            this.mainBindingSource.DataSource = typeof(RepetierHost.model.PrinterModel);
-            // 
             // switchSkeinforge
             // 
             this.switchSkeinforge.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -361,43 +362,70 @@
             this.switchSkeinforge.TextOn = "Active";
             this.switchSkeinforge.OnChange += new RepetierHost.view.SwitchEventHandler(this.switchSkeinforge_OnChange);
             // 
-            // switchSlic3rActive
+            // labelProfile
             // 
-            this.switchSlic3rActive.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.switchSlic3rActive.ButtonFlatBorderColor = System.Drawing.Color.Empty;
-            this.switchSlic3rActive.ButtonFlatBorderSize = 1;
-            this.switchSlic3rActive.ButtonFlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.switchSlic3rActive.ButtonTextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.switchSlic3rActive.Location = new System.Drawing.Point(10, 20);
-            this.switchSlic3rActive.MinimumSize = new System.Drawing.Size(90, 23);
-            this.switchSlic3rActive.Name = "switchSlic3rActive";
-            this.switchSlic3rActive.On = false;
-            this.switchSlic3rActive.Size = new System.Drawing.Size(100, 23);
-            this.switchSlic3rActive.TabIndex = 0;
-            this.switchSlic3rActive.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.switchSlic3rActive.TextOff = "Active";
-            this.switchSlic3rActive.TextOn = "Active";
-            this.switchSlic3rActive.OnChange += new RepetierHost.view.SwitchEventHandler(this.switchSlic3rActive_OnChange);
+            this.labelProfile.AutoSize = true;
+            this.labelProfile.Location = new System.Drawing.Point(10, 53);
+            this.labelProfile.Name = "labelProfile";
+            this.labelProfile.Size = new System.Drawing.Size(39, 13);
+            this.labelProfile.TabIndex = 0;
+            this.labelProfile.Text = "Profile:";
+            // 
+            // panelSlic3rPos
+            // 
+            this.panelSlic3rPos.Controls.Add(this.groupBox2);
+            this.panelSlic3rPos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelSlic3rPos.Location = new System.Drawing.Point(0, 0);
+            this.panelSlic3rPos.Name = "panelSlic3rPos";
+            this.panelSlic3rPos.Size = new System.Drawing.Size(610, 290);
+            this.panelSlic3rPos.TabIndex = 5;
+            // 
+            // panelSkeinforgePos
+            // 
+            this.panelSkeinforgePos.Controls.Add(this.groupSkeinforge);
+            this.panelSkeinforgePos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelSkeinforgePos.Location = new System.Drawing.Point(0, 290);
+            this.panelSkeinforgePos.Name = "panelSkeinforgePos";
+            this.panelSkeinforgePos.Size = new System.Drawing.Size(610, 91);
+            this.panelSkeinforgePos.TabIndex = 6;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(465, 423);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(142, 34);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Exit";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(441, 398);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(166, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Changes are Automatically Saved";
             // 
             // SlicerPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panelSkeinforgePos);
             this.Controls.Add(this.panelSlic3rPos);
             this.Name = "SlicerPanel";
-            this.Size = new System.Drawing.Size(610, 397);
+            this.Size = new System.Drawing.Size(610, 460);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
             this.groupSkeinforge.ResumeLayout(false);
             this.groupSkeinforge.PerformLayout();
             this.panelSlic3rPos.ResumeLayout(false);
             this.panelSkeinforgePos.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mainBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,6 +459,8 @@
         private System.Windows.Forms.BindingSource mainBindingSource;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.CheckBox generateRaftCheckbox;
+        public System.Windows.Forms.CheckBox generateSupportCheckbox;
     }
 }

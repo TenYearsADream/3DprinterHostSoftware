@@ -85,7 +85,7 @@ namespace RepetierHost
         public double gcodePrintingTime = 0;
         public FileAddOrRemove fileAddOrRemove = null;
 
-        public enum ThreeDViewOptions { loadAFile, STLeditor, gcode, printing };
+        public enum ThreeDViewOptions { loadAFile, STLeditor, gcode, livePrinting };
         public ThreeDViewOptions current3Dview = ThreeDViewOptions.loadAFile;
 
         public bool DeveloperMode = false;
@@ -309,7 +309,7 @@ namespace RepetierHost
             slicerPanel = new SlicerPanel();
             slicerPanaelForm = new Form();
             slicerPanaelForm.Visible = false;
-            slicerPanaelForm.Width = 620;
+            slicerPanaelForm.Width = 650;
             slicerPanaelForm.Height = 500;
             slicerPanaelForm.Controls.Add(slicerPanel);
             slicerPanaelForm.ControlBox = false;
@@ -491,8 +491,8 @@ namespace RepetierHost
             languageToolStripMenuItem.Text = Trans.T("M_LANGUAGE");
             printerSettingsToolStripMenuItem.Text = Trans.T("M_PRINTER_SETTINGS");
             //eeprom.Text = Trans.T("M_EEPROM_SETTINGS");
-            advancedViewConfigurationToolStripMenuItem.Text = Trans.T("M_3D_VIEWER_CONFIGURATION");
-            repetierSettingsToolStripMenuItem.Text = Trans.T("M_REPETIER_SETTINGS");
+            //advancedViewConfigurationToolStripMenuItem.Text = Trans.T("M_3D_VIEWER_CONFIGURATION");
+            //repetierSettingsToolStripMenuItem.Text = Trans.T("M_REPETIER_SETTINGS");
             internalSlicingParameterToolStripMenuItem.Text = Trans.T("M_TESTCASE_SETTINGS");
             soundConfigurationToolStripMenuItem.Text = Trans.T("M_SOUND_CONFIGURATION");
             showExtruderTemperaturesMenuItem.Text = Trans.T("M_SHOW_EXTRUDER_TEMPERATURES");
@@ -530,7 +530,7 @@ namespace RepetierHost
             sendScript5ToolStripMenuItem.Text = Trans.T("M_SEND_SCRIPT_5");
            // repetierHostHomepageToolStripMenuItem.Text = Trans.T("M_REPETIER_HOST_HOMEPAGE");
            //// repetierHostDownloadPageToolStripMenuItem.Text = Trans.T("M_REPETIER_HOST_DOWNLOAD_PAGE");
-            manualToolStripMenuItem.Text = Trans.T("M_MANUAL");
+           // manualToolStripMenuItem.Text = Trans.T("M_MANUAL");
             //slic3rHomepageToolStripMenuItem.Text = Trans.T("M_SLIC3R_HOMEPAGE");
             //skeinforgeHomepageToolStripMenuItem.Text = Trans.T("M_SKEINFORGE_HOMEPAGE");
             //repRapWebsiteToolStripMenuItem.Text = Trans.T("M_REPRAP_WEBSITE");
@@ -729,7 +729,7 @@ namespace RepetierHost
             sendScript5ToolStripMenuItem.Enabled = conn.connected;
             if (conn.connected)
             {
-                //connectToolStripSplitButton.Image = imageList.Images[0];
+                connectToolStripSplitButton.Image = imageList.Images[4];
                 connectToolStripSplitButton.ToolTipText = Trans.T("L_DISCONNECT_PRINTER"); // "Disconnect printer";
                 connectToolStripSplitButton.Text = Trans.T("M_DISCONNECT"); // "Disconnect";
                 foreach (ToolStripItem it in connectToolStripSplitButton.DropDownItems)
@@ -739,7 +739,7 @@ namespace RepetierHost
             }
             else
             {
-                //connectToolStripSplitButton.Image = imageList.Images[1];
+                connectToolStripSplitButton.Image = imageList.Images[3];
                 connectToolStripSplitButton.ToolTipText = Trans.T("L_CONNECT_PRINTER"); // "Connect printer";
                 connectToolStripSplitButton.Text = Trans.T("M_CONNECT"); // "Connect";
                 //eeprom.Enabled = false;
@@ -858,7 +858,7 @@ namespace RepetierHost
             else
             {
                 //tab.SelectedTab = tabPrint;
-                current3Dview = ThreeDViewOptions.printing;
+                current3Dview = ThreeDViewOptions.livePrinting;
                 //conn.analyzer.StartJob();
                 //printStripSplitButton4.Image = imageList.Images[3];
                 job.BeginJob();
@@ -1750,8 +1750,7 @@ namespace RepetierHost
 
         private void advancedViewConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            threeDSettings.Show();
-            threeDSettings.BringToFront();
+           
         }
 
         private void stopSlicerToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1848,10 +1847,11 @@ namespace RepetierHost
             else
             {
                 //tab.SelectedTab = tabPrint;
+                current3Dview = ThreeDViewOptions.livePrinting;
                 conn.analyzer.StartJob();
 
                 // TODO: Uncomment this section. The button should not be pushed unless a job is ready. 
-                printStripSplitButton4.Image = imageList.Images[3];
+                //printStripSplitButton4.Image = imageList.Images[3];
                 job.BeginJob();
                 job.PushGCodeShortArray(editor.getContentArray(1));
                 job.PushGCodeShortArray(editor.getContentArray(0));
@@ -2049,7 +2049,7 @@ namespace RepetierHost
 
         private void livePrintingMenuOption_Click(object sender, EventArgs e)
         {
-            this.current3Dview = ThreeDViewOptions.printing;
+            this.current3Dview = ThreeDViewOptions.livePrinting;
             this.mainHelp.UpdateEverythingInMain();
         }
 
@@ -2063,6 +2063,57 @@ namespace RepetierHost
            
             if (slicerPanaelForm.Visible == true)
                 slicerPanaelForm.BringToFront();
+        }
+
+        private void withRaftToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            withRaftToolStripMenuItem1.Checked = !withRaftToolStripMenuItem1.Checked;
+            slicerPanel.generateRaftCheckbox.Checked = withRaftToolStripMenuItem1.Checked;
+        }
+
+        private void withSupportsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            withSupportsToolStripMenuItem1.Checked = !withSupportsToolStripMenuItem1.Checked;
+            slicerPanel.generateSupportCheckbox.Checked = withSupportsToolStripMenuItem1.Checked;
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dViewSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            threeDSettings.Show();
+            threeDSettings.BringToFront();
+        }
+
+        private void centerOnObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.threedview.CenterViewOnObjects();
+        }
+
+        private void resetSoftwareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        //    const string message =
+        // "Are you sure that you would like to reset everything?";
+        //    const string caption = "Reset";
+        //    var result = MessageBox.Show(message, caption,
+        //                                 MessageBoxButtons.YesNo,
+        //                                 MessageBoxIcon.Question);
+
+        //    // If the no button was pressed ... 
+        //    if (result == DialogResult.Yes)
+        //    {
+        //        //RegistryKey.
+        //        //RegistryKey delKey = Registry.LocalMachine.OpenSubKey("Software", true);
+
+        //        //delKey.DeleteSubKey("Baoyan");
+        //        RegMemory.
+                   
+        //    }
+
+            
         }
 
      

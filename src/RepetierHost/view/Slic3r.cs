@@ -763,6 +763,7 @@ namespace RepetierHost.view
             ini.read(fPrinter);
             IniFile ini2 = new IniFile();
             ini2.read(cdir + Path.DirectorySeparatorChar + "printer" + Path.DirectorySeparatorChar + Main.printerModel.Slic3rPrinter + ".ini");
+            
             IniFile ini3 = new IniFile();
             ini3.read(cdir + Path.DirectorySeparatorChar + "filament" + Path.DirectorySeparatorChar + Main.printerModel.Slic3rFilament1 + ".ini");
            // IniFile ini3_2 = new IniFile();
@@ -777,6 +778,7 @@ namespace RepetierHost.view
             //    ini3.merge(ini3_3);
             ini.add(ini2);
             ini.add(ini3);
+            ini.AddSupportandRaft();
             ini.flatten();
             ini.write(config);
             procConvert = new Process();

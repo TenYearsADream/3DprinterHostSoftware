@@ -54,6 +54,19 @@ namespace RepetierHost.view
                     switchSlic3rActive.On = true;
                     switchSlic3rActive.Visible = false;
                 }
+
+
+                if (RegMemory.GetBool("generateSupportMaterial", false))
+                {
+                    this.generateSupportCheckbox.Checked = true;
+                    Main.main.withSupportsToolStripMenuItem1.Checked = true;
+                }
+                if (RegMemory.GetBool("generateRaft", false))
+                {
+                    this.generateRaftCheckbox.Checked = true;
+                    Main.main.withRaftToolStripMenuItem1.Checked = true;
+                }
+
                 mainBindingSource.DataSource = Main.printerModel;
             }
         }
@@ -251,13 +264,13 @@ namespace RepetierHost.view
             {
                 switchSlic3rActive.On = true;
                 switchSkeinforge.On = false;
-                label2.Text = "Slice with Slic3r\r\n\r\nPrinter = " + b.Slic3rPrinterSettings + "\r\nFilament = " + b.Slic3rFilamentSettings + "\r\nPrint = " + b.Slic3rPrintSettings;
+               // label2.Text = "Slice with Slic3r\r\n\r\nPrinter = " + b.Slic3rPrinterSettings + "\r\nFilament = " + b.Slic3rFilamentSettings + "\r\nPrint = " + b.Slic3rPrintSettings;
             }
             else if (Main.slicer.ActiveSlicer == Slicer.SlicerID.Skeinforge)
             {
                 switchSlic3rActive.On = false;
                 switchSkeinforge.On = true;
-                label2.Text = "Slice with Skeinforge\r\n\r\nProfile = " + b.SkeinforgeProfile;
+                //label2.Text = "Slice with Skeinforge\r\n\r\nProfile = " + b.SkeinforgeProfile;
             }
             //buttonStartSlicing.Text = Trans.T1("L_SLICE_WITH", Main.slicer.SlicerName);
             if (BasicConfiguration.basicConf.SkeinforgeProfileDir.ToLower().IndexOf("sfact") >= 0)
@@ -368,6 +381,24 @@ namespace RepetierHost.view
         private void button1_Click(object sender, EventArgs e)
         {
             Main.main.slicerPanaelForm.Visible = false;
+           
+           
         }
+
+        private void generateSupportCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.main.withSupportsToolStripMenuItem1.Checked = generateSupportCheckbox.Checked;
+          
+            RegMemory.SetBool("generateSupportMaterial", this.generateSupportCheckbox.Checked);
+        }
+
+        private void generateRaftCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.main.withRaftToolStripMenuItem1.Checked = generateRaftCheckbox.Checked;
+            RegMemory.SetBool("generateRaft", this.generateSupportCheckbox.Checked);
+            
+        }
+
+       
     }
 }

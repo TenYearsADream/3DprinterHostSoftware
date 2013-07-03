@@ -60,6 +60,14 @@ namespace RepetierHost.model
                 }
             }
         }
+
+        public void replaceValue(string targetName, string replacementString)
+        {
+            if (entries.ContainsKey(targetName))
+                this.entries[targetName] = replacementString;
+            else
+                addLine(replacementString);
+        }
     }
     public class IniFile
     {
@@ -154,6 +162,45 @@ namespace RepetierHost.model
                     lines.AddLast(line);
             }
             File.WriteAllLines(path, lines.ToArray());
+        }
+
+        internal void AddSupportandRaft()
+        {
+            if (Main.main.slicerPanel.generateSupportCheckbox.Checked == true)
+                addSupportMaterial();
+
+            if (Main.main.slicerPanel.generateRaftCheckbox.Checked == true)
+                addRaft();
+            // throw new NotImplementedException();
+        }
+
+        private void addRaft()
+        {
+            foreach (IniSection s in sections.Values)
+            {
+                s.replaceValue("raft_layers", "raft_layers = 5");              
+            }
+
+        }
+        
+        private void addSupportMaterial()
+        {
+
+            foreach (IniSection s in sections.Values)
+            {
+                s.replaceValue("support_material",                  "support_material = 1");
+                s.replaceValue("support_material_angle",            "support_material_angle = 0");
+                s.replaceValue("support_material_enforce_layers",   "support_material_enforce_layers = 2");
+                s.replaceValue("support_material_extruder",         "support_material_extruder = 1");
+                s.replaceValue("support_material_extrusion_width",  "support_material_extrusion_width = 0");
+                s.replaceValue("support_material_interface_layers", "support_material_interface_layers = 2");
+                s.replaceValue("support_material_interface_spacing","support_material_interface_spacing = 0");
+                s.replaceValue("support_material_pattern",          "support_material_pattern = rectilinear-grid");
+                s.replaceValue("support_material_spacing",          "support_material_spacing = 2.5");
+                s.replaceValue("support_material_speed",            "support_material_speed = 60");
+                s.replaceValue("support_material_threshold",        "support_material_threshold = 0");
+            }
+
         }
     }
 }
