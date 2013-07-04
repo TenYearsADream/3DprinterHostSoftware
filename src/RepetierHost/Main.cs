@@ -172,7 +172,7 @@ namespace RepetierHost
         [System.Runtime.InteropServices.DllImport("libc")]
         static extern int uname(IntPtr buf);
         public Main()
-        {
+        {   
             executeHostCall = new executeHostCommandDelegate(this.executeHostCommand);
             repetierKey = Custom.BaseKey; // Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");
             repetierKey.SetValue("installPath", Application.StartupPath);
@@ -194,7 +194,10 @@ namespace RepetierHost
             main = this;
           
             SplashScreen.run();
-            trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + "data" + Path.DirectorySeparatorChar + "translations");
+
+            // Temp change the directory which looks for translations. 
+            trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "Translation");
+//            trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + "data" + Path.DirectorySeparatorChar + "translations");
             SwitchButton.imageOffset = RegMemory.GetInt("onOffImageOffset", 0);
             generator = new GCodeGenerator();
             globalSettings = new GlobalSettings();
@@ -486,11 +489,44 @@ namespace RepetierHost
         {
             fileToolStripMenuItem.Text = Trans.T("M_FILE");
             settingsToolStripMenuItem.Text = Trans.T("M_CONFIG");
-            //slicerToolStripMenuItem.Text = Trans.T("M_SLICER");
+            this.repetierSettingsToolStripMenuItem.Text = Trans.T("M_SOFTWARE_GENERAL_SETTINGS");
+            this.slicerToolStripMenuItem1.Text = Trans.T("M_SLICER");
+            this.slicerSelectionToolStripMenuItem.Text = Trans.T("M_SLICER_DIRECTORY_SETUP");
+            this.slicerConfigurationToolStripMenuItem.Text = Trans.T("M_SLICER_CONFIGURATION");
+            this.gcodeEditorToolStripMenuItem.Text = Trans.T("M_GCODE_EDITOR");
+            this.stopSlicingProcessToolStripMenuItem.Text = Trans.T("M_STOP_SLICER");
+            this.dViewSettingsToolStripMenuItem.Text = Trans.T("M_3D_VIEW_OPTIONS");
+            this.manualControlToolStripMenuItem.Text = Trans.T("M_MANUAL");
+            this.topViewStripButton1.Text = Trans.T("M_TOP");
+            this.sideViewStripButton1.Text = Trans.T("M_SIDE");
+            this.frontStripButton1.Text = Trans.T("M_FRONT");
+            this.viewsStripSplitButton6.Text = Trans.T("M_VIEW");
+            this.rotateStripMenuItem11.Text = Trans.T("M_Rotate");
+            this.moveStripMenuItem12.Text = Trans.T("M_MOVE");
+            this.zoomStripMenuItem13.Text = Trans.T("M_ZOOM");
+            this.perspectiveStripMenuItem14.Text = Trans.T("M_PERSPECTIVE");
+            this.resetStripMenuItem15.Text = Trans.T("M_RESET_VIEW");
+            this.positionToolSplitButton2.Text = Trans.T("M_POSITION");
+            this.sliceToolSplitButton3.Text = Trans.T("M_SLICE");
+            this.withRaftToolStripMenuItem1.Text = Trans.T("M_WITH_RAFT");
+            this.withSupportsToolStripMenuItem1.Text = Trans.T("M_WITH_SUPPORT");
+            this.modeToolStripSplitButton1.Text = Trans.T("M_MODE");
+            this.loadAFileMenuModeMenuOption.Text = Trans.T("M_LOAD_A_FILE");
+            this.STLEditorMenuOption.Text = Trans.T("M_STL_EDITOR");
+            this.gCodeVisualizationMenuOption.Text = Trans.T("M_GCODE_VIEW");
+            this.livePrintingMenuOption.Text = Trans.T("M_LIVE_PRINTING");
+            this.saveGCodeToolStripMenuItem.Text = Trans.T("M_SAVE_GCODE");
+            this.saveNewSTLMenuItem11.Text = Trans.T("M_SAVE_NEW_STL");
+            this.loggingToolStripMenuItem.Text = Trans.T("M_VIEW_LOGGING");
+            this.manualControlToolStripMenuItem.Text = Trans.T("M_MANUAL_CONTROL");
+
+
+            this.advancedConfigStripSplitButton3.Text = Trans.T("M_ADVANCED");
+
             printerToolStripMenuItem.Text = Trans.T("M_PRINTER");
             temperatureToolStripMenuItem.Text = Trans.T("M_TEMPERATURE");
             helpToolStripMenuItem.Text = Trans.T("M_HELP");
-            //loadGCodeToolStripMenuItem.Text = Trans.T("M_LOAD_GCODE_OR_STL_FILE");
+            loadGCodeToolStripMenuItem.Text = Trans.T("M_LOAD_GCODE_OR_STL_FILE");
             showWorkdirectoryToolStripMenuItem.Text = Trans.T("M_SHOW_WORKDIRECTORY");
             languageToolStripMenuItem.Text = Trans.T("M_LANGUAGE");
             printerSettingsToolStripMenuItem.Text = Trans.T("M_PRINTER_SETTINGS");
@@ -539,8 +575,8 @@ namespace RepetierHost
             //skeinforgeHomepageToolStripMenuItem.Text = Trans.T("M_SKEINFORGE_HOMEPAGE");
             //repRapWebsiteToolStripMenuItem.Text = Trans.T("M_REPRAP_WEBSITE");
             //repRapForumToolStripMenuItem.Text = Trans.T("M_REPRAP_FORUM");
-            thingiverseNewestToolStripMenuItem.Text = Trans.T("M_THINGIVERSE_NEWEST");
-            thingiversePopularToolStripMenuItem.Text = Trans.T("M_THINGIVERSE_POPULAR");
+            //thingiverseNewestToolStripMenuItem.Text = Trans.T("M_THINGIVERSE_NEWEST");
+            //thingiversePopularToolStripMenuItem.Text = Trans.T("M_THINGIVERSE_POPULAR");
             //aboutRepetierHostToolStripMenuItem.Text = Trans.T("M_ABOUT_REPETIER_HOST");
             checkForUpdatesToolStripMenuItem.Text = Trans.T("M_CHECK_FOR_UPDATES");
             quitToolStripMenuItem.Text = Trans.T("M_QUIT");
@@ -2119,6 +2155,8 @@ namespace RepetierHost
 
             
         }
+
+   
 
      
     }

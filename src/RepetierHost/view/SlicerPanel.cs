@@ -72,6 +72,12 @@ namespace RepetierHost.view
         }
         void translate() {
             //buttonKillSlicing.Text = Trans.T("B_KILL_SLICING_PROCESS");
+            this.label3.Text = Trans.T("L_INFORMATION_ABOUT_SUPPORTS_AND_RAFT_CHECKBOXES");
+            this.generateSupportCheckbox.Text = Trans.T("CB_SUPPORT_CHECKBOX");
+            this.generateRaftCheckbox.Text = Trans.T("CB_RAFT_CHECKBOX");
+            this.label1.Text = Trans.T("L_EXIT_AUTO_SAVED");
+            this.button1.Text = Trans.T("B_EXIT");
+
             buttonSetupSkeinforge.Text = Trans.T("B_SETUP_SKEINFORGE");
             buttonSetupSlic3r.Text = Trans.T("B_SETUP_SLIC3R");
             buttonSkeinConfigure.Text = Trans.T("B_CONFIGURE_SKEINFORGE");

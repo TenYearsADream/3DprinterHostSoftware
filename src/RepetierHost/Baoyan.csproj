@@ -542,6 +542,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Translation\en.xml" />
+    <Content Include="Translation\syntax_en.xml" />
+    <Content Include="Translation\zh.xml" />
     <None Include="images\logos.ico" />
     <None Include="images\logoBaoyan.png" />
     <Content Include="images\switch_on.bmp" />

@@ -95,6 +95,14 @@ namespace RepetierHost.model
             active = t;
             RegMemory.SetString("lastLanguage", t.fileshort);
         }
+
+        /// <summary>
+        /// Check to see if the translation "trans" is active. If active and contains the word we are looking for than return the word. Otherwise
+        /// check to see if english is active. If the word exists in English then return the english translation. If there isn't a english translation, then return
+        /// the keyword "id" we are looking for. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static string T(string id)
         {
             string res = null;

@@ -69,20 +69,20 @@ namespace RepetierHost
             {
 
                 case RepetierHost.Main.ThreeDViewOptions.loadAFile:
-                    main.toolStripStatusLabel1.Text = "Load a file";
+                    main.toolStripStatusLabel1.Text = Trans.T("M_LOAD_A_FILE");
                     main.threedview.SetView(main.fileAddOrRemove.stleditorView);
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.STLeditor:
-                    main.toolStripStatusLabel1.Text = "stl Editor";
+                    main.toolStripStatusLabel1.Text = Trans.T("M_STL_EDITOR");
                     main.threedview.SetView(main.fileAddOrRemove.stleditorView);
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.gcode:
-                    main.toolStripStatusLabel1.Text = "Gcode Editor";
+                    main.toolStripStatusLabel1.Text = Trans.T("M_GCODE_VIEW");
                     main.listSTLObjects.Visible = false;
                     main.threedview.SetView(main.gcodePreviewView);
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.livePrinting:
-                    main.toolStripStatusLabel1.Text = "Live Printing View";
+                    main.toolStripStatusLabel1.Text = Trans.T("M_LIVE_PRINTING");
                     main.listSTLObjects.Visible = false;
                     main.threedview.SetView(main.printPreview);
                     break;
