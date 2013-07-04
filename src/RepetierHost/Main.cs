@@ -397,10 +397,14 @@ namespace RepetierHost
             //slicerPanel.UpdateSelection();
 
             // Determine whether to check for updates or not based on the users check preferences in advances settings. 
-            if (Custom.GetBool("removeUpdates", false))
-                checkForUpdatesToolStripMenuItem.Visible = false;
-            else
-                RHUpdater.checkForUpdates(true);
+            //if (Custom.GetBool("removeUpdates", false))
+            //    checkForUpdatesToolStripMenuItem.Visible = false;
+            //else
+            //    RHUpdater.checkForUpdates(true);
+            
+            // Don't check for updates because we want our own custom software to be sent to customers. 
+            RHUpdater.checkForUpdates(true);
+
             UpdateToolbarSize();
 
             // Determine which languages should appear in the languages menu. 

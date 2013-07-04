@@ -38,6 +38,7 @@ namespace RepetierHost.model
             string customfile = Application.StartupPath + Path.DirectorySeparatorChar+"data"+Path.DirectorySeparatorChar+"custom.ini";
             if(File.Exists(customfile))
                 ReadFile(customfile);
+            // Creates a registry key in the CurrentUser\\SOFTWARE\\Baoyan Folder. Creates or reads the key. 
             baseKey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\"+dic["registryFolder"]);
 
         }

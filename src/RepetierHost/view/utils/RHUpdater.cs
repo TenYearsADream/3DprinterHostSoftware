@@ -78,6 +78,10 @@ namespace RepetierHost.view.utils
         public static void checkForUpdates(bool silent) {
             RHUpdater.silent = silent;
             if (Custom.GetBool("removeUpdates", false)) return; // Do not try to look for updates.
+
+            // Force it to return early. So we don't have updates. 
+            return;
+
             url = "http://www.repetier.com/updates/rh/version_windows.txt";
             if (Environment.OSVersion.Platform == PlatformID.Unix)
                 url = "http://www.repetier.com/updates/rh/version_linux.txt";
