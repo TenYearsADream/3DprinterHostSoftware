@@ -26,6 +26,10 @@ namespace RepetierHost.model
     public delegate void OnPosChange(GCode code, float x, float y, float z);
     public delegate void OnPosChangeFast(float x, float y, float z, float e);
     public delegate void OnAnalyzerChange();
+
+    /// <summary>
+    /// This class contains data about specific extruders. 
+    /// </summary>
     public class ExtruderData
     {
         public ExtruderData(int _id) { id = _id; }
@@ -37,6 +41,10 @@ namespace RepetierHost.model
         public float eOffset = 0;
         public bool retracted = false;
     }
+
+    /// <summary>
+    /// Contains functions and fields to Analyzes G-code. 
+    /// </summary>
     public class GCodeAnalyzer
     {
         public event OnPosChange eventPosChanged;
@@ -71,6 +79,10 @@ namespace RepetierHost.model
         public double printingTime = 0;
         public bool eChanged;
 
+        /// <summary>
+        /// Initializes a new Gcode Analyzer. 
+        /// </summary>
+        /// <param name="privAnal">if true, then it will not invoke updating main as often</param>
         public GCodeAnalyzer(bool privAnal)
         {
             privateAnalyzer = privAnal;
@@ -99,6 +111,10 @@ namespace RepetierHost.model
             }
             else extruder[extr].temperature = t;
         }
+
+        /// <summary>
+        /// Invokes a pointer to function called "eventChange"
+        /// </summary>
         public void fireChanged()
         {
             if (eventChange != null)
@@ -149,6 +165,10 @@ namespace RepetierHost.model
                 Main.main.jobVisual.ResetQuality();
             fireChanged();
         }
+
+        /// <summary>
+        /// Goes to the beginning of the G-code when starting a new job. 
+        /// </summary>
         public void StartJob()
         {
             layer = 0;
@@ -170,6 +190,11 @@ namespace RepetierHost.model
             if (!privateAnalyzer)
                 Main.main.jobVisual.ResetQuality();
         }
+
+        /// <summary>
+        /// Analyzes a Gcode and updates the members of the class based off what the gcode says.
+        /// </summary>
+        /// <param name="code"></param>
         public void Analyze(GCode code)
         {
             if (code.hostCommand)
@@ -750,6 +775,11 @@ namespace RepetierHost.model
                 eventPosChangedFast(x, y, z, activeExtruder.e);
 
         }
+
+        /// <summary>
+        /// Analayzes a short Gcode segment. G-code files are made of g-code segments. 
+        /// </summary>
+        /// <param name="code"></param>
         public void analyzeShort(GCodeShort code)
         {
             isG1Move = false;

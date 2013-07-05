@@ -24,6 +24,9 @@ namespace RepetierHost.model
 {
     public delegate void OnEEPROMAdded(EEPROMParameter param);
 
+    /// <summary>
+    /// RElated to the eeprom. Nor really using this as far as I know. 
+    /// </summary>
     public class EEPROMParameter
     {
         public string description;

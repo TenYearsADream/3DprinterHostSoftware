@@ -1,4 +1,13 @@
-﻿using System;
+﻿///-----------------------------------------------------------------------
+/// <copyright file="FileAddOrRemove.cs" company="Baoyan">
+///   Some parts of this file were derived from Repetier Host which can be found at
+/// https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
+/// All other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China
+/// http://www.by3dp.com
+/// </copyright>
+///-----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -22,12 +31,12 @@ namespace RepetierHost
     public class MainHelper
     {
         Main main;
-        static RepetierHost.Main.ThreeDViewOptions oldviewMode;
-        ThreeDView newThreedview = null;
+        // static RepetierHost.Main.ThreeDViewOptions oldviewMode;
+        
         public MainHelper(Main _main)
         {
             this.main = _main;
-            oldviewMode = Main.ThreeDViewOptions.STLeditor;
+            // oldviewMode = Main.ThreeDViewOptions.STLeditor;
             oldview = main.fileAddOrRemove.stleditorView;
 
         }

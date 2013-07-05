@@ -27,6 +27,11 @@ using System.Windows.Forms;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// Allows for customization of the software if it reads a custom.ini while starting up. 
+    /// Sets the Main Registry key value to "Baoyan"
+    /// Most of this class is not used. 
+    /// </summary>
     public class Custom
     {
         private static RegistryKey baseKey;

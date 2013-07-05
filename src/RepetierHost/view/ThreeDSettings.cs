@@ -487,5 +487,10 @@ Immediate (slow)*/
             GCodePath.correctNorms = checkCorrectNormals.Checked;
             //Main.main.Update3D();
         }
+
+        private void background_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

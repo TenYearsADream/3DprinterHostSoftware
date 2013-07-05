@@ -87,7 +87,7 @@
             this.sendScript4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sendScript5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userManual2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
@@ -614,19 +614,19 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manualToolStripMenuItem,
+            this.userManual2ToolStripMenuItem,
             this.checkForUpdatesToolStripMenuItem,
             this.supportToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
-            // manualToolStripMenuItem
+            // userManual2ToolStripMenuItem
             // 
-            this.manualToolStripMenuItem.Name = "manualToolStripMenuItem";
-            this.manualToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.manualToolStripMenuItem.Text = "Manual";
-            this.manualToolStripMenuItem.Click += new System.EventHandler(this.manualToolStripMenuItem_Click);
+            this.userManual2ToolStripMenuItem.Name = "userManual2ToolStripMenuItem";
+            this.userManual2ToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.userManual2ToolStripMenuItem.Text = "Manual";
+            this.userManual2ToolStripMenuItem.Click += new System.EventHandler(this.manualToolStripMenuItem_Click);
             // 
             // checkForUpdatesToolStripMenuItem
             // 
@@ -700,7 +700,6 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-           // this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
             // 
             // imageList
             // 
@@ -1164,7 +1163,7 @@
         private System.Windows.Forms.ToolStripMenuItem printerInformationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem repetierSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem jobStatusToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem manualToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem userManual2ToolStripMenuItem;
         public System.Windows.Forms.ToolStripStatusLabel fpsLabel;
         private System.Windows.Forms.ToolStripMenuItem testCaseGeneratorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem internalSlicingParameterToolStripMenuItem;

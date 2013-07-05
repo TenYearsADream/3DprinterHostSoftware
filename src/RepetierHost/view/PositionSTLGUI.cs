@@ -1,18 +1,11 @@
-﻿/*
-   Copyright 2011 repetier repetierdev@gmail.com
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
+﻿///-----------------------------------------------------------------------
+/// <copyright file="FileAddOrRemove.cs" company="Baoyan">
+///   Some parts of this file were derived from Repetier Host which can be found at
+/// https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
+/// All other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China
+/// http://www.by3dp.com
+/// </copyright>
+///-----------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -36,9 +29,9 @@ namespace RepetierHost.view
     {
         // TODO: Add increment buttons so you can easily change the positon. Also for the rotation.
         // TODO: Enable the sliders and get them to work. 
-        private bool writeSTLBinary = true;
         //public ThreeDView cont;
-        private bool autosizeFailed = false;
+       
+        public bool autosizeFailed = false;
         private CopyObjectsDialog copyDialog = new CopyObjectsDialog();
 
         /// <summary>
@@ -534,7 +527,8 @@ namespace RepetierHost.view
             Main.main.mainHelp.UpdateEverythingInMain();
             Main.main.threedview.UpdateChanges();
         }
-        static bool inRecheckFiles = false;
+        // static bool inRecheckFiles = false;
+      
        
 
         public void listSTLObjects_KeyDown(object sender, KeyEventArgs e)
@@ -723,6 +717,8 @@ namespace RepetierHost.view
             updateSTLState(stl);
             Main.main.threedview.UpdateChanges();
         }
+
+
 
        
     }

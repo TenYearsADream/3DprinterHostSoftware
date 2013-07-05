@@ -13,6 +13,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+///-----------------------------------------------------------------------
+/// <copyright file="Program.cs" company="Baoyan">
+///   Some parts of this file were derived from Repetier Host which can be found at
+/// https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
+/// All other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China
+/// http://www.by3dp.com
+/// </copyright>
+///-----------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;

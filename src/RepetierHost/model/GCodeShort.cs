@@ -17,6 +17,11 @@ namespace RepetierHost.model
         // Bit 24-29 : Compressed command
         int flags;
         public string text;
+
+        /// <summary>
+        /// Saves the text as the G-code short and parses it for analysis. 
+        /// </summary>
+        /// <param name="cmd"></param>
         public GCodeShort(string cmd)
         {
             text = cmd;

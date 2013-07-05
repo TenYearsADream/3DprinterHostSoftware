@@ -1,4 +1,11 @@
-﻿using System;
+﻿///-----------------------------------------------------------------------
+/// <copyright file="FileAddOrRemove.cs" company="Baoyan">
+///   Some parts of this file were derived from Repetier Host which can be found at
+/// https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
+/// Other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China
+/// </copyright>
+///-----------------------------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -12,15 +19,33 @@ using RepetierHost.view.utils;
 
 namespace RepetierHost
 {
+    /// <summary>
+    /// This class aids in adding and removing files. 
+    /// </summary>
     public class FileAddOrRemove
     {
+        /// <summary>
+        /// Reference back to Main. 
+        /// </summary>
         Main main;
-        private bool writeSTLBinary = true;
-        public ThreeDView stleditorView;
-        private bool autosizeFailed = false;
-        private CopyObjectsDialog copyDialog = new CopyObjectsDialog();
 
-        public  FileAddOrRemove(Main main1)
+        /// <summary>
+        /// Determines whether we should write the ".stl" file as a binary or not. 
+        /// </summary>
+        private bool writeSTLBinary = true;
+
+        /// <summary>
+        /// The 3D view for the ".stl" editor and manipulator. TODO: This should probably be in the Main. 
+        /// </summary>
+        public ThreeDView stleditorView;
+
+        // private CopyObjectsDialog copyDialog = new CopyObjectsDialog();
+
+        /// <summary>
+        /// Initializes a new instance of the FileAddOrRemove class which helps with adding and removing stl and gcode files. 
+        /// </summary>
+        /// <param name="main1">References the Main. </param>
+        public FileAddOrRemove(Main main1)
         {
             this.main = main1;
             try
@@ -28,56 +53,54 @@ namespace RepetierHost
                 //main.threedview
                 stleditorView = new ThreeDView();
             }
-            catch { }
-
-
-             if (Main.main != null)
-                {
-                    Main.main.languageChanged += translate;
-                    translate();
-                }
+            catch
+            {
+            }
         }
 
         /// <summary>
         /// Allows either G-code or .stl file to be added. 
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="file">The File to Load</param>
         public void LoadGCodeOrSTL(string file)
         {
-            if (!File.Exists(file)) return;
+            if (!File.Exists(file))
+            {
+                return;
+            }
+
             FileInfo f = new FileInfo(file);
             this.main.Title = f.Name;
             this.main.fileHistory.Save(file);
             this.UpdateHistory();
             if (file.ToLower().EndsWith(".stl"))
             {
-                 openAndAddObject(file);
-                 this.main.current3Dview = Main.ThreeDViewOptions.STLeditor;
+                OpenAndAddSTLFile(file);
+                this.main.current3Dview = Main.ThreeDViewOptions.STLeditor;
             }
             else
-            {  
-
+            {
                 this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
-                //this.main.update3DviewSelection();
-                //tab.SelectTab(tabGCode);
                 this.main.editor.selectContent(0);
                 this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
             }
-            //changeSelectionBoxSize();
+
+            //// changeSelectionBoxSize(); TODO: Think this referes to the box around the .stl object. This is still an error. 
             Main.main.mainHelp.UpdateEverythingInMain();
         }
 
+        /// <summary>
+        /// Loads a Gcode file and sets the mode to g-code visualization. 
+        /// </summary>
+        /// <param name="file">File Path to Load</param>
         public void LoadGCode(string file)
         {
             try
             {
-                
                 this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
                 this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
                 this.main.editor.selectContent(0);
                 this.main.mainHelp.UpdateEverythingInMain();
-                //this.main.update3DviewSelection();
-                
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -89,34 +112,45 @@ namespace RepetierHost
             }
         }
 
+        /// <summary>
+        /// Loads a G-code text and sets the mode to g-code visualization. 
+        /// </summary>
+        /// <param name="text">The actual text of the g-code. </param>
         public void LoadGCodeText(string text)
         {
             try
             {
                 this.main.current3Dview = Main.ThreeDViewOptions.gcode;
                 this.main.editor.setContent(0, text);
-                //tab.SelectTab(tabGCode);
-                this.main.editor.selectContent(0);
+               this.main.editor.selectContent(0);
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        /// <summary>
+        /// Allows the user to select the stl or gcode file to add to the program. 
+        /// </summary>
         public void AddAFile()
         {
             if (this.main.openFileSTLorGcode.ShowDialog() == DialogResult.OK)
             {
                 foreach (string fname in this.main.openFileSTLorGcode.FileNames)
-                    openAndAddObject(fname);
+                {
+                    OpenAndAddSTLFile(fname);
+                }
             }
-            //changeSelectionBoxSize();
+            //// changeSelectionBoxSize(); Update the box around the object?? TODO: might need to fix this. 
             main.mainHelp.UpdateEverythingInMain();
         }
 
-       
-
-        public void openAndAddObject(string file)
+        /// <summary>
+        /// Opens the .stl file, sets the view to stl editor, and causes the model to animate a fall onto the print platform. 
+        /// </summary>
+        /// <param name="file">File Path to the stl file.</param>
+        public void OpenAndAddSTLFile(string file)
         {
             STL stl = new STL();
             stl.Load(file);
@@ -124,23 +158,22 @@ namespace RepetierHost
             stl.Land();
             if (stl.list.Count > 0)
             {
-               
                 this.main.listSTLObjects.Items.Add(stl);
-                
                 stleditorView.models.AddLast(stl);
                 this.main.listSTLObjects.SelectedItem = stl;
                 main.postionGUI.Autoposition();
                 stl.addAnimation(new DropAnimation("drop"));
                 main.postionGUI.updateSTLState(stl);
             }
-            //else
-            //{
-            //    main.listSTLObjects.Visible = false;
-            //}
-               
-                   
+            else
+            {
+                main.listSTLObjects.Visible = false;
+            }
         }
 
+        /// <summary>
+        /// Causes the current stl models to be sliced using the active slicer. A High level Method. 
+        /// </summary>
         public void Slice()
         {
             string dir = Main.globalSettings.Workdir;
@@ -150,17 +183,21 @@ namespace RepetierHost
                 Main.globalSettings.Show();
                 return;
             }
+
             if (main.listSTLObjects.Items.Count == 0) return;
             bool itemsOutide = false;
             foreach (STL stl in main.listSTLObjects.Items)
             {
-                if (stl.outside) itemsOutide = true;
+                if (stl.outside) 
+                    itemsOutide = true;
             }
+
             if (itemsOutide)
             {
                 if (MessageBox.Show(Trans.T("L_OBJECTS_OUTSIDE_SLICE_QUEST"), Trans.T("L_WARNING"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     return;
             }
+
             string t = main.listSTLObjects.Items[0].ToString();
             if (main.listSTLObjects.Items.Count > 1)
                 t += " + " + (main.listSTLObjects.Items.Count - 1).ToString();
@@ -187,9 +224,11 @@ namespace RepetierHost
                     delFlag = true;
                     continue;
                 }
+
                 if (delFlag)
                     delArray.AddLast(c);
             }
+
             foreach (ToolStripItem i in delArray)
                 main.fileToolStripMenuItem.DropDownItems.Remove(i);
             main.importSTLToolSplitButton1.DropDownItems.Clear();
@@ -214,19 +253,20 @@ namespace RepetierHost
         /// <summary>
         /// When clicked on a history item in the file menu, load that file. First we must recall which item it actually is from the history. 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sending Object</param>
+        /// <param name="e">Event Args</param>
         private void HistoryHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             RegMemory.HistoryFile f = (RegMemory.HistoryFile)clickedItem.Tag;
             this.LoadGCodeOrSTL(f.file);
-            // Take some action based on the data in clickedItem
-        }
+         }
 
-        public void removeObject()
+        /// <summary>
+        /// Removes the selected stl object(s) from the printing platform. 
+        /// </summary>
+        public void RemoveSTLObject()
         {
-
             LinkedList<STL> list = new LinkedList<STL>();
             foreach (STL stl in this.main.listSTLObjects.SelectedItems)
                 list.AddLast(stl);
@@ -234,86 +274,24 @@ namespace RepetierHost
             {
                 stleditorView.models.Remove(stl);
                 this.main.listSTLObjects.Items.Remove(stl);
-                autosizeFailed = false; // Reset autoposition
+                Main.main.postionGUI.autosizeFailed = false; // Reset autoposition
             }
+
             list.Clear();
             if (this.main.listSTLObjects.Items.Count > 0)
                 this.main.listSTLObjects.SelectedIndex = 0;
             else
                 this.main.current3Dview = Main.ThreeDViewOptions.loadAFile; // if there are no more in the list, then go to load a file mode. 
-            
+
             Main.main.mainHelp.UpdateEverythingInMain();
-
         }
 
-       
-
-        //public void LoadGCodeOrSTL(string file)
-        //{
-        //    //if (!File.Exists(file)) return;
-        //    //FileInfo f = new FileInfo(file);
-        //    //Title = f.Name;
-        //    //fileHistory.Save(file);
-        //    //UpdateHistory();
-        //    //if (file.ToLower().EndsWith(".stl"))
-        //    //{
-        //    //    /*  if (MessageBox.Show("Do you want to slice the STL-File? No adds it to the object grid.", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-        //    //      {
-        //    //          slicer.RunSlice(file); // Slice it and load
-        //    //      }
-        //    //      else
-        //    //      {*/
-        //    //    //tab.SelectTab(tabModel);
-        //    //    stlComposer1.openAndAddObject(file);
-        //    //    //}
-        //    //}
-        //    //else
-        //    //{
-        //    //    //tab.SelectTab(tabGCode);
-        //    //    editor.selectContent(0);
-        //    //    editor.setContent(0, System.IO.File.ReadAllText(file));
-        //    //}
-        //}
-
-
-        
-        //////////////////////////
-        //*****************************************
-        //*****************************************
-        //---------------------------------------
-
- 
-       /// <summary>
-       /// Translate the tooltip text and the text of the objects. 
-       /// </summary>
-        public void translate()
-        {
-            // TODO: Fix this translateion
-            //labelTranslation.Text = Trans.T("L_TRANSLATION:");
-            //labelScale.Text = Trans.T("L_SCALE:");
-            //labelRotate.Text = Trans.T("L_ROTATE:");
-            //labelSTLObjects.Text = Trans.T("L_STL_OBJECTS");
-            //buttonSave.Text = Trans.T("B_SAVE_AS_STL");
-            //buttonRemoveSTL.Text = Trans.T("B_REMOVE_STL_OBJECT");
-            //buttonAddSTL.Text = Trans.T("B_ADD_STL_OBJECT");
-            //buttonAutoplace.Text = Trans.T("B_AUTOPOSITION");
-            //buttonLand.Text = Trans.T("B_DROP_OBJECT");
-            //buttonCopyObjects.Text = Trans.T("B_COPY_OBJECTS");
-            //buttonCenter.Text = Trans.T("B_CENTER_OBJECT");
-            //checkScaleAll.Text = Trans.T("L_LOCK_ASPECT_RATIO");
-            //if (Main.slicer != null)
-            //    buttonSlice.Text = Trans.T1("L_SLICE_WITH", Main.slicer.SlicerName);
-        }
-
-  
         /// <summary>
         /// Removes an STL file. 
         /// TODO: Link to the method in the main. 
         /// </summary>
         public void buttonRemoveSTL_Click()
         {
-            //STL stl = (STL)listSTLObjects.SelectedItem;
-            //if (stl == null) return;
             LinkedList<STL> list = new LinkedList<STL>();
             foreach (STL stl in this.main.listSTLObjects.SelectedItems)
                 list.AddLast(stl);
@@ -321,7 +299,7 @@ namespace RepetierHost
             {
                 stleditorView.models.Remove(stl);
                 this.main.listSTLObjects.Items.Remove(stl);
-                autosizeFailed = false; // Reset autoposition
+                Main.main.postionGUI.autosizeFailed = false; // Reset autoposition
             }
             list.Clear();
             if (this.main.listSTLObjects.Items.Count > 0)
@@ -330,32 +308,32 @@ namespace RepetierHost
         }
 
         /// <summary>
-        /// Save the combined or modified .stl file
-        /// TODO: Link to the method in the main 
+        /// Determines whether the given vector coordinate values are valid. (Not 0 and not infinity)
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void buttonSave_Click(object sender, EventArgs e)
-        //{
-        //    if (saveSTL.ShowDialog() == DialogResult.OK)
-        //    {
-        //        saveComposition(saveSTL.FileName);
-        //    }
-        //}
+        /// <param name="v">Vector whose values to check</param>
+        /// <returns>true if the vector is ok. Otherwise false</returns>
         private bool AssertVector3NotNaN(Vector3 v)
         {
             if (float.IsNaN(v.X) || float.IsNaN(v.Y) || float.IsNaN(v.Z))
             {
-               // Main.conn.log("NaN value in STL file export", false, 2);
+                // Main.conn.log("NaN value in STL file export", false, 2);
                 return false;
             }
             if (float.IsInfinity(v.X) || float.IsInfinity(v.Y) || float.IsInfinity(v.Z))
             {
-               // Main.conn.log("Infinity value in STL file export", false, 2);
+                // Main.conn.log("Infinity value in STL file export", false, 2);
                 return false;
             }
             return true;
         }
+
+        /// <summary>
+        /// Determines if the two vectors have a meaningful distance from each other. 
+        /// (Checks to see if they are so close that they might be the same value)
+        /// </summary>
+        /// <param name="a">First Vector</param>
+        /// <param name="b">Second Vector</param>
+        /// <returns>true if they are not too close. False if they are too close</returns>
         private bool AssertMinDistance(Vector3 a, Vector3 b)
         {
             double dx = a.X - b.X;
@@ -367,7 +345,7 @@ namespace RepetierHost
         /// <summary>
         /// Create a combined .stl file from all the .stl files that are on the current printer platform. 
         /// </summary>
-        /// <param name="fname"></param>
+        /// <param name="fname">File path and name of the combined composition to save</param>
         public void saveComposition(string fname)
         {
             int n = 0;
@@ -375,6 +353,7 @@ namespace RepetierHost
             {
                 n += stl.list.Count;
             }
+
             STLTriangle[] triList2 = new STLTriangle[n];
             int p = 0;
             foreach (STL stl in this.main.listSTLObjects.Items)
@@ -390,6 +369,7 @@ namespace RepetierHost
                     stl.TransformPoint(ref t2.p1, out t.p1.X, out t.p1.Y, out t.p1.Z);
                     stl.TransformPoint(ref t2.p2, out t.p2.X, out t.p2.Y, out t.p2.Z);
                     stl.TransformPoint(ref t2.p3, out t.p3.X, out t.p3.Y, out t.p3.Z);
+
                     // Compute normal from p1-p3
                     float ax = t.p2.X - t.p1.X;
                     float ay = t.p2.Y - t.p1.Y;
@@ -405,17 +385,19 @@ namespace RepetierHost
                         AssertVector3NotNaN(t.p3) &&
                         AssertMinDistance(t.p1, t.p2) && AssertMinDistance(t.p1, t.p3) && AssertMinDistance(t.p2, t.p3))
                     {
-
                         triList2[p++] = t;
                     }
                 }
             }
+
             n = p;
             STLTriangle[] triList = new STLTriangle[n];
             for (int i = 0; i < n; i++)
                 triList[i] = triList2[i];
+
             // STL should have increasing z for faster slicing
             Array.Sort<STLTriangle>(triList, triList[0]);
+
             // Write file in binary STL format
             FileStream fs = File.Open(fname, FileMode.Create);
             if (writeSTLBinary)
@@ -441,6 +423,7 @@ namespace RepetierHost
                     w.Write(t.p3.Z);
                     w.Write((short)0);
                 }
+
                 w.Close();
             }
             else
@@ -478,19 +461,24 @@ namespace RepetierHost
                     w.WriteLine("    endloop");
                     w.WriteLine("  endfacet");
                 }
+
                 w.WriteLine("endsolid RepetierHost");
                 w.Close();
             }
+
             fs.Close();
         }
 
-    
-
-      
-      
 
 
+        /// <summary>
+        /// Tells if the files have already been checked. 
+        /// </summary>
         static bool inRecheckFiles = false;
+
+        /// <summary>
+        /// Checks if the stl files on the printing platform have changed. Maybe they have been edited by an outside program. 
+        /// </summary>
         public void recheckChangedFiles()
         {
             if (inRecheckFiles) return;
@@ -527,12 +515,16 @@ namespace RepetierHost
             inRecheckFiles = false;
         }
 
-
+        /// <summary>
+        /// Saves the current composition on the print platform if the "Crtl S" combination is pressed
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
         public void saveAFile_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Modifiers == Keys.Control && e.KeyCode == Keys.S)
             {
-                if(Main.main.current3Dview == Main.ThreeDViewOptions.gcode)
+                if (Main.main.current3Dview == Main.ThreeDViewOptions.gcode)
                     StoreCode.Execute();
 
                 if (Main.main.current3Dview == Main.ThreeDViewOptions.STLeditor)
@@ -545,23 +537,34 @@ namespace RepetierHost
 
                 e.Handled = true;
             }
-         
+
         }
-    
-    public class EnglishStreamWriter : StreamWriter
-    {
-        public EnglishStreamWriter(Stream path)
-            : base(path, Encoding.ASCII)
+
+        /// <summary>
+        /// Class related to reading Files in the country specific format?? Not sure this is used. 
+        /// </summary>
+        public class EnglishStreamWriter : StreamWriter
         {
-        }
-        public override IFormatProvider FormatProvider
-        {
-            get
+            /// <summary>
+            /// Initializes a new instance of the EnglishStreamWriter class
+            /// </summary>
+            /// <param name="path">The path to the stream to read??</param>
+            public EnglishStreamWriter(Stream path)
+                : base(path, Encoding.ASCII)
             {
-                return System.Globalization.CultureInfo.InvariantCulture;
+            }
+
+            /// <summary>
+            /// Overrides the default format field with the country or language specific field. 
+            /// </summary>
+            public override IFormatProvider FormatProvider
+            {
+                get
+                {
+                    return System.Globalization.CultureInfo.InvariantCulture;
+                }
             }
         }
-    }
     }
 }
 

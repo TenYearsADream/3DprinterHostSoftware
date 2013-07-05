@@ -503,7 +503,8 @@ namespace RepetierHost
             this.gcodeEditorToolStripMenuItem.Text = Trans.T("M_GCODE_EDITOR");
             this.stopSlicingProcessToolStripMenuItem.Text = Trans.T("M_STOP_SLICER");
             this.dViewSettingsToolStripMenuItem.Text = Trans.T("M_3D_VIEW_OPTIONS");
-            this.manualControlToolStripMenuItem.Text = Trans.T("M_MANUAL");
+            this.userManual2ToolStripMenuItem.Text = Trans.T("M_MANUAL");
+            this.manualControlToolStripMenuItem.Text = Trans.T("M_IMANUAL");
             this.topViewStripButton1.Text = Trans.T("M_TOP");
             this.sideViewStripButton1.Text = Trans.T("M_SIDE");
             this.frontStripButton1.Text = Trans.T("M_FRONT");
@@ -1699,7 +1700,7 @@ namespace RepetierHost
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
-                this.fileAddOrRemove.removeObject();
+                this.fileAddOrRemove.RemoveSTLObject();
                 //buttonRemoveSTL_Click(sender, null);
                 //fileAddOrRemove.removeObject();
                 e.Handled = true;
@@ -1811,7 +1812,7 @@ namespace RepetierHost
         {
             // TODO: Remove this button. Make it so if you select an objet and then hit delete, that it removes it. 
             // Maybe also pop up with a text box asking if you really want to remove it. 
-            this.fileAddOrRemove.removeObject();
+            this.fileAddOrRemove.RemoveSTLObject();
             //fileAddOrRemove.changeSelectionBoxSize();
             main.mainHelp.UpdateEverythingInMain();
         }

@@ -79,22 +79,22 @@ namespace RepetierHost.view.utils
             RHUpdater.silent = silent;
             if (Custom.GetBool("removeUpdates", false)) return; // Do not try to look for updates.
 
-            // Force it to return early. So we don't have updates. 
-            return;
+            
+            
 
-            url = "http://www.repetier.com/updates/rh/version_windows.txt";
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
-                url = "http://www.repetier.com/updates/rh/version_linux.txt";
-            url = Custom.GetString("updateUrl", url);
+            //url = "http://www.repetier.com/updates/rh/version_windows.txt";
+            //if (Environment.OSVersion.Platform == PlatformID.Unix)
+            //    url = "http://www.repetier.com/updates/rh/version_linux.txt";
+            //url = Custom.GetString("updateUrl", url);
 
-            long lastcheck = RegMemory.GetLong("lastUpdateCheck", 0);
-            if (silent && timeInSeconds() - lastcheck < 86400 * 7) return; // Test only once a week silently
-            //if (!pingServer("176.9.149.139")) return; // No network
+            //long lastcheck = RegMemory.GetLong("lastUpdateCheck", 0);
+            //if (silent && timeInSeconds() - lastcheck < 86400 * 7) return; // Test only once a week silently
+            ////if (!pingServer("176.9.149.139")) return; // No network
 
-            thread = new Thread(RHUpdater.CheckThread);
-            running = true;
-            Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
-            thread.Start();
+            //thread = new Thread(RHUpdater.CheckThread);
+            //running = true;
+            //Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
+            //thread.Start();
         }
         
         public static void CheckThread() {

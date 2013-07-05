@@ -26,6 +26,9 @@ namespace RepetierHost.model
 {
     public delegate void OnEEPROMMarlinAdded(EEPROMMarlinStorage param);
 
+    /// <summary>
+    /// Related to a specific printer's eeprom. Not in use by us. 
+    /// </summary>
     public class EEPROMMarlinStorage
     {
         public event OnEEPROMMarlinAdded eventAdded = null;
