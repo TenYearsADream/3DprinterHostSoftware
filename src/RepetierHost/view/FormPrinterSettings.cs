@@ -32,6 +32,10 @@ using System.IO;
 namespace RepetierHost.view
 {
     public delegate void PrinterChanged(RegistryKey printerKey,bool printerChanged);
+
+    /// <summary>
+    /// Form that helps discribe the printer settings and a lot of other settings. Allows the user to customize the printer. 
+    /// </summary>
     public partial class FormPrinterSettings : Form
     {
         public static FormPrinterSettings ps = null;
@@ -55,6 +59,11 @@ namespace RepetierHost.view
         public float cncZTop;
 
         int xhomeMode = 0, yhomeMode = 0, zhomemode = 0;
+
+
+        /// <summary>
+        /// Initialize the Form that lets the user setup the parameters of the Printer. 
+        /// </summary>
         public FormPrinterSettings()
         {
             ps = this;

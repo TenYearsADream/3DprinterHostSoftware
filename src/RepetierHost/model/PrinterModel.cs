@@ -24,6 +24,9 @@ using RepetierHost.view.utils;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// Class Helps save some of the printer settings to the registry when a change is made. 
+    /// </summary>
     public class PrinterModel : INotifyPropertyChanged
     {
         private RegistryKey key;
@@ -35,6 +38,10 @@ namespace RepetierHost.model
         private string slic3rFilament3;
         private string skeinforgeProfile;
         private Slicer.SlicerID activeSlicer = Slicer.SlicerID.Slic3r;
+
+        /// <summary>
+        /// Sets up a basic configuration for the printer which is based off information stored in the Registry.     
+        /// </summary>
         public PrinterModel()
         {
             key = Main.printerSettings.currentPrinterKey;
@@ -127,6 +134,10 @@ namespace RepetierHost.model
                 OnPropertyChanged(new PropertyChangedEventArgs("SkeinforgeProfile"));
             }
         }
+
+        /// <summary>
+        /// Reads slicer settings from the Registry. Similar (or exactly the save) as the BasicConfiguration() Class and function. 
+        /// </summary>
         private void readPrinterSettings() {
             updating = true;
             Slic3rPrint = (string)key.GetValue("slic3rPrint", slic3rPrint);

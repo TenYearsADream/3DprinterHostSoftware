@@ -43,6 +43,10 @@ namespace RepetierHost.view
             ReplaceSelection = 1,
 
         }
+
+        /// <summary>
+        /// Class which handles the "undo" function of editing G-code. 
+        /// </summary>
         public class Undo
         {
             int col, row, selCol, selRow;
@@ -240,6 +244,9 @@ namespace RepetierHost.view
                 }
             }
 
+            /// <summary>
+            /// Resets the position to the very beginning of the G-code text. 
+            /// </summary>
             public void ResetPos()
             {
                 col = row = selCol = selRow = topCol = topRow = topCol = 0;
@@ -256,6 +263,10 @@ namespace RepetierHost.view
                 hasSel = editor.hasSel;
                 //Text = editor.Text;
             }
+
+            /// <summary>
+            /// Sets the editor cursor location to the active part of the G-code. 
+            /// </summary>
             public void ToActive()
             {
                 editor.lines = textArray;
@@ -386,9 +397,8 @@ namespace RepetierHost.view
             InitializeComponent();
             
             fontHeight = drawFont.Height;
-            editor.MouseWheel += MouseWheelHandler;
-            
-    //        Text = System.IO.File.ReadAllText("d:\\arduino\\Mendel\\models\\work\\oozetest.gcode");
+            editor.MouseWheel += MouseWheelHandler;            
+            //Text = System.IO.File.ReadAllText("d:\\arduino\\Mendel\\models\\work\\oozetest.gcode");
             Content c = new Content(this, 0, "G-Code");
             //c.Text = ""; // System.IO.File.ReadAllText("d:\\arduino\\Mendel\\models\\foambowl_export.gcode");
             toolFile.Items.Clear();

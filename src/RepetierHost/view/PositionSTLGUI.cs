@@ -29,6 +29,9 @@ using RepetierHost.model;
 
 namespace RepetierHost.view
 {
+    /// <summary>
+    /// Shows a box with controls related to moving, rotate, and scale as well as center and autoplace.  
+    /// </summary>
     public partial class PositionSTLGUI : UserControl
     {
         // TODO: Add increment buttons so you can easily change the positon. Also for the rotation.
@@ -37,6 +40,10 @@ namespace RepetierHost.view
         //public ThreeDView cont;
         private bool autosizeFailed = false;
         private CopyObjectsDialog copyDialog = new CopyObjectsDialog();
+
+        /// <summary>
+        /// Shows a box with controls related to moving, rotate, and scale as well as center and autoplace.  
+        /// </summary>
         public PositionSTLGUI()
         {
             InitializeComponent();

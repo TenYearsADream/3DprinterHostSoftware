@@ -22,6 +22,10 @@ using RepetierHost.view.utils;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// Related to Basic Slicer Configuration. Helps save information to Registry. Saves values to Registry when they are set by
+    /// another function. 
+    /// </summary>
     class BasicConfiguration
     {
         private string externalSlic3rPath="";
@@ -37,7 +41,16 @@ namespace RepetierHost.model
         private string skeinforgeProfile = "";
         private string skeinforgeProfileDir = "";
         private bool internalSlic3rUseBundledVersion = true;
-        public static BasicConfiguration basicConf = new BasicConfiguration(); 
+
+        /// <summary>
+        /// Instance of the basic configuration class related to slicer configuration referencing itself. 
+        /// </summary>
+        public static BasicConfiguration basicConf = new BasicConfiguration();
+
+        /// <summary>
+        /// INitialize Slicer Settings by accessing the Registry.
+        /// Related to Basic Slicer Configuration. Helps save information to Registry
+        /// </summary>
         public BasicConfiguration()
         {
             slic3rConfigDir = RegMemory.GetString("slic3rConfigDir", slic3rConfigDir);

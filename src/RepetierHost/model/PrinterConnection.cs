@@ -42,6 +42,10 @@ namespace RepetierHost.model
     public delegate void OnTempMonitor(UInt32 time, float temp, float target, int output);
     public delegate void OnTempHistory(TemperatureEntry ent);
     public delegate void OnResponse(string response);
+
+    /// <summary>
+    /// Class Related to the connection with the Printer. 
+    /// </summary>
     public class PrinterConnection
     {
         public event OnPrinterConnectionChange eventConnectionChange;
@@ -140,6 +144,9 @@ namespace RepetierHost.model
         public int numExtruder = 1;
         public double ignoreFedbackUntil = 0;
 
+        /// <summary>
+        /// Initialization of the Printer Connection. 
+        /// </summary>
         public PrinterConnection()
         {
             virtualPrinter = new VirtualPrinter();

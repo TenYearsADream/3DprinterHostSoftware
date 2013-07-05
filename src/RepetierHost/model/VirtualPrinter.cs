@@ -7,6 +7,9 @@ using System.Threading;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// Make a virtual Printer that lets you test connection to a printer without actually having a printer. 
+    /// </summary>
     class VirtualPrinter
     {
         float bedTemp = 20;
@@ -80,14 +83,21 @@ namespace RepetierHost.model
                 }
             }
         }
+
+        /// <summary>
+        /// INitialization of the printer. 
+        /// </summary>
         public VirtualPrinter()
         {
-            ana = new GCodeAnalyzer(true);
+            ana = new GCodeAnalyzer(true); // Make a new GCode Analyzer
             output = new LinkedList<string>();
             extruderTemp[0] = extruderTemp[1] = extruderTemp[2] = 0;
             extruderOut[0] = extruderOut[1] = extruderOut[2] = 0;
         }
 
+        /// <summary>
+        /// Open the Virtual Serial port to the Printer. 
+        /// </summary>
         public void open()
         {
             baudrate = Main.conn.baud;
@@ -97,17 +107,25 @@ namespace RepetierHost.model
             writeThread.Start();
         }
 
+        /// <summary>
+        /// Close the Virtual Serial Port to the Printer. 
+        /// </summary>
         public void close()
         {
             writeThread.Abort();
         }
+
+        /// <summary>
+        /// Receive a line of Gcode and figure out what to do. 
+        /// </summary>
+        /// <param name="code">The g Code to analyze. </param>
         public void receiveLine(GCode code)
         {
             bytesin += code.orig.Length;
-            ana.Analyze(code);
+            ana.Analyze(code); // Analze the code. 
             lock (output)
             {
-                if (code.hasM) switch (code.M)
+                if (code.hasM) switch (code.M) // After the analysis, do some action only if it has an "M" value. 
                     {
                         case 115: // Firmware
                             output.AddLast("FIRMWARE_NAME:RepetierVirtualPrinter FIRMWARE_URL:https://github.com/repetier/Repetier-Firmware/ PROTOCOL_VERSION:1.0 MACHINE_TYPE:Mendel EXTRUDER_COUNT:1 REPETIER_PROTOCOL:1");

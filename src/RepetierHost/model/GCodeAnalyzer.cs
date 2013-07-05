@@ -110,7 +110,11 @@ namespace RepetierHost.model
                 catch { }
             }
         }
-        // set to start condition
+
+
+        /// <summary>
+        /// Set the Gcode Analyzer to the beginning of the G-code. Basicallly reset it. 
+        /// </summary>
         public void start()
         {
             relative = false;

@@ -542,7 +542,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Translation\en.xml" />
+    <Content Include="Translation\en.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Translation\syntax_en.xml" />
     <Content Include="Translation\zh.xml" />
     <None Include="images\logos.ico" />

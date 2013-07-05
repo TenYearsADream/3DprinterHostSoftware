@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <translation revision="5" language="中文" languageInEnglish="Chinese" author="tswang@gmail.com">
+  <t id="START NEW TEXT" ver="1"></t>
+
+  <t id="M_LOAD_GCODE_OR_STL_FILE" ver="1">加载G代码或.stl文件</t>
+  <t id="M_SOFTWARE_GENERAL_SETTINGS" ver="1">软件基本设置</t>
+  <t id="M_CONFIG" ver="1">配置</t>
+  <t id="M_SLICER" ver="1">代码生成器</t>
+  <t id="M_SLICER_DIRECTORY_SETUP" ver="1">代码目录设置</t>
+  <t id="M_SLICER_CONFIGURATION" ver="1">代码配置</t>
+  <t id="M_GCODE_EDITOR" ver="1">G代码编辑</t>
+  <t id="M_STOP_SLICER" ver="1">停止代码生成</t>
+  <t id="M_3D_VIEW_OPTIONS" ver="1">三维视图选项</t>
+  <t id="M_MANUAL" ver="1">手动模式</t>
+  <t id="M_TOP" ver="1">顶侧</t>
+  <t id="M_SIDE" ver="1">旁侧</t>
+  <t id="M_FRONT" ver="1">前侧</t>
+  <t id="M_VIEW" ver="1">预览</t>
+  <t id="M_MOVE" ver="1">移动</t>
+  <t id="M_Rotate" ver="1">旋转</t>
+  <t id="M_ZOOM" ver="1">缩放</t>
+  <t id="M_PERSPECTIVE" ver="1">透视</t>
+  <t id="M_POSITION" ver="1">位置</t>
+  <t id="M_RESET_VIEW" ver="1">重新设置</t>
+  <t id="M_SLICE" ver="1">切片</t>
+  <t id="M_WITH_RAFT" ver="1">带底座</t>
+  <t id="M_WITH_SUPPORT" ver="1">带支撑</t>
+  <t id="M_MODE" ver="1">模式</t>
+  <t id="M_LOAD_A_FILE" ver="1">加载文件</t>
+  <t id="M_STL_EDITOR" ver="1">编辑STL文件</t>
+  <t id="M_GCODE_VIEW" ver="1">G代码可视化</t>
+  <t id="M_LIVE_PRINTING" ver="1">现场打印可视化</t>
+
+  <t id="M_ADVANCED" ver="1">高级</t>
+  <t id="M_SAVE_GCODE" ver="1">保存G代码文件</t>
+  <t id="M_SAVE_NEW_STL" ver="1">保存STL文件</t>
+  <t id="M_VIEW_LOGGING" ver="1">历史记录</t>
+  <t id="M_MANUAL_CONTROL" ver="1">手动控制</t>
+
+  <t id="L_INFORMATION_ABOUT_SUPPORTS_AND_RAFT_CHECKBOXES" ver="1">支撑与底座选项将会覆盖原来切片配置，高级人员可以选择使用自己切片配置。</t>
+  <t id="CB_SUPPORT_CHECKBOX" ver="1">基本支撑</t>
+  <t id="CB_RAFT_CHECKBOX" ver="1">基本底座</t>
+  <t id="L_EXIT_AUTO_SAVED" ver="1">退出</t>
+  <t id="B_EXIT" ver="1">退出</t>
+
+  <t id="END NEW TEXT" ver="1"></t>
 <t id="M_FILE" ver="1">文件</t>
 <t id="M_CONFIG" ver="1">配置</t>
 <t id="M_SLICER" ver="1">代码生成器</t>

@@ -47,6 +47,7 @@ namespace RepetierHost.view
         static bool readingReg = false;
         public void translate()
         {
+            this.exitButton.Text = Trans.T("B_EXIT");
             labelShowInLog.Text = Trans.T("L_SHOW_IN_LOG");
             switchACK.TextOff = switchACK.TextOn = Trans.T("B_ACK");
             switchAutoscroll.TextOff = switchAutoscroll.TextOn = Trans.T("B_AUTO_SCROLL");
@@ -208,6 +209,12 @@ namespace RepetierHost.view
         {
             listLog.Autoscroll = switchAutoscroll.On;
             FormToReg();
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Main.main.logform.Visible = false;
+            //this.Visible = false;
         }
     }
 }

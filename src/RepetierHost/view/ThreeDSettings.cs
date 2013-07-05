@@ -30,6 +30,9 @@ using OpenTK;
 
 namespace RepetierHost.view
 {
+    /// <summary>
+    /// Form related to the settings for how to show the 3D model.  lights, colors, faces, edges. ...
+    /// </summary>
     public partial class ThreeDSettings : Form
     {
         RegistryKey repetierKey;
@@ -37,6 +40,10 @@ namespace RepetierHost.view
         public bool useVBOs = false;
         public int drawMethod = 0; // 0 = elements, 1 = drawElements, 2 = VBO
         public float openGLVersion = 1.0f; // Version for feature detection
+
+        /// <summary>
+        /// Initialize the class. Related to all the settings for how to show the 3D Model. 
+        /// </summary>
         public ThreeDSettings()
         {
             InitializeComponent();
@@ -51,6 +58,10 @@ namespace RepetierHost.view
             translate();
             Main.main.languageChanged += translate;
         }
+
+        /// <summary>
+        /// Translate all the text in the form. 
+        /// </summary>
         public void translate()
         {
             Text = Trans.T("W_3D_VISUALIZATION_SETTINGS");
@@ -135,6 +146,10 @@ Immediate (slow)*/
         {
             get { return radioHeight.Checked; }
         }
+
+        /// <summary>
+        /// Saves information to the Registry. 
+        /// </summary>
         public void FormToRegistry()
         {
             try
@@ -201,6 +216,11 @@ Immediate (slow)*/
             }
             catch { }
         }
+
+
+        /// <summary>
+        /// Set Form values based off the Registry. 
+        /// </summary>
         private void RegistryToForm()
         {
             try

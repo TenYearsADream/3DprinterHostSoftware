@@ -7,6 +7,9 @@ using System.Globalization;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// Class related to generating G-code from .stl file
+    /// </summary>
     public class GCodeGenerator
     {
         public RegistryKey repetierKey;
@@ -34,6 +37,9 @@ namespace RepetierHost.model
         int layer = 0;
         public StringBuilder code;
 
+        /// <summary>
+        /// Initialize the object by getting the "printer" key from the registry
+        /// </summary>
         public GCodeGenerator()
         {
             repetierKey = Custom.BaseKey; // Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");

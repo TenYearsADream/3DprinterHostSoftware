@@ -29,10 +29,17 @@ using RepetierHost.model;
 
 namespace RepetierHost.view
 {
+    /// <summary>
+    /// Class which defines a form which sets some of the global settings of the application
+    /// --- Like what is the working directory ----
+    /// </summary>
     public partial class GlobalSettings : Form
     {
         RegistryKey repetierKey;
 
+        /// <summary>
+        /// Initialize the class by getting Registry key related to global settings and translating
+        /// </summary>
         public GlobalSettings()
         {
             InitializeComponent();
@@ -40,8 +47,12 @@ namespace RepetierHost.view
             repetierKey = Custom.BaseKey; // Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");
             RegToForm();
             translate();
-            Main.main.languageChanged += translate;
+            Main.main.languageChanged += translate; // Register the translate function to the list of what to run if the language changes in Main.
         }
+
+        /// <summary>
+        /// Translates the Text
+        /// </summary>
         public void translate()
         {
             Text = Trans.T("W_REPETIER_SETTINGS");
@@ -59,10 +70,16 @@ namespace RepetierHost.view
             buttonAbort.Text = Trans.T("B_CANCEL");
             buttonOK.Text = Trans.T("B_OK");
         }
+
+        /// <summary>
+        /// Check to make sure that the working directory is OK meaning that it is has a text that isn't blank and that the 
+        /// directory actually exists. Warn the user if something is wrong. 
+        /// </summary>
+        /// <returns></returns>
         public bool WorkdirOK()
         {
             string wd = Workdir;
-            if (wd.Length == 0 || !Directory.Exists(wd))
+            if (wd.Length == 0 || !Directory.Exists(wd)) // Check to make sure the directory is not blank and that it exists.
             {
                 labelOKMasg.Text = Trans.T("L_EXISTING_WORKDIR_REQUIRED"); // "Existing work directory required!";
                 return false;
@@ -70,6 +87,10 @@ namespace RepetierHost.view
             labelOKMasg.Text = "";
             return true;
         }
+
+        /// <summary>
+        /// Saves the values in the form to the registry
+        /// </summary>
         public void FormToReg()
         {
             repetierKey.SetValue("workdir", Workdir);
@@ -78,6 +99,11 @@ namespace RepetierHost.view
             repetierKey.SetValue("reduceToolbarSize", ReduceToolbarSize ? 1 : 0);
             RegMemory.SetInt("onOffImageOffset", checkRedGreenSwitch.Checked ? 2 : 0);
         }
+
+        /// <summary>
+        /// Gets values from the registry and sets the text and checkboxes in the forms according to what was
+        /// saved in the regestry. 
+        /// </summary>
         public void RegToForm()
         {
             Workdir = (string)repetierKey.GetValue("workdir", Workdir);
@@ -86,6 +112,10 @@ namespace RepetierHost.view
             checkReduceToolbarSize.Checked = 1 == (int)repetierKey.GetValue("reduceToolbarSize", ReduceToolbarSize ? 1 : 0);
             checkRedGreenSwitch.Checked = 2 == RegMemory.GetInt("onOffImageOffset", 0);
         }
+
+        /// <summary>
+        /// Working Directory of the Application. Where everything will be temporarily saved. ie. composition.stl and comosition.gco
+        /// </summary>
         public string Workdir
         {
             get { return textWorkdir.Text; }
@@ -110,6 +140,11 @@ namespace RepetierHost.view
                 Hide();
         }
 
+        /// <summary>
+        /// Handler for Clicking "ok". Call the FormToReg().
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonOK_Click(object sender, EventArgs e)
         {
             FormToReg();

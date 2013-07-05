@@ -90,6 +90,10 @@ namespace RepetierHost
 
         public bool DeveloperMode = false;
 
+
+        /// <summary>
+        /// Updates the live printing model while the printer is printing. 
+        /// </summary>
         public class JobUpdater
         {
             GCodeVisual visual = null;
@@ -130,7 +134,13 @@ namespace RepetierHost
                 //Main.conn.log("Update time:" + sw.ElapsedMilliseconds, false, 3);
             }
         }
-        //From Managed.Windows.Forms/XplatUI
+
+
+        /// <summary>
+        /// Changes some of the settings to work better if it is running on a MAC. I don't have a MAC so I haven't been
+        /// keeping customizing the code to work on MAC. 
+        /// </summary>
+        /// <returns></returns>
         static bool IsRunningOnMac()
         {
             IntPtr buf = IntPtr.Zero;
@@ -155,6 +165,12 @@ namespace RepetierHost
             }
             return false;
         }
+
+        /// <summary>
+        /// Called when the Main form is loaded. Doesn't really do much. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Main_Load(object sender, EventArgs e)
         {
             /*    RegMemory.RestoreWindowPos("mainWindow", this);
@@ -171,27 +187,20 @@ namespace RepetierHost
         }
         [System.Runtime.InteropServices.DllImport("libc")]
         static extern int uname(IntPtr buf);
+
+        /// <summary>
+        /// Initialization of Main. Part of the Windows form setup. Everything should be initialized in this function. 
+        /// 
+        /// </summary>
         public Main()
         {   
-            executeHostCall = new executeHostCommandDelegate(this.executeHostCommand);
-            repetierKey = Custom.BaseKey; // Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");
+            executeHostCall = new executeHostCommandDelegate(this.executeHostCommand); // Define a delegate
+            repetierKey = Custom.BaseKey; // Get the Regestry Key
             repetierKey.SetValue("installPath", Application.StartupPath);
             if (Path.DirectorySeparatorChar != '\\' && IsRunningOnMac())
                 IsMac = true;
-            /*String[] parms = Environment.GetCommandLineArgs();
-            string lastcom = "";
-            foreach (string s in parms)
-            {
-                if (lastcom == "-home")
-                {
-                    repetierKey.SetValue("installPath",s);
-                    lastcom = "";
-                    continue;
-                }
-                if (s == "-macosx") IsMac = true;
-                lastcom = s;
-            }*/
-            main = this;
+           
+            main = this; 
           
             SplashScreen.run();
 
@@ -208,17 +217,12 @@ namespace RepetierHost
             threeDSettings = new ThreeDSettings();
             InitializeComponent();
 
-
             editor = new RepetierEditor();
             this.Controls.Add(editor);
             editor.Visible = false;
-            //editor.Left = this.Width - editor.Width;
-            //editor.Top = (this.Height - editor.Height) / 2;
             
-            //panel1.Controls.Add(editor);
-            updateShowFilament();
+            //updateShowFilament();
             RegMemory.RestoreWindowPos("mainWindow", this);
-
 
             extraForm = new Form();
             postionGUI = new PositionSTLGUI();
@@ -227,11 +231,13 @@ namespace RepetierHost
             postionGUI.Visible = false;
             Main.main.Controls.Add(postionGUI);
 
-
+            logView = new LogView();
+            logform = new Form();
+         
+            logform.Controls.Add(logView);
 
             fileAddOrRemove = new FileAddOrRemove(this);
-            main.listSTLObjects.Visible = false;
-            
+            main.listSTLObjects.Visible = false;            
 
             // Anthony, Maximize the window
             WindowState = FormWindowState.Maximized;
@@ -297,6 +303,7 @@ namespace RepetierHost
 
             logView = new LogView();
             logform = new Form();
+            logform.ControlBox = false;
             logView.Dock = DockStyle.Fill;
           
             
@@ -363,7 +370,7 @@ namespace RepetierHost
            
 
             //toolShowLog_CheckedChanged(null, null);
-            updateShowFilament();
+            //updateShowFilament();
             //update3DviewSelection();
             mainHelp = new MainHelper(this);
             // mainHelp.UpdateEverythingInMain(); called later. 
@@ -644,24 +651,11 @@ namespace RepetierHost
             openFileSTLorGcode.Title = Trans.T("L_IMPORT_G_CODE"); // Import G-Code
             saveJobDialog.Title = Trans.T("L_SAVE_G_CODE"); //Save G-Code
             updateTravelMoves();
-            updateShowFilament();
+            // updateShowFilament();
             foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
             {
                 item.Checked = item.Tag == trans.active;
-            }
-
-
-            // Not sure if this goes here, but it needs to go somewhere. , Anthony Garland
-            //toolMove.ToolTipText = Trans.T("L_MOVE_CAMERA");
-            //toolMoveObject.ToolTipText = Trans.T("L_MOVE_OBJECT");
-            //toolMoveViewpoint.ToolTipText = Trans.T("L_MOVE_VIEWPOINT");
-            //toolResetView.ToolTipText = Trans.T("L_RESET_VIEW");
-            //toolRotate.ToolTipText = Trans.T("L_ROTATE");
-            //toolTopView.ToolTipText = Trans.T("L_TOP_VIEW");
-            //toolZoom.ToolTipText = Trans.T("T_ZOOM_VIEW");
-            //toolStripClear.ToolTipText = Trans.T("T_CLEAR_OBJECTS");
-            //toolParallelProjection.ToolTipText = Trans.T("L_USE_PARALLEL_PROJECTION");
-
+            }         
         }
 
         /// <summary>
@@ -692,9 +686,6 @@ namespace RepetierHost
             if (languageChanged != null)
                 languageChanged();
         }
-
-
-
 
 
         /// <summary>
@@ -1327,26 +1318,26 @@ namespace RepetierHost
             }
         }
 
-        /// <summary>
-        /// Toggles whether the show filament visualization is on or off. 
-        /// TODO: Update this with the new pictures in teh image list. 
-        /// </summary>
-        public void updateShowFilament()
-        {
-            // TODO: Don't need this any more. Maybe we could put an icon at the bottom that indicates the current configuration of the filament. 
-            //if (threeDSettings.checkDisableFilamentVisualization.Checked)
-            //{
-            //    toolShowFilament.Image = imageList.Images[5];
-            //    toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_DISABLED"); // "Filament visualization disabled";
-            //    toolShowFilament.Text = Trans.T("M_HIDE_FILAMENT"); // "Show filament";
-            //}
-            //else
-            //{
-            //    toolShowFilament.Image = imageList.Images[4];
-            //    toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
-            //    toolShowFilament.Text = Trans.T("M_SHOW_FILAMENT"); // "Hide filament";
-            //}
-        }
+        ///// <summary>
+        ///// Toggles whether the show filament visualization is on or off. 
+        ///// 
+        ///// </summary>
+        //public void updateShowFilament()
+        //{
+        //    // TODO: Don't need this any more. Maybe we could put an icon at the bottom that indicates the current configuration of the filament. 
+        //    //if (threeDSettings.checkDisableFilamentVisualization.Checked)
+        //    //{
+        //    //    toolShowFilament.Image = imageList.Images[5];
+        //    //    toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_DISABLED"); // "Filament visualization disabled";
+        //    //    toolShowFilament.Text = Trans.T("M_HIDE_FILAMENT"); // "Show filament";
+        //    //}
+        //    //else
+        //    //{
+        //    //    toolShowFilament.Image = imageList.Images[4];
+        //    //    toolShowFilament.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
+        //    //    toolShowFilament.Text = Trans.T("M_SHOW_FILAMENT"); // "Hide filament";
+        //    //}
+        //}
 
         /// <summary>
         /// Toggles the Update Travel on or off. 
@@ -1934,18 +1925,17 @@ namespace RepetierHost
 
         private void loggingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (logform.IsDisposed == true)
-            {
-                logView = new LogView();
-                logform = new Form();
-                logView.Dock = DockStyle.Fill;
-                logform.Controls.Add(logView);
-                logform.Visible = true;
+            //if (logform.IsDisposed == true)
+            //{
+                
+            //    logform.Visible = true;
 
-            }
-            else
+            //}
+            //else
+                
                 logform.Visible = !logform.Visible;
-            //logform.Show();
+                logform.BringToFront();
+            //
             //logView.Show();
         }
 
