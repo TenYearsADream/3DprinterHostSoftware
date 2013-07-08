@@ -273,7 +273,7 @@ namespace RepetierHost.model
 
         public static void logInfo(string text)
         {
-            Main.conn.log(text, false, 3);
+            Main.connection.log(text, false, 3);
         }
         public void log(string t, bool response, int level)
         {
@@ -822,7 +822,7 @@ namespace RepetierHost.model
                 if (heatres == DialogResult.Cancel) return false;
                 if (heatres == DialogResult.Yes)
                 {
-                    for (int i = 0; i < Main.conn.numberExtruder; i++)
+                    for (int i = 0; i < Main.connection.numberExtruder; i++)
                         injectManualCommand("M104 S0 T" + i.ToString());
                     if (bedTemp > 0)
                         injectManualCommand("M140 S0");
@@ -1056,7 +1056,7 @@ namespace RepetierHost.model
         }
         public MethodInvoker firmwareRequestedPause = delegate
         {
-            Main.conn.pause(Trans.T("L_PAUSED_FIRMWARE"));
+            Main.connection.pause(Trans.T("L_PAUSED_FIRMWARE"));
         };
         public float getTemperature(int extr)
         {

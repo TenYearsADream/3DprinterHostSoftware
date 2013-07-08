@@ -63,7 +63,7 @@ namespace RepetierHost.model
                     }
                 }
                 if (res != null)
-                    Main.conn.VirtualResponse(res);
+                    Main.connection.VirtualResponse(res);
             } while (res != null);
             cnt++;
             if (cnt > 500)
@@ -100,7 +100,7 @@ namespace RepetierHost.model
         /// </summary>
         public void open()
         {
-            baudrate = Main.conn.baud;
+            baudrate = Main.connection.baud;
             ana.start();
             output.AddLast("start");
             writeThread = new Thread(new ThreadStart(this.WriteThread));

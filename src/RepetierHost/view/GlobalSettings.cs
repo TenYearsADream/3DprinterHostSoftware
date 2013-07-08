@@ -69,6 +69,10 @@ namespace RepetierHost.view
             checkRedGreenSwitch.Text = Trans.T("L_USE_RED_GREEN_SWITCH");
             buttonAbort.Text = Trans.T("B_CANCEL");
             buttonOK.Text = Trans.T("B_OK");
+
+            this.resetSoftware.Text = Trans.T("B_RESET");
+            this.resetSoftwarebutton1.Text = Trans.T("B_RESET");
+            this.ResetWarninglabel1.Text = Trans.T("L_RESET_EXPLANATION");
         }
 
         /// <summary>
@@ -173,6 +177,34 @@ namespace RepetierHost.view
         private void checkReduceToolbarSize_CheckedChanged(object sender, EventArgs e)
         {
             Main.main.UpdateToolbarSize();
+        }
+
+        private void resetSoftwarebutton1_Click(object sender, EventArgs e)
+        {
+            string message = Trans.T("M_RESET_WARNING_QUESTION"); 
+            string caption = Trans.T("B_RESET");
+                var result = MessageBox.Show(message, caption,
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+                // If the no button was pressed ... 
+                if (result == DialogResult.Yes)
+                {
+                    //RegistryKey.
+                    //RegistryKey delKey = Registry.LocalMachine.OpenSubKey("Software", true);
+                    //delKey.DeleteSubKey("Baoyan");
+                    // dic["registryFolder"] 
+                    //this.repetierKey.DeleteSubKeyTree("SOFTWARE\\"+Custom.GetString("registryFolder","Baoyan"));
+                    //Custom.BaseKey.
+                    
+                    string key = Custom.BaseKey.ToString();
+                    Registry.CurrentUser.DeleteSubKeyTree("Software\\Baoyan");
+                    Main.main.Close(); // Not working right now. Becasue it tries to access teh registry while shutting down. 
+                    
+
+                   // this.repetierKey.DeleteSubKeyTree(key);
+                    
+                }
+        
         }
     }
 }

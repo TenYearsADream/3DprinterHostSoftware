@@ -711,9 +711,9 @@ namespace RepetierHost.view
             {
                 try
                 {
-                    Main.conn.log("OpenGL version:" + GL.GetString(StringName.Version), false, 3);
-                    Main.conn.log("OpenGL extensions:" + GL.GetString(StringName.Extensions), false, 3);
-                    Main.conn.log("OpenGL renderer:" + GL.GetString(StringName.Renderer), false, 3);
+                    Main.connection.log("OpenGL version:" + GL.GetString(StringName.Version), false, 3);
+                    Main.connection.log("OpenGL extensions:" + GL.GetString(StringName.Extensions), false, 3);
+                    Main.connection.log("OpenGL renderer:" + GL.GetString(StringName.Renderer), false, 3);
                     string sv = GL.GetString(StringName.Version).Trim();
                     int p = sv.IndexOf(" ");
                     if (p > 0) sv = sv.Substring(0, p);
@@ -744,9 +744,9 @@ namespace RepetierHost.view
                         }
                     }
                     if (Main.threeDSettings.useVBOs)
-                        Main.conn.log("Using fast VBOs for rendering is possible", false, 3);
+                        Main.connection.log("Using fast VBOs for rendering is possible", false, 3);
                     else
-                        Main.conn.log("Fast VBOs for rendering not supported. Using slower default method.", false, 3);
+                        Main.connection.log("Fast VBOs for rendering not supported. Using slower default method.", false, 3);
                     //  Main.threeDSettings.useVBOs = false;
                 }
                 catch { }

@@ -66,17 +66,17 @@ namespace RepetierHost.view.utils
         public void Postprocess(string file)
         {
             string dir = Main.globalSettings.Workdir;
-            if (Main.conn.runFilterEverySlice == false || postproc != null || dir.Length==0)
+            if (Main.connection.runFilterEverySlice == false || postproc != null || dir.Length==0)
             {
                 SlicingInfo.f.Invoke(SlicingInfo.f.StopInfo);
 
                 //TODO: Fix this comment out
                //LoadGCode lg = Main.main.fileAddOrRemove.LoadGCode(file);
-                LoadGCode lg= Main.main.LoadGCode;
+                LoadGCode lg= Main.main.fileAddOrRemove.LoadGCode;
                 //LoadGCode lg = Main.main.LoadGCode;
                 //Main.main.fileAddOrRemove .Invoke(lg, file);
                 Main.main.Invoke(lg, file);
-                if (SlicingInfo.f.checkStartBoxAfterSlicing.Checked && Main.conn.connected)
+                if (SlicingInfo.f.checkStartBoxAfterSlicing.Checked && Main.connection.connected)
                     Main.main.Invoke(Main.main.StartJob);
                 return; // Nothing to do
             }
@@ -86,14 +86,14 @@ namespace RepetierHost.view.utils
             string tmpfile = dir + Path.DirectorySeparatorChar + "filter.gcode";
             File.Copy(file, tmpfile,true);
             // run filter
-            string full = Main.conn.filterCommand;
+            string full = Main.connection.filterCommand;
             int p = full.IndexOf(' ');
             if (p < 0) return;
             string cmd = full.Substring(0, p);
             string args = full.Substring(p + 1);
             args = args.Replace("#in", wrapQuotes(tmpfile));
             args = args.Replace("#out", wrapQuotes(file));
-            Main.conn.log(cmd + " " + args, false, 3);
+            Main.connection.log(cmd + " " + args, false, 3);
             postproc = new Process();
             postproc.EnableRaisingEvents = true;
             postproc.Exited += new EventHandler(PostprocessExited);
@@ -126,9 +126,9 @@ namespace RepetierHost.view.utils
             postproc.Close();
             postproc = null;
             SlicingInfo.f.Invoke(SlicingInfo.f.StopInfo);
-            LoadGCode lg = Main.main.LoadGCode;
+            LoadGCode lg = Main.main.fileAddOrRemove.LoadGCode;
             Main.main.Invoke(lg, postprocessFile);
-            if (SlicingInfo.f.checkStartBoxAfterSlicing.Checked && Main.conn.connected)
+            if (SlicingInfo.f.checkStartBoxAfterSlicing.Checked && Main.connection.connected)
                 Main.main.Invoke(Main.main.StartJob);
         }
         private static void OutputDataHandler(object sendingProcess,
@@ -137,7 +137,7 @@ namespace RepetierHost.view.utils
             // Collect the net view command output.
             if (!String.IsNullOrEmpty(outLine.Data))
             {
-                Main.conn.log("<Postprocess> "+outLine.Data, false, 4);
+                Main.connection.log("<Postprocess> "+outLine.Data, false, 4);
             }
         }
         private void printerPropertyChanged(object sender, PropertyChangedEventArgs evt)

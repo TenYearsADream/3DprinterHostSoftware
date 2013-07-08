@@ -39,7 +39,7 @@ namespace RepetierHost.view
         {
             InitializeComponent();
             RegMemory.RestoreWindowPos("eepromWindow", this);
-            storage = Main.conn.eeprom;
+            storage = Main.connection.eeprom;
             grid.Columns.Add("Description", "Description");
             grid.Columns[0].DataPropertyName = "Description";
             grid.Columns[0].ReadOnly = true;

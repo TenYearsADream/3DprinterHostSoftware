@@ -137,7 +137,7 @@ namespace RepetierHost.view
             }
             catch (Exception e)
             {
-                Main.conn.log(e.ToString(), false, 2);
+                Main.connection.log(e.ToString(), false, 2);
             }
         }
         public void KillSlice()
@@ -146,7 +146,7 @@ namespace RepetierHost.view
             {
                 procConvert.Kill();
                 procConvert = null;
-                Main.conn.log(Trans.T1("L_SKEIN_KILLED",name),false,2); //"Skeinforge slicing process killed on user request.", false, 2);
+                Main.connection.log(Trans.T1("L_SKEIN_KILLED",name),false,2); //"Skeinforge slicing process killed on user request.", false, 2);
                 RestoreConfigs();
             }
         }
@@ -325,7 +325,7 @@ winding	False
             }
             catch (Exception e)
             {
-                Main.conn.log(e.ToString(), false, 2);
+                Main.connection.log(e.ToString(), false, 2);
                 RestoreConfigs();
             }
         }
@@ -357,7 +357,7 @@ winding	False
             {
                 string[] lines = outLine.Data.Split((char)0x0d);
                 foreach (string l in lines)
-                    Main.conn.log("<"+Main.main.skeinforge.name+"> " + l, false, 4);
+                    Main.connection.log("<"+Main.main.skeinforge.name+"> " + l, false, 4);
             }
         }
 

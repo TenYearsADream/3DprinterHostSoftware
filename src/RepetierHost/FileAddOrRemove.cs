@@ -3,8 +3,7 @@
 //   Some parts of this file were derived from Repetier Host which can be found at
 // https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
 // 
-// Other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China 
-// and may not be reproduced in any form without express written consent.
+// Other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China.// 
 // 
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.

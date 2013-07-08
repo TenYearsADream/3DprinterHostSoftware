@@ -251,14 +251,13 @@
             this.internalSlicingParameterToolStripMenuItem.Name = "internalSlicingParameterToolStripMenuItem";
             this.internalSlicingParameterToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.internalSlicingParameterToolStripMenuItem.Text = "Test case slicing parameter";
-            this.internalSlicingParameterToolStripMenuItem.Click += new System.EventHandler(this.internalSlicingParameterToolStripMenuItem_Click);
             // 
             // soundConfigurationToolStripMenuItem
             // 
             this.soundConfigurationToolStripMenuItem.Name = "soundConfigurationToolStripMenuItem";
             this.soundConfigurationToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.soundConfigurationToolStripMenuItem.Text = "Sound configuration";
-            this.soundConfigurationToolStripMenuItem.Click += new System.EventHandler(this.soundConfigurationToolStripMenuItem_Click);
+            //this.soundConfigurationToolStripMenuItem.Click += new System.EventHandler(this.soundConfigurationToolStripMenuItem_Click);
             // 
             // slicerToolStripMenuItem1
             // 
@@ -554,7 +553,6 @@
             this.jobStatusToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.J)));
             this.jobStatusToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.jobStatusToolStripMenuItem.Text = "Job status";
-            this.jobStatusToolStripMenuItem.Click += new System.EventHandler(this.jobStatusToolStripMenuItem_Click);
             // 
             // menuSDCardManager
             // 
@@ -562,7 +560,6 @@
             this.menuSDCardManager.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
             this.menuSDCardManager.Size = new System.Drawing.Size(212, 22);
             this.menuSDCardManager.Text = "SD card manager";
-            this.menuSDCardManager.Click += new System.EventHandler(this.toolStripSDCard_Click);
             // 
             // testCaseGeneratorToolStripMenuItem
             // 

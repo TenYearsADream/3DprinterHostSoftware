@@ -300,10 +300,10 @@ namespace RepetierHost.model
                             {
                                 layer++;
                                 lastZPrint = z;
-                                if (!privateAnalyzer && Main.conn.job.hasData() && Main.conn.job.maxLayer >= 0)
+                                if (!privateAnalyzer && Main.connection.job.hasData() && Main.connection.job.maxLayer >= 0)
                                 {
                                     //PrinterConnection.logInfo("Printing layer " + layer.ToString() + " of " + Main.conn.job.maxLayer.ToString());
-                                    PrinterConnection.logInfo(Trans.T2("L_PRINTING_LAYER_X_OF_Y", layer.ToString(), Main.conn.job.maxLayer.ToString()));
+                                    PrinterConnection.logInfo(Trans.T2("L_PRINTING_LAYER_X_OF_Y", layer.ToString(), Main.connection.job.maxLayer.ToString()));
                                 }
                             }
                         }
@@ -729,10 +729,10 @@ namespace RepetierHost.model
                         layer++;
                         if (code!=null)
                         {
-                            if (!privateAnalyzer && Main.conn.job.hasData() && Main.conn.job.maxLayer >= 0)
+                            if (!privateAnalyzer && Main.connection.job.hasData() && Main.connection.job.maxLayer >= 0)
                             {
                                 //PrinterConnection.logInfo("Printing layer " + layer.ToString() + " of " + Main.conn.job.maxLayer.ToString());
-                                PrinterConnection.logInfo(Trans.T2("L_PRINTING_LAYER_X_OF_Y", layer.ToString(), Main.conn.job.maxLayer.ToString()));
+                                PrinterConnection.logInfo(Trans.T2("L_PRINTING_LAYER_X_OF_Y", layer.ToString(), Main.connection.job.maxLayer.ToString()));
                             }
                         }
                     }
@@ -756,10 +756,10 @@ namespace RepetierHost.model
                     layer++;
                     if (code!=null)
                     {
-                        if (!privateAnalyzer && Main.conn.job.hasData() && Main.conn.job.maxLayer >= 0)
+                        if (!privateAnalyzer && Main.connection.job.hasData() && Main.connection.job.maxLayer >= 0)
                         {
                             //PrinterConnection.logInfo("Printing layer " + layer.ToString() + " of " + Main.conn.job.maxLayer.ToString());
-                            PrinterConnection.logInfo(Trans.T2("L_PRINTING_LAYER_X_OF_Y", layer.ToString(), Main.conn.job.maxLayer.ToString()));
+                            PrinterConnection.logInfo(Trans.T2("L_PRINTING_LAYER_X_OF_Y", layer.ToString(), Main.connection.job.maxLayer.ToString()));
                         }
                     }
                 }

@@ -42,8 +42,11 @@
   <t id="CB_RAFT_CHECKBOX" ver="1">基本底座</t>
   <t id="L_EXIT_AUTO_SAVED" ver="1">退出</t>
   <t id="B_EXIT" ver="1">退出</t>
+  <t id="M_SURE_TO_EXIT" ver="1">确定退出程序？</t>
 
   <t id="END NEW TEXT" ver="1"></t>
+  
+  
 <t id="M_FILE" ver="1">文件</t>
 <t id="M_CONFIG" ver="1">配置</t>
 <t id="M_SLICER" ver="1">代码生成器</t>

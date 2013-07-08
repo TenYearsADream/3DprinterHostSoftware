@@ -589,16 +589,16 @@ namespace RepetierHost.model
             if (ana.maxDrawMethod > 0)
             {
                 ana.maxDrawMethod--;
-                Main.conn.log("Reduced visual quality for better framerates and to protect print quality.", false, 1);
-                Main.conn.log("You can disable this in Config->Repetier settings->Behaviour.", false, 1);
+                Main.connection.log("Reduced visual quality for better framerates and to protect print quality.", false, 1);
+                Main.connection.log("You can disable this in Config->Repetier settings->Behaviour.", false, 1);
             }
             else
             {
                 if (ana.drawing)
                 {
                     ana.drawing = false;
-                    Main.conn.log("Disabled additional filament drawing for better framerates and to protect print quality.", false, 1);
-                    Main.conn.log("You can disable this in Config->Repetier settings->Behaviour.", false, 1);
+                    Main.connection.log("Disabled additional filament drawing for better framerates and to protect print quality.", false, 1);
+                    Main.connection.log("You can disable this in Config->Repetier settings->Behaviour.", false, 1);
                 }
             }
         }

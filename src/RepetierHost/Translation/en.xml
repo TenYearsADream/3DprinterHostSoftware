@@ -44,6 +44,16 @@
   <t id="CB_RAFT_CHECKBOX" ver="1">Generate Raft</t>
   <t id="L_EXIT_AUTO_SAVED" ver="1">Changes Are Automatically Saved</t>
   <t id="B_EXIT" ver="1">Exit</t>
+  <t id="M_SURE_TO_EXIT" ver="1">Are you sure that you would to exit?</t>
+
+  <t id="M_RESET_WARNING_QUESTION" ver="1">Are you sure that you would like to reset everything? The program must restart immediately if you select yes.</t>
+  <t id="B_RESET" ver="1">Reset</t>
+  <t id="L_RESET_EXPLANATION" ver="1">Erases all the saved configuration information</t>
+  <t id="" ver="1">"";</t>
+  <t id="" ver="1">"";</t>
+  <t id="" ver="1">"";</t>
+  <t id="" ver="1">"";</t>
+ 
   
   <t id="END NEW TEXT" ver="1"></t>
  

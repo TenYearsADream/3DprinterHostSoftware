@@ -127,7 +127,7 @@ namespace RepetierHost.model
             con.GetInjectLock();
             if (con.afterJobDisableExtruder)
             {
-                for(int i=0;i<Main.conn.numberExtruder;i++) 
+                for(int i=0;i<Main.connection.numberExtruder;i++) 
                     con.injectManualCommand("M104 S0 T"+i.ToString());
             }
             if(con.afterJobDisablePrintbed) 
@@ -222,7 +222,7 @@ namespace RepetierHost.model
                 ticks -= 60000 * min;
                 long sec = ticks / 1000;
                 //Main.conn.log("Printjob finished at " + jobFinished.ToShortDateString()+" "+jobFinished.ToShortTimeString(),false,3);
-                Main.conn.log(Trans.T1("L_PRINTJOB_FINISHED_AT",jobFinished.ToShortDateString() + " " + jobFinished.ToShortTimeString()), false, 3);
+                Main.connection.log(Trans.T1("L_PRINTJOB_FINISHED_AT",jobFinished.ToShortDateString() + " " + jobFinished.ToShortTimeString()), false, 3);
                 StringBuilder s = new StringBuilder();
                 if (hours > 0)
                     s.Append(Trans.T1("L_TIME_H:",hours.ToString())); //"h:");
@@ -232,9 +232,9 @@ namespace RepetierHost.model
                 //Main.conn.log("Printing time:"+s.ToString(),false,3);
                 //Main.conn.log("Lines send:" + linesSend.ToString(), false, 3);
                 //Main.conn.firePrinterAction("Finished in "+s.ToString());
-                Main.conn.log(Trans.T1("L_PRINTING_TIME:",s.ToString()), false, 3);
-                Main.conn.log(Trans.T1("L_LINES_SEND:X",linesSend.ToString()), false, 3);
-                Main.conn.firePrinterAction(Trans.T1("L_FINISHED_IN",s.ToString()));
+                Main.connection.log(Trans.T1("L_PRINTING_TIME:",s.ToString()), false, 3);
+                Main.connection.log(Trans.T1("L_LINES_SEND:X",linesSend.ToString()), false, 3);
+                Main.connection.firePrinterAction(Trans.T1("L_FINISHED_IN",s.ToString()));
                 DoEndKillActions();
                 //.main.Invoke(Main.main.UpdateJobButtons);
                 //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
@@ -287,7 +287,7 @@ namespace RepetierHost.model
                     }*/
                     if (etaModeNormal)
                     {
-                        ticks = (long)(1000.0 * (computedPrintingTime - Main.conn.analyzer.printingTime) * (1.0 + 0.01 * Main.conn.addPrintingTime) * 100.0 / (float)Main.conn.speedMultiply);
+                        ticks = (long)(1000.0 * (computedPrintingTime - Main.connection.analyzer.printingTime) * (1.0 + 0.01 * Main.connection.addPrintingTime) * 100.0 / (float)Main.connection.speedMultiply);
                         long hours = ticks / 3600000;
                         ticks -= 3600000 * hours;
                         long min = ticks / 60000;
@@ -304,7 +304,7 @@ namespace RepetierHost.model
                     else
                     {
                         DateTime dt = DateTime.Now;
-                        dt = dt.AddSeconds(computedPrintingTime - Main.conn.analyzer.printingTime);
+                        dt = dt.AddSeconds(computedPrintingTime - Main.connection.analyzer.printingTime);
                         //dt.ToLocalTime();
                         return dt.ToLongTimeString();
                     }

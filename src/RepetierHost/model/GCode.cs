@@ -362,7 +362,7 @@ namespace RepetierHost.model
         }
         private void ActivateV2OrForceAscii()
         {
-            if (Main.conn.binaryVersion < 2)
+            if (Main.connection.binaryVersion < 2)
             {
                 forceAscii = true;
                 return;

@@ -65,7 +65,7 @@ namespace RepetierHost
 
         private void UpdateProgressBar()
         {
-            if(RepetierHost.Main.conn.job.mode !=1 )
+            if(RepetierHost.Main.connection.job.mode !=1 )
                 Main.main.toolProgress.Enabled = false;
             else
                 Main.main.toolProgress.Enabled = true;
@@ -182,12 +182,14 @@ namespace RepetierHost
         {
             main.connectToolStripSplitButton.DropDownItems.Clear();
             foreach (string s in RepetierHost.Main.printerSettings.printerKey.GetSubKeyNames())
-            // main.printerSettings.printerKey.GetSubKeyNames())
-            {
+           {
                 main.connectToolStripSplitButton.DropDownItems.Add(s, null, main.ConnectHandler);
             }
+
             foreach (ToolStripItem it in main.connectToolStripSplitButton.DropDownItems)
-                it.Enabled = !Main.conn.connected;// main.conn.connected;
+            {
+                it.Enabled = !Main.connection.connected;// main.conn.connected;
+            }
         }
 
         /// <summary>
@@ -277,7 +279,7 @@ namespace RepetierHost
                     Main.main.positionToolSplitButton2.Enabled = false;
                     Main.main.sliceToolSplitButton3.Enabled = false;
                     Main.main.gCodeVisualizationMenuOption.Enabled = true;
-                    if (Main.conn.connected == true)
+                    if (Main.connection.connected == true)
                     {
                         Main.main.printStripSplitButton4.Enabled = true;
                         Main.main.printStripSplitButton4.Image = Main.main.imageList.Images[2];
@@ -299,7 +301,7 @@ namespace RepetierHost
                 case RepetierHost.Main.ThreeDViewOptions.livePrinting:
                     Main.main.positionToolSplitButton2.Enabled = false;
                     Main.main.sliceToolSplitButton3.Enabled = false;
-                    Main.main.printStripSplitButton4.Enabled = Main.conn.connected;
+                    Main.main.printStripSplitButton4.Enabled = Main.connection.connected;
                     Main.main.saveGCodeToolStripMenuItem.Enabled = true;
                     Main.main.saveNewSTLMenuItem11.Enabled = false;
 
@@ -319,7 +321,7 @@ namespace RepetierHost
                     break;
             }
 
-            if (Main.conn.job.mode != 1) // if it is not printing. 1 = printing
+            if (Main.connection.job.mode != 1) // if it is not printing. 1 = printing
             {
                 Main.main.killJobToolStripMenuItem.Enabled = false;
                 //Main.main.printStripSplitButton4.Enabled = Main.conn.connected;

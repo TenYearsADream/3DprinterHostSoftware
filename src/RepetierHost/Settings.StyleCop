@@ -1,9 +1,16 @@
 <StyleCopSettings Version="105">
   <GlobalSettings>
     <CollectionProperty Name="RecognizedWords">
+      <Value>Baoyan</Value>
       <Value>Crtl</Value>
+      <Value>eeprom</Value>
       <Value>gcode</Value>
       <Value>Gcode</Value>
+      <Value>ini</Value>
+      <Value>skeinforge</Value>
+      <Value>slic</Value>
+      <Value>slic3r</Value>
+      <Value>Slic3r</Value>
       <Value>stl</Value>
       <Value>STL</Value>
     </CollectionProperty>

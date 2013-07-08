@@ -118,7 +118,7 @@ namespace RepetierHost.model
 
         public TemperatureHistory()
         {
-            Main.conn.eventTempHistory += addNotify;
+            Main.connection.eventTempHistory += addNotify;
             history = new TemperatureList();
             history.maxTime = DateTime.UtcNow.Ticks;
             history.minTime = history.maxTime - 36000000000;

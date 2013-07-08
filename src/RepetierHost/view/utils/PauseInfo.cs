@@ -22,7 +22,7 @@ namespace RepetierHost.view.utils
                 form = new PauseInfo();
             }
             form.labelInfo.Text = info;
-            GCodeAnalyzer a = Main.conn.analyzer;
+            GCodeAnalyzer a = Main.connection.analyzer;
             x = a.x-a.xOffset;
             y = a.y-a.yOffset;
             z = a.z-a.zOffset;
@@ -47,8 +47,8 @@ namespace RepetierHost.view.utils
         }
         private void buttonContinuePrinting_Click(object sender, EventArgs e)
         {
-            GCodeAnalyzer a = Main.conn.analyzer;
-            PrinterConnection c = Main.conn;
+            GCodeAnalyzer a = Main.connection.analyzer;
+            PrinterConnection c = Main.connection;
             c.injectManualCommand("G90");
             c.injectManualCommand("G1 X"+x.ToString(GCode.format)+" Y"+y.ToString(GCode.format)+" F"+c.travelFeedRate.ToString(GCode.format));
             c.injectManualCommand("G1 Z"+z.ToString(GCode.format)+" F"+c.maxZFeedRate.ToString(GCode.format));
@@ -58,7 +58,7 @@ namespace RepetierHost.view.utils
                 c.injectManualCommand(relative ? "G91" : "G90");
             }
             c.injectManualCommand("G1 F" + f.ToString(GCode.format)); // Reset old speed
-            Main.conn.paused = false;
+            Main.connection.paused = false;
             Hide();
         }
     }

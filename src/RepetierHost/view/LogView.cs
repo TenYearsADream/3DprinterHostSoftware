@@ -86,9 +86,9 @@ namespace RepetierHost.view
         private void filter()
         {
             listLog.Clear();
-            lock (Main.conn.logList)
+            lock (Main.connection.logList)
             {
-                foreach (LogLine l in Main.conn.logList)
+                foreach (LogLine l in Main.connection.logList)
                 {
                     logAppend(l);
                 }
@@ -120,9 +120,9 @@ namespace RepetierHost.view
         private void UpdateNewEntries(object sender, EventArgs e)
         {
             LinkedList<LogLine> nl = null;
-            lock (Main.conn.newLogs)
+            lock (Main.connection.newLogs)
             {
-                LinkedList<LogLine> l = Main.conn.newLogs;
+                LinkedList<LogLine> l = Main.connection.newLogs;
                 if (l.Count == 0) return;
                 nl = new LinkedList<LogLine>(l);
                 l.Clear();
@@ -158,7 +158,7 @@ namespace RepetierHost.view
 
         private void toolClear_Click(object sender, EventArgs e)
         {
-            Main.conn.clearLog();
+            Main.connection.clearLog();
         }
 
 
@@ -172,8 +172,8 @@ namespace RepetierHost.view
 
         private void LogView_Load(object sender, EventArgs e)
         {
-            Main.conn.eventLogCleared += filter;
-            Main.conn.eventLogUpdate += logUpdate;
+            Main.connection.eventLogCleared += filter;
+            Main.connection.eventLogUpdate += logUpdate;
             Application.Idle += new EventHandler(UpdateNewEntries);
         }
 

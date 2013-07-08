@@ -71,7 +71,7 @@ namespace RepetierHost.view
             RegMemory.RestoreWindowPos("printerSettingsWindow", this);
             repetierKey = Custom.BaseKey; // Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");
             printerKey = repetierKey.CreateSubKey("printer");
-            con = Main.conn;
+            con = Main.connection;
             conToForm();
             comboPrinter.Items.Clear();
             foreach (string s in printerKey.GetSubKeyNames())

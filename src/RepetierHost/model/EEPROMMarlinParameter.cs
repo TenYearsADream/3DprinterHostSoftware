@@ -216,14 +216,14 @@ namespace RepetierHost.model
             string cmdav = "M205 S" + avs + " T" + avt + " B" + avb + " X" + avx + " Z" + avz;
             string cmdho = "M206 X" + hox + " Y" + hoy + " Z" + hoz;
             string cmdpid = "M301 P" + ppid + " I" + ipid + " D" + dpid;
-            Main.conn.injectManualCommand(cmdsteps);
-            Main.conn.injectManualCommand(cmdfeed);
-            Main.conn.injectManualCommand(cmdmacc);
-            Main.conn.injectManualCommand(cmdacc);
-            Main.conn.injectManualCommand(cmdav);
-            Main.conn.injectManualCommand(cmdho);
+            Main.connection.injectManualCommand(cmdsteps);
+            Main.connection.injectManualCommand(cmdfeed);
+            Main.connection.injectManualCommand(cmdmacc);
+            Main.connection.injectManualCommand(cmdacc);
+            Main.connection.injectManualCommand(cmdav);
+            Main.connection.injectManualCommand(cmdho);
             if(hasPID)
-                Main.conn.injectManualCommand(cmdpid);
+                Main.connection.injectManualCommand(cmdpid);
             changed = false;
         }
         public string SX
@@ -353,12 +353,12 @@ namespace RepetierHost.model
         }
         public void SaveToEEPROM()
         {
-            Main.conn.injectManualCommand("M500");
+            Main.connection.injectManualCommand("M500");
         }
         public void retriev_factory_settings()
         {
             hasPID = false;
-            Main.conn.injectManualCommand("M502");
+            Main.connection.injectManualCommand("M502");
         }
         public void Add(string line)
         {
@@ -369,7 +369,7 @@ namespace RepetierHost.model
         public void Update()
         {
             hasPID = false;
-            Main.conn.injectManualCommand("M503");
+            Main.connection.injectManualCommand("M503");
         }
     }
 }

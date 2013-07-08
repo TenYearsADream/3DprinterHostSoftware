@@ -32,7 +32,7 @@ namespace RepetierHost.view
         PrinterConnection con;
         public PrinterInfo()
         {
-            con = Main.conn;
+            con = Main.connection;
             InitializeComponent();
             RegMemory.RestoreWindowPos("printerInfoWindow", this);
             timer_Tick(null, null);

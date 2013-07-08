@@ -295,7 +295,7 @@ namespace RepetierHost.view
             {
                 procConvert.Kill();
                 procConvert = null;
-                Main.conn.log("Slic3r slicing process killed on user request.", false, 2);
+                Main.connection.log("Slic3r slicing process killed on user request.", false, 2);
             }
         }
         public void RunExternalConfig()
@@ -345,7 +345,7 @@ namespace RepetierHost.view
             }
             catch (Exception e)
             {
-                Main.conn.log(e.ToString(), false, 2);
+                Main.connection.log(e.ToString(), false, 2);
             }
         }
         public void RunConfig()
@@ -392,7 +392,7 @@ namespace RepetierHost.view
             }
             catch (Exception e)
             {
-                Main.conn.log(e.ToString(), false, 2);
+                Main.connection.log(e.ToString(), false, 2);
             }
         }
         private void Slic3rExited(object sender, System.EventArgs e)
@@ -744,7 +744,7 @@ namespace RepetierHost.view
             }
             catch (Exception e)
             {
-                Main.conn.log(e.ToString(), false, 2);
+                Main.connection.log(e.ToString(), false, 2);
                 SlicingInfo.Stop();
                 return false;
             }
@@ -826,7 +826,7 @@ namespace RepetierHost.view
             }
             catch (Exception e)
             {
-                Main.conn.log(e.ToString(), false, 2);
+                Main.connection.log(e.ToString(), false, 2);
             }
             return true;
         }
@@ -861,7 +861,7 @@ namespace RepetierHost.view
             // Collect the net view command output.
             if (!String.IsNullOrEmpty(outLine.Data))
             {
-                Main.conn.log("<Slic3r> "+outLine.Data, false, 4);
+                Main.connection.log("<Slic3r> "+outLine.Data, false, 4);
             }
         }
 

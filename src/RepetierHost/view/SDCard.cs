@@ -112,7 +112,7 @@ namespace RepetierHost.view
             if (f == null)
             {
                 f = new SDCard();
-                Main.conn.eventResponse += f.analyzeEvent;
+                Main.connection.eventResponse += f.analyzeEvent;
             }
             f.RefreshFilenames();
             f.Show();
@@ -127,7 +127,7 @@ namespace RepetierHost.view
             f.mounted = true;
             f.printing = false;
             f.uploading = false;
-            Main.conn.analyzer.uploading = false;
+            Main.connection.analyzer.uploading = false;
             f.readFilenames = false;
             f.startPrint = false;
             f.currentDirectory = "";
@@ -158,7 +158,7 @@ namespace RepetierHost.view
         {
             updateFilenames = false;
             allFiles.Clear();
-            Main.conn.injectManualCommand("M20");
+            Main.connection.injectManualCommand("M20");
         }
         private void analyzeEvent(string res)
         {
@@ -239,8 +239,8 @@ namespace RepetierHost.view
             }
             else if (uploading && (res.Contains("M999") || res.IndexOf("error writing to file") != -1)) // write error
             {
-                Main.conn.job.KillJob();
-                Main.conn.analyzer.uploading = false;
+                Main.connection.job.KillJob();
+                Main.connection.analyzer.uploading = false;
                 uploading = false;
                 toolStatus.Text = Trans.T("L_UPLOAD_FAILED"); // "Upload failed.";
             }
@@ -251,12 +251,12 @@ namespace RepetierHost.view
                 progress.Value = 200;
                 toolStatus.Text = Trans.T("L_UPLOAD_FINISHED"); // "Upload finished.";
                 updateFilenames = true;
-                Main.conn.log(Trans.T1("L_UPLOADING_TIME", Printjob.DoubleToTime(time)), false, 3);
+                Main.connection.log(Trans.T1("L_UPLOADING_TIME", Printjob.DoubleToTime(time)), false, 3);
             }
             else if(res.Contains("Invalid directory")) {
                 if(uploading) {
-                    Main.conn.job.KillJob();
-                    Main.conn.analyzer.uploading = false;
+                    Main.connection.job.KillJob();
+                    Main.connection.analyzer.uploading = false;
                     uploading = false;
                     toolStatus.Text = Trans.T("L_UPLOAD_FAILED"); // "Upload failed.";
                 }
@@ -270,8 +270,8 @@ namespace RepetierHost.view
             }
             else if (uploading && res.StartsWith("open failed, File"))
             {
-                Main.conn.job.KillJob();
-                Main.conn.analyzer.uploading = false;
+                Main.connection.job.KillJob();
+                Main.connection.analyzer.uploading = false;
                 toolStatus.Text = Trans.T("L_UPLOAD_FAILED"); // "Upload failed.";
             }
             else if (res.StartsWith("File deleted"))
@@ -288,7 +288,7 @@ namespace RepetierHost.view
         }
         private void updateButtons()
         {
-            if (!Main.conn.connected)
+            if (!Main.connection.connected)
             {
                 toolAddFile.Enabled = false;
                 toolDelFile.Enabled = false;
@@ -299,7 +299,7 @@ namespace RepetierHost.view
                 toolNewFolder.Enabled = false;
                 return;
             }
-            if (uploading || printing || Main.conn.job.mode==1)
+            if (uploading || printing || Main.connection.job.mode==1)
             {
                 toolAddFile.Enabled = false;
                 toolDelFile.Enabled = false;
@@ -329,7 +329,7 @@ namespace RepetierHost.view
 
         private void toolAddFile_Click(object sender, EventArgs e)
         {
-            Printjob job = Main.conn.job;
+            Printjob job = Main.connection.job;
             if (job.mode==1)
             {
                 updateButtons();
@@ -368,10 +368,10 @@ namespace RepetierHost.view
                     job.PushGCodeShortArray(Main.main.editor.getContentArray(2));
                 if (f.checkJobFinished.Checked)
                 {
-                    PrinterConnection con = Main.conn;
+                    PrinterConnection con = Main.connection;
                     if (con.afterJobDisableExtruder)
                     {
-                        for (int i = 0; i < Main.conn.numberExtruder; i++)
+                        for (int i = 0; i < Main.connection.numberExtruder; i++)
                             job.PushData("M104 S0 T"+i.ToString());
                     }
                     if (con.afterJobDisablePrintbed)
@@ -394,20 +394,20 @@ namespace RepetierHost.view
             if (printing && printWait == 0)
             {
                 printWait = 2;
-                if(!Main.conn.hasInjectedMCommand(27))
-                    Main.conn.injectManualCommand("M27");
+                if(!Main.connection.hasInjectedMCommand(27))
+                    Main.connection.injectManualCommand("M27");
             }
             if (printWait <= 0) printWait = 2;
             if (uploading)
             {
-                progress.Value = (int)(Main.conn.job.PercentDone * 2);
+                progress.Value = (int)(Main.connection.job.PercentDone * 2);
             }
             printWait--;
             if (updateFilenames) RefreshFilenames();
             if (startPrint)
             {
                 startPrint = false;
-                Main.conn.injectManualCommand("M24");
+                Main.connection.injectManualCommand("M24");
             }
             if (waitDelete > 0)
             {
@@ -423,11 +423,11 @@ namespace RepetierHost.view
         private void toolStopPrint_Click(object sender, EventArgs e)
         {
             if(uploading) {
-                Main.conn.job.KillJob();
-                Main.conn.analyzer.uploading = false;
+                Main.connection.job.KillJob();
+                Main.connection.analyzer.uploading = false;
                 uploading = false;
                 toolStatus.Text = Trans.T("L_UPLOAD_FAILED"); // "Upload failed.";
-                Main.conn.injectManualCommand("M29");
+                Main.connection.injectManualCommand("M29");
             }
             if (printPaused)
             {
@@ -435,7 +435,7 @@ namespace RepetierHost.view
                 toolStatus.Text = Trans.T("L_PRINT_ABORTED"); // "Print aborted";
                 return;
             }
-            Main.conn.injectManualCommand("M25");
+            Main.connection.injectManualCommand("M25");
             printPaused = true;
             printing = false;
             toolStatus.Text = Trans.T("L_PRINT_PAUSED"); // "Print paused";
@@ -448,12 +448,12 @@ namespace RepetierHost.view
                 toolStatus.Text = Trans.T("L_SD_PRINTING...");
                 printing = true;
                 printPaused = false;
-                Main.conn.injectManualCommand("M24");
+                Main.connection.injectManualCommand("M24");
                 return;
             }
             foreach(ListViewItem v in files.SelectedItems) {
                 string name = v.Text;
-                Main.conn.injectManualCommand("M23 " + (currentDirectory.Length > 0 ? "/" : "") + currentDirectory + name);
+                Main.connection.injectManualCommand("M23 " + (currentDirectory.Length > 0 ? "/" : "") + currentDirectory + name);
                 break;
             }
         }
@@ -465,7 +465,7 @@ namespace RepetierHost.view
 
         private void toolMount_Click(object sender, EventArgs e)
         {
-            Main.conn.injectManualCommand("M21");
+            Main.connection.injectManualCommand("M21");
             mounted = true;
             currentDirectory = "";
             RefreshFilenames();
@@ -473,7 +473,7 @@ namespace RepetierHost.view
 
         private void toolUnmount_Click(object sender, EventArgs e)
         {
-            Main.conn.injectManualCommand("M22");
+            Main.connection.injectManualCommand("M22");
             mounted = false;
             currentDirectory = "";
             MessageBox.Show(Trans.T("L_REMOVE_SD_CARD")/*"You can remove the sd card."*/,Trans.T("L_INFORMATION"), MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -487,7 +487,7 @@ namespace RepetierHost.view
             if (MessageBox.Show(Trans.T1("L_REALLY_DELETE_X",fname), Trans.T("L_SECURITY_QUESTION"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                 waitDelete = 6;
-                Main.conn.injectManualCommand("M30 " + fname);
+                Main.connection.injectManualCommand("M30 " + fname);
             }
         }
 
@@ -536,7 +536,7 @@ namespace RepetierHost.view
                 MessageBox.Show(Trans.T("L_NOT_VALID_83_FILENAME"), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Main.conn.injectManualCommand("M32 " +(currentDirectory.Length>0?"/":"")+currentDirectory + foldername);
+            Main.connection.injectManualCommand("M32 " +(currentDirectory.Length>0?"/":"")+currentDirectory + foldername);
             RefreshFilenames();
         }
 

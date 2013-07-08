@@ -34,7 +34,7 @@ namespace RepetierHost.view
     public delegate void ContentChangedEvent();
 
     /// <summary>
-    /// The Windows Form that lets you Edit the G-code. 
+    /// The user Control that lets you Edit the G-code. 
     /// </summary>
     public partial class RepetierEditor : UserControl
     {
@@ -1552,7 +1552,7 @@ namespace RepetierHost.view
             if (a.printingTime > 0)
             {
                 printingTime = a.printingTime;
-                int sec = (int)(printingTime*(1+0.01*Main.conn.addPrintingTime));
+                int sec = (int)(printingTime*(1+0.01*Main.connection.addPrintingTime));
                 int hours = sec / 3600;
                 sec -= 3600 * hours;
                 int min = sec/60;

@@ -44,9 +44,13 @@
             this.groupGUI = new System.Windows.Forms.GroupBox();
             this.checkRedGreenSwitch = new System.Windows.Forms.CheckBox();
             this.checkReduceToolbarSize = new System.Windows.Forms.CheckBox();
+            this.resetSoftware = new System.Windows.Forms.GroupBox();
+            this.ResetWarninglabel1 = new System.Windows.Forms.Label();
+            this.resetSoftwarebutton1 = new System.Windows.Forms.Button();
             this.groupFilesAndDirectories.SuspendLayout();
             this.groupBehaviour.SuspendLayout();
             this.groupGUI.SuspendLayout();
+            this.resetSoftware.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupFilesAndDirectories
@@ -121,7 +125,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(365, 326);
+            this.buttonOK.Location = new System.Drawing.Point(362, 392);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(80, 22);
             this.buttonOK.TabIndex = 0;
@@ -131,7 +135,7 @@
             // 
             // buttonAbort
             // 
-            this.buttonAbort.Location = new System.Drawing.Point(451, 326);
+            this.buttonAbort.Location = new System.Drawing.Point(448, 392);
             this.buttonAbort.Name = "buttonAbort";
             this.buttonAbort.Size = new System.Drawing.Size(80, 22);
             this.buttonAbort.TabIndex = 1;
@@ -196,12 +200,44 @@
             this.checkReduceToolbarSize.UseVisualStyleBackColor = true;
             this.checkReduceToolbarSize.CheckedChanged += new System.EventHandler(this.checkReduceToolbarSize_CheckedChanged);
             // 
+            // resetSoftware
+            // 
+            this.resetSoftware.Controls.Add(this.ResetWarninglabel1);
+            this.resetSoftware.Controls.Add(this.resetSoftwarebutton1);
+            this.resetSoftware.Location = new System.Drawing.Point(12, 320);
+            this.resetSoftware.Name = "resetSoftware";
+            this.resetSoftware.Size = new System.Drawing.Size(519, 53);
+            this.resetSoftware.TabIndex = 4;
+            this.resetSoftware.TabStop = false;
+            this.resetSoftware.Text = "Reset Software";
+            this.resetSoftware.Visible = false;
+            // 
+            // ResetWarninglabel1
+            // 
+            this.ResetWarninglabel1.AutoSize = true;
+            this.ResetWarninglabel1.Location = new System.Drawing.Point(120, 26);
+            this.ResetWarninglabel1.Name = "ResetWarninglabel1";
+            this.ResetWarninglabel1.Size = new System.Drawing.Size(129, 13);
+            this.ResetWarninglabel1.TabIndex = 1;
+            this.ResetWarninglabel1.Text = "Erases all saved settings. ";
+            // 
+            // resetSoftwarebutton1
+            // 
+            this.resetSoftwarebutton1.Location = new System.Drawing.Point(6, 19);
+            this.resetSoftwarebutton1.Name = "resetSoftwarebutton1";
+            this.resetSoftwarebutton1.Size = new System.Drawing.Size(103, 27);
+            this.resetSoftwarebutton1.TabIndex = 0;
+            this.resetSoftwarebutton1.Text = "Reset Software";
+            this.resetSoftwarebutton1.UseVisualStyleBackColor = true;
+            this.resetSoftwarebutton1.Click += new System.EventHandler(this.resetSoftwarebutton1_Click);
+            // 
             // GlobalSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(544, 381);
+            this.ClientSize = new System.Drawing.Size(544, 442);
             this.ControlBox = false;
+            this.Controls.Add(this.resetSoftware);
             this.Controls.Add(this.groupGUI);
             this.Controls.Add(this.groupBehaviour);
             this.Controls.Add(this.buttonAbort);
@@ -221,6 +257,8 @@
             this.groupBehaviour.PerformLayout();
             this.groupGUI.ResumeLayout(false);
             this.groupGUI.PerformLayout();
+            this.resetSoftware.ResumeLayout(false);
+            this.resetSoftware.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -242,6 +280,9 @@
         private System.Windows.Forms.GroupBox groupGUI;
         private System.Windows.Forms.CheckBox checkReduceToolbarSize;
         private System.Windows.Forms.CheckBox checkRedGreenSwitch;
+        private System.Windows.Forms.GroupBox resetSoftware;
+        private System.Windows.Forms.Label ResetWarninglabel1;
+        private System.Windows.Forms.Button resetSoftwarebutton1;
 
     }
 }

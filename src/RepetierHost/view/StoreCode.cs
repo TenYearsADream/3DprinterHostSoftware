@@ -125,10 +125,10 @@ namespace RepetierHost.view
                 writeArray(file, Main.main.editor.getContentArray(2), binary);
             if (checkIncludeJobFinished.Checked)
             {
-                PrinterConnection con = Main.conn;
+                PrinterConnection con = Main.connection;
                 if (con.afterJobDisableExtruder)
                 {
-                    for (int i = 0; i < Main.conn.numberExtruder; i++)
+                    for (int i = 0; i < Main.connection.numberExtruder; i++)
                         writeString(file, "M104 S0 T"+i.ToString(), binary);
                 }
                 if (con.afterJobDisablePrintbed)

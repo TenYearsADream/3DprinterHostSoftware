@@ -69,7 +69,7 @@ namespace RepetierHost.view.utils
             }
             catch (Exception e)
             {
-                Main.conn.log(e.ToString(), false, 2);
+                Main.connection.log(e.ToString(), false, 2);
                 list.Remove(this);
             }
         }
@@ -84,7 +84,7 @@ namespace RepetierHost.view.utils
             // Collect the command output.
             if (!String.IsNullOrEmpty(outLine.Data))
             {
-                Main.conn.log("<"+exeName+"> " + outLine.Data, false, 4);
+                Main.connection.log("<"+exeName+"> " + outLine.Data, false, 4);
             }
         }
     }

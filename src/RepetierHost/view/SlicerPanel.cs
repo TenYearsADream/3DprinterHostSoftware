@@ -206,9 +206,9 @@ namespace RepetierHost.view
                     comboSlic3rFilamentSettings2.Items.Add(noINI(fi.Name));
                     comboSlic3rFilamentSettings3.Items.Add(noINI(fi.Name));
                 }
-                comboSlic3rFilamentSettings.Enabled = Main.conn.numberExtruder>0;
-                comboSlic3rFilamentSettings2.Enabled = Main.conn.numberExtruder > 1;
-                comboSlic3rFilamentSettings3.Enabled = Main.conn.numberExtruder > 2;
+                comboSlic3rFilamentSettings.Enabled = Main.connection.numberExtruder>0;
+                comboSlic3rFilamentSettings2.Enabled = Main.connection.numberExtruder > 1;
+                comboSlic3rFilamentSettings3.Enabled = Main.connection.numberExtruder > 2;
                 if (b.Slic3rFilamentSettings.Length > 0)
                     comboSlic3rFilamentSettings.SelectedItem = old1;
                 if (comboSlic3rFilamentSettings.SelectedIndex<0 && rgFiles.Count() > 0)

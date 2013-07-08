@@ -54,7 +54,7 @@ namespace RepetierHost.model
             string cmd = "M206 T" + type + " P" + position + " ";
             if (type == 3) cmd += "X" + val;
             else cmd += "S" + val;
-            Main.conn.injectManualCommand(cmd);
+            Main.connection.injectManualCommand(cmd);
             changed = false;
         }
         //[DisplayName("Description")]
@@ -99,7 +99,7 @@ namespace RepetierHost.model
         }
         public void Update()
         {
-            Main.conn.injectManualCommand("M205");
+            Main.connection.injectManualCommand("M205");
         }
         public EEPROMParameter Get(int pos)
         {

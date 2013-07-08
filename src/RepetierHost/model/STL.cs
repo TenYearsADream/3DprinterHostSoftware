@@ -412,12 +412,12 @@ namespace RepetierHost.model
         {
             if (float.IsNaN(v.X) || float.IsNaN(v.Y) || float.IsNaN(v.Z))
             {
-                Main.conn.log("NaN value in STL file import", false, 2);
+                Main.connection.log("NaN value in STL file import", false, 2);
                 return false;
             }
             if (float.IsInfinity(v.X) || float.IsInfinity(v.Y) || float.IsInfinity(v.Z))
             {
-                Main.conn.log("Infinity value in STL file import", false, 2);
+                Main.connection.log("Infinity value in STL file import", false, 2);
                 return false;
             }
             return true;

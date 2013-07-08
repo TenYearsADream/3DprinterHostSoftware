@@ -42,11 +42,11 @@ namespace RepetierHost.view
         {
             InitializeComponent();
             RegMemory.RestoreWindowPos("eepromMarlinWindow", this);
-            storage = Main.conn.eepromm;
+            storage = Main.connection.eepromm;
             storage.eventAdded += newline;
             translate();
             Main.main.languageChanged += translate;
-            newline(Main.conn.eepromm);
+            newline(Main.connection.eepromm);
         }
         private void translate()
         {

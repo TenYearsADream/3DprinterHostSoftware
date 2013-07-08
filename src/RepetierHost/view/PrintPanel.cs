@@ -41,7 +41,7 @@ namespace RepetierHost.view
         public ManualPrinterControl()
         {
             InitializeComponent();
-            con = Main.conn;
+            con = Main.connection;
             ann = con.analyzer;
             con.eventConnectionChange += ConnectionChanged;
             ann.fanVoltage = trackFanVoltage.Value;
@@ -119,7 +119,7 @@ namespace RepetierHost.view
             long timestamp = (long)t.TotalSeconds;
             long diff = timestamp - statusSet;
             float etemp = ann.getTemperature(ann.activeExtruderId);
-            if (Main.conn.connected == false)
+            if (Main.connection.connected == false)
             {
                 if (status != PrinterStatus.disconnected)
                     Status = PrinterStatus.disconnected;
@@ -130,9 +130,9 @@ namespace RepetierHost.view
                 Status = PrinterStatus.heatingBed;
             else if (status == PrinterStatus.heatingBed || status == PrinterStatus.heatingExtruder)
                 Status = PrinterStatus.idle;
-            else if (Main.conn.paused && status != PrinterStatus.jobPaused)
+            else if (Main.connection.paused && status != PrinterStatus.jobPaused)
                 Status = PrinterStatus.jobPaused;
-            else if (status == PrinterStatus.jobPaused && !Main.conn.paused)
+            else if (status == PrinterStatus.jobPaused && !Main.connection.paused)
                 Status = PrinterStatus.idle;
             else if (status == PrinterStatus.idle && diff > 0)
                 Status = PrinterStatus.idle;
@@ -141,7 +141,7 @@ namespace RepetierHost.view
                 if (diff > 30) // remove message after 30 seconds
                     Status = PrinterStatus.idle;
             }
-            else if (status == PrinterStatus.disconnected && Main.conn.connected)
+            else if (status == PrinterStatus.disconnected && Main.connection.connected)
                 Status = PrinterStatus.idle;
         }
         public MethodInvoker SetStatusJobFinished = delegate {Main.main.manulControl.Status = PrinterStatus.jobFinsihed;};
@@ -176,26 +176,26 @@ namespace RepetierHost.view
                         break;
                     default:
                     case PrinterStatus.idle:
-                        if (Main.conn.job.mode==1)
+                        if (Main.connection.job.mode==1)
                         {
-                            if (Main.conn.analyzer.uploading)
+                            if (Main.connection.analyzer.uploading)
                                 labelStatus.Text = Trans.T("L_UPLOADING..."); //"Uploading ...";
                             else
-                                labelStatus.Text = Trans.T1("L_PRINTING_JOB_ETA",Main.conn.job.ETA); //Printing job ETA " + Main.conn.job.ETA;
+                                labelStatus.Text = Trans.T1("L_PRINTING_JOB_ETA",Main.connection.job.ETA); //Printing job ETA " + Main.conn.job.ETA;
                         }
                         else
                         {
-                            if (Main.conn.injectCommands.Count == 0)
+                            if (Main.connection.injectCommands.Count == 0)
                                 labelStatus.Text = Trans.T("L_IDLE"); //"Idle";
                             else
-                                labelStatus.Text = Trans.T1("L_X_COMMANDS_WAITING", Main.conn.injectCommands.Count.ToString()); // +" commands waiting";
+                                labelStatus.Text = Trans.T1("L_X_COMMANDS_WAITING", Main.connection.injectCommands.Count.ToString()); // +" commands waiting";
                         }
                         break;
                 }
             }
         }
         public void ConnectionChanged(string msg) {
-            UpdateConStatus(Main.conn.serial != null || Main.conn.isVirtualActive);
+            UpdateConStatus(Main.connection.serial != null || Main.connection.isVirtualActive);
         }
         private void tempUpdate(float extruder, float printbed)
         {
@@ -510,7 +510,7 @@ namespace RepetierHost.view
 
         private void switchFanOn_Change(SwitchButton b)
         {
-            if (Main.conn.connected == false) return;
+            if (Main.connection.connected == false) return;
             if (!createCommands) return;
             con.GetInjectLock();
             if (switchFanOn.On)
@@ -547,7 +547,7 @@ namespace RepetierHost.view
 
         private void switchExtruderHeatOn_Change(SwitchButton b)
         {
-            if (Main.conn.connected == false) return;
+            if (Main.connection.connected == false) return;
             if (!createCommands) return;
             //int temp = 0;
             //int.TryParse(textExtruderSetTemp.Text,out temp);
@@ -565,7 +565,7 @@ namespace RepetierHost.view
 
         private void switchBedHeat_Change(SwitchButton b)
         {
-            if (Main.conn.connected == false) return;
+            if (Main.connection.connected == false) return;
             if (!createCommands) return;
             //int temp = 0;
             //int.TryParse(textPrintbedTemp.Text, out temp);
@@ -603,7 +603,7 @@ namespace RepetierHost.view
 
         private void switchPower_Change(SwitchButton b)
         {
-            if (Main.conn.connected == false) return;
+            if (Main.connection.connected == false) return;
             con.GetInjectLock();
             if (switchPower.On)
             {
