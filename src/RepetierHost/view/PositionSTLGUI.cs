@@ -23,7 +23,7 @@ using RepetierHost.model;
 namespace RepetierHost.view
 {
     /// <summary>
-    /// Shows a box with controls related to moving, rotate, and scale as well as center and autoplace.  
+    /// The user control that shows a box with controls related to moving, rotate, and scale as well as center and autoplace.  
     /// </summary>
     public partial class PositionSTLGUI : UserControl
     {
@@ -101,7 +101,7 @@ namespace RepetierHost.view
             foreach (STL stl in newSTL)
             {
                 Main.main.listSTLObjects.Items.Add(stl);
-                Main.main.fileAddOrRemove.stleditorView.models.AddLast(stl);
+                Main.main.fileAddOrRemove.StleditorView.models.AddLast(stl);
             }
             if (copyDialog.checkAutoposition.Checked)
             {
@@ -211,7 +211,7 @@ namespace RepetierHost.view
         {
             updateEnabled();
             STL stl = (STL)Main.main.listSTLObjects.SelectedItem;
-            foreach (STL s in Main.main.fileAddOrRemove.stleditorView.models)
+            foreach (STL s in Main.main.fileAddOrRemove.StleditorView.models)
             {
                 s.Selected = Main.main.listSTLObjects.SelectedItems.Contains(s);
             }
@@ -230,7 +230,7 @@ namespace RepetierHost.view
                 checkScaleAll.Checked = (stl.Scale.x == stl.Scale.y && stl.Scale.x == stl.Scale.z);
             }
             //Main.main.threedview.UpdateChanges();
-            Main.main.mainHelp.UpdateEverythingInMain();
+            Main.main.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         //private void textTransX_TextChanged(object sender, EventArgs e)
@@ -372,7 +372,7 @@ namespace RepetierHost.view
                 list.AddLast(stl);
             foreach (STL stl in list)
             {
-                Main.main.fileAddOrRemove.stleditorView.models.Remove(stl);
+                Main.main.fileAddOrRemove.StleditorView.models.Remove(stl);
                 Main.main.listSTLObjects.Items.Remove(stl);
                 autosizeFailed = false; // Reset autoposition
             }
@@ -386,7 +386,7 @@ namespace RepetierHost.view
         {
             if (saveSTL.ShowDialog() == DialogResult.OK)
             {
-                Main.main.fileAddOrRemove.saveComposition(saveSTL.FileName);
+                Main.main.fileAddOrRemove.SaveComposition(saveSTL.FileName);
             }
         }
         private bool AssertVector3NotNaN(Vector3 v)
@@ -518,13 +518,13 @@ namespace RepetierHost.view
             foreach (STL stl in newSTL)
             {
                 Main.main.listSTLObjects.Items.Add(stl);
-                Main.main.fileAddOrRemove.stleditorView.models.AddLast(stl);
+                Main.main.fileAddOrRemove.StleditorView.models.AddLast(stl);
             }
             if (copyDialog.checkAutoposition.Checked)
             {
                 Autoposition();
             }
-            Main.main.mainHelp.UpdateEverythingInMain();
+            Main.main.mainUpdaterHelper.UpdateEverythingInMain();
             Main.main.threedview.UpdateChanges();
         }
         // static bool inRecheckFiles = false;

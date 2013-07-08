@@ -30,6 +30,9 @@ using RepetierHost.view.utils;
 
 namespace RepetierHost.view
 {
+    /// <summary>
+    /// Form related to configuring the eeprom on the Marlin 3d printer. 
+    /// </summary>
     public partial class EEPROMMarlin : Form
     {
         EEPROMMarlinStorage storage;

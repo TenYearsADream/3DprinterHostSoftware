@@ -64,7 +64,7 @@ namespace RepetierHost.model
             con.analyzer.StartJob();
             
             //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
-            UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+            UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
             Main.main.Invoke(updateAll);
         }
         public void EndJob()
@@ -75,10 +75,10 @@ namespace RepetierHost.model
                 con.firePrinterAction(Trans.T("L_IDLE"));
                 //Main.main.Invoke(Main.main.UpdateJobButtons);
                 //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
-                UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+                UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
                 Main.main.Invoke(updateAll);
 
-                Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobFinished);
+                Main.main.manulControl.Invoke(Main.main.manulControl.SetStatusJobFinished);
                 return;
             }
             dataComplete = true;
@@ -108,12 +108,12 @@ namespace RepetierHost.model
             }
             //Main.main.Invoke(Main.main.UpdateJobButtons);
             //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
-            UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+            UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
             Main.main.Invoke(updateAll);
 
             con.firePrinterAction(Trans.T("L_JOB_KILLED")); //"Job killed");
             DoEndKillActions();
-            Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobKilled);
+            Main.main.manulControl.Invoke(Main.main.manulControl.SetStatusJobKilled);
         }
 
 
@@ -238,10 +238,10 @@ namespace RepetierHost.model
                 DoEndKillActions();
                 //.main.Invoke(Main.main.UpdateJobButtons);
                 //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
-                UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+                UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
                 Main.main.Invoke(updateAll);
 
-                Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobFinished);
+                Main.main.manulControl.Invoke(Main.main.manulControl.SetStatusJobFinished);
                 RepetierHost.view.SoundConfig.PlayPrintFinished(false);
             }
             return gc;

@@ -34,44 +34,178 @@ namespace RepetierHost
     public delegate void executeHostCommandDelegate(GCode code);
     public delegate void languageChangedEvent();
 
+
+    /// <summary>
+    /// Main is the form that shows the main user GUI. As memebers that are the other important user forms and user controls and 
+    /// other helpful objects. 
+    /// </summary>
     public partial class Main : Form
     {
+        /// <summary>
+        /// Defines the event when the user changes the language. 
+        /// </summary>
         public event languageChangedEvent languageChanged;
-        private const int InfoPanel2MinSize = 440;
+      
+        /// <summary>
+        /// The main printer connection object. 
+        /// </summary>
         public static PrinterConnection conn;
+
+        /// <summary>
+        /// A reference to itself. The main is the primary user interface. 
+        /// </summary>
         public static Main main;
+
+        /// <summary>
+        /// Form that is created in the main object that points to the form used to shwo printer Settings. 
+        /// </summary>
         public static FormPrinterSettings printerSettings;
+
+        /// <summary>
+        /// Helps with saving information about the priter setup to the registry. 
+        /// </summary>
         public static PrinterModel printerModel;
+
+        /// <summary>
+        /// Shows the settings related to how to show the 3D model. 
+        /// </summary>
         public static ThreeDSettings threeDSettings;
+
+        /// <summary>
+        /// Form which shows and allows the user to set information related to global settings. Such as the current working directory. 
+        /// </summary>
         public static GlobalSettings globalSettings = null;
+
+        /// <summary>
+        /// Code related to generating g-code from .stl files. 
+        /// </summary>
         public static GCodeGenerator generator = null;
+
+        /// <summary>
+        /// A string that is related to the text in the top left corner of the windows form. It changes based on what the name
+        /// of the current .stl file is. 
+        /// </summary>
         public string basicTitle = "";
+
+        /// <summary>
+        /// Not really sure what this is. Maybe momochrome (black and white) on some basic linux computers. 
+        /// Not important for Windows development. 
+        /// </summary>
         public static bool IsMono = Type.GetType("Mono.Runtime") != null;
+
+        /// <summary>
+        /// Class that helps manage the non-slicer specific information. 
+        /// </summary>
         public static Slicer slicer = null;
-        public static Slic3r slic3r = null;         
+
+        /// <summary>
+        /// Code that helps setup slic3r. 
+        /// </summary>
+        public static Slic3r slic3r = null;   
+      
+        /// <summary>
+        /// Used to indicated if running on a Mac (Apple) computer. 
+        /// </summary>
         public static bool IsMac = false;
 
+        /// <summary>
+        /// Form used to show slic3r configuration information. 
+        /// </summary>
         public Form slicerPanaelForm = null;
+
+        /// <summary>
+        /// The User control that lets the user pick the slic3r settings that are saved as .ini files 
+        /// </summary>
         public SlicerPanel slicerPanel = null;
+
+        /// <summary>
+        /// A User control that lets the user move, rotate, and scale the selected .stl object. 
+        /// </summary>
         public PositionSTLGUI postionGUI = null;
-        //public positionModelGUIInterface positionModelGUI = null;
-        public Form extraForm = null;
+        
+        /// <summary>
+        /// The form that allows the suer to see and edit the gcode. 
+        /// </summary>
+        public Form gCodeEditorForm = null;
+
+        /// <summary>
+        /// The form that lets the user see the log information. 
+        /// </summary>
         public Form logform = null;
-        public MainHelper mainHelp = null;
+
+        /// <summary>
+        /// A class related to updating things in the program. Often these methods are called after events. 
+        /// </summary>
+        public MainUpdaterHelper mainUpdaterHelper = null;
+
+        /// <summary>
+        /// Object that helps manage skeinforge. I'm not using skeinforge right now. 
+        /// </summary>
         public Skeinforge skeinforge = null;
+
+        /// <summary>
+        /// Form related to modifing the eeprom of the particular printer. 
+        /// </summary>
         public EEPROMRepetier eepromSettings = null;
+
+        /// <summary>
+        /// Form related to configuring the eeprom on the Marlin 3d printer. 
+        /// </summary>
         public EEPROMMarlin eepromSettingsm = null;
+
+        /// <summary>
+        /// User control that shows the scrolling log. The controler for the logform object.
+        /// </summary>
         public LogView logView = null;
-        public PrintPanel printPanel = null;
+
+        /// <summary>
+        /// The user form that lets the user manually control the printer. 
+        /// </summary>
+        public ManualPrinterControl manulControl = null;
+
+        /// <summary>
+        /// The registry Key that is used. 
+        /// </summary>
         public RegistryKey repetierKey;
+
+        /// <summary>
+        /// OpenGL wrapper that handles the openGL code. Graphics handler. 
+        /// </summary>
         public ThreeDControl threedview = null;
+
+        /// <summary>
+        /// 3D view saved for the G-code print preview. 
+        /// </summary>
         public ThreeDView gcodePreviewView = null;
-        public ThreeDView printPreview = null;
+
+        /// <summary>
+        /// The 3D view saved of the live printing. 
+        /// </summary>
+        public ThreeDView livePrintingView = null;
+
+        /// <summary>
+        /// G-code graphics handler that helps show the result of some G-code. Shows what the "job" will look like. 
+        /// </summary>
         public GCodeVisual jobVisual = new GCodeVisual();
+
+        /// <summary>
+        /// G-code live visualization handler. 
+        /// </summary>
         public GCodeVisual printVisual = null;
-        // public STLComposer stlComposer1 = null;
+        
+        /// <summary>
+        /// Another G-code live visualization handler. Maybe accessed by several threads. 
+        /// </summary>
         public volatile GCodeVisual newVisual = null;
+
+        /// <summary>
+        /// Not sure what this does?? something related to updating the live printing g-code. Can be accessed by more than one thread. 
+        /// </summary>
         public volatile bool jobPreviewThreadFinished = true;
+
+        /// <summary>
+        /// Thread for updating the live printing view. 
+        /// </summary>
         public volatile Thread previewThread = null;
         public RegMemory.FilesHistory fileHistory = new RegMemory.FilesHistory("fileHistory", 8);
         public int refreshCounter = 0;
@@ -120,13 +254,13 @@ namespace RepetierHost
                         visual.maxLayer = ed.ShowMaxLayer;
                         break;
                 }
+
                 visual.parseGCodeShortArray(Main.main.previewArray0, true, 0);
                 visual.parseGCodeShortArray(Main.main.previewArray1, false, 1);
                 visual.parseGCodeShortArray(Main.main.previewArray2, false, 2);
                 Main.main.previewArray0 = Main.main.previewArray1 = Main.main.previewArray2 = null;
                 visual.Reduce();
                 Main.main.gcodePrintingTime = visual.ana.printingTime;
-                //visual.stats();
                 Main.main.newVisual = visual;
                 Main.main.jobPreviewThreadFinished = true;
                 Main.main.previewThread = null;
@@ -182,7 +316,7 @@ namespace RepetierHost
                 splitInfoEdit.Panel2MinSize = Main.InfoPanel2MinSize;
                 //splitInfoEdit.SplitterDistance = (splitInfoEdit.Width - splitInfoEdit.Panel2MinSize);
              * */
-            mainHelp.UpdateEverythingInMain();
+            mainUpdaterHelper.UpdateEverythingInMain();
             //Main.main.Invoke(UpdateJobButtons);
         }
         [System.Runtime.InteropServices.DllImport("libc")]
@@ -224,7 +358,7 @@ namespace RepetierHost
             //updateShowFilament();
             RegMemory.RestoreWindowPos("mainWindow", this);
 
-            extraForm = new Form();
+            gCodeEditorForm = new Form();
             postionGUI = new PositionSTLGUI();
             postionGUI.Left = this.Width - postionGUI.Width;
             postionGUI.Top = (this.Height - postionGUI.Height) / 2;
@@ -288,17 +422,17 @@ namespace RepetierHost
             //tabModel.Controls.Add(stlComposer1);
             //panel1.Controls.Add(stlComposer1);
 
-            printPanel = new PrintPanel();
+            manulControl = new ManualPrinterControl();
             //printPanel.Dock = DockStyle.Fill;
-            this.Controls.Add(printPanel);
-            printPanel.Visible = false;
+            this.Controls.Add(manulControl);
+            manulControl.Visible = false;
             printerSettings.formToCon();
 
 
 
 
-            extraForm = new Form();
-            extraForm.Dock = DockStyle.Fill;
+            gCodeEditorForm = new Form();
+            gCodeEditorForm.Dock = DockStyle.Fill;
 
 
             logView = new LogView();
@@ -348,14 +482,14 @@ namespace RepetierHost
             this.fileAddOrRemove.UpdateHistory();
 
             // Make a new View. 
-            printPreview = new ThreeDView();
-            printPreview.SetEditor(false);
-            printPreview.autoupdateable = true;
+            livePrintingView = new ThreeDView();
+            livePrintingView.SetEditor(false);
+            livePrintingView.autoupdateable = true;
 
             // Print visualzation is dependent on the connection to the printer being active. (ie the printer is connected)
             printVisual = new GCodeVisual(conn.analyzer);
             printVisual.liveView = true;
-            printPreview.models.AddLast(printVisual); // Add a new model to the view
+            livePrintingView.models.AddLast(printVisual); // Add a new model to the view
             basicTitle = Text;
 
 
@@ -372,7 +506,7 @@ namespace RepetierHost
             //toolShowLog_CheckedChanged(null, null);
             //updateShowFilament();
             //update3DviewSelection();
-            mainHelp = new MainHelper(this);
+            mainUpdaterHelper = new MainUpdaterHelper(this);
             // mainHelp.UpdateEverythingInMain(); called later. 
 
             // TODO: Add temperature controls
@@ -402,7 +536,7 @@ namespace RepetierHost
                 basicTitle = basicTitle.Substring(0, p) + titleAdd + basicTitle.Substring(p);
                 Text = basicTitle;
             }
-            mainHelp.UpdateEverythingInMain();
+            mainUpdaterHelper.UpdateEverythingInMain();
             //update3DviewSelection();
             //slicerPanel.UpdateSelection();
 
@@ -702,7 +836,7 @@ namespace RepetierHost
             //slicerPanel.UpdateSelection();
             printerSettings.UpdateDimensions();
             //main.Update3D();
-            Main.main.mainHelp.UpdateEverythingInMain();
+            Main.main.mainUpdaterHelper.UpdateEverythingInMain();
             conn.open();
         }
         public void LoadGCode(string fileName)
@@ -1012,7 +1146,7 @@ namespace RepetierHost
         }
         public MethodInvoker FirmwareDetected = delegate
         {
-            Main.main.printPanel.UpdateConStatus(true);
+            Main.main.manulControl.UpdateConStatus(true);
             if (conn.isRepetier)
             {
                 Main.main.continuousMonitoringMenuItem.Enabled = true;
@@ -1417,7 +1551,7 @@ namespace RepetierHost
 
         private void Main_Activated(object sender, EventArgs e)
         {
-            fileAddOrRemove.recheckChangedFiles();
+            fileAddOrRemove.RecheckChangedFiles();
 
             //slicerPanel.UpdateSelection();
         }
@@ -1814,7 +1948,7 @@ namespace RepetierHost
             // Maybe also pop up with a text box asking if you really want to remove it. 
             this.fileAddOrRemove.RemoveSTLObject();
             //fileAddOrRemove.changeSelectionBoxSize();
-            main.mainHelp.UpdateEverythingInMain();
+            main.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         //private void copyObjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1852,7 +1986,7 @@ namespace RepetierHost
         {
             current3Dview = ThreeDViewOptions.gcode;
             //update3DviewSelection();
-            mainHelp.UpdateEverythingInMain();
+            mainUpdaterHelper.UpdateEverythingInMain();
             //threedview.SetView(jobPreview);
             //JobPreview();
             //threedview.SetView(fileAddOrRemove.cont);
@@ -1860,7 +1994,7 @@ namespace RepetierHost
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            threedview.SetView(fileAddOrRemove.stleditorView);
+            threedview.SetView(fileAddOrRemove.StleditorView);
         }
 
         /// <summary>
@@ -1959,9 +2093,9 @@ namespace RepetierHost
 
         private void advancedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            extraForm.Controls.Add(editor);
-            extraForm.Size = new Size(640, 530);
-            extraForm.Visible = !extraForm.Visible;
+            gCodeEditorForm.Controls.Add(editor);
+            gCodeEditorForm.Size = new Size(640, 530);
+            gCodeEditorForm.Visible = !gCodeEditorForm.Visible;
         }
 
         private void toolStripButton1_Click_1(object sender, EventArgs e)
@@ -1973,7 +2107,7 @@ namespace RepetierHost
 
             
             //update3DviewSelection();
-            mainHelp.UpdateEverythingInMain();
+            mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         private void connectToolStripSplitButton_ButtonClick(object sender, EventArgs e)
@@ -2001,12 +2135,12 @@ namespace RepetierHost
             //extraForm.Controls.Add(printPanel);
             //extraForm.Size = new Size(800, 600);
             //extraForm.Visible = !extraForm.Visible;
-            printPanel.Left = (this.Width - printPanel.Width) / 2;
-            printPanel.Top = (this.Height - printPanel.Height) / 2;
-            printPanel.Visible = !printPanel.Visible;
+            manulControl.Left = (this.Width - manulControl.Width) / 2;
+            manulControl.Top = (this.Height - manulControl.Height) / 2;
+            manulControl.Visible = !manulControl.Visible;
 
            // if(printPanel.Visible==true)
-                printPanel.BringToFront();
+                manulControl.BringToFront();
         }
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2029,7 +2163,7 @@ namespace RepetierHost
         {
             if (saveSTL.ShowDialog() == DialogResult.OK)
             {
-                this.fileAddOrRemove.saveComposition(saveSTL.FileName);
+                this.fileAddOrRemove.SaveComposition(saveSTL.FileName);
             }
         }
 
@@ -2063,25 +2197,25 @@ namespace RepetierHost
         private void loadAFileMenuModeMenuOption_Click(object sender, EventArgs e)
         {
             this.current3Dview = ThreeDViewOptions.loadAFile;
-            this.mainHelp.UpdateEverythingInMain();
+            this.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         private void STLEditorMenuOption_Click(object sender, EventArgs e)
         {
             this.current3Dview = ThreeDViewOptions.STLeditor;
-            this.mainHelp.UpdateEverythingInMain();
+            this.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         private void gCodeVisualizationMenuOption_Click(object sender, EventArgs e)
         {
             this.current3Dview = ThreeDViewOptions.gcode;
-            this.mainHelp.UpdateEverythingInMain();
+            this.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         private void livePrintingMenuOption_Click(object sender, EventArgs e)
         {
             this.current3Dview = ThreeDViewOptions.livePrinting;
-            this.mainHelp.UpdateEverythingInMain();
+            this.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         private void slicerConfigurationToolStripMenuItem_Click(object sender, EventArgs e)

@@ -30,7 +30,7 @@ using RepetierHost.model;
 namespace RepetierHost.view
 {
     /// <summary>
-    /// Class which defines a form which sets some of the global settings of the application
+    /// Form class which defines a form which sets some of the global settings of the application
     /// --- Like what is the working directory ----
     /// </summary>
     public partial class GlobalSettings : Form

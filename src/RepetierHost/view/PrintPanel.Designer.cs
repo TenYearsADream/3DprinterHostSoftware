@@ -1,6 +1,6 @@
 ﻿namespace RepetierHost.view
 {
-    partial class PrintPanel
+    partial class ManualPrinterControl
     {
         /// <summary> 
         /// Erforderliche Designervariable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrintPanel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManualPrinterControl));
             this.label1 = new System.Windows.Forms.Label();
             this.textGCode = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();

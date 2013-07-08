@@ -373,11 +373,11 @@ namespace RepetierHost.view
             con.numberExtruder = con.numExtruder = (int)numericNumExtruder.Value;
             float.TryParse(textAddPrintingTime.Text, out con.addPrintingTime);
             int.TryParse(textReceiveCacheSize.Text, out con.receiveCacheSize);
-            if (Main.main.printPanel != null)
+            if (Main.main.manulControl != null)
             {
-                Main.main.printPanel.numericUpDownExtruder.Value = int.Parse(textDefaultExtruderTemp.Text);
-                Main.main.printPanel.numericPrintBed.Value = int.Parse(textDefaultHeatedBedTemp.Text);
-                Main.main.printPanel.refillExtruder();
+                Main.main.manulControl.numericUpDownExtruder.Value = int.Parse(textDefaultExtruderTemp.Text);
+                Main.main.manulControl.numericPrintBed.Value = int.Parse(textDefaultHeatedBedTemp.Text);
+                Main.main.manulControl.refillExtruder();
             }
             if (eventPrinterChanged != null)
                 eventPrinterChanged(currentPrinterKey,pnchanged);
@@ -421,10 +421,10 @@ namespace RepetierHost.view
             logM105Checkbox.Checked = con.logM105;
             textAddPrintingTime.Text = con.addPrintingTime.ToString(GCode.format);
             numericNumExtruder.Value = con.numExtruder;
-            if (Main.main.printPanel != null)
+            if (Main.main.manulControl != null)
             {
-                textDefaultExtruderTemp.Text = Main.main.printPanel.numericUpDownExtruder.Value.ToString("0");
-                textDefaultHeatedBedTemp.Text = Main.main.printPanel.numericPrintBed.Value.ToString("0");
+                textDefaultExtruderTemp.Text = Main.main.manulControl.numericUpDownExtruder.Value.ToString("0");
+                textDefaultHeatedBedTemp.Text = Main.main.manulControl.numericPrintBed.Value.ToString("0");
             }
         }
         private void buttonOK_Click(object sender, EventArgs e)
@@ -435,7 +435,7 @@ namespace RepetierHost.view
             Hide();
             Main.main.slicerPanel.UpdateSelection();
             //Main.main.Update3D();
-            Main.main.mainHelp.UpdateEverythingInMain();
+            Main.main.mainUpdaterHelper.UpdateEverythingInMain();
             if (Main.main != null && Main.main.editor != null)
                 Main.main.editor.Changed();
         }
@@ -447,7 +447,7 @@ namespace RepetierHost.view
             Hide();
             //Main.main.Update3D();
             //Main.main.UpdateConnections();
-            Main.main.mainHelp.UpdateEverythingInMain();
+            Main.main.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         public void UpdatePorts()
@@ -482,7 +482,7 @@ namespace RepetierHost.view
             }
             //Main.main.Update3D();
             //Main.main.mUpdateConnections();
-            Main.main.mainHelp.UpdateEverythingInMain();
+            Main.main.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         private void comboPrinter_SelectedIndexChanged(object sender, EventArgs e)

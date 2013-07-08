@@ -36,7 +36,8 @@ namespace RepetierHost.view
 
 
     /// <summary>
-    /// ThreeDControlOld is the .stl OpenGl frame and Controller. It must be initialzed and added as the controller for some panal for the .stl viewer to show up. 
+    /// The user control ThreeDControl is the .stl OpenGl frame and Controller. Most of the rendering works happens here. 
+    /// Basically a OpenGL wrapper as a userControl. 
     /// </summary>
     public partial class ThreeDControl : UserControl
     {
@@ -1199,7 +1200,7 @@ namespace RepetierHost.view
         {
             if (view.editor)
             {
-                Main.main.fileAddOrRemove.buttonRemoveSTL_Click();
+                Main.main.fileAddOrRemove.ButtonRemoveSTL_Click();
                 //Main.main.stlComposer1.buttonRemoveSTL_Click(null, null);
             }
             foreach (ThreeDModel m in view.models)
@@ -1336,7 +1337,7 @@ namespace RepetierHost.view
              }
 
             if (e.Handled == false)
-                Main.main.fileAddOrRemove.saveAFile_KeyDown(sender, e);
+                Main.main.fileAddOrRemove.SaveAFile_KeyDown(sender, e);
         }
 
         public void ChangeProspectiveMode()

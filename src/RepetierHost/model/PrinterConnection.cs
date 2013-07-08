@@ -718,7 +718,7 @@ namespace RepetierHost.model
                     if (eventConnectionChange != null)
                         eventConnectionChange(Trans.T("L_CONNECTED") + ":" + printerName);
                     //Main.main.Invoke(Main.main.UpdateJobButtons);
-                    UpdateAll update = Main.main.mainHelp.UpdateEverythingInMain;
+                    UpdateAll update = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
                     Main.main.Invoke(update);
                     return;
                 }
@@ -772,13 +772,13 @@ namespace RepetierHost.model
                 GetInjectLock();
                 injectManualCommand("N0 M110"); // Make sure we tal about the same linenumbers
                 injectManualCommand("M115"); // Check firmware
-                injectManualCommand("T" + Main.main.printPanel.comboExtruder.SelectedIndex);
+                injectManualCommand("T" + Main.main.manulControl.comboExtruder.SelectedIndex);
                 injectManualCommand("M105"); // Read temperature
                 ReturnInjectLock();
                 if (eventConnectionChange != null)
                     eventConnectionChange(Trans.T("L_CONNECTED"));
                 //Main.main.Invoke(Main.main.UpdateJobButtons);
-                UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+                UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
                 Main.main.Invoke(updateAll);
             }
             catch (IOException ex)
@@ -807,7 +807,7 @@ namespace RepetierHost.model
 
         public bool close()
         {
-            UpdateAll updateAll = Main.main.mainHelp.UpdateEverythingInMain;
+            UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
             if (serial == null && !isVirtualActive) return true;
             // Test if we should warn about heaters still on.
             bool heateron = false;

@@ -23,21 +23,24 @@ using System.Diagnostics;
 
 namespace RepetierHost
 {
+    /// <summary>
+    /// Allows a pointer to made to the UpdateEverything method so that it can be called from another tread as an event. 
+    /// </summary>
     delegate void UpdateAll();
 
     /// <summary>
     /// Designed to help remove some of the code from the Main class
     /// </summary>
-    public class MainHelper
+    public class MainUpdaterHelper
     {
         Main main;
         // static RepetierHost.Main.ThreeDViewOptions oldviewMode;
         
-        public MainHelper(Main _main)
+        public MainUpdaterHelper(Main _main)
         {
             this.main = _main;
             // oldviewMode = Main.ThreeDViewOptions.STLeditor;
-            oldview = main.fileAddOrRemove.stleditorView;
+            oldview = main.fileAddOrRemove.StleditorView;
 
         }
 
@@ -79,11 +82,11 @@ namespace RepetierHost
 
                 case RepetierHost.Main.ThreeDViewOptions.loadAFile:
                     main.toolStripStatusLabel1.Text = Trans.T("M_LOAD_A_FILE");
-                    main.threedview.SetView(main.fileAddOrRemove.stleditorView);
+                    main.threedview.SetView(main.fileAddOrRemove.StleditorView);
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.STLeditor:
                     main.toolStripStatusLabel1.Text = Trans.T("M_STL_EDITOR");
-                    main.threedview.SetView(main.fileAddOrRemove.stleditorView);
+                    main.threedview.SetView(main.fileAddOrRemove.StleditorView);
                     break;
                 case RepetierHost.Main.ThreeDViewOptions.gcode:
                     main.toolStripStatusLabel1.Text = Trans.T("M_GCODE_VIEW");
@@ -93,7 +96,7 @@ namespace RepetierHost
                 case RepetierHost.Main.ThreeDViewOptions.livePrinting:
                     main.toolStripStatusLabel1.Text = Trans.T("M_LIVE_PRINTING");
                     main.listSTLObjects.Visible = false;
-                    main.threedview.SetView(main.printPreview);
+                    main.threedview.SetView(main.livePrintingView);
                     break;
             }
             
@@ -237,7 +240,7 @@ namespace RepetierHost
                         Main.main.STLEditorMenuOption.Enabled = false;
 
                    
-                    if(Main.main.printPreview.models.Count >1)
+                    if(Main.main.livePrintingView.models.Count >1)
                         Main.main.gCodeVisualizationMenuOption.Enabled = true;
                     else
                          Main.main.gCodeVisualizationMenuOption.Enabled = false;

@@ -27,6 +27,9 @@ using Microsoft.Win32;
 
 namespace RepetierHost.view
 {
+    /// <summary>
+    /// User control that shows all the log information. It shows it as a scrolling list. Allows the user to turn on and off some of what is shown. 
+    /// </summary>
     public partial class LogView : UserControl
     {
         public Color errorColor = Color.FromArgb(238, 198, 198);

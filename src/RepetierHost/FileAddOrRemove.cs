@@ -1,45 +1,62 @@
-﻿///-----------------------------------------------------------------------
-/// <copyright file="FileAddOrRemove.cs" company="Baoyan">
-///   Some parts of this file were derived from Repetier Host which can be found at
-/// https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
-/// Other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China
-/// </copyright>
-///-----------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using OpenTK;
-using RepetierHost.model;
-using RepetierHost.view;
-using RepetierHost.view.utils;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="FileAddOrRemove.cs" company="Baoyan">
+//   Some parts of this file were derived from Repetier Host which can be found at
+// https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
+// 
+// Other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China 
+// and may not be reproduced in any form without express written consent.
+// 
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace RepetierHost
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Forms;
+    using OpenTK;
+    using RepetierHost.model;
+    using RepetierHost.view;
+    using RepetierHost.view.utils;
+
     /// <summary>
     /// This class aids in adding and removing files. 
     /// </summary>
     public class FileAddOrRemove
-    {
+    {      
+        /// <summary>
+        /// The 3D view for the ".stl" editor and manipulator. TODO: This should probably be in the Main. 
+        /// </summary>
+        public ThreeDView StleditorView;
+       
+        /// <summary>
+        /// Tells if the files have already been checked. 
+        /// </summary>
+        private static bool inRecheckFiles = false;
+
         /// <summary>
         /// Reference back to Main. 
         /// </summary>
-        Main main;
+        private Main main;
 
         /// <summary>
         /// Determines whether we should write the ".stl" file as a binary or not. 
         /// </summary>
         private bool writeSTLBinary = true;
-
-        /// <summary>
-        /// The 3D view for the ".stl" editor and manipulator. TODO: This should probably be in the Main. 
-        /// </summary>
-        public ThreeDView stleditorView;
-
-        // private CopyObjectsDialog copyDialog = new CopyObjectsDialog();
 
         /// <summary>
         /// Initializes a new instance of the FileAddOrRemove class which helps with adding and removing stl and gcode files. 
@@ -50,8 +67,7 @@ namespace RepetierHost
             this.main = main1;
             try
             {
-                //main.threedview
-                stleditorView = new ThreeDView();
+                this.StleditorView = new ThreeDView();
             }
             catch
             {
@@ -75,7 +91,7 @@ namespace RepetierHost
             this.UpdateHistory();
             if (file.ToLower().EndsWith(".stl"))
             {
-                OpenAndAddSTLFile(file);
+                this.OpenAndAddSTLFile(file);
                 this.main.current3Dview = Main.ThreeDViewOptions.STLeditor;
             }
             else
@@ -86,7 +102,7 @@ namespace RepetierHost
             }
 
             //// changeSelectionBoxSize(); TODO: Think this referes to the box around the .stl object. This is still an error. 
-            Main.main.mainHelp.UpdateEverythingInMain();
+            Main.main.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         /// <summary>
@@ -100,7 +116,7 @@ namespace RepetierHost
                 this.main.editor.setContent(0, System.IO.File.ReadAllText(file));
                 this.main.current3Dview = RepetierHost.Main.ThreeDViewOptions.gcode;
                 this.main.editor.selectContent(0);
-                this.main.mainHelp.UpdateEverythingInMain();
+                this.main.mainUpdaterHelper.UpdateEverythingInMain();
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -139,11 +155,11 @@ namespace RepetierHost
             {
                 foreach (string fname in this.main.openFileSTLorGcode.FileNames)
                 {
-                    OpenAndAddSTLFile(fname);
+                    this.OpenAndAddSTLFile(fname);
                 }
             }
             //// changeSelectionBoxSize(); Update the box around the object?? TODO: might need to fix this. 
-            main.mainHelp.UpdateEverythingInMain();
+            this.main.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         /// <summary>
@@ -159,15 +175,15 @@ namespace RepetierHost
             if (stl.list.Count > 0)
             {
                 this.main.listSTLObjects.Items.Add(stl);
-                stleditorView.models.AddLast(stl);
+                this.StleditorView.models.AddLast(stl);
                 this.main.listSTLObjects.SelectedItem = stl;
-                main.postionGUI.Autoposition();
+                this.main.postionGUI.Autoposition();
                 stl.addAnimation(new DropAnimation("drop"));
-                main.postionGUI.updateSTLState(stl);
+                this.main.postionGUI.updateSTLState(stl);
             }
             else
             {
-                main.listSTLObjects.Visible = false;
+                this.main.listSTLObjects.Visible = false;
             }
         }
 
@@ -184,9 +200,9 @@ namespace RepetierHost
                 return;
             }
 
-            if (main.listSTLObjects.Items.Count == 0) return;
+            if (this.main.listSTLObjects.Items.Count == 0) return;
             bool itemsOutide = false;
-            foreach (STL stl in main.listSTLObjects.Items)
+            foreach (STL stl in this.main.listSTLObjects.Items)
             {
                 if (stl.outside) 
                     itemsOutide = true;
@@ -198,12 +214,12 @@ namespace RepetierHost
                     return;
             }
 
-            string t = main.listSTLObjects.Items[0].ToString();
-            if (main.listSTLObjects.Items.Count > 1)
-                t += " + " + (main.listSTLObjects.Items.Count - 1).ToString();
+            string t = this.main.listSTLObjects.Items[0].ToString();
+            if (this.main.listSTLObjects.Items.Count > 1)
+                t += " + " + (this.main.listSTLObjects.Items.Count - 1).ToString();
             Main.main.Title = t;
             dir += Path.DirectorySeparatorChar + "composition.stl";
-            saveComposition(dir);
+            this.SaveComposition(dir);
             Main.slicer.RunSlice(dir); // Slice it and load
         }
 
@@ -215,11 +231,11 @@ namespace RepetierHost
             bool delFlag = false;
             LinkedList<ToolStripItem> delArray = new LinkedList<ToolStripItem>();
             int pos = 0;
-            foreach (ToolStripItem c in main.fileToolStripMenuItem.DropDownItems)
+            foreach (ToolStripItem c in this.main.fileToolStripMenuItem.DropDownItems)
             {
-                if (c == main.toolStripEndHistory) break;
+                if (c == this.main.toolStripEndHistory) break;
                 if (!delFlag) pos++;
-                if (c == main.toolStripStartHistory)
+                if (c == this.main.toolStripStartHistory)
                 {
                     delFlag = true;
                     continue;
@@ -230,37 +246,25 @@ namespace RepetierHost
             }
 
             foreach (ToolStripItem i in delArray)
-                main.fileToolStripMenuItem.DropDownItems.Remove(i);
-            main.importSTLToolSplitButton1.DropDownItems.Clear();
-            foreach (RegMemory.HistoryFile f in main.fileHistory.list)
+                this.main.fileToolStripMenuItem.DropDownItems.Remove(i);
+            this.main.importSTLToolSplitButton1.DropDownItems.Clear();
+            foreach (RegMemory.HistoryFile f in this.main.fileHistory.list)
             {
                 ToolStripMenuItem item = new ToolStripMenuItem(); // You would obviously calculate this value at runtime
                 item = new ToolStripMenuItem();
                 item.Name = "file" + pos;
                 item.Tag = f;
                 item.Text = f.ToString();
-                item.Click += new EventHandler(HistoryHandler);
+                item.Click += new EventHandler(this.HistoryHandler);
                 this.main.fileToolStripMenuItem.DropDownItems.Insert(pos++, item);
                 item = new ToolStripMenuItem();
                 item.Name = "filet" + pos;
                 item.Tag = f;
                 item.Text = f.ToString();
-                item.Click += new EventHandler(HistoryHandler);
+                item.Click += new EventHandler(this.HistoryHandler);
                 this.main.importSTLToolSplitButton1.DropDownItems.Add(item);
             }
         }
-
-        /// <summary>
-        /// When clicked on a history item in the file menu, load that file. First we must recall which item it actually is from the history. 
-        /// </summary>
-        /// <param name="sender">Sending Object</param>
-        /// <param name="e">Event Args</param>
-        private void HistoryHandler(object sender, EventArgs e)
-        {
-            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            RegMemory.HistoryFile f = (RegMemory.HistoryFile)clickedItem.Tag;
-            this.LoadGCodeOrSTL(f.file);
-         }
 
         /// <summary>
         /// Removes the selected stl object(s) from the printing platform. 
@@ -272,7 +276,7 @@ namespace RepetierHost
                 list.AddLast(stl);
             foreach (STL stl in list)
             {
-                stleditorView.models.Remove(stl);
+                this.StleditorView.models.Remove(stl);
                 this.main.listSTLObjects.Items.Remove(stl);
                 Main.main.postionGUI.autosizeFailed = false; // Reset autoposition
             }
@@ -283,70 +287,102 @@ namespace RepetierHost
             else
                 this.main.current3Dview = Main.ThreeDViewOptions.loadAFile; // if there are no more in the list, then go to load a file mode. 
 
-            Main.main.mainHelp.UpdateEverythingInMain();
+            Main.main.mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         /// <summary>
         /// Removes an STL file. 
         /// TODO: Link to the method in the main. 
         /// </summary>
-        public void buttonRemoveSTL_Click()
+        public void ButtonRemoveSTL_Click()
         {
             LinkedList<STL> list = new LinkedList<STL>();
             foreach (STL stl in this.main.listSTLObjects.SelectedItems)
                 list.AddLast(stl);
             foreach (STL stl in list)
             {
-                stleditorView.models.Remove(stl);
+                this.StleditorView.models.Remove(stl);
                 this.main.listSTLObjects.Items.Remove(stl);
                 Main.main.postionGUI.autosizeFailed = false; // Reset autoposition
             }
+
             list.Clear();
             if (this.main.listSTLObjects.Items.Count > 0)
                 this.main.listSTLObjects.SelectedIndex = 0;
             Main.main.threedview.UpdateChanges();
         }
-
+        
         /// <summary>
-        /// Determines whether the given vector coordinate values are valid. (Not 0 and not infinity)
+        /// Checks if the stl files on the printing platform have changed. Maybe they have been edited by an outside program. 
         /// </summary>
-        /// <param name="v">Vector whose values to check</param>
-        /// <returns>true if the vector is ok. Otherwise false</returns>
-        private bool AssertVector3NotNaN(Vector3 v)
+        public void RecheckChangedFiles()
         {
-            if (float.IsNaN(v.X) || float.IsNaN(v.Y) || float.IsNaN(v.Z))
+            if (inRecheckFiles) return;
+            inRecheckFiles = true;
+            bool changed = false;
+            foreach (STL stl in this.main.listSTLObjects.Items)
             {
-                // Main.conn.log("NaN value in STL file export", false, 2);
-                return false;
+                if (stl.changedOnDisk())
+                {
+                    changed = true;
+                    break;
+                }
             }
-            if (float.IsInfinity(v.X) || float.IsInfinity(v.Y) || float.IsInfinity(v.Z))
+
+            if (changed)
             {
-                // Main.conn.log("Infinity value in STL file export", false, 2);
-                return false;
+                if (MessageBox.Show("One or more objects files are changed.\r\nReload objects?", "Files changed", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    foreach (STL stl in this.main.listSTLObjects.Items)
+                    {
+                        if (stl.changedOnDisk())
+                            stl.reload();
+                    }
+
+                    Main.main.threedview.UpdateChanges();
+                }
+                else
+                {
+                    foreach (STL stl in this.main.listSTLObjects.Items)
+                    {
+                        if (stl.changedOnDisk())
+                            stl.resetModifiedDate();
+                    }
+                }
             }
-            return true;
+
+            inRecheckFiles = false;
         }
 
         /// <summary>
-        /// Determines if the two vectors have a meaningful distance from each other. 
-        /// (Checks to see if they are so close that they might be the same value)
+        /// Saves the current composition on the print platform if the "Crtl S" combination is pressed
         /// </summary>
-        /// <param name="a">First Vector</param>
-        /// <param name="b">Second Vector</param>
-        /// <returns>true if they are not too close. False if they are too close</returns>
-        private bool AssertMinDistance(Vector3 a, Vector3 b)
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
+        public void SaveAFile_KeyDown(object sender, KeyEventArgs e)
         {
-            double dx = a.X - b.X;
-            double dy = a.Y - b.Y;
-            double dz = a.Z - b.Z;
-            return dx * dx + dy * dy + dz * dz > 1e-8;
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.S)
+            {
+                if (Main.main.current3Dview == Main.ThreeDViewOptions.gcode)
+                    StoreCode.Execute();
+
+                if (Main.main.current3Dview == Main.ThreeDViewOptions.STLeditor)
+                {
+                    if (Main.main.saveSTL.ShowDialog() == DialogResult.OK)
+                    {
+                        this.SaveComposition(Main.main.saveSTL.FileName);
+                    }
+                }
+
+                e.Handled = true;
+            }
         }
 
         /// <summary>
         /// Create a combined .stl file from all the .stl files that are on the current printer platform. 
         /// </summary>
         /// <param name="fname">File path and name of the combined composition to save</param>
-        public void saveComposition(string fname)
+        public void SaveComposition(string fname)
         {
             int n = 0;
             foreach (STL stl in this.main.listSTLObjects.Items)
@@ -377,13 +413,13 @@ namespace RepetierHost
                     float bx = t.p3.X - t.p1.X;
                     float by = t.p3.Y - t.p1.Y;
                     float bz = t.p3.Z - t.p1.Z;
-                    t.normal.X = ay * bz - az * by;
-                    t.normal.Y = az * bx - ax * bz;
-                    t.normal.Z = ax * by - ay * bx;
+                    t.normal.X = (ay * bz) - (az * by);
+                    t.normal.Y = (az * bx) - (ax * bz);
+                    t.normal.Z = (ax * by) - (ay * bx);
                     Vector3.Normalize(ref t.normal, out t.normal);
-                    if (AssertVector3NotNaN(t.normal) && AssertVector3NotNaN(t.p1) && AssertVector3NotNaN(t.p2) &&
-                        AssertVector3NotNaN(t.p3) &&
-                        AssertMinDistance(t.p1, t.p2) && AssertMinDistance(t.p1, t.p3) && AssertMinDistance(t.p2, t.p3))
+                    if (this.AssertVector3NotNaN(t.normal) && this.AssertVector3NotNaN(t.p1) && this.AssertVector3NotNaN(t.p2) &&
+                        this.AssertVector3NotNaN(t.p3) &&
+                        this.AssertMinDistance(t.p1, t.p2) && this.AssertMinDistance(t.p1, t.p3) && this.AssertMinDistance(t.p2, t.p3))
                     {
                         triList2[p++] = t;
                     }
@@ -400,7 +436,7 @@ namespace RepetierHost
 
             // Write file in binary STL format
             FileStream fs = File.Open(fname, FileMode.Create);
-            if (writeSTLBinary)
+            if (this.writeSTLBinary)
             {
                 BinaryWriter w = new BinaryWriter(fs);
                 int i;
@@ -467,83 +503,60 @@ namespace RepetierHost
             }
 
             fs.Close();
-        }
-
-
-
+        }        
+        
         /// <summary>
-        /// Tells if the files have already been checked. 
+        /// When clicked on a history item in the file menu, load that file. First we must recall which item it actually is from the history. 
         /// </summary>
-        static bool inRecheckFiles = false;
-
-        /// <summary>
-        /// Checks if the stl files on the printing platform have changed. Maybe they have been edited by an outside program. 
-        /// </summary>
-        public void recheckChangedFiles()
+        /// <param name="sender">Sending Object</param>
+        /// <param name="e">Event Args</param>
+        private void HistoryHandler(object sender, EventArgs e)
         {
-            if (inRecheckFiles) return;
-            inRecheckFiles = true;
-            bool changed = false;
-            foreach (STL stl in this.main.listSTLObjects.Items)
-            {
-                if (stl.changedOnDisk())
-                {
-                    changed = true;
-                    break;
-                }
-            }
-            if (changed)
-            {
-                if (MessageBox.Show("One or more objects files are changed.\r\nReload objects?", "Files changed", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    foreach (STL stl in this.main.listSTLObjects.Items)
-                    {
-                        if (stl.changedOnDisk())
-                            stl.reload();
-                    }
-                    Main.main.threedview.UpdateChanges();
-                }
-                else
-                {
-                    foreach (STL stl in this.main.listSTLObjects.Items)
-                    {
-                        if (stl.changedOnDisk())
-                            stl.resetModifiedDate();
-                    }
-                }
-            }
-            inRecheckFiles = false;
+            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            RegMemory.HistoryFile f = (RegMemory.HistoryFile)clickedItem.Tag;
+            this.LoadGCodeOrSTL(f.file);
         }
 
         /// <summary>
-        /// Saves the current composition on the print platform if the "Crtl S" combination is pressed
+        /// Determines whether the given vector coordinate values are valid. (Not 0 and not infinity)
         /// </summary>
-        /// <param name="sender">event sender</param>
-        /// <param name="e">event args</param>
-        public void saveAFile_KeyDown(object sender, KeyEventArgs e)
+        /// <param name="v">Vector whose values to check</param>
+        /// <returns>true if the vector is ok. Otherwise false</returns>
+        private bool AssertVector3NotNaN(Vector3 v)
         {
-            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.S)
+            if (float.IsNaN(v.X) || float.IsNaN(v.Y) || float.IsNaN(v.Z))
             {
-                if (Main.main.current3Dview == Main.ThreeDViewOptions.gcode)
-                    StoreCode.Execute();
-
-                if (Main.main.current3Dview == Main.ThreeDViewOptions.STLeditor)
-                {
-                    if (Main.main.saveSTL.ShowDialog() == DialogResult.OK)
-                    {
-                        this.saveComposition(Main.main.saveSTL.FileName);
-                    }
-                }
-
-                e.Handled = true;
+               return false;
             }
 
+            if (float.IsInfinity(v.X) || float.IsInfinity(v.Y) || float.IsInfinity(v.Z))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Determines if the two vectors have a meaningful distance from each other. 
+        /// (Checks to see if they are so close that they might be the same value)
+        /// </summary>
+        /// <param name="a">First Vector</param>
+        /// <param name="b">Second Vector</param>
+        /// <returns>true if they are not too close. False if they are too close</returns>
+        private bool AssertMinDistance(Vector3 a, Vector3 b)
+        {
+            double dx = a.X - b.X;
+            double dy = a.Y - b.Y;
+            double dz = a.Z - b.Z;
+            return ((dx * dx) + (dy * dy) + (dz * dz)) > 1e-8;
         }
 
         /// <summary>
         /// Class related to reading Files in the country specific format?? Not sure this is used. 
         /// </summary>
-        public class EnglishStreamWriter : StreamWriter
+        public class EnglishStreamWriter :
+            StreamWriter
         {
             /// <summary>
             /// Initializes a new instance of the EnglishStreamWriter class
@@ -567,9 +580,3 @@ namespace RepetierHost
         }
     }
 }
-
-
-
-    
-
-

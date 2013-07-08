@@ -27,6 +27,9 @@ using RepetierHost.view.utils;
 
 namespace RepetierHost.view
 {
+    /// <summary>
+    /// Form related to modifing the eeprom of the particular printer. 
+    /// </summary>
     public partial class EEPROMRepetier : Form
     {
         EEPROMStorage storage;

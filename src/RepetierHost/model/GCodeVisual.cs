@@ -497,6 +497,10 @@ namespace RepetierHost.model
             drawMethod = method;
         }
     }
+
+    /// <summary>
+    /// Class is derived from ThreeDModel. Controls how to show g-code using OpenGL graphics 
+    /// </summary>
     public class GCodeVisual : ThreeDModel
     {
         static int MaxExtruder = 3;

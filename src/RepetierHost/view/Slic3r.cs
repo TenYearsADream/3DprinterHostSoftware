@@ -32,7 +32,7 @@ using RepetierHost.model;
 namespace RepetierHost.view
 {
     /// <summary>
-    /// The Windows form that lets you set all of the advanced settings for the Slic3r
+    /// The Windows form that lets you set all of the advanced settings for the Slic3r. The form is never shown, but the code is used. 
     /// </summary>
     public partial class Slic3r : Form
     {

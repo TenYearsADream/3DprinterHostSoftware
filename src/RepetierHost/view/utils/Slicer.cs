@@ -11,6 +11,9 @@ using System.ComponentModel;
 
 namespace RepetierHost.view.utils
 {
+    /// <summary>
+    /// Class that helps manage picking the slicer and some of the non-slicer specific information. 
+    /// </summary>
     public class Slicer
     {
         public enum SlicerID  {Slic3r,Skeinforge,Slic3rExternal};

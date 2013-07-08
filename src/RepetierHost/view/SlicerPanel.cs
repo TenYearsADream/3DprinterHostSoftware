@@ -28,6 +28,9 @@ using RepetierHost.view.utils;
 
 namespace RepetierHost.view
 {
+    /// <summary>
+    /// User control that lets the user pick the slic3r settings they want to use. The settings must have been saved by slic3r as .ini files. 
+    /// </summary>
     public partial class SlicerPanel : UserControl
     {
         bool updating = false;

@@ -28,7 +28,7 @@ using RepetierHost.view.utils;
 namespace RepetierHost.view
 {
     public enum PrinterStatus {disconnected,idle,heatingExtruder,heatingBed,motorStopped,jobPaused,jobKilled,jobFinsihed }
-    public partial class PrintPanel : UserControl
+    public partial class ManualPrinterControl : UserControl
     {
         PrinterConnection con;
         GCodeAnalyzer ann;
@@ -38,7 +38,7 @@ namespace RepetierHost.view
         float lastx = -1000, lasty = -1000, lastz = -1000;
         private PrinterStatus status = PrinterStatus.disconnected;
         private long statusSet=0;
-        public PrintPanel()
+        public ManualPrinterControl()
         {
             InitializeComponent();
             con = Main.conn;
@@ -144,8 +144,8 @@ namespace RepetierHost.view
             else if (status == PrinterStatus.disconnected && Main.conn.connected)
                 Status = PrinterStatus.idle;
         }
-        public MethodInvoker SetStatusJobFinished = delegate {Main.main.printPanel.Status = PrinterStatus.jobFinsihed;};
-        public MethodInvoker SetStatusJobKilled = delegate { Main.main.printPanel.Status = PrinterStatus.jobKilled; };
+        public MethodInvoker SetStatusJobFinished = delegate {Main.main.manulControl.Status = PrinterStatus.jobFinsihed;};
+        public MethodInvoker SetStatusJobKilled = delegate { Main.main.manulControl.Status = PrinterStatus.jobKilled; };
         public PrinterStatus Status
         {
             set
