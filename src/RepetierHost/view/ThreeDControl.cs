@@ -152,27 +152,6 @@ namespace RepetierHost.view
                 int w = gl.Width;
                 int h = gl.Height;
                 GL.Viewport(0, 0, w, h); // Use all of the glControl painting area
-                GL.MatrixMode(MatrixMode.Projection);
-                //GL.LoadIdentity();
-                float dx = view.viewCenter.X - view.userPosition.X;
-                float dy = view.viewCenter.Y - view.userPosition.Y;
-                float dz = view.viewCenter.Z - view.userPosition.Z;
-                float dist = (float)Math.Sqrt(dx * dx + dy * dy + dz * dz);
-                view.nearHeight = 2.0f * (float)Math.Tan(view.zoom * 15f * Math.PI / 180f) * view.nearDist;
-                view.aspectRatio = (float)w / (float)h;
-                view.nearDist = Math.Max(10, dist - 2f * ps.PrintAreaDepth);
-                view.farDist = dist + 2 * ps.PrintAreaDepth;
-                if (perspectiveModeisParrallel ==  true)
-                {
-                    view.persp = Matrix4.CreateOrthographic(4.0f * view.nearHeight * view.aspectRatio, 4.0f * view.nearHeight, view.nearDist, view.farDist);
-                }
-                else
-                {
-                    view.persp = Matrix4.CreatePerspectiveFieldOfView((float)(view.zoom * 30f * Math.PI / 180f), view.aspectRatio, view.nearDist, view.farDist);
-                }
-                GL.LoadMatrix(ref view.persp);
-                // GL.Ortho(0, w, 0, h, -1, 1); // Bottom-left corner pixel has coordinate (0, 0)
-
             }
             catch { }
         }
@@ -235,19 +214,24 @@ namespace RepetierHost.view
                 fpsTimer.Start(); // Start the stop watch
                 gl.MakeCurrent(); // Set all GL commands to the current rendering. 
                
-                ////GL.Enable(EnableCap.Multisample);
+
                 GL.ClearColor(Main.threeDSettings.background.BackColor); // Set the color that clears the screen. 
                  GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-              
-                GL.Enable(EnableCap.DepthTest);            
-                SetupViewport();
+
+                 SetupViewport();
+                 // Maybe put the background gradient here for 2D gradient. 
+                 DrawBackGroundGradient();
+
+
+                GL.Enable(EnableCap.DepthTest);
+                SetupProjectionMatrix();
                
                 view.lookAt = Matrix4.LookAt(view.userPosition.X, view.userPosition.Y, view.userPosition.Z, view.viewCenter.X, view.viewCenter.Y, view.viewCenter.Z, 0, 0, 1.0f);
                
-                if (SimpleTest() == true)
-                {
-                    return;
-                }
+                //if (SimpleTest() == true)
+                //{
+                //    return;
+                //}
 
                 GL.MatrixMode(MatrixMode.Modelview); // Change to the Model View Matrix. 
                 GL.LoadMatrix(ref view.lookAt);
@@ -356,6 +340,9 @@ namespace RepetierHost.view
                     MaterialParameter.Specular,
                     new OpenTK.Graphics.Color4(255, 255, 255, 255));
 
+                // Drawing background gradient should be  ok here if you want to do a box or a cube with images. 
+                
+
                 float dx1 = ps.DumpAreaLeft;
                 float dx2 = dx1 + ps.DumpAreaWidth;
                 float dy1 = ps.DumpAreaFront;
@@ -363,13 +350,13 @@ namespace RepetierHost.view
                 if (Main.threeDSettings.showPrintbed.Checked)
                 {
                     col = Main.threeDSettings.printerBase.BackColor;
-                    GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, new OpenTK.Graphics.Color4(0, 0, 0, 255));
-                    GL.Material(MaterialFace.Front, MaterialParameter.Emission, new OpenTK.Graphics.Color4(0, 0, 0, 0));
-                    GL.Material(MaterialFace.Front, MaterialParameter.Specular, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
-                    GL.Material(
-                        MaterialFace.Front,
-                        MaterialParameter.Emission,
-                        new OpenTK.Graphics.Color4(col.R, col.G, col.B, col.A));
+                        GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, new OpenTK.Graphics.Color4(0, 0, 0, 255));
+                        GL.Material(MaterialFace.Front, MaterialParameter.Emission, new OpenTK.Graphics.Color4(0, 0, 0, 0));
+                        GL.Material(MaterialFace.Front, MaterialParameter.Specular, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
+                        GL.Material(
+                            MaterialFace.Front,
+                            MaterialParameter.Emission,
+                            new OpenTK.Graphics.Color4(col.R, col.G, col.B, col.A));
                     int i;
                     // Draw origin
                     GL.Disable(EnableCap.CullFace);
@@ -857,6 +844,36 @@ namespace RepetierHost.view
             catch { }
         }
 
+        private void SetupProjectionMatrix()
+        {
+            try
+            {
+                int w = gl.Width;
+                int h = gl.Height;
+                GL.MatrixMode(MatrixMode.Projection);
+                //GL.LoadIdentity();
+                float dx = view.viewCenter.X - view.userPosition.X;
+                float dy = view.viewCenter.Y - view.userPosition.Y;
+                float dz = view.viewCenter.Z - view.userPosition.Z;
+                float dist = (float)Math.Sqrt(dx * dx + dy * dy + dz * dz);
+                view.nearHeight = 2.0f * (float)Math.Tan(view.zoom * 15f * Math.PI / 180f) * view.nearDist;
+                view.aspectRatio = (float)w / (float)h;
+                view.nearDist = Math.Max(10, dist - 2f * ps.PrintAreaDepth);
+                view.farDist = dist + 2 * ps.PrintAreaDepth;
+               if (perspectiveModeisParrallel == true)
+                {
+                    view.persp = Matrix4.CreateOrthographic(4.0f * view.nearHeight * view.aspectRatio, 4.0f * view.nearHeight, view.nearDist, view.farDist);
+                }
+                else
+                {
+                    view.persp = Matrix4.CreatePerspectiveFieldOfView((float)(view.zoom * 30f * Math.PI / 180f), view.aspectRatio, view.nearDist, view.farDist);
+                }
+                GL.LoadMatrix(ref view.persp);
+            }
+            catch { }
+           
+        }
+
         private bool SimpleTest()
         {
             gl.MakeCurrent();
@@ -870,7 +887,6 @@ namespace RepetierHost.view
 
             //--------------------------------
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
             Matrix4 modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PushMatrix();
@@ -895,33 +911,55 @@ namespace RepetierHost.view
 
         private void DrawBackGroundGradient()
         {
-            // http://stackoverflow.com/questions/468297/in-opengl-how-do-i-make-a-simple-background-quad
+            //// http://stackoverflow.com/questions/468297/in-opengl-how-do-i-make-a-simple-background-quad
+
+            GL.PushMatrix(); //glPushMatrix();
+            GL.Clear(ClearBufferMask.DepthBufferBit); //glClear(GL_DEPTH_BUFFER_BIT); 
+            GL.Disable(EnableCap.DepthTest); //glDisable(GL_DEPTH_TEST); 
 
             GL.MatrixMode(MatrixMode.Projection); //glMatrixMode(GL_PROJECTION);
-            GL.PushMatrix(); //glPushMatrix();
+            
             GL.LoadIdentity(); //glLoadIdentity();
-            int w = gl.Width; //glutGet(GLUT_WINDOW_WIDTH);
-            int h = gl.Height; //glutGet(GLUT_WINDOW_HEIGHT);
-            Matrix4 temp = Matrix4.CreatePerspectiveFieldOfView(0,w,0,h);
-            GL.LoadMatrix(ref temp);
+            int w = gl.Width;   // //int w = glutGet(GLUT_WINDOW_WIDTH);
+            int h = gl.Height;   //int h = glutGet(GLUT_WINDOW_HEIGHT);
+            GL.Ortho(0, w, 0, h, -1.0f, 1.0f); //gluOrtho2D(0, w, h, 0);
+
             GL.MatrixMode(MatrixMode.Modelview); //glMatrixMode(GL_MODELVIEW);
             GL.PushMatrix(); //glPushMatrix();
             GL.LoadIdentity(); //glLoadIdentity();
             // Draw your quad here in screen coordinates
-             GL.Begin(BeginMode.Quads);
-            
-             GL.Vertex2(-10, 10); //glVertex2f(-1.0, 1.0);
-             GL.Vertex2(-10, 10); //glVertex2f(-1.0, -1.0);
+            GL.Begin(BeginMode.Quads);
+            //int size = 5000;
+            ////int down = -500;
+            GL.Color3(Color.Orange);
+            GL.Vertex2(0, 0);
+            GL.Vertex2(0, h);
+            GL.Vertex2(w, h);
+            GL.Vertex2(w, 0);
+            GL.End();
 
-             GL.PopMatrix(); //glPopMatrix() // Pops the matrix that we used to draw the quad
-             GL.MatrixMode(MatrixMode.Projection);//glMatrixMode(GL_PROJECTION);
-             GL.PopMatrix(); // glPopMatrix(); // Pops our orthographic projection matrix, which restores the old one
-
-            
-            // glMatrixMode(GL_MODELVIEW); // Puts us back into GL_MODELVIEW since this is probably what 
+            GL.PopMatrix(); //glPopMatrix() // Pops the matrix that we used to draw the quad
+            GL.MatrixMode(MatrixMode.Projection); //glMatrixMode(GL_PROJECTION);
+            GL.PopMatrix(); //glPopMatrix(); // Pops our orthographic projection matrix, which restores the old one
+            //glMatrixMode(GL_MODELVIEW); // Puts us back into GL_MODELVIEW since this is probably what you want
 
 
-            //throw new NotImplementedException();
+
+
+
+
+
+
+            ////GL.Disable(EnableCap.CullFace);
+            ////GL.Enable(EnableCap.Blend);
+            ////GL.Begin(BeginMode.Quads);
+            ////int size = 5000;
+            ////int down = -500;
+            ////GL.Vertex3(0, 0,down);
+            ////GL.Vertex3(0, size, down);
+            ////GL.Vertex3(size, size, down);
+            ////GL.Vertex3(size, 0, down);           
+            ////GL.End();          
         }
 
         static bool configureSettings = true;
