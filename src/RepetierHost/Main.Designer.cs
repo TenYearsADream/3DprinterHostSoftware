@@ -743,10 +743,10 @@
             // listSTLObjects
             // 
             this.listSTLObjects.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.listSTLObjects.BackColor = System.Drawing.Color.Gray;
+            this.listSTLObjects.BackColor = System.Drawing.Color.White;
             this.listSTLObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listSTLObjects.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listSTLObjects.ForeColor = System.Drawing.Color.Transparent;
+            this.listSTLObjects.ForeColor = System.Drawing.Color.Black;
             this.listSTLObjects.FormattingEnabled = true;
             this.listSTLObjects.ItemHeight = 16;
             this.listSTLObjects.Location = new System.Drawing.Point(716, 57);

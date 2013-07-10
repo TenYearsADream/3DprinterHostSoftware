@@ -908,66 +908,44 @@ namespace RepetierHost.view
            // throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Draw the background gradient before you draw the 3D text.   
+        /// </summary>
         private void DrawBackGroundGradient()
         {
             //// http://stackoverflow.com/questions/468297/in-opengl-how-do-i-make-a-simple-background-quad
-
-            //GL.PushMatrix(); //glPushMatrix();
-            //GL.Clear(ClearBufferMask.DepthBufferBit); //glClear(GL_DEPTH_BUFFER_BIT); 
-            //GL.Disable(EnableCap.DepthTest); //glDisable(GL_DEPTH_TEST); 
+            // http://stackoverflow.com/questions/5467218/opengl-2d-hud-over-3d
+            
+            // Disable things setup in 3D mode
             GL.Disable(EnableCap.DepthTest); //glDisable(GL_DEPTH_TEST);
             GL.Disable(EnableCap.CullFace);//glDisable(GL_CULL_FACE);
             GL.Disable(EnableCap.Texture2D);//glDisable(GL_TEXTURE_2D);
-            GL.Disable(EnableCap.Lighting);//glDisable(GL_LIGHTING);
-            
+            GL.Disable(EnableCap.Lighting);//glDisable(GL_LIGHTING);    
 
-
+            // Swith to projection mode so that we can change to orthogonal view. 
             GL.MatrixMode(MatrixMode.Projection); //glMatrixMode(GL_PROJECTION);
-
             GL.LoadIdentity(); //glLoadIdentity();
+
+            // Set the orthogonal view to the width and height of the controller. 
             int w = gl.Width;   // //int w = glutGet(GLUT_WINDOW_WIDTH);
             int h = gl.Height;   //int h = glutGet(GLUT_WINDOW_HEIGHT);
             GL.Ortho(0, w, 0, h, -1.0f, 1.0f); //gluOrtho2D(0, w, h, 0);
-            //GL.Ortho(-100, 100 , -100, 100, -1.0f, 1.0f); //gluOrtho2D(0, w, h, 0);
-
-            GL.MatrixMode(MatrixMode.Modelview); //glMatrixMode(GL_MODELVIEW);
-            //GL.PushMatrix(); //glPushMatrix();
-            GL.LoadIdentity(); //glLoadIdentity();
-            // Draw your quad here in screen coordinates
-            GL.Begin(BeginMode.Quads);
-            int size = 50;
-            ////int down = -500;
-            GL.Color3(Color.DarkBlue);
+           
+            // Swith to model view so that we can draw the quad
+            GL.MatrixMode(MatrixMode.Modelview); //glMatrixMode(GL_MODELVIEW);          
+            GL.LoadIdentity(); //glLoadIdentity();   
+     
+            // Draw the quad, specify color for each vertex
+            GL.Begin(BeginMode.Quads);         
+            GL.Color3(Color.LightSkyBlue);
             GL.Vertex2(0, 0);
-            GL.Color3(Color.LightGreen);
+            GL.Color3(Color.WhiteSmoke);
             GL.Vertex2(0, h);
             GL.Color3(Color.White);
             GL.Vertex2(w, h);
-            GL.Color3(Color.DarkBlue);
+            GL.Color3(Color.LightBlue);
             GL.Vertex2(w, 0);
-            GL.End();
-
-            //GL.PopMatrix(); //glPopMatrix() // Pops the matrix that we used to draw the quad
-            //GL.MatrixMode(MatrixMode.Projection); //glMatrixMode(GL_PROJECTION);
-            //GL.PopMatrix(); //glPopMatrix(); // Pops our orthographic projection matrix, which restores the old one
-           
-
-
-
-
-
-
-
-            ////GL.Disable(EnableCap.CullFace);
-            ////GL.Enable(EnableCap.Blend);
-            ////GL.Begin(BeginMode.Quads);
-            ////int size = 5000;
-            ////int down = -500;
-            ////GL.Vertex3(0, 0,down);
-            ////GL.Vertex3(0, size, down);
-            ////GL.Vertex3(size, size, down);
-            ////GL.Vertex3(size, 0, down);           
-            ////GL.End();          
+            GL.End();       
         }
 
         static bool configureSettings = true;

@@ -403,6 +403,7 @@
             this.background.Name = "background";
             this.background.Size = new System.Drawing.Size(111, 22);
             this.background.TabIndex = 0;
+            this.background.Visible = false;
             this.background.Click += new System.EventHandler(this.background_Click);
             this.background.Paint += new System.Windows.Forms.PaintEventHandler(this.background_Paint);
             // 
@@ -441,6 +442,7 @@
             this.labelBackground.Size = new System.Drawing.Size(68, 13);
             this.labelBackground.TabIndex = 0;
             this.labelBackground.Text = "Background:";
+            this.labelBackground.Visible = false;
             // 
             // buttonOK
             // 
