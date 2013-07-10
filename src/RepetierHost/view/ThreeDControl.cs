@@ -190,6 +190,7 @@ namespace RepetierHost.view
                         }
 
                         break;
+
                     case 1: // VBOs
                         ThreeDSettings.currentDrawMethod = ThreeDSettings.drawMethod.VBO;
                         ////Main.threeDSettings.drawMethod = 2;
@@ -212,16 +213,14 @@ namespace RepetierHost.view
                
                 fpsTimer.Reset(); // Reset the stop watch
                 fpsTimer.Start(); // Start the stop watch
-                gl.MakeCurrent(); // Set all GL commands to the current rendering. 
-               
+                gl.MakeCurrent(); // Set all GL commands to the current rendering.                
 
                 GL.ClearColor(Main.threeDSettings.background.BackColor); // Set the color that clears the screen. 
-                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                  SetupViewport();
                  // Maybe put the background gradient here for 2D gradient. 
-                 DrawBackGroundGradient();
-
+                DrawBackGroundGradient();
 
                 GL.Enable(EnableCap.DepthTest);
                 SetupProjectionMatrix();
@@ -913,36 +912,45 @@ namespace RepetierHost.view
         {
             //// http://stackoverflow.com/questions/468297/in-opengl-how-do-i-make-a-simple-background-quad
 
-            GL.PushMatrix(); //glPushMatrix();
-            GL.Clear(ClearBufferMask.DepthBufferBit); //glClear(GL_DEPTH_BUFFER_BIT); 
-            GL.Disable(EnableCap.DepthTest); //glDisable(GL_DEPTH_TEST); 
+            //GL.PushMatrix(); //glPushMatrix();
+            //GL.Clear(ClearBufferMask.DepthBufferBit); //glClear(GL_DEPTH_BUFFER_BIT); 
+            //GL.Disable(EnableCap.DepthTest); //glDisable(GL_DEPTH_TEST); 
+            GL.Disable(EnableCap.DepthTest); //glDisable(GL_DEPTH_TEST);
+            GL.Disable(EnableCap.CullFace);//glDisable(GL_CULL_FACE);
+            GL.Disable(EnableCap.Texture2D);//glDisable(GL_TEXTURE_2D);
+            GL.Disable(EnableCap.Lighting);//glDisable(GL_LIGHTING);
+            
+
 
             GL.MatrixMode(MatrixMode.Projection); //glMatrixMode(GL_PROJECTION);
-            
+
             GL.LoadIdentity(); //glLoadIdentity();
             int w = gl.Width;   // //int w = glutGet(GLUT_WINDOW_WIDTH);
             int h = gl.Height;   //int h = glutGet(GLUT_WINDOW_HEIGHT);
             GL.Ortho(0, w, 0, h, -1.0f, 1.0f); //gluOrtho2D(0, w, h, 0);
+            //GL.Ortho(-100, 100 , -100, 100, -1.0f, 1.0f); //gluOrtho2D(0, w, h, 0);
 
             GL.MatrixMode(MatrixMode.Modelview); //glMatrixMode(GL_MODELVIEW);
-            GL.PushMatrix(); //glPushMatrix();
+            //GL.PushMatrix(); //glPushMatrix();
             GL.LoadIdentity(); //glLoadIdentity();
             // Draw your quad here in screen coordinates
             GL.Begin(BeginMode.Quads);
-            //int size = 5000;
+            int size = 50;
             ////int down = -500;
-            GL.Color3(Color.Orange);
+            GL.Color3(Color.DarkBlue);
             GL.Vertex2(0, 0);
+            GL.Color3(Color.LightGreen);
             GL.Vertex2(0, h);
+            GL.Color3(Color.White);
             GL.Vertex2(w, h);
+            GL.Color3(Color.DarkBlue);
             GL.Vertex2(w, 0);
             GL.End();
 
-            GL.PopMatrix(); //glPopMatrix() // Pops the matrix that we used to draw the quad
-            GL.MatrixMode(MatrixMode.Projection); //glMatrixMode(GL_PROJECTION);
-            GL.PopMatrix(); //glPopMatrix(); // Pops our orthographic projection matrix, which restores the old one
-            //glMatrixMode(GL_MODELVIEW); // Puts us back into GL_MODELVIEW since this is probably what you want
-
+            //GL.PopMatrix(); //glPopMatrix() // Pops the matrix that we used to draw the quad
+            //GL.MatrixMode(MatrixMode.Projection); //glMatrixMode(GL_PROJECTION);
+            //GL.PopMatrix(); //glPopMatrix(); // Pops our orthographic projection matrix, which restores the old one
+           
 
 
 
