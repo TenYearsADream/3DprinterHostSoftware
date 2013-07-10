@@ -47,6 +47,12 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.rotateTabPage2 = new System.Windows.Forms.TabPage();
+            this.rotateMinus90Z = new System.Windows.Forms.Button();
+            this.rotateMinus90Y = new System.Windows.Forms.Button();
+            this.rotate90Z = new System.Windows.Forms.Button();
+            this.rotate90Y = new System.Windows.Forms.Button();
+            this.rotateMinus90X = new System.Windows.Forms.Button();
+            this.rotate90X = new System.Windows.Forms.Button();
             this.zRotateControl = new System.Windows.Forms.NumericUpDown();
             this.yRotateControl = new System.Windows.Forms.NumericUpDown();
             this.xRotateControl = new System.Windows.Forms.NumericUpDown();
@@ -63,12 +69,6 @@
             this.numericCopies = new System.Windows.Forms.NumericUpDown();
             this.labelNumberOfCopies = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.rotate90X = new System.Windows.Forms.Button();
-            this.rotateMinus90X = new System.Windows.Forms.Button();
-            this.rotate90Y = new System.Windows.Forms.Button();
-            this.rotate90Z = new System.Windows.Forms.Button();
-            this.rotateMinus90Y = new System.Windows.Forms.Button();
-            this.rotateMinus90Z = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.PositionTabControl.SuspendLayout();
             this.movetabPage1.SuspendLayout();
@@ -148,12 +148,14 @@
             this.PositionTabControl.Controls.Add(this.rotateTabPage2);
             this.PositionTabControl.Controls.Add(this.scaleTabPage3);
             this.PositionTabControl.Controls.Add(this.copyModelTab);
-            this.PositionTabControl.Location = new System.Drawing.Point(3, 3);
+            this.PositionTabControl.Location = new System.Drawing.Point(0, 0);
+            this.PositionTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.PositionTabControl.Multiline = true;
             this.PositionTabControl.Name = "PositionTabControl";
             this.PositionTabControl.SelectedIndex = 0;
             this.PositionTabControl.Size = new System.Drawing.Size(280, 137);
             this.PositionTabControl.TabIndex = 19;
+            this.PositionTabControl.MouseLeave += new System.EventHandler(this.PositionTabControl_MouseLeave);
             // 
             // movetabPage1
             // 
@@ -298,6 +300,66 @@
             this.rotateTabPage2.TabIndex = 1;
             this.rotateTabPage2.Text = "Rotate";
             this.rotateTabPage2.UseVisualStyleBackColor = true;
+            // 
+            // rotateMinus90Z
+            // 
+            this.rotateMinus90Z.Location = new System.Drawing.Point(189, 77);
+            this.rotateMinus90Z.Name = "rotateMinus90Z";
+            this.rotateMinus90Z.Size = new System.Drawing.Size(48, 26);
+            this.rotateMinus90Z.TabIndex = 33;
+            this.rotateMinus90Z.Text = "-90";
+            this.rotateMinus90Z.UseVisualStyleBackColor = true;
+            this.rotateMinus90Z.Click += new System.EventHandler(this.rotateMinus90Z_Click);
+            // 
+            // rotateMinus90Y
+            // 
+            this.rotateMinus90Y.Location = new System.Drawing.Point(115, 77);
+            this.rotateMinus90Y.Name = "rotateMinus90Y";
+            this.rotateMinus90Y.Size = new System.Drawing.Size(48, 26);
+            this.rotateMinus90Y.TabIndex = 32;
+            this.rotateMinus90Y.Text = "-90";
+            this.rotateMinus90Y.UseVisualStyleBackColor = true;
+            this.rotateMinus90Y.Click += new System.EventHandler(this.rotateMinus90Y_Click);
+            // 
+            // rotate90Z
+            // 
+            this.rotate90Z.Location = new System.Drawing.Point(189, 45);
+            this.rotate90Z.Name = "rotate90Z";
+            this.rotate90Z.Size = new System.Drawing.Size(48, 26);
+            this.rotate90Z.TabIndex = 31;
+            this.rotate90Z.Text = "+90";
+            this.rotate90Z.UseVisualStyleBackColor = true;
+            this.rotate90Z.Click += new System.EventHandler(this.rotate90Z_Click);
+            // 
+            // rotate90Y
+            // 
+            this.rotate90Y.Location = new System.Drawing.Point(115, 45);
+            this.rotate90Y.Name = "rotate90Y";
+            this.rotate90Y.Size = new System.Drawing.Size(48, 26);
+            this.rotate90Y.TabIndex = 30;
+            this.rotate90Y.Text = "+90";
+            this.rotate90Y.UseVisualStyleBackColor = true;
+            this.rotate90Y.Click += new System.EventHandler(this.rotate90Y_Click);
+            // 
+            // rotateMinus90X
+            // 
+            this.rotateMinus90X.Location = new System.Drawing.Point(41, 77);
+            this.rotateMinus90X.Name = "rotateMinus90X";
+            this.rotateMinus90X.Size = new System.Drawing.Size(48, 26);
+            this.rotateMinus90X.TabIndex = 29;
+            this.rotateMinus90X.Text = "-90";
+            this.rotateMinus90X.UseVisualStyleBackColor = true;
+            this.rotateMinus90X.Click += new System.EventHandler(this.rotateMinus90X_Click);
+            // 
+            // rotate90X
+            // 
+            this.rotate90X.Location = new System.Drawing.Point(41, 45);
+            this.rotate90X.Name = "rotate90X";
+            this.rotate90X.Size = new System.Drawing.Size(48, 26);
+            this.rotate90X.TabIndex = 28;
+            this.rotate90X.Text = "+90";
+            this.rotate90X.UseVisualStyleBackColor = true;
+            this.rotate90X.Click += new System.EventHandler(this.rotate90X_Click);
             // 
             // zRotateControl
             // 
@@ -495,74 +557,16 @@
             this.labelNumberOfCopies.TabIndex = 5;
             this.labelNumberOfCopies.Text = "Number of copies:";
             // 
-            // rotate90X
-            // 
-            this.rotate90X.Location = new System.Drawing.Point(41, 45);
-            this.rotate90X.Name = "rotate90X";
-            this.rotate90X.Size = new System.Drawing.Size(48, 26);
-            this.rotate90X.TabIndex = 28;
-            this.rotate90X.Text = "+90";
-            this.rotate90X.UseVisualStyleBackColor = true;
-            this.rotate90X.Click += new System.EventHandler(this.rotate90X_Click);
-            // 
-            // rotateMinus90X
-            // 
-            this.rotateMinus90X.Location = new System.Drawing.Point(41, 77);
-            this.rotateMinus90X.Name = "rotateMinus90X";
-            this.rotateMinus90X.Size = new System.Drawing.Size(48, 26);
-            this.rotateMinus90X.TabIndex = 29;
-            this.rotateMinus90X.Text = "-90";
-            this.rotateMinus90X.UseVisualStyleBackColor = true;
-            this.rotateMinus90X.Click += new System.EventHandler(this.rotateMinus90X_Click);
-            // 
-            // rotate90Y
-            // 
-            this.rotate90Y.Location = new System.Drawing.Point(115, 45);
-            this.rotate90Y.Name = "rotate90Y";
-            this.rotate90Y.Size = new System.Drawing.Size(48, 26);
-            this.rotate90Y.TabIndex = 30;
-            this.rotate90Y.Text = "+90";
-            this.rotate90Y.UseVisualStyleBackColor = true;
-            this.rotate90Y.Click += new System.EventHandler(this.rotate90Y_Click);
-            // 
-            // rotate90Z
-            // 
-            this.rotate90Z.Location = new System.Drawing.Point(189, 45);
-            this.rotate90Z.Name = "rotate90Z";
-            this.rotate90Z.Size = new System.Drawing.Size(48, 26);
-            this.rotate90Z.TabIndex = 31;
-            this.rotate90Z.Text = "+90";
-            this.rotate90Z.UseVisualStyleBackColor = true;
-            this.rotate90Z.Click += new System.EventHandler(this.rotate90Z_Click);
-            // 
-            // rotateMinus90Y
-            // 
-            this.rotateMinus90Y.Location = new System.Drawing.Point(115, 77);
-            this.rotateMinus90Y.Name = "rotateMinus90Y";
-            this.rotateMinus90Y.Size = new System.Drawing.Size(48, 26);
-            this.rotateMinus90Y.TabIndex = 32;
-            this.rotateMinus90Y.Text = "-90";
-            this.rotateMinus90Y.UseVisualStyleBackColor = true;
-            this.rotateMinus90Y.Click += new System.EventHandler(this.rotateMinus90Y_Click);
-            // 
-            // rotateMinus90Z
-            // 
-            this.rotateMinus90Z.Location = new System.Drawing.Point(189, 77);
-            this.rotateMinus90Z.Name = "rotateMinus90Z";
-            this.rotateMinus90Z.Size = new System.Drawing.Size(48, 26);
-            this.rotateMinus90Z.TabIndex = 33;
-            this.rotateMinus90Z.Text = "-90";
-            this.rotateMinus90Z.UseVisualStyleBackColor = true;
-            this.rotateMinus90Z.Click += new System.EventHandler(this.rotateMinus90Z_Click);
-            // 
             // PositionSTLGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.PositionTabControl);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PositionSTLGUI";
-            this.Size = new System.Drawing.Size(283, 141);
+            this.Size = new System.Drawing.Size(283, 137);
             this.Leave += new System.EventHandler(this.PositionSTLGUI_Leave);
+            this.MouseLeave += new System.EventHandler(this.PositionSTLGUI_MouseLeave);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.PositionTabControl.ResumeLayout(false);
             this.movetabPage1.ResumeLayout(false);

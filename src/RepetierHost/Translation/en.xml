@@ -326,7 +326,7 @@ You are using the latest version.</t>
 <t id="L_LICENCE_AND_LIBRARIES" ver="1">Licence and Libraries</t>
 <t id="L_REPETIER_INFO" ver="1">This software was developed for controlling RepRap like 3D-printer. It is best used with Repetier-Firmware, which supports all features. Other printer firmware like Marlin, Teacup, Sprinter or 5D GCode interpreter should work with proper settings.</t>
 <t id="W_COPY_MARKED_OBJECTS" ver="1">Copy Marked Objects</t>
-<t id="L_NUMBER_OF_COPIES:" ver="1">Number of Copies:</t>
+<t id="L_NUMBER_OF_COPIES" ver="1">Number of Copies:</t>
 <t id="L_AUTO_POSITION_AFTER_COPY" ver="1">Auto Position after Adding Objects</t>
 <t id="L_PRINTING_LAYER_X_OF_Y" ver="1">Printing layer $1 of $2</t>
 <t id="L_BUILDING_PRINT_JOB..." ver="1">Building print job...</t>

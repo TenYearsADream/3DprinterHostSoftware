@@ -278,7 +278,28 @@ namespace RepetierHost
         /// <summary>
         /// Options for the current view mode. 
         /// </summary>
-        public enum ThreeDViewOptions { loadAFile, STLeditor, gcode, livePrinting };
+        public enum ThreeDViewOptions
+        { 
+            /// <summary>
+            /// Loads a file. Only the load a file button should be enabled
+            /// </summary>
+            loadAFile,
+
+            /// <summary>
+            /// Allows the user to manipulate, add, copy, scale, move .stl files on the printer platform
+            /// </summary>
+            STLeditor, 
+
+            /// <summary>
+            /// Shows gcode preview of how the software thinks the printer will move and place material. 
+            /// </summary>
+            gcode, 
+
+            /// <summary>
+            /// Show the live printing of what the printer is doing. 
+            /// </summary>
+            livePrinting 
+        };
 
         /// <summary>
         /// The current 3D view mode. 
@@ -376,7 +397,7 @@ namespace RepetierHost
         /// Called when the Main form is loaded. Doesn't really do much. 
         /// </summary>
         /// <param name="sender">Sender</param>
-        /// <param name="e">Event Arguements</param>
+        /// <param name="e">Event Arguments</param>
         private void Main_Load(object sender, EventArgs e)
         {
            mainUpdaterHelper.UpdateEverythingInMain();
@@ -626,7 +647,7 @@ namespace RepetierHost
         /// Control the Drag Enter actions. Basically copy the file to the clip board??
         /// </summary>
         /// <param name="sender">Sender</param>
-        /// <param name="e">Event Arguements</param>
+        /// <param name="e">Event Arguments</param>
         void Form1_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
@@ -840,7 +861,7 @@ namespace RepetierHost
         /// When clicking on recent printers/printer settings update the printer settings objects. Provides an action for clicking on recent printers. 
         /// </summary>
         /// <param name="sender">Sending Button</param>
-        /// <param name="e">Event arguements</param>
+        /// <param name="e">Event arguments</param>
         public void ConnectHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
@@ -852,7 +873,7 @@ namespace RepetierHost
         }       
 
         /// <summary>
-        /// Actions to take when changing printers. Assigned to point to the printerformsettings memeber 
+        /// Actions to take when changing printers. Assigned to point to the printer form settings members 
         /// </summary>
         /// <param name="pkey">The registry key for the particular printer.</param>
         /// <param name="printerChanged">True if printer is to change.</param>
@@ -886,7 +907,7 @@ namespace RepetierHost
         /// Exit the application on click "quit"
         /// </summary>
         /// <param name="sender">Sender</param>
-        /// <param name="e">arguements</param>
+        /// <param name="e">Arguments</param>
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -895,7 +916,7 @@ namespace RepetierHost
         /// <summary>
         /// If the connection to the printer changes then update what is available to click. 
         /// </summary>
-        /// <param name="msg">Message to put in the connnection status</param>
+        /// <param name="msg">Message to put in the connection status</param>
         private void OnPrinterConnectionChange(string msg)
         {
             this.toolConnection.Text = msg;
@@ -1037,7 +1058,7 @@ namespace RepetierHost
         /// Brings up the printer settings form. 
         /// </summary>
         /// <param name="sender">Sender</param>
-        /// <param name="e">Event arguements</param>
+        /// <param name="e">Event arguments</param>
         private void printerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             printerSettings.Show(this);
@@ -1055,6 +1076,9 @@ namespace RepetierHost
         ////    skeinforge.RunSkeinforge();
         ////}
 
+        /// <summary>
+        /// Contains information about the current printer. 
+        /// </summary>
         private PrinterInfo printerInfo = null;
 
         /// <summary>
@@ -2038,6 +2062,7 @@ namespace RepetierHost
             openLink(Custom.GetString("extraSupportURL", "http://www.by3dp.com  "));
         }
 
+
         private void advancedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             gCodeEditorForm.Controls.Add(editor);
@@ -2045,18 +2070,13 @@ namespace RepetierHost
             gCodeEditorForm.Visible = !gCodeEditorForm.Visible;
         }
 
-        private void toolStripButton1_Click_1(object sender, EventArgs e)
-        {
-            if (current3Dview == ThreeDViewOptions.STLeditor)
-                current3Dview = ThreeDViewOptions.gcode;
-            else if (current3Dview == ThreeDViewOptions.gcode)
-                current3Dview = ThreeDViewOptions.STLeditor;
+       
 
-
-            //update3DviewSelection();
-            mainUpdaterHelper.UpdateEverythingInMain();
-        }
-
+        /// <summary>
+        /// If connected than disconnect, if not connected then connect
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void connectToolStripSplitButton_ButtonClick(object sender, EventArgs e)
         {
             // TODO: Select COM port
@@ -2097,8 +2117,6 @@ namespace RepetierHost
 
         private void positionToolSplitButton2_Click(object sender, EventArgs e)
         {
-
-            //mainHelp.updatePositionControlLocation();
 
             this.postionGUI.Left = 100;
             this.postionGUI.Top = 24 + 54;

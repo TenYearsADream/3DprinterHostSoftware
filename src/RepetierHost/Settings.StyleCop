@@ -17,9 +17,14 @@
     </CollectionProperty>
   </GlobalSettings>
   <Analyzers>
-    <Analyzer AnalyzerId="StyleCop.CSharp.LayoutRules">
+    <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
       <Rules>
-        <Rule Name="CurlyBracketsMustNotBeOmitted">
+        <Rule Name="DocumentationTextMustBeginWithACapitalLetter">
+          <RuleSettings>
+            <BooleanProperty Name="Enabled">True</BooleanProperty>
+          </RuleSettings>
+        </Rule>
+        <Rule Name="DocumentationTextMustContainWhitespace">
           <RuleSettings>
             <BooleanProperty Name="Enabled">False</BooleanProperty>
           </RuleSettings>

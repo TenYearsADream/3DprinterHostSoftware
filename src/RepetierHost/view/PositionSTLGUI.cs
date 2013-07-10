@@ -53,6 +53,7 @@ namespace RepetierHost.view
                 //cont.eventObjectMoved += objectMoved;
                 //cont.eventObjectSelected += objectSelected;
                 //cont.autoupdateable = true;
+                this.PositionTabControl.Size = this.Size;
                 updateEnabled();
                 if (Main.main != null)
                 {
@@ -568,6 +569,11 @@ namespace RepetierHost.view
 
         }
 
+        /// <summary>
+        /// When leaving the Control, make it disappear. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PositionSTLGUI_Leave(object sender, EventArgs e)
         {
             this.Visible = false;
@@ -717,6 +723,16 @@ namespace RepetierHost.view
 
             updateSTLState(stl);
             Main.main.threedview.UpdateChanges();
+        }
+
+        private void PositionSTLGUI_MouseLeave(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void PositionTabControl_MouseLeave(object sender, EventArgs e)
+        {
+            //this.Visible = false;
         }
 
 

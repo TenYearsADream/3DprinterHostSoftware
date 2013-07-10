@@ -72,7 +72,7 @@ namespace RepetierHost.view
         }
         private void translate()
         {
-          
+
         }
         public void SetView(ThreeDView view)
         {
@@ -181,7 +181,7 @@ namespace RepetierHost.view
                         else if (Main.threeDSettings.openGLVersion >= 1.099)
                         {
                             ThreeDSettings.currentDrawMethod = ThreeDSettings.drawMethod.Elements;
-                           //// Main.threeDSettings.drawMethod = 1;
+                            //// Main.threeDSettings.drawMethod = 1;
                         }
                         else
                         {
@@ -210,7 +210,7 @@ namespace RepetierHost.view
                 {
                     Main.main.updateTravelMoves();
                 }
-               
+
                 fpsTimer.Reset(); // Reset the stop watch
                 fpsTimer.Start(); // Start the stop watch
                 gl.MakeCurrent(); // Set all GL commands to the current rendering.                
@@ -218,15 +218,15 @@ namespace RepetierHost.view
                 GL.ClearColor(Main.threeDSettings.background.BackColor); // Set the color that clears the screen. 
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-                 SetupViewport();
-                 // Maybe put the background gradient here for 2D gradient. 
+                SetupViewport();
+                // Maybe put the background gradient here for 2D gradient. 
                 DrawBackGroundGradient();
 
                 GL.Enable(EnableCap.DepthTest);
                 SetupProjectionMatrix();
-               
+
                 view.lookAt = Matrix4.LookAt(view.userPosition.X, view.userPosition.Y, view.userPosition.Z, view.viewCenter.X, view.viewCenter.Y, view.viewCenter.Z, 0, 0, 1.0f);
-               
+
                 //if (SimpleTest() == true)
                 //{
                 //    return;
@@ -340,7 +340,7 @@ namespace RepetierHost.view
                     new OpenTK.Graphics.Color4(255, 255, 255, 255));
 
                 // Drawing background gradient should be  ok here if you want to do a box or a cube with images. 
-                
+
 
                 float dx1 = ps.DumpAreaLeft;
                 float dx2 = dx1 + ps.DumpAreaWidth;
@@ -349,13 +349,13 @@ namespace RepetierHost.view
                 if (Main.threeDSettings.showPrintbed.Checked)
                 {
                     col = Main.threeDSettings.printerBase.BackColor;
-                        GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, new OpenTK.Graphics.Color4(0, 0, 0, 255));
-                        GL.Material(MaterialFace.Front, MaterialParameter.Emission, new OpenTK.Graphics.Color4(0, 0, 0, 0));
-                        GL.Material(MaterialFace.Front, MaterialParameter.Specular, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
-                        GL.Material(
-                            MaterialFace.Front,
-                            MaterialParameter.Emission,
-                            new OpenTK.Graphics.Color4(col.R, col.G, col.B, col.A));
+                    GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, new OpenTK.Graphics.Color4(0, 0, 0, 255));
+                    GL.Material(MaterialFace.Front, MaterialParameter.Emission, new OpenTK.Graphics.Color4(0, 0, 0, 0));
+                    GL.Material(MaterialFace.Front, MaterialParameter.Specular, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
+                    GL.Material(
+                        MaterialFace.Front,
+                        MaterialParameter.Emission,
+                        new OpenTK.Graphics.Color4(col.R, col.G, col.B, col.A));
                     int i;
                     // Draw origin
                     GL.Disable(EnableCap.CullFace);
@@ -633,7 +633,7 @@ namespace RepetierHost.view
                         GL.Vertex3(model.xMax, model.yMin, model.zMin);
 
                         GL.End();
-                        model.AnimationAfter();                                                                                                                 
+                        model.AnimationAfter();
                         GL.PopMatrix();
                     }
                 } // End loop of models.
@@ -746,80 +746,8 @@ namespace RepetierHost.view
                     GL.Disable(EnableCap.Blend);
                 } // End show the print bed. 
 
-                //// Draw a gradient background. 
-                ////http://stackoverflow.com/questions/468297/in-opengl-how-do-i-make-a-simple-background-quad
-
-                //GL.MatrixMode(MatrixMode.Projection); // glMatrixMode(GL_PROJECTION);
-                //GL.PushMatrix(); // glPushMatrix();
-                //GL.LoadIdentity(); // glLoadIdentity();
-                //int w = gl.Width;
-                //int h = gl.Height;
-                //GL.Rects(0,(short) w,(short) h, 0);
-
-                //GL.PopMatrix(); //glPopMatrix() // Pops the matrix that we used to draw the quad
-                //// GL.MatrixMode(MatrixMode.Projection); //glMatrixMode(GL_PROJECTION);
-                ////glPopMatrix(); // Pops our orthographic projection matrix, which restores the old one
-                //GL.MatrixMode(MatrixMode.Modelview); //glMatrixMode
-
-                //glLoadIdentity();
-                //glMatrixMode(GL_MODELVIEW);
-                //glLoadIdentity();
-              
-               
-
-                //GL.Disable(EnableCap.CullFace); // CAn see it from both sies. 
-                //GL.Enable(EnableCap.Blend);	// Turn Blending On
-               
-
-
-                //GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, new OpenTK.Graphics.Color4(0, 0, 0, 255));
-                //GL.Material(MaterialFace.Front, MaterialParameter.Emission, new OpenTK.Graphics.Color4(1, 0, 0, 0));
-                //GL.Material(MaterialFace.Front, MaterialParameter.Specular, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
-                //GL.Material(
-                //    MaterialFace.Front,
-                //    MaterialParameter.Emission,
-                //    new OpenTK.Graphics.Color4(col.R, col.G, col.B, col.A));
-
-                ////GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-                //GL.Begin(BeginMode.Quads);// glBegin(GL_QUADS);
-                //////red color
-              
-                //int tempSize = 300;
-                //Vector3 towardView = view.userPosition - view.viewCenter;
-                //Matrix4 rotateM = Matrix4.CreateFromAxisAngle(towardView, MathHelper.PiOver2);
-                //Vector4 towardView4 = new Vector4(towardView, 1);
-                //Vector4 dir1 = Vector4.Multiply( towardView4 * rotateM;
-
-               // GL.MatrixMode(MatrixMode.
-
-                    
-                 //GL.Rotate(model.Rotation.z, Vector3.UnitZ);
-                 //GL.Rotate(model.Rotation.y, Vector3.UnitY);
-                 //GL.Rotate(model.Rotation.x, Vector3.UnitX);
-
-                
-                                //GL.Vertex3(ps.BedLeft, ps.BedFront, 0);
-                                //GL.Vertex3(ps.BedLeft + ps.PrintAreaWidth, ps.BedFront, 0);
-                                //GL.Vertex3(ps.BedLeft + ps.PrintAreaWidth, ps.BedFront + dy1, 0);
-                //                //GL.Vertex3(ps.BedLeft, ps.BedFront + dy1, 0);
-                            
-                //GL.Color3(1.0, 0.0, 0.0); //glColor3f(1.0, 0.0, 0.0);
-                //GL.Vertex3(-tempSize, tempSize,-20); //glVertex2f(-1.0, 1.0);
-                //GL.Vertex3(-tempSize, -tempSize,-20); //glVertex2f(-1.0, -1.0);
-                //////blue color
-                //GL.Color3(1.0, 1.0, 0.0); //glColor3f(0.0, 0.0, 1.0);
-                //GL.Vertex3(tempSize, -tempSize,-20); //glVertex2f(1.0, -1.0);
-                //GL.Vertex3(tempSize, tempSize,-20); //glVertex2f(1.0, 1.0);
-                //GL.End(); //glEnd();
-
-                // END Attempt 1. 
-
-
                 gl.SwapBuffers();  // Show the scene on the screen. 
                 fpsTimer.Stop();  // Stop the stopwatch timer. 
-
-                //// double time = fpsTimer.Elapsed.Milliseconds / 1000.0;
-                //// PrinterConnection.logInfo("OpenGL update time:" + time.ToString());
 
                 double framerate = 1.0 / fpsTimer.Elapsed.TotalSeconds;
                 Main.main.fpsLabel.Text = framerate.ToString("0") + " FPS";
@@ -843,6 +771,9 @@ namespace RepetierHost.view
             catch { }
         }
 
+        /// <summary>
+        /// Sets up the projection matrix for the 3D view in OpenTK. The projection matrix is dependent on if we are in in orthogonal 3d mode. 
+        /// </summary>
         private void SetupProjectionMatrix()
         {
             try
@@ -859,7 +790,7 @@ namespace RepetierHost.view
                 view.aspectRatio = (float)w / (float)h;
                 view.nearDist = Math.Max(10, dist - 2f * ps.PrintAreaDepth);
                 view.farDist = dist + 2 * ps.PrintAreaDepth;
-               if (perspectiveModeisParrallel == true)
+                if (perspectiveModeisParrallel == true)
                 {
                     view.persp = Matrix4.CreateOrthographic(4.0f * view.nearHeight * view.aspectRatio, 4.0f * view.nearHeight, view.nearDist, view.farDist);
                 }
@@ -870,13 +801,17 @@ namespace RepetierHost.view
                 GL.LoadMatrix(ref view.persp);
             }
             catch { }
-           
+
         }
 
+        /// <summary>
+        /// A simple test to play with 3d rendering type things. Not in use right now. 
+        /// </summary>
+        /// <returns>Always false</returns>
         private bool SimpleTest()
         {
             gl.MakeCurrent();
-            
+
             GL.Viewport(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height);
 
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
@@ -905,7 +840,7 @@ namespace RepetierHost.view
 
             return false;
 
-           // throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
         /// <summary>
@@ -915,7 +850,7 @@ namespace RepetierHost.view
         {
             //// http://stackoverflow.com/questions/468297/in-opengl-how-do-i-make-a-simple-background-quad
             // http://stackoverflow.com/questions/5467218/opengl-2d-hud-over-3d
-            
+
             // Disable things setup in 3D mode
             GL.Disable(EnableCap.DepthTest); //glDisable(GL_DEPTH_TEST);
             GL.Disable(EnableCap.CullFace);//glDisable(GL_CULL_FACE);
@@ -930,13 +865,13 @@ namespace RepetierHost.view
             int w = gl.Width;   // //int w = glutGet(GLUT_WINDOW_WIDTH);
             int h = gl.Height;   //int h = glutGet(GLUT_WINDOW_HEIGHT);
             GL.Ortho(0, w, 0, h, -1.0f, 1.0f); //gluOrtho2D(0, w, h, 0);
-           
+
             // Swith to model view so that we can draw the quad
             GL.MatrixMode(MatrixMode.Modelview); //glMatrixMode(GL_MODELVIEW);          
             GL.LoadIdentity(); //glLoadIdentity();   
-     
+
             // Draw the quad, specify color for each vertex
-            GL.Begin(BeginMode.Quads);         
+            GL.Begin(BeginMode.Quads);
             GL.Color3(Color.LightSkyBlue);
             GL.Vertex2(0, 0);
             GL.Color3(Color.WhiteSmoke);
@@ -945,7 +880,7 @@ namespace RepetierHost.view
             GL.Vertex2(w, h);
             GL.Color3(Color.LightBlue);
             GL.Vertex2(w, 0);
-            GL.End();       
+            GL.End();
         }
 
         static bool configureSettings = true;
@@ -1029,7 +964,7 @@ namespace RepetierHost.view
             double norm_y = (double)window_y / (double)(Height / 2);
             int window_x = x - Width / 2;
             double norm_x = (double)window_x / (double)(Width / 2);
-            float fpy = (float)(view.nearHeight * 0.5 * norm_y) * (perspectiveModeisParrallel==true ? 4f : 1f);
+            float fpy = (float)(view.nearHeight * 0.5 * norm_y) * (perspectiveModeisParrallel == true ? 4f : 1f);
             float fpx = (float)(view.nearHeight * 0.5 * view.aspectRatio * norm_x) * (perspectiveModeisParrallel == true ? 4f : 1f);
 
 
@@ -1039,7 +974,7 @@ namespace RepetierHost.view
             Matrix4 rotz = Matrix4.CreateFromAxisAngle(new Vector3(0, 0, 1), (float)(view.rotZ * Math.PI / 180.0));
             Matrix4 trans = Matrix4.CreateTranslation(-ps.BedLeft - ps.PrintAreaWidth * 0.5f, -ps.BedFront - ps.PrintAreaDepth * 0.5f, -0.5f * ps.PrintAreaHeight);
             Matrix4 ntrans = Matrix4.LookAt(view.userPosition.X, view.userPosition.Y, view.userPosition.Z, view.viewCenter.X, view.viewCenter.Y, view.viewCenter.Z, 0, 0, 1.0f);
-            
+
             ntrans = Matrix4.Mult(rotx, ntrans);
             ntrans = Matrix4.Mult(rotz, ntrans);
             ntrans = Matrix4.Mult(trans, ntrans);
@@ -1094,12 +1029,12 @@ namespace RepetierHost.view
             double norm_y = (double)window_y / (double)(viewport[3] / 2);
             int window_x = x - viewport[2] / 2;
             double norm_x = (double)window_x / (double)(viewport[2] / 2);
-            float fpy = (float)(view.nearHeight * 0.5 * norm_y) * (perspectiveModeisParrallel==true ? 4f : 1f);
-            float fpx = (float)(view.nearHeight * 0.5 * view.aspectRatio * norm_x) * (perspectiveModeisParrallel==true ? 4f : 1f);
+            float fpy = (float)(view.nearHeight * 0.5 * norm_y) * (perspectiveModeisParrallel == true ? 4f : 1f);
+            float fpx = (float)(view.nearHeight * 0.5 * view.aspectRatio * norm_x) * (perspectiveModeisParrallel == true ? 4f : 1f);
 
 
-            Vector4 frontPointN = (perspectiveModeisParrallel==true ? new Vector4(fpx, fpy, 0, 1) : new Vector4(0, 0, 0, 1));
-            Vector4 dirN = (perspectiveModeisParrallel==true ? new Vector4(0, 0, -view.nearDist, 0) : new Vector4(fpx, fpy, -view.nearDist, 0));
+            Vector4 frontPointN = (perspectiveModeisParrallel == true ? new Vector4(fpx, fpy, 0, 1) : new Vector4(0, 0, 0, 1));
+            Vector4 dirN = (perspectiveModeisParrallel == true ? new Vector4(0, 0, -view.nearDist, 0) : new Vector4(fpx, fpy, -view.nearDist, 0));
             Matrix4 rotx = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)(view.rotX * Math.PI / 180.0));
             Matrix4 rotz = Matrix4.CreateFromAxisAngle(new Vector3(0, 0, 1), (float)(view.rotZ * Math.PI / 180.0));
             Matrix4 trans = Matrix4.CreateTranslation(-ps.BedLeft - ps.PrintAreaWidth * 0.5f, -ps.BedFront - ps.PrintAreaDepth * 0.5f, -0.5f * ps.PrintAreaHeight);
@@ -1108,7 +1043,7 @@ namespace RepetierHost.view
             ntrans = Matrix4.Mult(rotz, ntrans);
             ntrans = Matrix4.Mult(trans, ntrans);
             ntrans = Matrix4.Invert(ntrans);
-            Vector4 frontPoint = (perspectiveModeisParrallel==true ? Vector4.Transform(frontPointN, ntrans) : ntrans.Row3);
+            Vector4 frontPoint = (perspectiveModeisParrallel == true ? Vector4.Transform(frontPointN, ntrans) : ntrans.Row3);
             Vector4 dirVec = Vector4.Transform(dirN, ntrans);
             pickLine = new Geom3DLine(new Geom3DVector(frontPoint.X / frontPoint.W, frontPoint.Y / frontPoint.W, frontPoint.Z / frontPoint.W),
                 new Geom3DVector(dirVec.X, dirVec.Y, dirVec.Z), true);
@@ -1278,7 +1213,7 @@ namespace RepetierHost.view
                 speedY = (yPos - yDown) / gl.Height;
                 view.userPosition.X = startUserPosition.X + speedX * 200 * view.zoom;
                 view.userPosition.Z = startUserPosition.Z - speedY * 200 * view.zoom;
-                if (view.rotX == 90 && view.rotZ == 0 && perspectiveModeisParrallel==true)
+                if (view.rotX == 90 && view.rotZ == 0 && perspectiveModeisParrallel == true)
                 {
                     view.viewCenter.X = startViewCenter.X + speedX * 200 * view.zoom;
                     view.viewCenter.Z = startViewCenter.Z - speedY * 200 * view.zoom;
@@ -1294,7 +1229,7 @@ namespace RepetierHost.view
                 speedY = (yPos - yDown) / gl.Height;
                 view.viewCenter.X = startViewCenter.X - speedX * 200 * view.zoom;
                 view.viewCenter.Z = startViewCenter.Z + speedY * 200 * view.zoom;
-                if (view.rotX == 90 && view.rotZ == 0 && perspectiveModeisParrallel==true)
+                if (view.rotX == 90 && view.rotZ == 0 && perspectiveModeisParrallel == true)
                 {
                     view.userPosition.X = startUserPosition.X - speedX * 200 * view.zoom;
                     view.userPosition.Z = startUserPosition.Z + speedY * 200 * view.zoom;
@@ -1429,7 +1364,7 @@ namespace RepetierHost.view
             {
                 if (m.Changed || m.hasAnimations)
                 {
-                   // if ((Main.threeDSettings.drawMethod == 0 && (timeCall % 9) != 0))
+                    // if ((Main.threeDSettings.drawMethod == 0 && (timeCall % 9) != 0))
                     if ((ThreeDSettings.currentDrawMethod == ThreeDSettings.drawMethod.DrawElements) && ((timeCall % 9) != 0))
                     {
                         return;
@@ -1456,10 +1391,12 @@ namespace RepetierHost.view
                 Main.main.fileAddOrRemove.ButtonRemoveSTL_Click();
                 //Main.main.stlComposer1.buttonRemoveSTL_Click(null, null);
             }
+
             foreach (ThreeDModel m in view.models)
             {
                 m.Clear();
             }
+
             gl.Invalidate();
         }
 
@@ -1510,19 +1447,12 @@ namespace RepetierHost.view
             gl.Invalidate();
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            view.rotX = 90;
-            view.rotZ = 0;
-            view.zoom = 1.0f;
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);
-            //view.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.7f *(float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth), 0.0f * ps.PrintAreaHeight);
-            view.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
-            //userPosition = new Vector3(0f * ps.PrintAreaWidth, -2f * ps.PrintAreaDepth, 0.0f * ps.PrintAreaHeight);
-            gl.Invalidate();
-        }
-
+       
+        /// <summary>
+        /// Not sure this is used. Looks like is meant to determine if the key pressed is one of interest. 
+        /// </summary>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
         protected override bool IsInputKey(Keys keyData)
         {
             switch (keyData)
@@ -1540,6 +1470,12 @@ namespace RepetierHost.view
             }
             return base.IsInputKey(keyData);
         }
+
+        /// <summary>
+        /// Event control for pressing down a key while the controller is selected. 
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Specifics about the key pressed down</param>
         public void ThreeDControl_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
@@ -1584,38 +1520,36 @@ namespace RepetierHost.view
             // If the event hasn't been handled, then send it on to the listSTLObjects key down to see if we should delete something. 
             // Basically we are making a way to delele objects. 
             if (Main.main.current3Dview == Main.ThreeDViewOptions.STLeditor && e.Handled == false)
-            {  
+            {
                 Main.main.listSTLObjects_KeyDown(sender, e);
-             }
+            }
 
             if (e.Handled == false)
+            {
                 Main.main.fileAddOrRemove.SaveAFile_KeyDown(sender, e);
+            }
         }
 
+        /// <summary>
+        /// Changes to the opposite of the current prospective mode. Orthogonal or prospective. 
+        /// </summary>
         public void ChangeProspectiveMode()
         {
             perspectiveModeisParrallel = !perspectiveModeisParrallel;
             gl.Invalidate();
         }
 
-        private void toolParallelProjection_Click(object sender, EventArgs e)
-        {
-            perspectiveModeisParrallel = !perspectiveModeisParrallel;
-            gl.Invalidate();
-        }
-
-
         /// <summary>
         /// Not working right now. I was trying to make a function that would center the view directly on the object.   
         /// </summary>
         internal void CenterViewOnObjects()
         {
-             
-            float xCenter=0f * ps.PrintAreaWidth;
-            float yCenter =ps.PrintAreaDepth * 0f;
+
+            float xCenter = 0f * ps.PrintAreaWidth;
+            float yCenter = ps.PrintAreaDepth * 0f;
             float zCenter = 0.0f * ps.PrintAreaHeight;
             // view.viewCenter = new Vector3(, , );
-           
+
             foreach (STL tempSTL in Main.main.listSTLObjects.Items)
             {
                 xCenter += (tempSTL.xMax + tempSTL.xMin);
@@ -1625,6 +1559,6 @@ namespace RepetierHost.view
 
             view.viewCenter = new Vector3(xCenter, yCenter, zCenter);
             gl.Invalidate();
-         }
+        }
     }
 }
