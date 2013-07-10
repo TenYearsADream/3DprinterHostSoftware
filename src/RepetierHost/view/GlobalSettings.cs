@@ -179,6 +179,12 @@ namespace RepetierHost.view
             Main.main.UpdateToolbarSize();
         }
 
+
+        /// <summary>
+        /// Does not work right now. It should be invisible. Anthony G. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void resetSoftwarebutton1_Click(object sender, EventArgs e)
         {
             string message = Trans.T("M_RESET_WARNING_QUESTION"); 
@@ -189,20 +195,9 @@ namespace RepetierHost.view
                 // If the no button was pressed ... 
                 if (result == DialogResult.Yes)
                 {
-                    //RegistryKey.
-                    //RegistryKey delKey = Registry.LocalMachine.OpenSubKey("Software", true);
-                    //delKey.DeleteSubKey("Baoyan");
-                    // dic["registryFolder"] 
-                    //this.repetierKey.DeleteSubKeyTree("SOFTWARE\\"+Custom.GetString("registryFolder","Baoyan"));
-                    //Custom.BaseKey.
-                    
                     string key = Custom.BaseKey.ToString();
                     Registry.CurrentUser.DeleteSubKeyTree("Software\\Baoyan");
                     Main.main.Close(); // Not working right now. Becasue it tries to access teh registry while shutting down. 
-                    
-
-                   // this.repetierKey.DeleteSubKeyTree(key);
-                    
                 }
         
         }

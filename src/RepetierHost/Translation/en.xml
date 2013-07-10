@@ -49,10 +49,10 @@
   <t id="M_RESET_WARNING_QUESTION" ver="1">Are you sure that you would like to reset everything? The program must restart immediately if you select yes.</t>
   <t id="B_RESET" ver="1">Reset</t>
   <t id="L_RESET_EXPLANATION" ver="1">Erases all the saved configuration information</t>
-  <t id="" ver="1">"";</t>
-  <t id="" ver="1">"";</t>
-  <t id="" ver="1">"";</t>
-  <t id="" ver="1">"";</t>
+  <t id="L_X_AXIS" ver="1">X-Axis</t>
+  <t id="L_Y_AXIS" ver="1">Y-Axis</t>
+  <t id="L_Z_AXIS" ver="1">Z-Axis</t>
+  <t id="" ver="1"></t>
  
   
   <t id="END NEW TEXT" ver="1"></t>

@@ -65,20 +65,21 @@ namespace RepetierHost.view
         public void translate()
         {
             // TODO: Update these translations
-            //labelTranslation.Text = Trans.T("L_TRANSLATION:");
-            //labelScale.Text = Trans.T("L_SCALE:");
-            //labelRotate.Text = Trans.T("L_ROTATE:");
-            //labelSTLObjects.Text = Trans.T("L_STL_OBJECTS");
-            //buttonSave.Text = Trans.T("B_SAVE_AS_STL");
-            //buttonRemoveSTL.Text = Trans.T("B_REMOVE_STL_OBJECT");
-            //buttonAddSTL.Text = Trans.T("B_ADD_STL_OBJECT");
-            //buttonAutoplace.Text = Trans.T("B_AUTOPOSITION");
-            //buttonLand.Text = Trans.T("B_DROP_OBJECT");
-            //buttonCopyObjects.Text = Trans.T("B_COPY_OBJECTS");
-            //buttonCenter.Text = Trans.T("B_CENTER_OBJECT");
-            //checkScaleAll.Text = Trans.T("L_LOCK_ASPECT_RATIO");
-            //if (Main.slicer != null)
-            //    buttonSlice.Text = Trans.T1("L_SLICE_WITH", Main.slicer.SlicerName);
+            this.movetabPage1.Text = Trans.T("L_TRANSLATION:");
+            this.scaleTabPage3.Text = Trans.T("L_SCALE:");
+            this.rotateTabPage2.Text = Trans.T("L_ROTATE:");
+            this.label18.Text =  this.label15.Text =  this.label9.Text = Trans.T("L_X_AXIS");
+            this.label5.Text = this.label14.Text = this.label17.Text = Trans.T("L_Y_AXIS");
+            this.label1.Text = this.label13.Text = this.label16.Text = Trans.T("L_Z_AXIS");
+            this.labelNumberOfCopies.Text = Trans.T("L_NUMBER_OF_COPIES");
+            this.checkAutoposition.Text = Trans.T("L_AUTO_POSITION_AFTER_COPY");
+           
+            this.buttonAutoplace.Text = Trans.T("B_AUTOPOSITION");         
+            this.copyModelTab.Text = Trans.T("B_COPY_OBJECTS");
+            this.buttonCenter.Text = Trans.T("B_CENTER_OBJECT");
+            this.buttonCopy.Text = Trans.T("L_COPY");
+            this.checkScaleAll.Text = Trans.T("L_LOCK_ASPECT_RATIO");
+          
         }
 
 

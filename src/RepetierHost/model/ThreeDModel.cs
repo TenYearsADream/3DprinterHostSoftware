@@ -156,6 +156,10 @@ namespace RepetierHost.model
             get { return false; }
         }
         public virtual void Clear() { }
+
+        /// <summary>
+        /// Overriden by the specific g-code model or the stl file model. Provides the information on how to paint the models using openGL.
+        /// </summary>
         abstract public void Paint();
         public virtual Vector3 getCenter()
         {

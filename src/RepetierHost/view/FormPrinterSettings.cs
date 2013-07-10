@@ -613,5 +613,10 @@ namespace RepetierHost.view
             panelTotalArea.Visible = idx != 2;
             panelCNC.Visible = idx == 3;
         }
+
+        private void textPrintAreaHeight_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

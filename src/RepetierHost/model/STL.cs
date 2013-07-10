@@ -27,6 +27,9 @@ using System.Windows.Forms;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// STL Triangles are a data structure that holds the individual stl triangles. 
+    /// </summary>
     public class STLTriangle : IComparer<STLTriangle>
     {
         public Vector3 normal;
@@ -65,14 +68,34 @@ namespace RepetierHost.model
             }
         }
     }
+
+    /// <summary>
+    /// Holds information about an .stl file. Holds that actualy data structures that allow the program to paint the .stl model. 
+    /// </summary>
     public class STL : ThreeDModel
     {
+        /// <summary>
+        /// List of triangles that make up the .stl file. 
+        /// </summary>
         public LinkedList<STLTriangle> list;
         public string name = "Unknown";
         public string filename = "";
+
+        /// <summary>
+        /// Time in "Ticks" when the file was last modified. 
+        /// </summary>
         long lastModified = 0;
         public bool outside = false;
+
+        /// <summary>
+        /// Translation, rotation, scaling vector. 4x4 matrix. 
+        /// </summary>
         public Matrix4 trans;
+
+        /// <summary>
+        /// Copy the current .stl objct and return a new one. 
+        /// </summary>
+        /// <returns>The newly created stl object</returns>
         public STL copySTL()
         {
             STL stl = new STL();
@@ -93,16 +116,25 @@ namespace RepetierHost.model
             stl.UpdateBoundingBox();
             return stl;
         }
+
+        /// <summary>
+        /// Determines if a file has changed since it was opened in the program. 
+        /// </summary>
+        /// <returns>True if </returns>
         public bool changedOnDisk()
         {
             DateTime lastModiefied2 = File.GetLastWriteTime(filename);
-            return lastModified != lastModiefied2.Ticks;
+            return (lastModified != lastModiefied2.Ticks);
         }
         public void resetModifiedDate()
         {
             DateTime lastModified2 = File.GetLastWriteTime(filename);
             lastModified = lastModified2.Ticks;
         }
+
+        /// <summary>
+        /// Reloads a file. First delets the openGL buffers, and then loads the file again. 
+        /// </summary>
         public void reload()
         {
             if (bufs != null)
@@ -118,9 +150,9 @@ namespace RepetierHost.model
         }
 
         /// <summary>
-        /// Read the binary at the beginning of the file to get information from it. 
+        /// Tries to read the file as binary. If it can't it reads it as a plain text .stl file. Loads the triangles into the stl object data structures. 
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="file">File path of the .stl file</param>
         public void Load(string file)
         {
             list = new LinkedList<STLTriangle>();
@@ -132,16 +164,16 @@ namespace RepetierHost.model
                 FileStream f = File.OpenRead(file);
                 byte[] header = new byte[80];
                 ReadArray(f, header);
-                /*   if (header[0] == 's' && header[1] == 'o' && header[2] == 'l' && header[3] == 'i' && header[4] == 'd')
-                   {
-                       f.Close();
-                       LoadText(file);
-                   }
-                   else
-                   {*/
+                /////*   if (header[0] == 's' && header[1] == 'o' && header[2] == 'l' && header[3] == 'i' && header[4] == 'd')
+                ////   {
+                ////       f.Close();
+                ////       LoadText(file);
+                ////   }
+                ////   else
+                ////   {*/
                 BinaryReader r = new BinaryReader(f);
                 int nTri = r.ReadInt32();
-                if (f.Length != 84 + nTri * 50)
+                if (f.Length != (84 + nTri * 50))
                 {
                     f.Close();
                     LoadText(file);
@@ -162,7 +194,7 @@ namespace RepetierHost.model
                     r.Close();
                     f.Close();
                 }
-                //}
+                
                 FileInfo info = new FileInfo(file);
                 name = info.Name;
             }
@@ -171,12 +203,18 @@ namespace RepetierHost.model
                 MessageBox.Show(e.ToString(), "Error reading STL file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        /// <summary>
+        /// Converts the .stl file name to string. Overrides the default object implementation. 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return name;
         }
+
         /// <summary>
-        /// Translate Object, so that the lowest point is 0.
+        /// Move Object, so that it goes down zMin amount. 
         /// </summary>
         public void Land()
         {
@@ -186,19 +224,29 @@ namespace RepetierHost.model
 
         /// <summary>
         /// GCenter the X and Y position of the model on the plate. Then Add the X and Y amounts that are parameters. 
+        /// Land() is also called so that the model goes down zMin amount. 
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         public void Center(float x, float y)
         {
             Land();
-            Position.x += x - 0.5f * (xMax + xMin);
-            Position.y += y - 0.5f * (yMax + yMin);
+            Position.x += (x - (0.5f * (xMax + xMin)));
+            Position.y += (y - (0.5f * (yMax + yMin)));
         }
+
+        /// <summary>
+        /// Gets the center of the model. Average of the min and max in the x, y, and z directions. 
+        /// </summary>
+        /// <returns></returns>
         public override Vector3 getCenter()
         {
             return new Vector3(0.5f * (xMin + xMax), 0.5f * (yMin + yMax), 0.5f * (zMin + zMax));
         }
+
+        /// <summary>
+        /// Updates the matrix that defines the orientation and position of the .stl object. 
+        /// </summary>
         public void UpdateMatrix()
         {
             Matrix4 transl = Matrix4.CreateTranslation(Position.x, Position.y, Position.z);
@@ -224,6 +272,11 @@ namespace RepetierHost.model
                 includePoint(ref tri.p3);
             }
         }
+
+        /// <summary>
+        /// Checks to see if the vector is outside the current x, y, and z Min and Max of the .stl object. Updates the min and max if necessary. 
+        /// </summary>
+        /// <param name="v"></param>
         private void includePoint(ref Vector3 v)
         {
             float x, y, z;
@@ -238,6 +291,14 @@ namespace RepetierHost.model
             zMin = Math.Min(zMin, z);
             zMax = Math.Max(zMax, z);
         }
+
+        /// <summary>
+        /// Transforms the location of a Vector using the trans Matrix. 
+        /// </summary>
+        /// <param name="v">Input vector</param>
+        /// <param name="x">Output vectors x</param>
+        /// <param name="y">Output vectors y</param>
+        /// <param name="z">Output vectors z</param>
         public void TransformPoint(ref Vector3 v, out float x, out float y, out float z)
         {
             Vector4 v4 = new Vector4(v, 1);
@@ -250,22 +311,48 @@ namespace RepetierHost.model
         int[] triangles = null;
         int[] edges = null;
         int[] bufs = null;
+
+                 ////glMatrixMode(GL_PROJECTION);
+                 ////glLoadIdentity();
+
+                 ////glMatrixMode(GL_MODELVIEW);
+                 ////glLoadIdentity();
+
+                 ////glBegin(GL_QUADS);
+                 //////red color
+                 ////glColor3f(1.0,0.0,0.0);
+                 ////glVertex2f(-1.0, 1.0);
+                 ////glVertex2f(-1.0,-1.0);
+                 //////blue color
+                 ////glColor3f(0.0,0.0,1.0);
+                 ////glVertex2f(1.0,-1.0);
+                 ////glVertex2f(1.0, 1.0);
+                 ////glEnd();
+
+        /// <summary>
+        /// The .stl OpenGL magic happens here. It takes loads the points that define the object into the OpenGL buffer. 
+        ///  GL.BindBuffer. Note that this method is an override. 
+        /// </summary>
         public override void Paint()
         {
             GL.Enable(EnableCap.Normalize);
-            bool useVBOs = Main.threeDSettings.drawMethod == 2;
+            bool useVBOs =  view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.VBO; // == 2;
+            // bool useVBOs = Main.threeDSettings.drawMethod == 2;
             if (bufs != null && useVBOs == false)
             {
                 GL.DeleteBuffers(4, bufs);
                 bufs = null;
             }
-            if (((useVBOs && bufs == null)) || (points == null && Main.threeDSettings.drawMethod == 1))
+
+            //if (((useVBOs && bufs == null)) || (points == null && Main.threeDSettings.drawMethod == 1))
+            if (((useVBOs && bufs == null)) || ((points == null) && (view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.Elements)))
             {
                 if (useVBOs)
                 {
                     bufs = new int[4];
                     GL.GenBuffers(4, bufs);
                 }
+
                 int nv = list.Count * 3;
                 points = new float[nv * 3];
                 normals = new float[nv * 3];
@@ -306,8 +393,11 @@ namespace RepetierHost.model
                     points[ppos++] = tri.p3.Z;
                     pos += 3;
                 }
+
                 if (useVBOs)
                 {
+                    /// A lot of the OpenGL work happens here. Drawing the .stl file 1 triangle at a time. 
+                    /// http://docs.unity3d.com/Documentation/ScriptReference/GL.Vertex3.html
                     GL.BindBuffer(BufferTarget.ArrayBuffer, bufs[0]);
                     GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(points.Length * sizeof(float)), points, BufferUsageHint.StaticDraw);
                     GL.BindBuffer(BufferTarget.ArrayBuffer, bufs[1]);
@@ -318,23 +408,33 @@ namespace RepetierHost.model
                     GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(edges.Length * sizeof(int)), edges, BufferUsageHint.StaticDraw);
                 }
             }
+
             Color col;
             if (outside)
+            {
                 col = Main.threeDSettings.outsidePrintbed.BackColor;
+            }
             else if (Selected)
+            {
                 col = Main.threeDSettings.selectedFaces.BackColor;
+            }
             else
+            {
                 col = Main.threeDSettings.faces.BackColor;
+            }
+
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Ambient, new OpenTK.Graphics.Color4(col.R, col.G, col.B, 255));
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Diffuse, new OpenTK.Graphics.Color4(col.R, col.G, col.B, 255));
             GL.Material(MaterialFace.Front, MaterialParameter.Emission, new OpenTK.Graphics.Color4(0, 0, 0, 0));
             GL.Material(MaterialFace.Front, MaterialParameter.Specular, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.Material(MaterialFace.Front, MaterialParameter.Shininess, 50f);
-            if (Main.threeDSettings.drawMethod > 0)
+            if (/*view.ThreeDsettings.*/ (view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.Elements) ||
+                (view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.VBO))
+                //// Main.threeDSettings.drawMethod > 0)
                 {
                     GL.EnableClientState(ArrayCap.VertexArray);
                     GL.EnableClientState(ArrayCap.NormalArray);
-                    if (Main.threeDSettings.drawMethod == 2)
+                    if (view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.VBO)
                     {
                         GL.BindBuffer(BufferTarget.ArrayBuffer, bufs[0]);
                         GL.VertexPointer(3, VertexPointerType.Float, 0, 0);
@@ -370,11 +470,14 @@ namespace RepetierHost.model
                             GL.DrawElements(BeginMode.Lines, edges.Length, DrawElementsType.UnsignedInt, edges);
                         }
                     }
+
                     GL.DisableClientState(ArrayCap.VertexArray);
                     GL.DisableClientState(ArrayCap.NormalArray);
                 }
                 else
                 {
+                    /// A lot of the OpenGL work happens here. Drawing the .stl file 1 triangle at a time. 
+                    /// http://docs.unity3d.com/Documentation/ScriptReference/GL.Vertex3.html
                     GL.Begin(BeginMode.Triangles);
                     foreach (STLTriangle tri in list)
                     {
@@ -406,8 +509,11 @@ namespace RepetierHost.model
                 }
                 GL.End();
             }
+
             GL.Disable(EnableCap.Normalize);
-        }
+        } // end PAint
+
+
         private bool AssertVector3NotNaN(Vector3 v)
         {
             if (float.IsNaN(v.X) || float.IsNaN(v.Y) || float.IsNaN(v.Z))
@@ -429,27 +535,33 @@ namespace RepetierHost.model
             double dz = a.Z - b.Z;
             return dx * dx + dy * dy + dz * dz > 1e-8;
         }
-        /// <summary>
-        /// solid
-        ///  facet normal -1.000000 -0.000000 -0.000000
-        /// outer loop
-        /// vertex -12.000000 -12.000000 0.000000
-        /// vertex -12.000000 -12.000000 24.000000
-        /// vertex -12.000000 12.000000 0.000000
-        /// endloop
-        /// endfacet
+        
+        ///// solid
+        /////  facet normal -1.000000 -0.000000 -0.000000
+        ///// outer loop
+        ///// vertex -12.000000 -12.000000 0.000000
+        ///// vertex -12.000000 -12.000000 24.000000
+        ///// vertex -12.000000 12.000000 0.000000
+        ///// endloop
+        ///// endfacet
 
+        /// <summary>
+        /// Reads a plain text .stl file and saves it into the programs data structure of a list of STLTriangles. 
         /// </summary>
         /// <param name="file"></param>
         private void LoadText(string file)
         {
             string text = System.IO.File.ReadAllText(file);
             int lastP = 0, p, pend, normal, outer, vertex, vertex2;
+
+            // While there are more .stl triangles to read from the file. 
             while ((p = text.IndexOf("facet", lastP)) > 0)
             {
                 pend = text.IndexOf("endfacet", p + 5);
                 normal = text.IndexOf("normal", p) + 6;
                 outer = text.IndexOf("outer loop", normal);
+
+                // Make a new .stl triangle
                 STLTriangle tri = new STLTriangle();
                 tri.normal = extractVector(text.Substring(normal, outer - normal));
                 tri.normal = Vector3.Normalize(tri.normal);
@@ -464,10 +576,15 @@ namespace RepetierHost.model
                 vertex2 = text.IndexOf("endloop", vertex);
                 tri.p3 = extractVector(text.Substring(vertex, vertex2 - vertex));
                 lastP = pend + 8;
+
+                // Check to make sure the extracted .stl triangle is a valid size. 
                 if (AssertVector3NotNaN(tri.normal) && AssertVector3NotNaN(tri.p1) && AssertVector3NotNaN(tri.p2) && AssertVector3NotNaN(tri.p3))
                 {
-                    if(AssertMinDistance(tri.p1,tri.p2) && AssertMinDistance(tri.p1,tri.p3) && AssertMinDistance(tri.p2,tri.p3))
+                    if (AssertMinDistance(tri.p1, tri.p2) && AssertMinDistance(tri.p1, tri.p3) && AssertMinDistance(tri.p2, tri.p3))
+                    {
+                        // If all ok with the .stl triangle then add it to the list. 
                         list.AddLast(tri);
+                    }
                 }
             }
         }

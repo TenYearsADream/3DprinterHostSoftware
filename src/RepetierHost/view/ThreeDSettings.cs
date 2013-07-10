@@ -38,7 +38,9 @@ namespace RepetierHost.view
         RegistryKey repetierKey;
         RegistryKey threedKey;
         public bool useVBOs = false;
-        public int drawMethod = 0; // 0 = elements, 1 = drawElements, 2 = VBO
+        public  enum drawMethod {Elements, DrawElements, VBO};
+        public static drawMethod currentDrawMethod = drawMethod.Elements;
+        //public int drawMethod = 0; // 0 = elements, 1 = drawElements, 2 = VBO
         public float openGLVersion = 1.0f; // Version for feature detection
 
         /// <summary>
@@ -49,11 +51,18 @@ namespace RepetierHost.view
             InitializeComponent();
             RegMemory.RestoreWindowPos("threeDSettingsWindow", this);
             if (Main.IsMono)
-                buttonOK.Location = new Point(buttonOK.Location.X,buttonOK.Location.Y-10);
+            {
+                buttonOK.Location = new Point(buttonOK.Location.X, buttonOK.Location.Y - 10);
+            }
+
             comboDrawMethod.SelectedIndex = 0;
             repetierKey = Custom.BaseKey; //  Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");
             threedKey = repetierKey.CreateSubKey("3D");
-            if (comboFilamentVisualization.SelectedIndex < 0) comboFilamentVisualization.SelectedIndex = 1;
+            if (comboFilamentVisualization.SelectedIndex < 0)
+            {
+                comboFilamentVisualization.SelectedIndex = 1;
+            }
+
             RegistryToForm();
             translate();
             Main.main.languageChanged += translate;

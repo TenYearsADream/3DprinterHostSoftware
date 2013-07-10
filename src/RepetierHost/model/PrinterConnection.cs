@@ -66,7 +66,7 @@ namespace RepetierHost.model
         public string printerName = "default";
         public int transferProtocol = 0; // 0 = auto, 1 = force ascii, 2 = force binary
         public int binaryVersion = 0;
-        public int baud = 57600;
+        public int baud = 500000;
         public float addPrintingTime = 8;
         public bool garbageCleared = false; // Skip old output
         public Parity parity = Parity.None;

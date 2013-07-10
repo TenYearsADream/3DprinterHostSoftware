@@ -71,11 +71,11 @@
             this.gl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gl_MouseUp);
             this.gl.Resize += new System.EventHandler(this.gl_Resize);
             // 
-            // ThreeDControlOld
+            // ThreeDControl
             // 
             this.AutoSize = true;
             this.Controls.Add(this.gl);
-            this.Name = "ThreeDControlOld";
+            this.Name = "ThreeDControl";
             this.Size = new System.Drawing.Size(1123, 504);
             this.Load += new System.EventHandler(this.ThreeDControl_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ThreeDControl_KeyDown);

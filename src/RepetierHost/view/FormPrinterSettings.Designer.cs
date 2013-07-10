@@ -88,6 +88,10 @@
             this.labelTravelFeedRate = new System.Windows.Forms.Label();
             this.tabPageShape = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panelCNC = new System.Windows.Forms.Panel();
+            this.labelCNCHeight = new System.Windows.Forms.Label();
+            this.textCNCZTop = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.panelRostock = new System.Windows.Forms.Panel();
             this.labelRosPrintableHeight = new System.Windows.Forms.Label();
             this.labelRosPrintableRadius = new System.Windows.Forms.Label();
@@ -151,10 +155,6 @@
             this.buttonAbort = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.panelCNC = new System.Windows.Forms.Panel();
-            this.labelCNCHeight = new System.Windows.Forms.Label();
-            this.textCNCZTop = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.panelPrinterSelect.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageConnection.SuspendLayout();
@@ -163,6 +163,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackTempPeriod)).BeginInit();
             this.tabPageShape.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panelCNC.SuspendLayout();
             this.panelRostock.SuspendLayout();
             this.panelDumpArea.SuspendLayout();
             this.panelTotalArea.SuspendLayout();
@@ -171,7 +172,6 @@
             this.groupBoxPostSliceFilter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-            this.panelCNC.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelPrinterSelect
@@ -204,9 +204,9 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPageConnection);
             this.tabControl1.Controls.Add(this.tabPagePrinter);
             this.tabControl1.Controls.Add(this.tabPageShape);
@@ -824,6 +824,44 @@
             this.panel2.Size = new System.Drawing.Size(460, 517);
             this.panel2.TabIndex = 18;
             // 
+            // panelCNC
+            // 
+            this.panelCNC.Controls.Add(this.labelCNCHeight);
+            this.panelCNC.Controls.Add(this.textCNCZTop);
+            this.panelCNC.Controls.Add(this.label1);
+            this.panelCNC.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelCNC.Location = new System.Drawing.Point(0, 447);
+            this.panelCNC.Name = "panelCNC";
+            this.panelCNC.Size = new System.Drawing.Size(460, 100);
+            this.panelCNC.TabIndex = 23;
+            // 
+            // labelCNCHeight
+            // 
+            this.labelCNCHeight.AutoSize = true;
+            this.labelCNCHeight.Location = new System.Drawing.Point(9, 7);
+            this.labelCNCHeight.Name = "labelCNCHeight";
+            this.labelCNCHeight.Size = new System.Drawing.Size(106, 13);
+            this.labelCNCHeight.TabIndex = 0;
+            this.labelCNCHeight.Text = "Object z top position:";
+            // 
+            // textCNCZTop
+            // 
+            this.textCNCZTop.Location = new System.Drawing.Point(137, 4);
+            this.textCNCZTop.Name = "textCNCZTop";
+            this.textCNCZTop.Size = new System.Drawing.Size(106, 20);
+            this.textCNCZTop.TabIndex = 1;
+            this.textCNCZTop.Text = "0";
+            this.textCNCZTop.Validating += new System.ComponentModel.CancelEventHandler(this.float_Validating);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(271, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(23, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "mm";
+            // 
             // panelRostock
             // 
             this.panelRostock.Controls.Add(this.labelRosPrintableHeight);
@@ -1056,7 +1094,8 @@
             this.textPrintAreaHeight.Name = "textPrintAreaHeight";
             this.textPrintAreaHeight.Size = new System.Drawing.Size(106, 20);
             this.textPrintAreaHeight.TabIndex = 2;
-            this.textPrintAreaHeight.Text = "100";
+            this.textPrintAreaHeight.Text = "135";
+            this.textPrintAreaHeight.TextChanged += new System.EventHandler(this.textPrintAreaHeight_TextChanged);
             this.textPrintAreaHeight.Validating += new System.ComponentModel.CancelEventHandler(this.float_Validating);
             // 
             // labelXMin
@@ -1155,7 +1194,7 @@
             this.textPrintAreaDepth.Name = "textPrintAreaDepth";
             this.textPrintAreaDepth.Size = new System.Drawing.Size(106, 20);
             this.textPrintAreaDepth.TabIndex = 1;
-            this.textPrintAreaDepth.Text = "200";
+            this.textPrintAreaDepth.Text = "140";
             this.textPrintAreaDepth.Validating += new System.ComponentModel.CancelEventHandler(this.float_Validating);
             // 
             // textPrinterYMax
@@ -1173,7 +1212,7 @@
             this.textPrintAreaWidth.Name = "textPrintAreaWidth";
             this.textPrintAreaWidth.Size = new System.Drawing.Size(106, 20);
             this.textPrintAreaWidth.TabIndex = 0;
-            this.textPrintAreaWidth.Text = "200";
+            this.textPrintAreaWidth.Text = "180";
             this.textPrintAreaWidth.Validating += new System.ComponentModel.CancelEventHandler(this.float_Validating);
             // 
             // labelBedFront
@@ -1388,8 +1427,8 @@
             this.labelFilterInfo.Size = new System.Drawing.Size(447, 62);
             this.labelFilterInfo.TabIndex = 3;
             this.labelFilterInfo.Text = "You can run a filter program after each slicing action. The filter will be run on" +
-                " the G-Code\r\nproduced by the slicer. Use #in and #out to insert the input and ou" +
-                "tput filenames as parameter.";
+    " the G-Code\r\nproduced by the slicer. Use #in and #out to insert the input and ou" +
+    "tput filenames as parameter.";
             // 
             // checkRunFilterEverySlice
             // 
@@ -1463,44 +1502,6 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
-            // panelCNC
-            // 
-            this.panelCNC.Controls.Add(this.labelCNCHeight);
-            this.panelCNC.Controls.Add(this.textCNCZTop);
-            this.panelCNC.Controls.Add(this.label1);
-            this.panelCNC.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelCNC.Location = new System.Drawing.Point(0, 447);
-            this.panelCNC.Name = "panelCNC";
-            this.panelCNC.Size = new System.Drawing.Size(460, 100);
-            this.panelCNC.TabIndex = 23;
-            // 
-            // labelCNCHeight
-            // 
-            this.labelCNCHeight.AutoSize = true;
-            this.labelCNCHeight.Location = new System.Drawing.Point(9, 7);
-            this.labelCNCHeight.Name = "labelCNCHeight";
-            this.labelCNCHeight.Size = new System.Drawing.Size(106, 13);
-            this.labelCNCHeight.TabIndex = 0;
-            this.labelCNCHeight.Text = "Object z top position:";
-            // 
-            // textCNCZTop
-            // 
-            this.textCNCZTop.Location = new System.Drawing.Point(137, 4);
-            this.textCNCZTop.Name = "textCNCZTop";
-            this.textCNCZTop.Size = new System.Drawing.Size(106, 20);
-            this.textCNCZTop.TabIndex = 1;
-            this.textCNCZTop.Text = "0";
-            this.textCNCZTop.Validating += new System.ComponentModel.CancelEventHandler(this.float_Validating);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(271, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "mm";
-            // 
             // FormPrinterSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1532,6 +1533,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackTempPeriod)).EndInit();
             this.tabPageShape.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panelCNC.ResumeLayout(false);
+            this.panelCNC.PerformLayout();
             this.panelRostock.ResumeLayout(false);
             this.panelRostock.PerformLayout();
             this.panelDumpArea.ResumeLayout(false);
@@ -1545,8 +1548,6 @@
             this.groupBoxPostSliceFilter.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-            this.panelCNC.ResumeLayout(false);
-            this.panelCNC.PerformLayout();
             this.ResumeLayout(false);
 
         }

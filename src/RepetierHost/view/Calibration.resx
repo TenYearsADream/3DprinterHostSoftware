@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,62 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="labelShapeInfo.Text" xml:space="preserve">
-    <value>The min and max values define the possible range of extruder coordinates. These coordinates
-can be negative and outside the print bed. Bed left/front define the coordinates where the
-printbed itself starts. By changing the min/max values you can even move the origin in the
-center of the print bed, if supported by firmware.</value>
-  </data>
-  <data name="labelConnectionInfo.Text" xml:space="preserve">
-    <value>The printer settings always correspond to the selected printer at the top. They
-are stored with every OK or apply. To create a new printer, just enter a new
-printer name and press apply. The new printer starts with the last settings
-selected.</value>
-  </data>
-  <metadata name="errorProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-        JxYAB+akmFc2LiUiIiIiIiIiJS44LOrYwRKZuw8nIycWGBx7txkqM0orIiIiIiIiIiIiJjpRS+W1sY6e
-        9Hr4u4vT15T6LT9PMSkiIiIiIiIiIiIlW0dFzwwO4pJsYmJs351o8OEtMkowJCIiIiIiIiIiIiIoMTYs
-        STwyU3I0vDpHWDMGVFo5LikiIiIiIiIiIiIiIiQrOlhfKkM9XDhCNmBaP1lFOC8oJCIiIiIiIiIiIiIi
-        IiUwVVw8LV9FMms1AgZNM0IvJiQiIiIiIiIiIiIiIiIiIiUwOk8ELUtvQ183TjU5QSgkIiIiIiIiIiIi
-        IiIiIiIiIiUrNFMCUmdqO0syRy4oJCIiIiIiIiIiIiIiIiIiIiIiIiQmRjYCCg0qa0cuKSIiIiIiIiIi
-        IiIiIiIiIiIiIiIiIiQrNDk/DXBEQSkiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiUrL0JQRi4oIiIiIiIi
-        IiIiIiIiIiIiIiIiIiIiIiIiIiUmKysrKSQiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiQlJSQkIiIi
-        IiIiIiIiIiIiIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAA
-</value>
-  </data>
 </root>

@@ -49,6 +49,7 @@
             this.gcodeEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopSlicingProcessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dViewSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.calibrateHeightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.temperatureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showExtruderTemperaturesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showHeatedBedTemperaturesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -219,7 +220,8 @@
             this.internalSlicingParameterToolStripMenuItem,
             this.soundConfigurationToolStripMenuItem,
             this.slicerToolStripMenuItem1,
-            this.dViewSettingsToolStripMenuItem});
+            this.dViewSettingsToolStripMenuItem,
+            this.calibrateHeightToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
             this.settingsToolStripMenuItem.Text = "&Configuration";
@@ -257,7 +259,6 @@
             this.soundConfigurationToolStripMenuItem.Name = "soundConfigurationToolStripMenuItem";
             this.soundConfigurationToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.soundConfigurationToolStripMenuItem.Text = "Sound configuration";
-            //this.soundConfigurationToolStripMenuItem.Click += new System.EventHandler(this.soundConfigurationToolStripMenuItem_Click);
             // 
             // slicerToolStripMenuItem1
             // 
@@ -304,6 +305,13 @@
             this.dViewSettingsToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.dViewSettingsToolStripMenuItem.Text = "3D View Settings";
             this.dViewSettingsToolStripMenuItem.Click += new System.EventHandler(this.dViewSettingsToolStripMenuItem_Click);
+            // 
+            // calibrateHeightToolStripMenuItem
+            // 
+            this.calibrateHeightToolStripMenuItem.Name = "calibrateHeightToolStripMenuItem";
+            this.calibrateHeightToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+            this.calibrateHeightToolStripMenuItem.Text = "Calibrate Height";
+            this.calibrateHeightToolStripMenuItem.Visible = false;
             // 
             // temperatureToolStripMenuItem
             // 
@@ -1260,6 +1268,7 @@
         public System.Windows.Forms.ToolStripMenuItem withSupportsToolStripMenuItem1;
         public System.Windows.Forms.ToolStripProgressBar toolProgress;
         private System.Windows.Forms.ToolStripMenuItem dViewSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem calibrateHeightToolStripMenuItem;
     }
 }
 

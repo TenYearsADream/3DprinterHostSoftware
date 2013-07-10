@@ -934,7 +934,9 @@ namespace RepetierHost.model
         }
         public void drawSegment(GCodePath path)
         {
-            if (Main.threeDSettings.drawMethod == 2)
+
+            if (view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.VBO)
+            ////if (Main.threeDSettings.drawMethod == 2)
             {
                 GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, defaultColor);
                 GL.EnableClientState(ArrayCap.VertexArray);
@@ -943,8 +945,15 @@ namespace RepetierHost.model
                     path.UpdateVBO(true);
                 }
                 else if (path.hasBuf == false && path.elements != null)
+                {
                     path.RefillVBO();
-                if (path.elements == null) return;
+                }
+
+                if (path.elements == null)
+                {
+                    return;
+                }
+
                 GL.BindBuffer(BufferTarget.ArrayBuffer, path.buf[0]);
                 GL.VertexPointer(3, VertexPointerType.Float, 0, 0);
                 float[] cp;
@@ -971,21 +980,27 @@ namespace RepetierHost.model
                             }
                         }
                     }
+
                     GL.Enable(EnableCap.ColorMaterial);
                     GL.ColorMaterial(MaterialFace.FrontAndBack, ColorMaterialParameter.AmbientAndDiffuse);
                     if (colbufSize < cp.Length)
                     {
                         if (colbufSize != 0)
+                        {
                             GL.DeleteBuffers(1, colbuf);
+                        }
+
                         GL.GenBuffers(1, colbuf);
                         colbufSize = cp.Length;
                         GL.BindBuffer(BufferTarget.ArrayBuffer, colbuf[0]);
                         GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(cp.Length * sizeof(float) * 2), (IntPtr)0, BufferUsageHint.StaticDraw);
                     }
+
                     GL.BindBuffer(BufferTarget.ArrayBuffer, colbuf[0]);
                     GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)0, (IntPtr)(cp.Length * sizeof(float)), cp);
                     GL.ColorPointer(3, ColorPointerType.Float, 0, 0);
                 }
+
                 if (method == 0)
                 {
                     GL.BindBuffer(BufferTarget.ElementArrayBuffer, path.buf[2]);
@@ -1000,19 +1015,26 @@ namespace RepetierHost.model
                     GL.DrawElements(BeginMode.Quads, path.elementsLength, DrawElementsType.UnsignedInt, 0);
                     GL.DisableClientState(ArrayCap.NormalArray);
                 }
+
                 if (liveView && path.lastDist > minHotDist)
                 {
                     GL.Disable(EnableCap.ColorMaterial);
                     GL.DisableClientState(ArrayCap.ColorArray);
                 }
+
                 GL.DisableClientState(ArrayCap.VertexArray);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             }
             else
             {
                 if (path.drawMethod != method || recompute || path.hasBuf)
+                {
                     path.UpdateVBO(false);
-                if (Main.threeDSettings.drawMethod > 0) // Is also fallback for vbos with dynamic colors
+                }
+
+                if((view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.Elements) ||
+                    (view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.VBO))
+               // if (Main.threeDSettings.drawMethod > 0) // Is also fallback for vbos with dynamic colors
                 {
                     GL.EnableClientState(ArrayCap.VertexArray);
                     if (path.elements == null) return;
@@ -1040,12 +1062,16 @@ namespace RepetierHost.model
                                 }
                             }
                         }
+
                         GL.Enable(EnableCap.ColorMaterial);
                         GL.ColorMaterial(MaterialFace.FrontAndBack, ColorMaterialParameter.AmbientAndDiffuse);
                         GL.ColorPointer(3, ColorPointerType.Float, 0, cp);
                     }
+
                     if (method == 0)
+                    {
                         GL.DrawElements(BeginMode.Lines, path.elementsLength, DrawElementsType.UnsignedInt, path.elements);
+                    }
                     else
                     {
                         GL.EnableClientState(ArrayCap.NormalArray);
@@ -1053,16 +1079,18 @@ namespace RepetierHost.model
                         GL.DrawElements(BeginMode.Quads, path.elementsLength, DrawElementsType.UnsignedInt, path.elements);
                         GL.DisableClientState(ArrayCap.NormalArray);
                     }
-                    /*ErrorCode err = GL.GetError();
-                    if (err != ErrorCode.NoError)
-                    {
-                        PrinterConnection.logInfo("D1 error" + err);
-                    }*/
+
+                    /////*ErrorCode err = GL.GetError();
+                    ////if (err != ErrorCode.NoError)
+                    ////{
+                    ////    PrinterConnection.logInfo("D1 error" + err);
+                    ////}*/
                     if (liveView && path.lastDist > minHotDist)
                     {
                         GL.Disable(EnableCap.ColorMaterial);
                         GL.DisableClientState(ArrayCap.ColorArray);
                     }
+
                     GL.DisableClientState(ArrayCap.VertexArray);
                 }
                 else
@@ -1166,9 +1194,11 @@ namespace RepetierHost.model
                                         GL.Vertex3(v.X + s * dirs[0] + c * diru[0], v.Y + s * dirs[1] + c * diru[1], v.Z - dh + s * dirs[2] + c * diru[2]);
                                         GL.Vertex3(last.X + s * dirs[0] + c * diru[0], last.Y + s * dirs[1] + c * diru[1], last.Z - dh + s * dirs[2] + c * diru[2]);
                                     }
+
                                     last = v;
                                 }
                             }
+
                             GL.End();
                         }
                         else if (method == 0)
@@ -1206,6 +1236,7 @@ namespace RepetierHost.model
                 }
             }
         }
+
         /// <summary>
         /// Used to mark a section of the path. Is called after drawSegment so VBOs are already
         /// computed. Not used inside live preview.
@@ -1245,7 +1276,9 @@ namespace RepetierHost.model
             estart = startP.element;
             if (endP != null) eend = endP.element;
             if (estart == eend) return;
-            if (Main.threeDSettings.drawMethod == 2)
+
+            if (view.ThreeDSettings.currentDrawMethod == view.ThreeDSettings.drawMethod.VBO)
+            //if (Main.threeDSettings.drawMethod == 2)
             {
                 GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, defaultColor);
                 GL.EnableClientState(ArrayCap.VertexArray);
@@ -1276,7 +1309,9 @@ namespace RepetierHost.model
             {
                 if (path.drawMethod != method || recompute || path.hasBuf)
                     path.UpdateVBO(false);
-                if (Main.threeDSettings.drawMethod > 0) // Is also fallback for vbos with dynamic colors
+
+                if ((view.ThreeDSettings.currentDrawMethod == ThreeDSettings.drawMethod.Elements) ||
+                    (view.ThreeDSettings.currentDrawMethod == ThreeDSettings.drawMethod.VBO)) // Is also fallback for vbos with dynamic colors
                 {
                     GL.EnableClientState(ArrayCap.VertexArray);
                     if (path.elements == null) return;
@@ -1335,13 +1370,21 @@ namespace RepetierHost.model
         /** Draw stored travel moves */
         public void drawMoves()
         {
-            if (Main.threeDSettings.drawMethod != 2) return;
+            //if (Main.threeDSettings.drawMethod != 2) return;
+            if (view.ThreeDSettings.currentDrawMethod != ThreeDSettings.drawMethod.VBO)
+            {
+                return;
+            }
+           
             int l = travelMoves.Count;
             if (!hasTravelBuf || travelMovesBuffered + 100 < l)
             {
                 // Revill vbo
                 if (hasTravelBuf)
+                {
                     GL.DeleteBuffers(2, travelBuf);
+                }
+
                 int len = 6 * l;
                 float[] pts = new float[len];
                 int[] idx = new int[2 * l];
@@ -1360,6 +1403,7 @@ namespace RepetierHost.model
                     pts[p++] = t.p2.Z;
                     n++;
                 }
+
                 // NSLog(@"Count %d n %d",l,n);
                 GL.GenBuffers(2, travelBuf);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, travelBuf[0]);
@@ -1369,6 +1413,7 @@ namespace RepetierHost.model
                 hasTravelBuf = true;
                 travelMovesBuffered = l;
             }
+
             float[] black = new float[4]{0,0,0,1};
             float[] travel = new float[4];
             Color col = Main.threeDSettings.travelMoves.BackColor;
@@ -1390,6 +1435,7 @@ namespace RepetierHost.model
             GL.DrawElements(BeginMode.Lines, travelMovesBuffered * 2, DrawElementsType.UnsignedInt, 0);
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+
             // Draw new lines one by one
             GL.Begin(BeginMode.Lines);
             for (int i = travelMovesBuffered; i < l; i++)
@@ -1398,12 +1444,18 @@ namespace RepetierHost.model
                 GL.Vertex3(t.p1);
                 GL.Vertex3(t.p2);
             }
+
             GL.End();
             GL.Material(MaterialFace.FrontAndBack,MaterialParameter.Emission,black);
         }
         public void drawMovesFromTo(int mstart, int mend)
         {
-            if (Main.threeDSettings.drawMethod != 2) return;
+            //if (Main.threeDSettings.drawMethod != 2) return;
+            if (view.ThreeDSettings.currentDrawMethod != ThreeDSettings.drawMethod.VBO)
+            {
+                return;
+            }
+
             float[] black = new float[4] { 0, 0, 0, 1 };
             int l = travelMoves.Count;
             // Check if inside mark area
@@ -1430,12 +1482,18 @@ namespace RepetierHost.model
                 if (endP >= 0) break;
                 p++;
             }
+
             if (startP == -1)
             {
                 return;
             }
+
             estart = startP;
-            if (endP >= 0) eend = endP;
+            if (endP >= 0)
+            {
+                eend = endP;
+            }
+
             if (estart == eend)
             {
                 return;
@@ -1445,6 +1503,7 @@ namespace RepetierHost.model
             GL.Material(MaterialFace.FrontAndBack,MaterialParameter.AmbientAndDiffuse, black);
             GL.Material(MaterialFace.FrontAndBack,MaterialParameter.Specular, black);
             GL.Material(MaterialFace.FrontAndBack,MaterialParameter.Emission,defaultColor);
+
             // Draw buffer
             GL.Color4(defaultColor);
             GL.EnableClientState(ArrayCap.VertexArray);
@@ -1452,23 +1511,34 @@ namespace RepetierHost.model
             GL.VertexPointer(3, VertexPointerType.Float, 0, 0);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, travelBuf[1]);
             GL.DrawElements(BeginMode.Lines, 2 * (eend - estart), DrawElementsType.UnsignedInt,(sizeof(int) * estart * 2));
-            //glDrawElements(GL_LINES, travelMovesBuffered*2, GL_UNSIGNED_INT, 0);
+            ////glDrawElements(GL_LINES, travelMovesBuffered*2, GL_UNSIGNED_INT, 0);
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.Material(MaterialFace.FrontAndBack,MaterialParameter.Emission,black);
         }
+
+        /// <summary>
+        /// This is were a lot of the openGL work happens. The actual drawing of a g-code visualization. 
+        /// </summary>
         public override void Paint()
         {
             changed = false;
-            if (Main.threeDSettings.drawMethod != 2 && colbufSize > 0)
+            if(view.ThreeDSettings.currentDrawMethod != ThreeDSettings.drawMethod.VBO)
+            //if (Main.threeDSettings.drawMethod != 2 && colbufSize > 0)
             {
                 GL.DeleteBuffers(1, colbuf);
                 colbufSize = 0;
             }
-            if (Main.threeDSettings.checkDisableFilamentVisualization.Checked) return; // Disabled too much for card
+
+            if (Main.threeDSettings.checkDisableFilamentVisualization.Checked)
+            {
+                return; // Disabled too much for card
+            }
+
             hotFilamentLength = Main.threeDSettings.hotFilamentLength;
             minHotDist = totalDist - hotFilamentLength;
             Reduce(); // Minimize number of VBO
+
             //long timeStart = DateTime.Now.Ticks;
             Color col;
             col = Main.threeDSettings.hotFilament.BackColor;
@@ -1476,12 +1546,16 @@ namespace RepetierHost.model
             hotColor[1] = (float)col.G / 255.0f;
             hotColor[2] = (float)col.B / 255.0f;
             hotColor[3] = curColor[3] = 1;
-            //           GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, new OpenTK.Graphics.Color4(col.R, col.G, col.B, 255));
+            ////           GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, new OpenTK.Graphics.Color4(col.R, col.G, col.B, 255));
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Emission, new OpenTK.Graphics.Color4(0, 0, 0, 0));
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Specular, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Shininess, 50f);
             method = Main.threeDSettings.filamentVisualization;
-            if (method > ana.maxDrawMethod) method = ana.maxDrawMethod;
+            if (method > ana.maxDrawMethod)
+            {
+                method = ana.maxDrawMethod;
+            }
+
             wfac = Main.threeDSettings.widthOverHeight;
             h = Main.threeDSettings.layerHeight;
             w = h * wfac;
@@ -1509,8 +1583,11 @@ namespace RepetierHost.model
                     drawSegment(path);
                 }
             }
+
             if (!Main.threeDSettings.checkDisableTravelMoves.Checked)
+            {
                 drawMoves();
+            }
 
             if (showSelection)
             {
@@ -1533,6 +1610,7 @@ namespace RepetierHost.model
                         selectionStart = GCodePoint.toFileLine(ed.FileIndex, ed.selRow);
                     }
                 }
+
                 col = Main.threeDSettings.selectedFilament.BackColor;
                 defaultColor[0] = (float)col.R / 255.0f;
                 defaultColor[1] = (float)col.G / 255.0f;
@@ -1540,18 +1618,21 @@ namespace RepetierHost.model
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, defaultColor);
                 for (int i = 0; i < MaxExtruder; i++)
+                {
                     foreach (GCodePath path in segments[i])
                     {
                         drawSegmentMarked(path, selectionStart, selectionEnd);
                     }
+                }
+
                 if (!Main.threeDSettings.checkDisableTravelMoves.Checked)
                 {
                     drawMovesFromTo(selectionStart, selectionEnd);
                 }
             }
-            // timeStart = DateTime.Now.Ticks - timeStart;
-            //  double time = (double)timeStart * 0.1;
-            // Main.conn.log("OpenGL paint time " + time.ToString("0.0", GCode.format) + " microseconds",false,4);
+            //// timeStart = DateTime.Now.Ticks - timeStart;
+            ////  double time = (double)timeStart * 0.1;
+            //// Main.conn.log("OpenGL paint time " + time.ToString("0.0", GCode.format) + " microseconds",false,4);
         }
         public override bool Changed
         {
