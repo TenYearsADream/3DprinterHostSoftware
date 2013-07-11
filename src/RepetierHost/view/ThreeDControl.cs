@@ -1,19 +1,23 @@
-﻿/*
-   Copyright 2011 repetier repetierdev@gmail.com
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="ThreeDControl.cs" company="Baoyan">
+//   Some parts of this file were derived from Repetier Host which can be found at
+// https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
+// 
+// Other parts of the file are property of Baoyan Automation LTC, Nanjing Jiangsu China.  
+// 
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,37 +35,124 @@ using RepetierHost.model;
 
 namespace RepetierHost.view
 {
-    //public delegate void onObjectMoved(float dx, float dy);
-    //public delegate void onObjectSelected(ThreeDModel selModel);
-
-
     /// <summary>
     /// The user control ThreeDControl is the .stl OpenGL frame and Controller. Most of the rendering works happens here. 
     /// Basically a OpenGL wrapper as a userControl. 
     /// </summary>
     public partial class ThreeDControl : UserControl
     {
+        /// <summary>
+        /// Printer settings. Important so that we know the size of the printer platform. 
+        /// </summary>
         FormPrinterSettings ps = Main.printerSettings;
+
+        /// <summary>
+        /// Indicates if the OpenTK control is loaded. Used to prevent painting and manipulation calls before the control is actually loaded. 
+        /// </summary>
         bool loaded = false;
-        float xDown, yDown;
-        float xPos, yPos;
-        float speedX, speedY;
-        // float zoom = 1.0f;
+
+        /// <summary>
+        /// The X position of the Mouse click down event. Used for dragging the mouse will holding down the right click. 
+        /// </summary>
+        float xDown;
+        
+        /// <summary>
+        /// The Y position of the Mouse click down event. Used for dragging the mouse will holding down the right click. 
+        /// </summary>
+        float yDown;
+
+        /// <summary>
+        /// Last recorded X position of the mouse. 
+        /// </summary>
+        float xPos;
+
+        /// <summary>
+        /// Last recorded Y position of the mouse. 
+        /// </summary>
+        float yPos;
+
+        /// <summary>
+        /// Speed in X direction of the mouse movement
+        /// </summary>
+        float speedX;
+
+        /// <summary>
+        /// Speed in Y direction of the mouse movement
+        /// </summary>
+        float  speedY;
+
+        /// <summary>
+        /// The vector location of where the center of view (What we are looking at) is at the beginning of a mouse movement event. ViewCenter when we begin to move the mouse. 
+        /// </summary>
         Vector3 startViewCenter;
+
+        /// <summary>
+        /// The vector location of where the User Position (Camera position) is at the beginning of a mouse movement event.  
+        /// </summary>
         Vector3 startUserPosition;
-        double normX = 0, normY = 0;
+       
+        //// double normX = 0, normY = 0;
         float startRotZ = 0, startRotX = 0;
         float lastX, lastY;
+
+        /// <summary>
+        /// Options for what to do when dragging the mouse in the ThreeDController. 
+        /// MoveObject  = 4
+        /// Zoom = 3
+        /// MoveViewpoint = 2 
+        /// Move = 1 
+        /// Rotate = 0;
+        /// </summary>
+        public enum modeOptions
+        {
+            /// <summary>
+            /// Rotates the view when dragging the mouse. Old 0
+            /// </summary>
+            Rotation,
+
+            /// <summary>
+            /// Moves the Center of view when dragging the mouse. Old 1
+            /// </summary>
+            Move,
+
+            /// <summary>
+            /// Moves the Center of view when dragging the mouse. Old 2
+            /// </summary>
+            MoveViewpoint,
+
+            /// <summary>
+            /// Zooms of view when dragging the mouse. Old 3
+            /// </summary>
+            Zoom,
+
+            /// <summary>
+            /// Moves the object. Old 4
+            /// </summary>
+            MoveObject
+        };
+
+        /// <summary>
+        /// Stop watch
+        /// </summary>
         Stopwatch sw = new Stopwatch();
         Stopwatch fpsTimer = new Stopwatch();
-        int mode = 0;
+
+        public static modeOptions currentMode = modeOptions.Rotation;
+
         int slowCounter = 0; // Indicates slow framerates
         uint timeCall = 0;
-        bool perspectiveModeisParrallel = false;
+
+        /// <summary>
+        /// Used to indicate if we should use parrallel projection instad of perspective
+        /// </summary>
+        static bool perspectiveModeisParrallel = false;
 
 
         public ThreeDView view = null;
 
+        /// <summary>
+        /// Initializes a new instance of the ThreeDControl Class which is the top level wrapper or controller for the openTK or openGL code
+        /// </summary>
         public ThreeDControl()
         {
             InitializeComponent();
@@ -70,37 +161,38 @@ namespace RepetierHost.view
             translate();
             Main.main.languageChanged += translate;
         }
+
+        /// <summary>
+        /// Translate. Nothing to translate
+        /// </summary>
         private void translate()
         {
 
         }
+
+        /// <summary>
+        /// Sets the current 3D view object. This should probably be done as a SET and GET property. TODO!
+        /// </summary>
+        /// <param name="view"></param>
         public void SetView(ThreeDView view)
         {
             this.view = view;
             toolStripClear.Visible = view.autoupdateable;
-            if (view.editor)
-            {
-                //////{
-                ////    //toolMoveObject.Visible = true;
-                ////    //toolStripClear.Enabled = false;
-                //////}
-                //////toolMoveObject.Enabled = view.objectsSelected;
-                toolStripClear.Enabled = view.objectsSelected;
-            }
-
             UpdateChanges();
         }
+
+        /// <summary>
+        /// Makes the gl openTK control object visible or not visiible. Adds the controller if true, removes it if false. 
+        /// </summary>
+        /// <param name="vis"></param>
         public void MakeVisible(bool vis)
         {
-            //return;
-            //Console.WriteLine("Vis = " + vis);
             if (vis)
             {
                 if (!Controls.Contains(gl))
+                {
                     Controls.Add(gl);
-                //gl.Dock = DockStyle.None;
-                //gl.Width = 0;
-                //gl.Height = 0;
+                }               
             }
             else
             {
@@ -108,14 +200,20 @@ namespace RepetierHost.view
                     Controls.Remove(gl);
                 //gl.Dock = DockStyle.Fill;
             }
+
             gl.Visible = vis;
         }
+
+        /// <summary>
+        /// Sets if an object is selected. Not sure this function is really needed. TODO??
+        /// </summary>
+        /// <param name="sel">True if an oject is selected</param>
         public void SetObjectSelected(bool sel)
         {
-            //toolMoveObject.Enabled = sel;
-            toolStripClear.Enabled = sel;
             view.objectsSelected = sel;
         }
+
+
         public bool AutoUpdateable
         {
             get { return view.autoupdateable; }
@@ -129,8 +227,7 @@ namespace RepetierHost.view
                 else
                 {
                     timer.Stop();
-                }
-                toolStripClear.Visible = value;
+                }               
             }
         }
         public void UpdateChanges()
@@ -225,7 +322,10 @@ namespace RepetierHost.view
                 GL.Enable(EnableCap.DepthTest);
                 SetupProjectionMatrix();
 
-                view.lookAt = Matrix4.LookAt(view.userPosition.X, view.userPosition.Y, view.userPosition.Z, view.viewCenter.X, view.viewCenter.Y, view.viewCenter.Z, 0, 0, 1.0f);
+
+                RepetierHost.view.ThreeDView.lookAt = Matrix4.LookAt(
+                    RepetierHost.view.ThreeDView.userPosition.X, RepetierHost.view.ThreeDView.userPosition.Y, RepetierHost.view.ThreeDView.userPosition.Z,
+                    RepetierHost.view.ThreeDView.viewCenter.X, RepetierHost.view.ThreeDView.viewCenter.Y, RepetierHost.view.ThreeDView.viewCenter.Z, 0, 0, 1.0f);
 
                 //if (SimpleTest() == true)
                 //{
@@ -233,7 +333,7 @@ namespace RepetierHost.view
                 //}
 
                 GL.MatrixMode(MatrixMode.Modelview); // Change to the Model View Matrix. 
-                GL.LoadMatrix(ref view.lookAt);
+                GL.LoadMatrix(ref RepetierHost.view.ThreeDView.lookAt);
                 GL.ShadeModel(ShadingModel.Smooth);
                 // GL.Enable(EnableCap.LineSmooth);
                 //Enable lighting
@@ -330,10 +430,10 @@ namespace RepetierHost.view
                 GL.Vertex3(viewCenter.X, viewCenter.Y, viewCenter.Z + 2);
                 GL.End();*/
 
-                GL.Rotate(view.rotX, 1, 0, 0);
-                GL.Rotate(view.rotZ, 0, 0, 1);
+                GL.Rotate(RepetierHost.view.ThreeDView.rotX, 1, 0, 0);
+                GL.Rotate(RepetierHost.view.ThreeDView.rotZ, 0, 0, 1);
                 GL.Translate(-ps.BedLeft - ps.PrintAreaWidth * 0.5f, -ps.BedFront - ps.PrintAreaDepth * 0.5f, -0.5f * ps.PrintAreaHeight);
-                GL.GetFloat(GetPName.ModelviewMatrix, out view.modelView);
+                GL.GetFloat(GetPName.ModelviewMatrix, out RepetierHost.view.ThreeDView.modelView);
                 GL.Material(
                     MaterialFace.Front,
                     MaterialParameter.Specular,
@@ -782,26 +882,36 @@ namespace RepetierHost.view
                 int h = gl.Height;
                 GL.MatrixMode(MatrixMode.Projection);
                 //GL.LoadIdentity();
-                float dx = view.viewCenter.X - view.userPosition.X;
-                float dy = view.viewCenter.Y - view.userPosition.Y;
-                float dz = view.viewCenter.Z - view.userPosition.Z;
+                float dx = RepetierHost.view.ThreeDView.viewCenter.X - RepetierHost.view.ThreeDView.userPosition.X;
+                float dy = RepetierHost.view.ThreeDView.viewCenter.Y - RepetierHost.view.ThreeDView.userPosition.Y;
+                float dz = RepetierHost.view.ThreeDView.viewCenter.Z - RepetierHost.view.ThreeDView.userPosition.Z;
                 float dist = (float)Math.Sqrt(dx * dx + dy * dy + dz * dz);
-                view.nearHeight = 2.0f * (float)Math.Tan(view.zoom * 15f * Math.PI / 180f) * view.nearDist;
-                view.aspectRatio = (float)w / (float)h;
-                view.nearDist = Math.Max(10, dist - 2f * ps.PrintAreaDepth);
-                view.farDist = dist + 2 * ps.PrintAreaDepth;
+                RepetierHost.view.ThreeDView.nearHeight = 2.0f * (float)Math.Tan(RepetierHost.view.ThreeDView.zoom * 15f * Math.PI / 180f) * RepetierHost.view.ThreeDView.nearDist;
+                RepetierHost.view.ThreeDView.aspectRatio = (float)w / (float)h;
+                RepetierHost.view.ThreeDView.nearDist = Math.Max(10, dist - 2f * ps.PrintAreaDepth);
+                RepetierHost.view.ThreeDView.farDist = dist + 2 * ps.PrintAreaDepth;
                 if (perspectiveModeisParrallel == true)
                 {
-                    view.persp = Matrix4.CreateOrthographic(4.0f * view.nearHeight * view.aspectRatio, 4.0f * view.nearHeight, view.nearDist, view.farDist);
+                    RepetierHost.view.ThreeDView.persp = Matrix4.CreateOrthographic(
+                        4.0f * RepetierHost.view.ThreeDView.nearHeight * RepetierHost.view.ThreeDView.aspectRatio,
+                        4.0f * RepetierHost.view.ThreeDView.nearHeight,
+                        RepetierHost.view.ThreeDView.nearDist,
+                        RepetierHost.view.ThreeDView.farDist);
                 }
                 else
                 {
-                    view.persp = Matrix4.CreatePerspectiveFieldOfView((float)(view.zoom * 30f * Math.PI / 180f), view.aspectRatio, view.nearDist, view.farDist);
+                    RepetierHost.view.ThreeDView.persp = Matrix4.CreatePerspectiveFieldOfView((float)(RepetierHost.view.ThreeDView.zoom * 30f * Math.PI / 180f),
+                        RepetierHost.view.ThreeDView.aspectRatio,
+                        RepetierHost.view.ThreeDView.nearDist,
+                        RepetierHost.view.ThreeDView.farDist);
                 }
-                GL.LoadMatrix(ref view.persp);
-            }
-            catch { }
 
+                GL.LoadMatrix(ref RepetierHost.view.ThreeDView.persp);
+            }
+            catch
+            {
+
+            }
         }
 
         /// <summary>
@@ -964,16 +1074,21 @@ namespace RepetierHost.view
             double norm_y = (double)window_y / (double)(Height / 2);
             int window_x = x - Width / 2;
             double norm_x = (double)window_x / (double)(Width / 2);
-            float fpy = (float)(view.nearHeight * 0.5 * norm_y) * (perspectiveModeisParrallel == true ? 4f : 1f);
-            float fpx = (float)(view.nearHeight * 0.5 * view.aspectRatio * norm_x) * (perspectiveModeisParrallel == true ? 4f : 1f);
+            float fpy = (float)(RepetierHost.view.ThreeDView.nearHeight * 0.5 * norm_y) * (perspectiveModeisParrallel == true ? 4f : 1f);
+            float fpx = (float)(RepetierHost.view.ThreeDView.nearHeight * 0.5 * RepetierHost.view.ThreeDView.aspectRatio * norm_x) * (perspectiveModeisParrallel == true ? 4f : 1f);
 
 
             Vector4 frontPointN = (perspectiveModeisParrallel == true ? new Vector4(fpx, fpy, 0, 1) : new Vector4(0, 0, 0, 1));
-            Vector4 dirN = (perspectiveModeisParrallel == true ? new Vector4(0, 0, -view.nearDist, 0) : new Vector4(fpx, fpy, -view.nearDist, 0));
-            Matrix4 rotx = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)(view.rotX * Math.PI / 180.0));
-            Matrix4 rotz = Matrix4.CreateFromAxisAngle(new Vector3(0, 0, 1), (float)(view.rotZ * Math.PI / 180.0));
+            Vector4 dirN = (perspectiveModeisParrallel == true ? new Vector4(0, 0, -RepetierHost.view.ThreeDView.nearDist, 0) : new Vector4(fpx, fpy, -RepetierHost.view.ThreeDView.nearDist, 0));
+            Matrix4 rotx = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)(RepetierHost.view.ThreeDView.rotX * Math.PI / 180.0));
+            Matrix4 rotz = Matrix4.CreateFromAxisAngle(new Vector3(0, 0, 1), (float)(RepetierHost.view.ThreeDView.rotZ * Math.PI / 180.0));
             Matrix4 trans = Matrix4.CreateTranslation(-ps.BedLeft - ps.PrintAreaWidth * 0.5f, -ps.BedFront - ps.PrintAreaDepth * 0.5f, -0.5f * ps.PrintAreaHeight);
-            Matrix4 ntrans = Matrix4.LookAt(view.userPosition.X, view.userPosition.Y, view.userPosition.Z, view.viewCenter.X, view.viewCenter.Y, view.viewCenter.Z, 0, 0, 1.0f);
+            Matrix4 ntrans = Matrix4.LookAt(RepetierHost.view.ThreeDView.userPosition.X,
+                RepetierHost.view.ThreeDView.userPosition.Y,
+                RepetierHost.view.ThreeDView.userPosition.Z,
+                RepetierHost.view.ThreeDView.viewCenter.X,
+                RepetierHost.view.ThreeDView.viewCenter.Y,
+                RepetierHost.view.ThreeDView.viewCenter.Z, 0, 0, 1.0f);
 
             ntrans = Matrix4.Mult(rotx, ntrans);
             ntrans = Matrix4.Mult(rotz, ntrans);
@@ -1015,13 +1130,18 @@ namespace RepetierHost.view
 
             //GluPerspective(45, 32 / 24, 0.1f, 100.0f);
             //Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, 1, 0.1f, 100.0f);
-            GL.MultMatrix(ref view.persp);
+            GL.MultMatrix(ref RepetierHost.view.ThreeDView.persp);
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.ClearColor(Main.threeDSettings.background.BackColor);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.Enable(EnableCap.DepthTest);
-            view.lookAt = Matrix4.LookAt(view.userPosition.X, view.userPosition.Y, view.userPosition.Z, view.viewCenter.X, view.viewCenter.Y, view.viewCenter.Z, 0, 0, 1.0f);
+            RepetierHost.view.ThreeDView.lookAt = Matrix4.LookAt(RepetierHost.view.ThreeDView.userPosition.X,
+                RepetierHost.view.ThreeDView.userPosition.Y,
+                RepetierHost.view.ThreeDView.userPosition.Z,
+                RepetierHost.view.ThreeDView.viewCenter.X,
+                RepetierHost.view.ThreeDView.viewCenter.Y,
+                RepetierHost.view.ThreeDView.viewCenter.Z, 0, 0, 1.0f);
 
             // Intersection on bottom plane
 
@@ -1029,16 +1149,16 @@ namespace RepetierHost.view
             double norm_y = (double)window_y / (double)(viewport[3] / 2);
             int window_x = x - viewport[2] / 2;
             double norm_x = (double)window_x / (double)(viewport[2] / 2);
-            float fpy = (float)(view.nearHeight * 0.5 * norm_y) * (perspectiveModeisParrallel == true ? 4f : 1f);
-            float fpx = (float)(view.nearHeight * 0.5 * view.aspectRatio * norm_x) * (perspectiveModeisParrallel == true ? 4f : 1f);
+            float fpy = (float)(RepetierHost.view.ThreeDView.nearHeight * 0.5 * norm_y) * (perspectiveModeisParrallel == true ? 4f : 1f);
+            float fpx = (float)(RepetierHost.view.ThreeDView.nearHeight * 0.5 * RepetierHost.view.ThreeDView.aspectRatio * norm_x) * (perspectiveModeisParrallel == true ? 4f : 1f);
 
 
             Vector4 frontPointN = (perspectiveModeisParrallel == true ? new Vector4(fpx, fpy, 0, 1) : new Vector4(0, 0, 0, 1));
-            Vector4 dirN = (perspectiveModeisParrallel == true ? new Vector4(0, 0, -view.nearDist, 0) : new Vector4(fpx, fpy, -view.nearDist, 0));
-            Matrix4 rotx = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)(view.rotX * Math.PI / 180.0));
-            Matrix4 rotz = Matrix4.CreateFromAxisAngle(new Vector3(0, 0, 1), (float)(view.rotZ * Math.PI / 180.0));
+            Vector4 dirN = (perspectiveModeisParrallel == true ? new Vector4(0, 0, -RepetierHost.view.ThreeDView.nearDist, 0) : new Vector4(fpx, fpy, -RepetierHost.view.ThreeDView.nearDist, 0));
+            Matrix4 rotx = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)(RepetierHost.view.ThreeDView.rotX * Math.PI / 180.0));
+            Matrix4 rotz = Matrix4.CreateFromAxisAngle(new Vector3(0, 0, 1), (float)(RepetierHost.view.ThreeDView.rotZ * Math.PI / 180.0));
             Matrix4 trans = Matrix4.CreateTranslation(-ps.BedLeft - ps.PrintAreaWidth * 0.5f, -ps.BedFront - ps.PrintAreaDepth * 0.5f, -0.5f * ps.PrintAreaHeight);
-            Matrix4 ntrans = view.lookAt;
+            Matrix4 ntrans = RepetierHost.view.ThreeDView.lookAt;
             ntrans = Matrix4.Mult(rotx, ntrans);
             ntrans = Matrix4.Mult(rotz, ntrans);
             ntrans = Matrix4.Mult(trans, ntrans);
@@ -1047,7 +1167,7 @@ namespace RepetierHost.view
             Vector4 dirVec = Vector4.Transform(dirN, ntrans);
             pickLine = new Geom3DLine(new Geom3DVector(frontPoint.X / frontPoint.W, frontPoint.Y / frontPoint.W, frontPoint.Z / frontPoint.W),
                 new Geom3DVector(dirVec.X, dirVec.Y, dirVec.Z), true);
-            dirN = new Vector4(0, 0, -view.nearDist, 0);
+            dirN = new Vector4(0, 0, -RepetierHost.view.ThreeDView.nearDist, 0);
             dirVec = Vector4.Transform(dirN, ntrans);
             viewLine = new Geom3DLine(new Geom3DVector(frontPoint.X / frontPoint.W, frontPoint.Y / frontPoint.W, frontPoint.Z / frontPoint.W),
                 new Geom3DVector(dirVec.X, dirVec.Y, dirVec.Z), true);
@@ -1060,9 +1180,9 @@ namespace RepetierHost.view
              Main.conn.log("Schnittpunkt: " + cross, false, 3);
              */
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref view.lookAt);
-            GL.Rotate(view.rotX, 1, 0, 0);
-            GL.Rotate(view.rotZ, 0, 0, 1);
+            GL.LoadMatrix(ref RepetierHost.view.ThreeDView.lookAt);
+            GL.Rotate(RepetierHost.view.ThreeDView.rotX, 1, 0, 0);
+            GL.Rotate(RepetierHost.view.ThreeDView.rotZ, 0, 0, 1);
             GL.Translate(-ps.BedLeft - ps.PrintAreaWidth * 0.5f, -ps.BedFront - ps.PrintAreaDepth * 0.5f, -0.5f * ps.PrintAreaHeight);
 
 
@@ -1103,7 +1223,7 @@ namespace RepetierHost.view
                     }
                 }
                 double dfac = (double)lastDepth / uint.MaxValue;
-                dfac = -(view.farDist * view.nearDist) / (dfac * (view.farDist - view.nearDist) - view.farDist);
+                dfac = -(RepetierHost.view.ThreeDView.farDist * RepetierHost.view.ThreeDView.nearDist) / (dfac * (RepetierHost.view.ThreeDView.farDist - RepetierHost.view.ThreeDView.nearDist) - RepetierHost.view.ThreeDView.farDist);
                 Geom3DVector crossPlanePoint = new Geom3DVector(viewLine.dir).scale((float)dfac).add(viewLine.point);
                 Geom3DPlane objplane = new Geom3DPlane(crossPlanePoint, viewLine.dir);
                 objplane.intersectLine(pickLine, pickPoint);
@@ -1124,10 +1244,10 @@ namespace RepetierHost.view
         {
             lastX = xDown = e.X;
             lastY = yDown = e.Y;
-            startRotX = view.rotX;
-            startRotZ = view.rotZ;
-            startViewCenter = view.viewCenter;
-            startUserPosition = view.userPosition;
+            startRotX = RepetierHost.view.ThreeDView.rotX;
+            startRotZ = RepetierHost.view.ThreeDView.rotZ;
+            startViewCenter = RepetierHost.view.ThreeDView.viewCenter;
+            startUserPosition = RepetierHost.view.ThreeDView.userPosition;
             movePlane = new Geom3DPlane(new Geom3DVector(0, 0, 0), new Geom3DVector(0, 0, 1));
             moveStart = moveLast = new Geom3DVector(0, 0, 0);
             UpdatePickLine(e.X, e.Y);
@@ -1149,9 +1269,9 @@ namespace RepetierHost.view
         private void gl_MouseMove(object sender, MouseEventArgs e)
         {
             double window_y = (gl.Height - e.Y) - gl.Height / 2;
-            normY = window_y * 2.0 / (double)(gl.Height);
+            //normY = window_y * 2.0 / (double)(gl.Height);
             double window_x = e.X - gl.Width / 2;
-            normX = window_x * 2.0 / (double)(gl.Width);
+            //normX = window_x * 2.0 / (double)(gl.Width);
             if (e.Button == MouseButtons.None)
             {
                 speedX = speedY = 0;
@@ -1175,9 +1295,9 @@ namespace RepetierHost.view
         {
             if (e.Delta != 0)
             {
-                view.zoom *= 1f - e.Delta / 2000f;
-                if (view.zoom < 0.01) view.zoom = 0.01f;
-                if (view.zoom > 5.9) view.zoom = 5.9f;
+                RepetierHost.view.ThreeDView.zoom *= 1f - e.Delta / 2000f;
+                if (RepetierHost.view.ThreeDView.zoom < 0.01) RepetierHost.view.ThreeDView.zoom = 0.01f;
+                if (RepetierHost.view.ThreeDView.zoom > 5.9) RepetierHost.view.ThreeDView.zoom = 5.9f;
                 //userPosition.Y += e.Delta;
                 gl.Invalidate();
             }
@@ -1192,68 +1312,71 @@ namespace RepetierHost.view
             sw.Reset(); // reset stopwatch
             sw.Start(); // restart stopwatch
             Keys k = Control.ModifierKeys;
-            int emode = mode;
-            if (k == Keys.Shift || Control.MouseButtons == MouseButtons.Middle) emode = 2;
-            if (k == Keys.Control) emode = 0;
-            if (k == Keys.Alt || Control.MouseButtons == MouseButtons.Right) emode = 4;
-            if (emode == 0)
+
+            modeOptions tempMode = currentMode;
+
+            if (k == Keys.Shift || Control.MouseButtons == MouseButtons.Middle) tempMode = modeOptions.MoveViewpoint;
+            if (k == Keys.Control) tempMode = modeOptions.Rotation;
+            if (k == Keys.Alt || Control.MouseButtons == MouseButtons.Right) tempMode = modeOptions.MoveObject;
+
+            if (tempMode == modeOptions.Rotation)
             {
                 float d = Math.Min(gl.Width, gl.Height) / 3;
                 speedX = (xPos - xDown) / d;
                 speedY = (yPos - yDown) / d;
-                view.rotZ = startRotZ + speedX * 50;
-                view.rotX = startRotX + speedY * 50;
+                RepetierHost.view.ThreeDView.rotZ = startRotZ + speedX * 50;
+                RepetierHost.view.ThreeDView.rotX = startRotX + speedY * 50;
                 //rotZ += (float)milliseconds * speedX *Math.Abs(speedX)/ 15.0f;
                 //rotX += (float)milliseconds * speedY*Math.Abs(speedY) / 15.0f;
                 gl.Invalidate();
             }
-            else if (emode == 1)
+            else if (tempMode == modeOptions.Move)
             {
                 speedX = (xPos - xDown) / gl.Width;
                 speedY = (yPos - yDown) / gl.Height;
-                view.userPosition.X = startUserPosition.X + speedX * 200 * view.zoom;
-                view.userPosition.Z = startUserPosition.Z - speedY * 200 * view.zoom;
-                if (view.rotX == 90 && view.rotZ == 0 && perspectiveModeisParrallel == true)
+                RepetierHost.view.ThreeDView.userPosition.X = startUserPosition.X + speedX * 200 * RepetierHost.view.ThreeDView.zoom;
+                RepetierHost.view.ThreeDView.userPosition.Z = startUserPosition.Z - speedY * 200 * RepetierHost.view.ThreeDView.zoom;
+                if (RepetierHost.view.ThreeDView.rotX == 90 && RepetierHost.view.ThreeDView.rotZ == 0 && perspectiveModeisParrallel == true)
                 {
-                    view.viewCenter.X = startViewCenter.X + speedX * 200 * view.zoom;
-                    view.viewCenter.Z = startViewCenter.Z - speedY * 200 * view.zoom;
+                    RepetierHost.view.ThreeDView.viewCenter.X = startViewCenter.X + speedX * 200 * RepetierHost.view.ThreeDView.zoom;
+                    RepetierHost.view.ThreeDView.viewCenter.Z = startViewCenter.Z - speedY * 200 * RepetierHost.view.ThreeDView.zoom;
                 }
 
                 //userPosition.X += (float)milliseconds * speedX * Math.Abs(speedX) / 10.0f;
                 //userPosition.Z -= (float)milliseconds * speedY *Math.Abs(speedY)/ 10.0f;
                 gl.Invalidate();
             }
-            else if (emode == 2)
+            else if (tempMode == modeOptions.MoveViewpoint)
             {
                 speedX = (xPos - xDown) / gl.Width;
                 speedY = (yPos - yDown) / gl.Height;
-                view.viewCenter.X = startViewCenter.X - speedX * 200 * view.zoom;
-                view.viewCenter.Z = startViewCenter.Z + speedY * 200 * view.zoom;
-                if (view.rotX == 90 && view.rotZ == 0 && perspectiveModeisParrallel == true)
+                RepetierHost.view.ThreeDView.viewCenter.X = startViewCenter.X - speedX * 200 * RepetierHost.view.ThreeDView.zoom;
+                RepetierHost.view.ThreeDView.viewCenter.Z = startViewCenter.Z + speedY * 200 * RepetierHost.view.ThreeDView.zoom;
+                if (RepetierHost.view.ThreeDView.rotX == 90 && RepetierHost.view.ThreeDView.rotZ == 0 && perspectiveModeisParrallel == true)
                 {
-                    view.userPosition.X = startUserPosition.X - speedX * 200 * view.zoom;
-                    view.userPosition.Z = startUserPosition.Z + speedY * 200 * view.zoom;
+                    RepetierHost.view.ThreeDView.userPosition.X = startUserPosition.X - speedX * 200 * RepetierHost.view.ThreeDView.zoom;
+                    RepetierHost.view.ThreeDView.userPosition.Z = startUserPosition.Z + speedY * 200 * RepetierHost.view.ThreeDView.zoom;
                 }
                 //viewCenter.X -= (float)milliseconds * speedX * Math.Abs(speedX) / 10.0f;
                 //viewCenter.Z += (float)milliseconds * speedY * Math.Abs(speedY)/ 10.0f;
                 gl.Invalidate();
             }
-            else if (emode == 3)
+            else if (tempMode == modeOptions.Zoom)
             {
                 //userPosition.Y += (float)milliseconds * speedY * Math.Abs(speedY) / 10.0f;
-                view.zoom *= (1 - speedY);
+                RepetierHost.view.ThreeDView.zoom *= (1 - speedY);
                 speedY = 0;
-                if (view.zoom < 0.01) view.zoom = 0.01f;
-                if (view.zoom > 5.9) view.zoom = 5.9f;
+                if (RepetierHost.view.ThreeDView.zoom < 0.01) RepetierHost.view.ThreeDView.zoom = 0.01f;
+                if (RepetierHost.view.ThreeDView.zoom > 5.9) RepetierHost.view.ThreeDView.zoom = 5.9f;
                 yDown = yPos;
                 gl.Invalidate();
             }
-            else if (emode == 4)
+            else if (tempMode == modeOptions.MoveObject)
             {
                 Geom3DVector diff = movePos.sub(moveLast);
                 moveLast = movePos;
-                speedX = (xPos - lastX) * 200 * view.zoom / gl.Width;
-                speedY = (yPos - lastY) * 200 * view.zoom / gl.Height;
+                speedX = (xPos - lastX) * 200 * RepetierHost.view.ThreeDView.zoom / gl.Width;
+                speedY = (yPos - lastY) * 200 * RepetierHost.view.ThreeDView.zoom / gl.Height;
                 if (view.eventObjectMoved != null)
                     view.eventObjectMoved(diff.x, diff.y);
                 //               view.eventObjectMoved(speedX, -speedY);
@@ -1265,52 +1388,44 @@ namespace RepetierHost.view
             }
         }
 
-        public void SetMode(int _mode)
+        public void SetMode(modeOptions _mode)
         {
-            mode = _mode;
-
-            // Getting rid of these tools, so we don't need to worry if they are check or not. 
-            //toolRotate.Checked = mode == 0;
-            //toolMove.Checked = mode == 1;
-            //toolMoveViewpoint.Checked = mode == 2;
-            //toolZoom.Checked = mode == 3;
-            //toolMoveObject.Checked = mode == 4;
+            currentMode = _mode;
         }
         private void toolRotate_Click(object sender, EventArgs e)
         {
-            SetMode(0);
+            SetMode(modeOptions.Rotation);
         }
 
         private void toolMove_Click(object sender, EventArgs e)
         {
-            SetMode(1);
+            SetMode(modeOptions.Move);
         }
 
         public void ResetView()
         {
-            view.rotX = 20;
-            view.rotZ = 0;
-            view.zoom = 1.0f;
-            //view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);
-            view.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
-            //userPosition = new Vector3(0f * ps.PrintAreaWidth, -2f * ps.PrintAreaDepth, 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.rotX = 20;
+            RepetierHost.view.ThreeDView.rotZ = 0;
+            RepetierHost.view.ThreeDView.zoom = 1.0f;
+            RepetierHost.view.ThreeDView.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
+            perspectiveModeisParrallel = false;
             gl.Invalidate();
         }
 
         private void toolMoveViewpoint_Click(object sender, EventArgs e)
         {
-            SetMode(2);
+            SetMode(modeOptions.MoveViewpoint);
         }
 
         private void toolZoom_Click(object sender, EventArgs e)
         {
-            SetMode(3);
+            SetMode(modeOptions.Zoom);
         }
 
         private void toolMoveObject_Click(object sender, EventArgs e)
         {
-            SetMode(4);
+            SetMode(modeOptions.MoveObject);
         }
 
         private void ThreeDControl_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
@@ -1341,15 +1456,15 @@ namespace RepetierHost.view
             }*/
             if (e.KeyChar == '-')
             {
-                view.zoom *= 1.05f;
-                if (view.zoom > 10) view.zoom = 10;
+                RepetierHost.view.ThreeDView.zoom *= 1.05f;
+                if (RepetierHost.view.ThreeDView.zoom > 10) RepetierHost.view.ThreeDView.zoom = 10;
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyChar == '+')
             {
-                view.zoom *= 0.95f;
-                if (view.zoom < 0.01) view.zoom = 0.01f;
+                RepetierHost.view.ThreeDView.zoom *= 0.95f;
+                if (RepetierHost.view.ThreeDView.zoom < 0.01) RepetierHost.view.ThreeDView.zoom = 0.01f;
                 gl.Invalidate();
                 e.Handled = true;
             }
@@ -1410,12 +1525,12 @@ namespace RepetierHost.view
         /// </summary>
         public void GoToTopView()
         {
-            view.rotX = 90;
-            view.rotZ = 0;
-            view.zoom = 1.0f;
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);
-            view.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.rotX = 90;
+            RepetierHost.view.ThreeDView.rotZ = 0;
+            RepetierHost.view.ThreeDView.zoom = 1.0f;
+            RepetierHost.view.ThreeDView.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
             gl.Invalidate();
         }
 
@@ -1424,12 +1539,12 @@ namespace RepetierHost.view
         /// </summary>
         public void GoToFrontView()
         {
-            view.rotX = 0;
-            view.rotZ = 0;
-            view.zoom = 1.0f;
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);
-            view.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.rotX = 0;
+            RepetierHost.view.ThreeDView.rotZ = 0;
+            RepetierHost.view.ThreeDView.zoom = 1.0f;
+            RepetierHost.view.ThreeDView.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
             gl.Invalidate();
         }
 
@@ -1438,12 +1553,13 @@ namespace RepetierHost.view
         /// </summary>
         public void GoToSideView()
         {
-            view.rotX = 0;
-            view.rotZ = 90;
-            view.zoom = 1.0f;
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);
-            view.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
-            view.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView    .rotX = 0;
+            RepetierHost.view.ThreeDView.rotZ = 90;
+            RepetierHost.view.ThreeDView.zoom = 1.0f;
+
+            RepetierHost.view.ThreeDView.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
+            RepetierHost.view.ThreeDView.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0f, 0.0f * ps.PrintAreaHeight);
             gl.Invalidate();
         }
 
@@ -1452,7 +1568,7 @@ namespace RepetierHost.view
         /// Not sure this is used. Looks like is meant to determine if the key pressed is one of interest. 
         /// </summary>
         /// <param name="keyData"></param>
-        /// <returns></returns>
+        /// <returns>True if one of the important keys is pressed</returns>
         protected override bool IsInputKey(Keys keyData)
         {
             switch (keyData)
@@ -1480,39 +1596,39 @@ namespace RepetierHost.view
         {
             if (e.KeyCode == Keys.Left)
             {
-                view.rotZ -= 5;
+                RepetierHost.view.ThreeDView.rotZ -= 5;
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Right)
             {
-                view.rotZ += 5;
+                RepetierHost.view.ThreeDView.rotZ += 5;
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Up)
             {
-                view.rotX -= 5;
+                RepetierHost.view.ThreeDView.rotX -= 5;
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Down)
             {
-                view.rotX += 5;
+                RepetierHost.view.ThreeDView.rotX += 5;
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyValue == '-')
             {
-                view.zoom *= 1.05f;
-                if (view.zoom > 10) view.zoom = 10;
+                RepetierHost.view.ThreeDView.zoom *= 1.05f;
+                if (RepetierHost.view.ThreeDView.zoom > 10) RepetierHost.view.ThreeDView.zoom = 10;
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyValue == '+')
             {
-                view.zoom *= 0.95f;
-                if (view.zoom < 0.01) view.zoom = 0.01f;
+                RepetierHost.view.ThreeDView.zoom *= 0.95f;
+                if (RepetierHost.view.ThreeDView.zoom < 0.01) RepetierHost.view.ThreeDView.zoom = 0.01f;
                 gl.Invalidate();
                 e.Handled = true;
             }
@@ -1557,7 +1673,7 @@ namespace RepetierHost.view
                 zCenter += (tempSTL.zMax + tempSTL.zMin);
             }
 
-            view.viewCenter = new Vector3(xCenter, yCenter, zCenter);
+            RepetierHost.view.ThreeDView.viewCenter = new Vector3(xCenter, yCenter, zCenter);
             gl.Invalidate();
         }
     }

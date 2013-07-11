@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FileAddOrRemove.cs" company="Baoyan">
+// <copyright file="Main.cs" company="Baoyan">
 //   Some parts of this file were derived from Repetier Host which can be found at
 // https://github.com/repetier/Repetier-Host Which is licensed using the Apache 2.0 license. 
 // 
@@ -1868,20 +1868,35 @@ namespace RepetierHost
             //conn.close();
         }
 
+        /// <summary>
+        /// Set the mode to rotate
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
         {
             this.threedview.SetMode(0);
         }
 
+        /// <summary>
+        /// Set the 3D mode to move
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void moveStripMenuItem12_Click(object sender, EventArgs e)
         {
             // Set the Control mode to move Mode
-            this.threedview.SetMode(2);
+            this.threedview.SetMode(ThreeDControl.modeOptions.MoveViewpoint);
         }
 
+        /// <summary>
+        /// Set the 3D mode to zoom.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void zoomStripMenuItem13_Click(object sender, EventArgs e)
         {
-            this.threedview.SetMode(3);
+            this.threedview.SetMode(ThreeDControl.modeOptions.Zoom);
         }
 
         private void perspectiveStripMenuItem14_Click(object sender, EventArgs e)

@@ -21,14 +21,14 @@ namespace RepetierHost.view
         FormPrinterSettings ps = Main.printerSettings;
         public onObjectMoved eventObjectMoved;
         public onObjectSelected eventObjectSelected;
-        public float zoom = 1.0f;
-        public Vector3 viewCenter;
-        public Vector3 userPosition;
-        public Matrix4 lookAt, persp, modelView;
-        public double normX = 0, normY = 0;
-        public float nearDist, farDist, aspectRatio, nearHeight;
-        public float rotZ = 0, rotX = 0;
-        public int mode = 0;
+        public static float zoom = 1.0f;
+        public static Vector3 viewCenter;
+        public static Vector3 userPosition;
+        public static Matrix4 lookAt, persp, modelView;
+        public static double normX = 0, normY = 0;
+        public static float nearDist, farDist, aspectRatio, nearHeight;
+        public static float rotZ = 0, rotX = 0;
+        public static int mode = 0;
         public bool editor = false;
         public bool autoupdateable = false;
         public int slowCounter = 0; // Indicates slow framerates
