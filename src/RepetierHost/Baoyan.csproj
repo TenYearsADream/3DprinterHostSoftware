@@ -492,6 +492,12 @@
     <Compile Include="view\TemperatureView.Designer.cs">
       <DependentUpon>TemperatureView.cs</DependentUpon>
     </Compile>
+    <Compile Include="view\TemperatureViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\TemperatureViewForm.Designer.cs">
+      <DependentUpon>TemperatureViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\TestGenerator.cs">
       <SubType>Form</SubType>
     </Compile>

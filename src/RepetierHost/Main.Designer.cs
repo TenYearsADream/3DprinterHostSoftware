@@ -143,6 +143,7 @@
             this.openFileSTLorGcode = new System.Windows.Forms.OpenFileDialog();
             this.saveSTL = new System.Windows.Forms.SaveFileDialog();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.showTemperatureWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -277,7 +278,7 @@
             // slicerConfigurationToolStripMenuItem
             // 
             this.slicerConfigurationToolStripMenuItem.Name = "slicerConfigurationToolStripMenuItem";
-            this.slicerConfigurationToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.slicerConfigurationToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.slicerConfigurationToolStripMenuItem.Text = "Slicer Configuration";
             this.slicerConfigurationToolStripMenuItem.Click += new System.EventHandler(this.slicerConfigurationToolStripMenuItem_Click);
             // 
@@ -292,7 +293,7 @@
             // stopSlicingProcessToolStripMenuItem
             // 
             this.stopSlicingProcessToolStripMenuItem.Name = "stopSlicingProcessToolStripMenuItem";
-            this.stopSlicingProcessToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.stopSlicingProcessToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.stopSlicingProcessToolStripMenuItem.Text = "Stop Slicing Process";
             this.stopSlicingProcessToolStripMenuItem.Click += new System.EventHandler(this.stopSlicingProcessToolStripMenuItem_Click);
             // 
@@ -331,7 +332,8 @@
             this.timeperiodMenuItem,
             this.temperatureZoomMenuItem,
             this.buildAverageOverMenuItem,
-            this.continuousMonitoringMenuItem});
+            this.continuousMonitoringMenuItem,
+            this.showTemperatureWindowToolStripMenuItem});
             this.temperatureToolStripMenuItem.Name = "temperatureToolStripMenuItem";
             this.temperatureToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.temperatureToolStripMenuItem.Text = "&Temperature";
@@ -889,7 +891,7 @@
             this.connectToolStripSplitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.connectToolStripSplitButton.ToolTipText = "Connect printer";
             this.connectToolStripSplitButton.ButtonClick += new System.EventHandler(this.connectToolStripSplitButton_ButtonClick);
-            this.connectToolStripSplitButton.DropDownOpened += new System.EventHandler(this.connectToolStripSplitButton_DropDownOpened);
+           // this.connectToolStripSplitButton.DropDownOpened += new System.EventHandler(this.connectToolStripSplitButton_DropDownOpened);
             this.connectToolStripSplitButton.MouseEnter += new System.EventHandler(this.connectToolStripSplitButton_MouseEnter);
             // 
             // importSTLToolSplitButton1
@@ -1124,6 +1126,13 @@
             this.saveSTL.Filter = "STL-Files|*.stl;*.STL";
             this.saveSTL.Title = "Save composition";
             // 
+            // showTemperatureWindowToolStripMenuItem
+            // 
+            this.showTemperatureWindowToolStripMenuItem.Name = "showTemperatureWindowToolStripMenuItem";
+            this.showTemperatureWindowToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.showTemperatureWindowToolStripMenuItem.Text = "Show Temperature Window";
+            this.showTemperatureWindowToolStripMenuItem.Click += new System.EventHandler(this.showTemperatureWindowToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1277,6 +1286,7 @@
         private System.Windows.Forms.ToolStripMenuItem calibrateHeightToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerSettings2ToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menu;
+        private System.Windows.Forms.ToolStripMenuItem showTemperatureWindowToolStripMenuItem;
     }
 }
 

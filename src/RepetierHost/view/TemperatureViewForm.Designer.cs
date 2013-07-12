@@ -1,4 +1,4 @@
-﻿namespace Baoyan.view
+﻿namespace RepetierHost.view
 {
     partial class TemperatureViewForm
     {

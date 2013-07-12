@@ -146,6 +146,11 @@ namespace RepetierHost
         public Form logform = null;
 
         /// <summary>
+        /// Form the holds the temperature information. 
+        /// </summary>
+        public TemperatureViewForm temperatureForm = null;
+
+        /// <summary>
         /// A class related to updating things in the program. Often these methods are called after events. 
         /// </summary>
         public MainUpdaterHelper mainUpdaterHelper = null;
@@ -561,9 +566,14 @@ namespace RepetierHost
             mainUpdaterHelper = new MainUpdaterHelper(this);
 
             //// TODO: Add temperature controls
-            ////history = new TemperatureHistory();
-            ////tempView = new TemperatureView();
-            ////tempView.Dock = DockStyle.Fill;
+            history = new TemperatureHistory();
+            tempView = new TemperatureView();
+            tempView.Dock = DockStyle.Fill;
+            temperatureForm = new TemperatureViewForm();
+            temperatureForm.Controls.Add(tempView);
+            temperatureForm.Height = 324;
+            temperatureForm.Width = 549;
+            temperatureForm.ControlBox = false;
             ////tabPageTemp.Controls.Add(tempView);
             ////if (IsMono)
             ////{
@@ -1546,6 +1556,12 @@ namespace RepetierHost
         {
             history.CurrentPos = (int)((ToolStripMenuItem)sender).Tag;
         }
+
+        /// <summary>
+        /// Selected how long of a history to use when calculating the average. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void selectAverage(object sender, EventArgs e)
         {
             history.AvgPeriod = int.Parse(((ToolStripMenuItem)sender).Tag.ToString());
@@ -2305,15 +2321,16 @@ namespace RepetierHost
         private void printerSettings2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             printerSettings.ShowSimpleForm();
-        }
+        }      
 
-        private void connectToolStripSplitButton_DropDownOpened(object sender, EventArgs e)
-        {
-            //this.mainUpdaterHelper.UpdateConnections();
-        }
-
+        /// <summary>
+        /// Action to take when the mouse goes over the connection tool split button. Should update the possible ports. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void connectToolStripSplitButton_MouseEnter(object sender, EventArgs e)
         {
+            // If the options are already showing then don't update. 
             if (this.connectToolStripSplitButton.DropDownButtonPressed)
             {
                 return; // do nothing
@@ -2321,9 +2338,6 @@ namespace RepetierHost
 
             this.mainUpdaterHelper.UpdateConnections(); // update the ports
         }
-
-
-
 
         /// <summary>
         /// Updates the visibility or availablity of menu itmes based on the current developer mode.
@@ -2339,8 +2353,7 @@ namespace RepetierHost
             this.printerToolStripMenuItem.Visible = DeveloperMode;
             this.gcodeEditorToolStripMenuItem.Visible = DeveloperMode;
             this.loggingToolStripMenuItem.Visible = DeveloperMode;
-            this.soundConfigurationToolStripMenuItem.Visible = DeveloperMode;
-            //throw new NotImplementedException();
+            this.soundConfigurationToolStripMenuItem.Visible = DeveloperMode;           
         }
 
         /// <summary>
@@ -2363,6 +2376,16 @@ namespace RepetierHost
         private void calibrateHeightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             calibrationZ.Visible = !calibrationZ.Visible;
+        }
+
+        /// <summary>
+        /// Action to take when clicking the show temperature menu option. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void showTemperatureWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.temperatureForm.Visible = !this.temperatureForm.Visible;
         }
     }
 }

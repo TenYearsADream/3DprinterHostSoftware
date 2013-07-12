@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Baoyan.view
+namespace RepetierHost.view
 {
     public partial class TemperatureViewForm : Form
     {
