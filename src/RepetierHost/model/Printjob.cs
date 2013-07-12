@@ -35,7 +35,34 @@ namespace RepetierHost.model
         public int linesSend;
         public bool exclusive = false;
         public int maxLayer = -1;
-        public int mode = 0; /// 0 = no job defines, 1 = printing, 2 = finished, 3 = aborted
+
+        /// <summary>
+        /// The possible types of jobs that may be running. 
+        /// </summary>
+        public enum jobMode
+        {
+            /// <summary>
+            /// Not job is currrently running. Old 0
+            /// </summary>
+            noJob, 
+
+            /// <summary>
+            /// Printing job, Old 1
+            /// </summary>
+            printingJob,
+
+            /// <summary>
+            /// Finished the most recent job. Old 2
+            /// </summary>
+            finishedJob,
+
+            /// <summary>
+            /// Aborted the most recent job. Old 3
+            /// </summary>
+            abortedJob
+
+        }
+        public jobMode mode = jobMode.noJob; /// 0 = no job defines, 1 = printing, 2 = finished, 3 = aborted
         public double computedPrintingTime = 0;
         public DateTime jobStarted, jobFinished;
         LinkedList<GCodeCompressed> jobList = new LinkedList<GCodeCompressed>();
@@ -59,7 +86,7 @@ namespace RepetierHost.model
             computedPrintingTime = 0;
             con.lastlogprogress = -1000;
             maxLayer = -1;
-            mode = 1;
+            mode = jobMode.printingJob;
             ana = new GCodeAnalyzer(true);
             con.analyzer.StartJob();
             
@@ -91,7 +118,8 @@ namespace RepetierHost.model
         /// </summary>
         public void KillJob()
         {
-            mode = 3;
+            //mode = 3;
+            mode = jobMode.abortedJob;
             lock (jobList)
             {
                 if (dataComplete == false && jobList.Count == 0) return;
@@ -207,13 +235,17 @@ namespace RepetierHost.model
                             times.RemoveFirst();
                     }*/
                 }
-                catch { };
-                finished = jobList.Count == 0 && mode != 3;
+                catch 
+                {                 
+                };
+
+                //finished = jobList.Count == 0 && mode != 3;
+                finished = jobList.Count == 0 && mode != jobMode.abortedJob;
             }
             if (finished)
             {
                 dataComplete = false;
-                mode = 2;
+                mode = Printjob.jobMode.finishedJob;
                 jobFinished = DateTime.Now;
                 long ticks = (jobFinished.Ticks - jobStarted.Ticks) / 10000;
                 long hours = ticks / 3600000;

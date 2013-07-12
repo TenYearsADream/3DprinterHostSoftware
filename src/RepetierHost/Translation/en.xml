@@ -2,7 +2,7 @@
 <translation revision="9" language="English" languageInEnglish="English" author="Anthony G">
 <t id="M_FILE" ver="1">File</t>
 
-  <t id="START NEW TEXT" ver="1"></t>
+  
   
 <t id="M_LOAD_GCODE_OR_STL_FILE" ver="1">Load G-code or .stl File</t>
 <t id="M_SOFTWARE_GENERAL_SETTINGS" ver="1">Software General Settings</t>
@@ -53,7 +53,37 @@
   <t id="L_Y_AXIS" ver="1">Y-Axis</t>
   <t id="L_Z_AXIS" ver="1">Z-Axis</t>
   <t id="" ver="1"></t>
- 
+
+  <t id="START NEW TEXT" ver="1"></t>
+
+  <t id="M_NO_CONNECTIONS_AVAILABLE" ver="1">No Printer Connections Available</t>
+  <t id="L_CONNECT_A_PRINTER" ver="1">Please Connect a printer before calibrating its height.</t>
+  <t id="L_CALIBRATION_WIZARD_STEP1" ver="1">This Wizard will guide you through the process of calibrating the height of your 3D printer.
+  Please follow the step by step instructions.
+  
+  If you choose to click exit before the Wizard is complete then your changes will not be saved</t>
+  <t id="L_CALIBRATION_WIZARD_STEP2" ver="1">The factory settings for your printer specifies that the Z distance is 135 mm; however each printer is slightly different and must be calibrated.
+  
+  In order to calibrate the exact height, we will move the printing platform up 130 mm and then slowly move it closer and closer to the print head.
+  
+  When "Next" is clicked, the platform will move to the home position and then up to 130 mm</t>
+  <t id="L_CALIBRATION_WIZARD_STEP3" ver="1">After the print platform has moved up 130 mm, you should then use the "Up" button to move the platform within 1 mm or less of the print head.
+  
+  Once the platform and print heard are withing 1 mm click "Next"</t>
+  <t id="L_CALIBRATION_WIZARD_STEP4" ver="1">Now, carefully move the head up in 0.1 mm increments until a piece of paper cannot move betwen the print nozzle and the print platform.
+  
+  Once this action is complete click "Next"</t>
+  <t id="L_CALIBRATION_WIZARD_STEP5" ver="1">The maxiumum Z height will now be recorded as</t>
+  <t id="L_CALIBRATION_WIZARD_STEP6" ver="1">The printer will now go back to the home position. Press "Exit" to end and save the results of the configuration Wizard</t>
+  <t id="B_UP" ver="1">Up</t>
+  <t id="B_DOWN" ver="1">Down</t>
+  <t id="B_NEXT" ver="1">Next</t>
+  <t id="Z_Height_Calibration_Wizard" ver="1">Z Height Calibration Wizard</t>
+  <t id="L_STEP" ver="1">Step Number</t>
+  <t id="" ver="1"></t>
+  <t id="" ver="1"></t>
+  <t id="" ver="1"></t>
+  <t id="M_CALIBRATE_HIEGHT" ver="1">Calibrate Z Height</t>
   
   <t id="END NEW TEXT" ver="1"></t>
  

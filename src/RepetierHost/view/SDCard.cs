@@ -299,7 +299,7 @@ namespace RepetierHost.view
                 toolNewFolder.Enabled = false;
                 return;
             }
-            if (uploading || printing || Main.connection.job.mode==1)
+            if (uploading || printing || Main.connection.job.mode == Printjob.jobMode.printingJob)
             {
                 toolAddFile.Enabled = false;
                 toolDelFile.Enabled = false;
@@ -330,7 +330,8 @@ namespace RepetierHost.view
         private void toolAddFile_Click(object sender, EventArgs e)
         {
             Printjob job = Main.connection.job;
-            if (job.mode==1)
+            //if (job.mode == 1)
+            if (job.mode == Printjob.jobMode.printingJob)
             {
                 updateButtons();
                 return;

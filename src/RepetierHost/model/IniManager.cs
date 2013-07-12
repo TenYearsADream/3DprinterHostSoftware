@@ -202,5 +202,20 @@ namespace RepetierHost.model
             }
 
         }
+
+        /// <summary>
+        /// Inserts the custom Baoyan start G-code with the correctly calibrated Z height which is abtained form the printer settings. 
+        /// </summary>
+        internal void CalibrateHeight()
+        {
+            foreach (IniSection s in sections.Values)
+            {
+                string replace = String.Format(
+                     @"start_gcode = M92 E380\nM140 S110\nM109 S230\nM190 S80\nG21 ;set units to mm\nG90 ;set to absolute positioning\n;M80\nM107\nG92 E0 ;reset extruder \nG28 X0 Y0 Z0\nG92 Z{0}\nG1 Z0.2 F400\nG1 X20 E4 F100\nG1 Y3 E6 F100\nG1 X0 E10\nM140 S110\nG92 E0",
+                       Main.printerSettings.textPrintAreaHeight.Text);
+
+                s.replaceValue("start_gcode", replace);               
+            }
+        }
     }
 }

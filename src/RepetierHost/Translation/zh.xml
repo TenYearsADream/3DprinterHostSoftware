@@ -50,6 +50,45 @@
   <t id="END NEW TEXT" ver="1"></t>
   
   
+  <t id="START NEW TEXT" ver="1"></t>
+
+  <t id="M_NO_CONNECTIONS_AVAILABLE" ver="1">无打印机连接</t>
+  <t id="L_CONNECT_A_PRINTER" ver="1">请在测量喷头高度前先与一台打印机进行连接。</t>
+  <t id="L_CALIBRATION_WIZARD_STEP1" ver="1">
+    该向导将引导您测量3D打印机高度。
+    请按照向导步骤来做。
+
+    如果在向导结束前点击关闭按钮，将不会保存您的改变  </t>
+  <t id="L_CALIBRATION_WIZARD_STEP2" ver="1">
+    出厂时打印机设置的Z轴高度为135毫米，由于每台打印机之间都有少许差异，必须先测量其高度。
+
+    为了测量出打印机准确高度，先将打印平台上移130毫米，再慢慢将平台向上靠近打印喷头。
+
+    点击“下一步”，打印平台将先回到初始位置再向上移至130毫米处  </t>
+  <t id="L_CALIBRATION_WIZARD_STEP3" ver="1">
+    在打印平台上升130毫米后，点击“向上”以1毫米的增量上升打印平台，直至打印机喷头与打印平台之间小于1毫米。
+
+    在打印平台距打印喷头不到1毫米时点击“下一步”
+  </t>
+  <t id="L_CALIBRATION_WIZARD_STEP4" ver="1">
+    现在，以0.1毫米的增量上升打印平台，直至打印机喷头与打印平台之间可以刚好抽动一张纸。
+
+    完成如上步骤后点击“下一步”
+  </t>
+  <t id="L_CALIBRATION_WIZARD_STEP5" ver="1">Z轴最大高度将被记作</t>
+  <t id="L_CALIBRATION_WIZARD_STEP6" ver="1">打印机将回到初始位置，点击“完成”保存向导配置结果</t>
+  <t id="B_UP" ver="1">向上</t>
+  <t id="B_DOWN" ver="1">向下</t>
+  <t id="B_NEXT" ver="1">下一步</t>
+  <t id="Z_Height_Calibration_Wizard" ver="1">Z轴高度测量向导</t>
+  <t id="L_STEP" ver="1">步数</t>
+  <t id="M_CALIBRATE_HIEGHT" ver="1">高度测量</t>
+  <t id="" ver="1"></t>
+  <t id="" ver="1"></t>
+
+  <t id="END NEW TEXT" ver="1"></t>
+  
+  
 <t id="M_FILE" ver="1">文件</t>
 <t id="M_CONFIG" ver="1">配置</t>
 <t id="M_SLICER" ver="1">代码生成器</t>

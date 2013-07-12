@@ -1568,7 +1568,6 @@
         private System.Windows.Forms.Label labelStopbits;
         private System.Windows.Forms.ComboBox comboBaud;
         private System.Windows.Forms.Label labelBaudRate;
-        private System.Windows.Forms.ComboBox comboPort;
         private System.Windows.Forms.Label labelPort;
         private System.Windows.Forms.Label labelTransferProtocol;
         private System.Windows.Forms.ComboBox comboTransferProtocol;
@@ -1596,7 +1595,6 @@
         private System.Windows.Forms.Label labelReceiveCacheSize;
         private System.Windows.Forms.TextBox textReceiveCacheSize;
         private System.Windows.Forms.TabPage tabPageShape;
-        private System.Windows.Forms.TextBox textPrintAreaHeight;
         private System.Windows.Forms.TextBox textDumpAreaLeft;
         private System.Windows.Forms.TextBox textPrintAreaDepth;
         private System.Windows.Forms.TextBox textPrintAreaWidth;
@@ -1679,5 +1677,7 @@
         private System.Windows.Forms.Label labelCNCHeight;
         private System.Windows.Forms.TextBox textCNCZTop;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.ComboBox comboPort;
+        public System.Windows.Forms.TextBox textPrintAreaHeight;
     }
 }

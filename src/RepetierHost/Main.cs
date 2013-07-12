@@ -276,6 +276,11 @@ namespace RepetierHost
         public FileAddOrRemove fileAddOrRemove = null;
 
         /// <summary>
+        /// Windows Form that guides the user through setting up the Z height of their printer. 
+        /// </summary>
+        private Calibration calibrationZ;
+
+        /// <summary>
         /// Options for the current view mode. 
         /// </summary>
         public enum ThreeDViewOptions
@@ -456,11 +461,10 @@ namespace RepetierHost
             fileAddOrRemove = new FileAddOrRemove(this);
             main.listSTLObjects.Visible = false;
 
-            // Anthony, Maximize the window
             WindowState = FormWindowState.Maximized;
 
-            if (WindowState == FormWindowState.Maximized)
-                Application.DoEvents();
+            //if (WindowState == FormWindowState.Maximized)
+            //    Application.DoEvents();
             //splitLog.SplitterDistance = RegMemory.GetInt("logSplitterDistance", splitLog.SplitterDistance);
             // splitInfoEdit.SplitterDistance = RegMemory.GetInt("infoEditSplitterDistance", Width-470);
             if (IsMono)
@@ -533,8 +537,7 @@ namespace RepetierHost
             //tabPage3DView.Controls.Add(threedview);
 
             // 
-            gcodePreviewView = new ThreeDView();
-            gcodePreviewView.SetEditor(false);
+            gcodePreviewView = new ThreeDView();          
             gcodePreviewView.models.AddLast(jobVisual); // Add a g-code visualzation model to the view
             editor.contentChangedEvent += JobPreview;
             editor.commands = new Commands();
@@ -542,8 +545,7 @@ namespace RepetierHost
             this.fileAddOrRemove.UpdateHistory();
 
             // Make a new View. 
-            livePrintingView = new ThreeDView();
-            livePrintingView.SetEditor(false);
+            livePrintingView = new ThreeDView();         
             livePrintingView.autoupdateable = true;
 
             // Print visualzation is dependent on the connection to the printer being active. (ie the printer is connected)
@@ -636,6 +638,10 @@ namespace RepetierHost
             toolConnection.Text = Trans.T("L_DISCONNECTED");
             updateTravelMoves();
 
+            calibrationZ = new Calibration();
+            calibrationZ.Visible = false;
+            calibrationZ.ControlBox = false;
+
             // Allow for Drag and drop
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
@@ -669,11 +675,12 @@ namespace RepetierHost
         /// </summary>
         public void translate()
         {
+            this.calibrateHeightToolStripMenuItem.Text = Trans.T("M_CALIBRATE_HIEGHT");
             fileToolStripMenuItem.Text = Trans.T("M_FILE");
             settingsToolStripMenuItem.Text = Trans.T("M_CONFIG");
             this.repetierSettingsToolStripMenuItem.Text = Trans.T("M_SOFTWARE_GENERAL_SETTINGS");
             this.slicerToolStripMenuItem1.Text = Trans.T("M_SLICER");
-            this.slicerSelectionToolStripMenuItem.Text = Trans.T("M_SLICER_DIRECTORY_SETUP");
+            //// this.slicerSelectionToolStripMenuItem.Text = Trans.T("M_SLICER_DIRECTORY_SETUP");
             this.slicerConfigurationToolStripMenuItem.Text = Trans.T("M_SLICER_CONFIGURATION");
             this.gcodeEditorToolStripMenuItem.Text = Trans.T("M_GCODE_EDITOR");
             this.stopSlicingProcessToolStripMenuItem.Text = Trans.T("M_STOP_SLICER");
@@ -758,12 +765,12 @@ namespace RepetierHost
             ////thingiverseNewestToolStripMenuItem.Text = Trans.T("M_THINGIVERSE_NEWEST");
             ////thingiversePopularToolStripMenuItem.Text = Trans.T("M_THINGIVERSE_POPULAR");
             ////aboutRepetierHostToolStripMenuItem.Text = Trans.T("M_ABOUT_REPETIER_HOST");
-            ////checkForUpdatesToolStripMenuItem.Text = Trans.T("M_CHECK_FOR_UPDATES");
-            ////quitToolStripMenuItem.Text = Trans.T("M_QUIT");
+            checkForUpdatesToolStripMenuItem.Text = Trans.T("M_CHECK_FOR_UPDATES");
+            quitToolStripMenuItem.Text = Trans.T("M_QUIT");
             ////donateToolStripMenuItem.Text = Trans.T("M_DONATE");
             ////tabPage3DView.Text = Trans.T("TAB_3D_VIEW");
             ////tabPageTemp.Text = Trans.T("TAB_TEMPERATURE_CURVE");
-            ////tabModel.Text = Trans.T("TAB_OBJECT_PLACEMENT");
+            ////tabModel    .Text = Trans.T("TAB_OBJECT_PLACEMENT");
             ////tabSlicer.Text = Trans.T("TAB_SLICER");
             ////tabGCode.Text = Trans.T("TAB_GCODE_EDITOR");
             ////tabPrint.Text = Trans.T("TAB_MANUAL_CONTROL");
@@ -803,8 +810,8 @@ namespace RepetierHost
             ////    //viewSlicedObjectToolStripMenuItem1.ToolTipText = Trans.T("L_FILAMENT_VISUALIZATION_ENABLED"); // "Filament visualization enabled";
             ////    //viewSlicedObjectToolStripMenuItem1.Text = Trans.T("M_HIDE_FILAMENT"); // "Hide filament";
             ////}
-            
-            if (connection.job.mode != 1)
+
+            if (connection.job.mode != Printjob.jobMode.printingJob)
             {
                 Main.main.printStripSplitButton4.ToolTipText = Trans.T("M_RUN_JOB"); // "Run job";
                 Main.main.printStripSplitButton4.Text = Trans.T("M_RUN_JOB"); //"Run job";
@@ -865,9 +872,9 @@ namespace RepetierHost
         public void ConnectHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            printerSettings.load(clickedItem.Text);
-            printerSettings.formToCon();
-            printerSettings.UpdateDimensions();
+            connection.port = clickedItem.Text;
+            printerSettings.formToCon(); // so that we save the most the port name. 
+           
             this.mainUpdaterHelper.UpdateEverythingInMain();
             connection.open();
         }       
@@ -1113,7 +1120,7 @@ namespace RepetierHost
                 return;
             }
 
-            if (connection.job.mode == 1)
+            if (connection.job.mode == Printjob.jobMode.printingJob)
             {
                 if (MessageBox.Show(Trans.T("L_REALLY_QUIT"), Trans.T("L_SECURITY_QUESTION"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 {
@@ -1163,7 +1170,7 @@ namespace RepetierHost
         ////}
 
         /// <summary>
-        /// Used to try to open a webaddress. Catches if there are problems. 
+        /// Used to try to open a web address. Catches if there are problems. 
         /// </summary>
         /// <param name="link">Link to open.</param>
         public void openLink(string link)
@@ -1523,8 +1530,8 @@ namespace RepetierHost
         /// <summary>
         /// Runs when the user comes back to the Main application after using other programs. Checks to make sure the .stl files are the same. 
         /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">e</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Main_Activated(object sender, EventArgs e)
         {
             fileAddOrRemove.RecheckChangedFiles();
@@ -1745,7 +1752,8 @@ namespace RepetierHost
         private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Set the Control to RorateMode
-            this.threedview.SetMode(0);
+           // this.threedview.SetMode(0);
+            ThreeDControl.CurrentMode = ThreeDControl.modeOptions.Rotation;
 
             // string message = sender.ToString();        
             //const string caption = "Test";
@@ -1875,7 +1883,8 @@ namespace RepetierHost
         /// <param name="e"></param>
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
         {
-            this.threedview.SetMode(0);
+            //// this.threedview.SetMode(0);
+            ThreeDControl.CurrentMode = ThreeDControl.modeOptions.Rotation;
         }
 
         /// <summary>
@@ -1886,7 +1895,8 @@ namespace RepetierHost
         private void moveStripMenuItem12_Click(object sender, EventArgs e)
         {
             // Set the Control mode to move Mode
-            this.threedview.SetMode(ThreeDControl.modeOptions.MoveViewpoint);
+            //// this.threedview.SetMode(ThreeDControl.modeOptions.MoveViewpoint);
+            ThreeDControl.CurrentMode = ThreeDControl.modeOptions.MoveViewpoint;
         }
 
         /// <summary>
@@ -1896,14 +1906,25 @@ namespace RepetierHost
         /// <param name="e"></param>
         private void zoomStripMenuItem13_Click(object sender, EventArgs e)
         {
-            this.threedview.SetMode(ThreeDControl.modeOptions.Zoom);
+            ThreeDControl.CurrentMode = ThreeDControl.modeOptions.Zoom;
+            //// this.threedview.SetMode(ThreeDControl.modeOptions.Zoom);
         }
 
+        /// <summary>
+        ///Change the perspective mode of the 3D view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void perspectiveStripMenuItem14_Click(object sender, EventArgs e)
         {
             this.threedview.ChangeProspectiveMode();
         }
 
+        /// <summary>
+        /// Reset the 3D view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void resetStripMenuItem15_Click(object sender, EventArgs e)
         {
             this.threedview.ResetView();
@@ -2110,18 +2131,16 @@ namespace RepetierHost
 
         }
 
+        /// <summary>
+        /// Displays the manul control panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void manualControlToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            //extraForm.Controls.Clear();
-            //extraForm.Controls.Add(printPanel);
-            //extraForm.Size = new Size(800, 600);
-            //extraForm.Visible = !extraForm.Visible;
             manulControl.Left = (this.Width - manulControl.Width) / 2;
             manulControl.Top = (this.Height - manulControl.Height) / 2;
             manulControl.Visible = !manulControl.Visible;
-
-            // if(printPanel.Visible==true)
             manulControl.BringToFront();
         }
 
@@ -2130,6 +2149,11 @@ namespace RepetierHost
 
         }
 
+        /// <summary>
+        /// Shows the Position stl GUI control
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void positionToolSplitButton2_Click(object sender, EventArgs e)
         {
 
@@ -2147,9 +2171,49 @@ namespace RepetierHost
             }
         }
 
+        Stopwatch developerModeWatch = new Stopwatch();
+        int developerModeClickCount = 0;
+
+
+        /// <summary>
+        /// Runs actions related to going clicking the davanced button. Toggles developer mode if clicked 6 times in 5 seconds. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void advancedConfigStripSplitButton3_ButtonClick(object sender, EventArgs e)
         {
+            // Remember what mode we start in so that we can see if it changes. 
+            bool beginMode = DeveloperMode;
 
+            // Increment the counter. 
+            developerModeClickCount++;
+
+            // if clicked 6 times then toggle developer mode. 
+            if ( developerModeClickCount>6)
+            {
+                DeveloperMode = !DeveloperMode;
+                developerModeWatch.Stop();
+                developerModeWatch.Reset();
+                developerModeClickCount = 0;
+            }
+
+            // if the time elapsed is greater than 5 seconds since the start of the timer, then reset the stop watch and click count to zero
+            TimeSpan timeElapsed = developerModeWatch.Elapsed;
+            if(timeElapsed.Seconds >= 5)
+            {
+                developerModeWatch.Stop();
+                developerModeWatch.Reset();
+                developerModeClickCount = 0;
+            }
+
+            // If the stop watch is not running, then start the stop watch
+            if (developerModeWatch.IsRunning == false)
+            {
+                developerModeWatch.Start();
+            }
+
+            if (DeveloperMode != beginMode)
+                mainUpdaterHelper.UpdateEverythingInMain();
         }
 
         private void slicerSelectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2238,8 +2302,67 @@ namespace RepetierHost
             this.threedview.CenterViewOnObjects();
         }
 
-       
+        private void printerSettings2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            printerSettings.ShowSimpleForm();
+        }
 
-      
+        private void connectToolStripSplitButton_DropDownOpened(object sender, EventArgs e)
+        {
+            //this.mainUpdaterHelper.UpdateConnections();
+        }
+
+        private void connectToolStripSplitButton_MouseEnter(object sender, EventArgs e)
+        {
+            if (this.connectToolStripSplitButton.DropDownButtonPressed)
+            {
+                return; // do nothing
+            }
+
+            this.mainUpdaterHelper.UpdateConnections(); // update the ports
+        }
+
+
+
+
+        /// <summary>
+        /// Updates the visibility or availablity of menu itmes based on the current developer mode.
+        /// </summary>
+        internal void UpdateMenuItemsForDeveloper()
+        {
+            this.printerSettingsToolStripMenuItem.Visible = DeveloperMode;
+            this.repetierSettingsToolStripMenuItem.Visible = DeveloperMode;
+            this.internalSlicingParameterToolStripMenuItem.Visible = DeveloperMode;
+            this.dViewSettingsToolStripMenuItem.Visible = DeveloperMode;
+            this.printerSettings2ToolStripMenuItem.Visible = DeveloperMode;
+            this.temperatureToolStripMenuItem.Visible = DeveloperMode;
+            this.printerToolStripMenuItem.Visible = DeveloperMode;
+            this.gcodeEditorToolStripMenuItem.Visible = DeveloperMode;
+            this.loggingToolStripMenuItem.Visible = DeveloperMode;
+            this.soundConfigurationToolStripMenuItem.Visible = DeveloperMode;
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Action to take on clicking sound menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void soundConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SoundConfig.config.ShowDialog();
+        }
+
+        
+
+        /// <summary>
+        /// Action to take on clicking the calibration menu item. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void calibrateHeightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            calibrationZ.Visible = !calibrationZ.Visible;
+        }
     }
 }

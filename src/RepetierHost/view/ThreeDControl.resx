@@ -118,30 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>238, 17</value>
+    <value>238, 13</value>
   </metadata>
   <metadata name="bindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>318, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStripClear.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMnSURBVFhH7ZZNSFRRFMfFSLBNBEaWmBlR0ecqIoiyZWoL
-        ndHxe2Ycv3XGUYhoEUaLCtq0bxdEMFBQ6sTQwkWLLIhAiqQ2IZVSM9OilCzx9vsP90mLSmaaoGAO/Hn3
-        nnvuOf977nnnvbyc/HcSiUQKxsbGTkSj0QAIWwTHx8dd6Iut2d+RysrK4pqamsmmpibT0tJiWltbV9Dc
-        3GxcLtdcVVVVhTXPvjQ2Np7r7u42QiAQWGpvb1+wWOzq6jK9vb0iNmHNsy+c/FpPT49pa2t7VV9fv6+2
-        tna74PF4drIWETGyMWXNMxdjTD7ODrrd7kBDQ8Nl0nsd3CUDb3RKnZqAk5z2kUDQh8xnteb3+z9jGwU3
-        0V1lf4hxxczMTKF1v7rE4/ESgs13dnaavr4+09/fbwYGBkwoFDLDw8MmHA6nxj9icHAwtaaxbLVHe5Ux
-        SJhYLOa27leXZDJZpjuVAzlWwKGhoVQA5/k7yMYhGQwGDYcxo6OjXut+dVleXi7kCs5yz/e47+dgTqn1
-        er3fSL8K8KfQGljCdgHbD1zNS4JP6Cqmp6fLrfv0ZWRkJB8nGyi2UupiF9gvkNoDgjMn2G5stvEsqqur
-        K7DbM5fq6up1BPbh8BSBDhNkDyhnvIXC2sxzE4GKNceujLUdjPfKFiIn2deBrsS6S1/YvBESX1WMSjGp
-        TaWZ56JFSicbpd5eQcpWe7RGc8q8MeG4yOfzxVXV3OknXrkYSGhum84LMvFAwVRsqhHm96mZ1yrgjo4O
-        Q4aOWnfpi0NAzgh2RzrSekXBFZQMHZeOoO/12lF0TzSneP16i7JKgCC3pIPARb3bIkCgY7ZAZ0VATUk2
-        6NuyTgDnt6WjwC45BJQBAqxxCJCBx9bGmyOQI5AjkHUC9IGIdDi/4BDgfT8kHR3wnSUwqTnfAU82CXxU
-        61V7xe9pMvFUwfT7RVO6Ac7T/xfVirFNYnMGXUzdUgTUrKy79IVTrOXkUzqxc2oFVjCR0FxQMOkcG51e
-        OvZ+IQNbrbvMhLQe4av2DOfzDiCxMv6VDhJvyZrfuvkz4Se1IJFIlKYDfuvW2+05+ZclL+87RcgeNF0S
-        22oAAAAASUVORK5CYII=
-</value>
-  </data>
 </root>

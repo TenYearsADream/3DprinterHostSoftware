@@ -38,6 +38,9 @@ namespace RepetierHost.view
         float lastx = -1000, lasty = -1000, lastz = -1000;
         private PrinterStatus status = PrinterStatus.disconnected;
         private long statusSet=0;
+
+        private Size normalControlSize = new Size(702, 336);
+
         public ManualPrinterControl()
         {
             InitializeComponent();
@@ -68,6 +71,9 @@ namespace RepetierHost.view
                 translate();
                 Main.main.languageChanged += translate;
             }
+
+            // Set the width and height. These change if in developer mode. 
+            this.Size = normalControlSize;
         }
         public void translate() {
             buttonSend.Text = Trans.T("B_SEND");
@@ -176,7 +182,7 @@ namespace RepetierHost.view
                         break;
                     default:
                     case PrinterStatus.idle:
-                        if (Main.connection.job.mode==1)
+                        if (Main.connection.job.mode == Printjob.jobMode.printingJob)
                         {
                             if (Main.connection.analyzer.uploading)
                                 labelStatus.Text = Trans.T("L_UPLOADING..."); //"Uploading ...";
@@ -368,12 +374,40 @@ namespace RepetierHost.view
             con.ReturnInjectLock();
         }
 
-        private void buttonHomeAll_Click(object sender, EventArgs e)
+        public void buttonHomeAll_Click(object sender, EventArgs e)
         {
             con.GetInjectLock();
             con.injectManualCommand("G28 X0 Y0 Z0");
             con.ReturnInjectLock();
         }
+
+        /// <summary>
+        /// Moves the print head to the center of the print plate in the XY cordinates. 
+        /// </summary>
+        public void moveHeadToCenterXY()
+        {
+            moveHead("X", Main.printerSettings.XMax / 2);
+            moveHead("Y", Main.printerSettings.YMax / 2);
+
+        }
+
+       
+        /// <summary>
+        /// Moves the printer head the Z amount. encapsultes the moveHead to be called outside ManualPrinterControl
+        /// </summary>
+        /// <param name="amount"></param>
+        public void moveHeadInZ(float _amount)
+        {
+          
+            moveHead("Z", _amount);
+
+        }
+
+        /// <summary>
+        /// Moves the head in the axis direction the specified amount. 
+        /// </summary>
+        /// <param name="axis"></param>
+        /// <param name="amount"></param>
         private void moveHead(string axis,float amount) {
             con.GetInjectLock();
             bool wasrel = con.analyzer.relative;
@@ -853,7 +887,14 @@ namespace RepetierHost.view
         private void arrowButtonZMinus_Click(object sender, EventArgs e)
         {
             float d = -((ArrowButton)sender).CurrentValueF;
-            if (FormPrinterSettings.ps.printerType != 3 && (ann.hasZHome && d + ann.z < 0)) d = -ann.z;
+
+            if ((FormPrinterSettings.ps.printerType != 3) &&
+                ann.hasZHome &&
+                (d + ann.z < 0))
+            {
+                d = -ann.z;
+            }
+
             moveHead("Z", d);
 
         }
@@ -898,5 +939,32 @@ namespace RepetierHost.view
             this.Visible = false;
         }
 
-     }
+        /// <summary>
+        /// Changes the visibility of some of the group boxes to reflect the developer mode. 
+        /// </summary>
+        internal void UpdateItemsForDeveloper()
+        {
+            this.groupSpeedMultiply.Visible = Main.main.DeveloperMode;
+            this.groupBox_Fan.Visible = Main.main.DeveloperMode;
+            this.groupDebugOptions.Visible = Main.main.DeveloperMode;
+            this.switchPower.Visible = Main.main.DeveloperMode;
+            this.buttonStopMotor.Visible = Main.main.DeveloperMode;
+            this.buttonGoDisposeArea.Visible = Main.main.DeveloperMode;
+            this.buttonSend.Visible = Main.main.DeveloperMode;
+            this.textGCode.Visible = Main.main.DeveloperMode;
+            this.label1.Visible = Main.main.DeveloperMode;
+
+            if (Main.main.DeveloperMode == true)
+            {
+                this.Height = 418;
+                this.Width = 918;
+            }
+            else
+            {
+                this.Size = normalControlSize;
+            }
+
+            // throw new NotImplementedException();
+        }
+    }
 }

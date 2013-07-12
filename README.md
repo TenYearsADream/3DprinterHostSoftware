@@ -11,3 +11,5 @@ https://github.com/repetier/Repetier-Host
 
 
 All other parts of the software are developed and owned by Baoyan Automation Nanjing, Jiangsu, PRC. 
+
+Source code files may not show the most recent copy right headers. 

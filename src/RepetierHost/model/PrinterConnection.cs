@@ -66,7 +66,7 @@ namespace RepetierHost.model
         public string printerName = "default";
         public int transferProtocol = 0; // 0 = auto, 1 = force ascii, 2 = force binary
         public int binaryVersion = 0;
-        public int baud = 500000;
+        public int baud = 250000;
         public float addPrintingTime = 8;
         public bool garbageCleared = false; // Skip old output
         public Parity parity = Parity.None;
@@ -716,7 +716,10 @@ namespace RepetierHost.model
                     gc.Parse("M105");
                     virtualPrinter.receiveLine(gc);
                     if (eventConnectionChange != null)
-                        eventConnectionChange(Trans.T("L_CONNECTED") + ":" + printerName);
+                    {
+                        eventConnectionChange(Trans.T("L_CONNECTED") + ":" + port);
+                    }
+
                     //Main.main.Invoke(Main.main.UpdateJobButtons);
                     UpdateAll update = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
                     Main.main.Invoke(update);
@@ -728,8 +731,6 @@ namespace RepetierHost.model
                 else
                     serial = new ProtectedSerialPort();
                 garbageCleared = false;
-                //serial.PortName = "COM2";
-
                 serial.PortName = port;
                 serial.BaudRate = baud;
                 serial.Parity = parity;
@@ -740,8 +741,6 @@ namespace RepetierHost.model
                 serial.ErrorReceived += error;
                 serial.RtsEnable = false;
                 serial.DtrEnable = false;
-
-
                 serial.Open();
                 serial.DtrEnable = true;
                 Thread.Sleep(200);
@@ -750,7 +749,6 @@ namespace RepetierHost.model
                 // If we didn't restart the connection we need to eat
                 // all unread data on this port.
                 serial.DiscardInBuffer();
-
                 /*while(serial.BytesToRead > 0)
                 {
                     string indata = serial.ReadExisting();
@@ -783,11 +781,7 @@ namespace RepetierHost.model
             }
             catch (IOException ex)
             {
-
-                //serial.Close();
-                serial.Dispose();
                 serial = null;
-                //readThread.Abort();
                 log(ex.Message, true, 2);
                 if (eventConnectionChange != null)
                     eventConnectionChange(Trans.T("L_CONNECTION_ERROR")); // "Conn. error");
@@ -857,7 +851,7 @@ namespace RepetierHost.model
                 return true;
             }
 
-            if (job.mode == 1)
+            if (job.mode == Printjob.jobMode.printingJob)
                 job.KillJob();
             Application.DoEvents();
             Thread.Sleep(100);
@@ -973,7 +967,10 @@ namespace RepetierHost.model
         private void received(object sender,
                         SerialDataReceivedEventArgs e)
         {
-            if (serial == null) return;
+            if (serial == null)
+            {
+                return;
+            }
             string indata = serial.ReadExisting();
             read += indata.Replace('\r', '\n');
             do

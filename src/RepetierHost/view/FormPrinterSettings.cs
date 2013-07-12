@@ -58,6 +58,9 @@ namespace RepetierHost.view
         public float rostockRadius;
         public float cncZTop;
 
+        public FormPrinterSettingsSimple printerSettingsSimple;
+
+       
         int xhomeMode = 0, yhomeMode = 0, zhomemode = 0;
 
 
@@ -75,7 +78,10 @@ namespace RepetierHost.view
             conToForm();
             comboPrinter.Items.Clear();
             foreach (string s in printerKey.GetSubKeyNames())
+            {
                 comboPrinter.Items.Add(s);
+               // this.printerSettingsSimple.comboPrinter.Items.Add(s);
+            }
             con.printerName = (string)repetierKey.GetValue("currentPrinter", "default");
             load(con.printerName);
             formToCon();
@@ -103,9 +109,23 @@ namespace RepetierHost.view
                 textDumpAreaLeft.Visible = false;
                 textDumpAreaWidth.Visible = false;
             }*/
+
+            printerSettingsSimple = new FormPrinterSettingsSimple(this);
             Main.main.languageChanged += translate;
             translate();
         }
+
+        /// <summary>
+        /// Shows the Simplified form.
+        /// </summary>
+        public void ShowSimpleForm()
+        {
+            this.printerSettingsSimple.Visible = true;
+        }
+
+        /// <summary>
+        /// Translates all the text
+        /// </summary>
         public void translate()
         {
             labelAddPrintingTime.Text = Trans.T("L_ADD_PRINTING_TIME");
@@ -382,6 +402,7 @@ namespace RepetierHost.view
             if (eventPrinterChanged != null)
                 eventPrinterChanged(currentPrinterKey,pnchanged);
         }
+
         public void conToForm()
         {
             comboPrinter.Text = con.printerName;
@@ -421,13 +442,15 @@ namespace RepetierHost.view
             logM105Checkbox.Checked = con.logM105;
             textAddPrintingTime.Text = con.addPrintingTime.ToString(GCode.format);
             numericNumExtruder.Value = con.numExtruder;
+
             if (Main.main.manulControl != null)
             {
                 textDefaultExtruderTemp.Text = Main.main.manulControl.numericUpDownExtruder.Value.ToString("0");
                 textDefaultHeatedBedTemp.Text = Main.main.manulControl.numericPrintBed.Value.ToString("0");
             }
         }
-        private void buttonOK_Click(object sender, EventArgs e)
+
+        public void buttonOK_Click(object sender, EventArgs e)
         {
             buttonApply_Click(null, null);
             formToCon();

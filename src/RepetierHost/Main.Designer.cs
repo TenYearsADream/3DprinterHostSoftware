@@ -44,12 +44,12 @@
             this.internalSlicingParameterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.slicerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.slicerSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.slicerConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gcodeEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopSlicingProcessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dViewSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calibrateHeightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.printerSettings2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.temperatureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showExtruderTemperaturesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showHeatedBedTemperaturesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -221,7 +221,8 @@
             this.soundConfigurationToolStripMenuItem,
             this.slicerToolStripMenuItem1,
             this.dViewSettingsToolStripMenuItem,
-            this.calibrateHeightToolStripMenuItem});
+            this.calibrateHeightToolStripMenuItem,
+            this.printerSettings2ToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
             this.settingsToolStripMenuItem.Text = "&Configuration";
@@ -239,6 +240,7 @@
             this.printerSettingsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.printerSettingsToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.printerSettingsToolStripMenuItem.Text = "&Printer settings";
+            this.printerSettingsToolStripMenuItem.Visible = false;
             this.printerSettingsToolStripMenuItem.Click += new System.EventHandler(this.printerSettingsToolStripMenuItem_Click);
             // 
             // repetierSettingsToolStripMenuItem
@@ -259,24 +261,18 @@
             this.soundConfigurationToolStripMenuItem.Name = "soundConfigurationToolStripMenuItem";
             this.soundConfigurationToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.soundConfigurationToolStripMenuItem.Text = "Sound configuration";
+            this.soundConfigurationToolStripMenuItem.Visible = false;
+            this.soundConfigurationToolStripMenuItem.Click += new System.EventHandler(this.soundConfigurationToolStripMenuItem_Click);
             // 
             // slicerToolStripMenuItem1
             // 
             this.slicerToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.slicerSelectionToolStripMenuItem,
             this.slicerConfigurationToolStripMenuItem,
             this.gcodeEditorToolStripMenuItem,
             this.stopSlicingProcessToolStripMenuItem});
             this.slicerToolStripMenuItem1.Name = "slicerToolStripMenuItem1";
             this.slicerToolStripMenuItem1.Size = new System.Drawing.Size(237, 22);
             this.slicerToolStripMenuItem1.Text = "Slicer";
-            // 
-            // slicerSelectionToolStripMenuItem
-            // 
-            this.slicerSelectionToolStripMenuItem.Name = "slicerSelectionToolStripMenuItem";
-            this.slicerSelectionToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.slicerSelectionToolStripMenuItem.Text = "Slicer Directory Setup";
-            this.slicerSelectionToolStripMenuItem.Click += new System.EventHandler(this.slicerSelectionToolStripMenuItem_Click);
             // 
             // slicerConfigurationToolStripMenuItem
             // 
@@ -288,8 +284,9 @@
             // gcodeEditorToolStripMenuItem
             // 
             this.gcodeEditorToolStripMenuItem.Name = "gcodeEditorToolStripMenuItem";
-            this.gcodeEditorToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.gcodeEditorToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.gcodeEditorToolStripMenuItem.Text = "G-code Editor";
+            this.gcodeEditorToolStripMenuItem.Visible = false;
             this.gcodeEditorToolStripMenuItem.Click += new System.EventHandler(this.gcodeEditorToolStripMenuItem_Click);
             // 
             // stopSlicingProcessToolStripMenuItem
@@ -311,7 +308,15 @@
             this.calibrateHeightToolStripMenuItem.Name = "calibrateHeightToolStripMenuItem";
             this.calibrateHeightToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.calibrateHeightToolStripMenuItem.Text = "Calibrate Height";
-            this.calibrateHeightToolStripMenuItem.Visible = false;
+            this.calibrateHeightToolStripMenuItem.Click += new System.EventHandler(this.calibrateHeightToolStripMenuItem_Click);
+            // 
+            // printerSettings2ToolStripMenuItem
+            // 
+            this.printerSettings2ToolStripMenuItem.Name = "printerSettings2ToolStripMenuItem";
+            this.printerSettings2ToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+            this.printerSettings2ToolStripMenuItem.Text = "Printer Settings2";
+            this.printerSettings2ToolStripMenuItem.Visible = false;
+            this.printerSettings2ToolStripMenuItem.Click += new System.EventHandler(this.printerSettings2ToolStripMenuItem_Click);
             // 
             // temperatureToolStripMenuItem
             // 
@@ -884,6 +889,8 @@
             this.connectToolStripSplitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.connectToolStripSplitButton.ToolTipText = "Connect printer";
             this.connectToolStripSplitButton.ButtonClick += new System.EventHandler(this.connectToolStripSplitButton_ButtonClick);
+            this.connectToolStripSplitButton.DropDownOpened += new System.EventHandler(this.connectToolStripSplitButton_DropDownOpened);
+            this.connectToolStripSplitButton.MouseEnter += new System.EventHandler(this.connectToolStripSplitButton_MouseEnter);
             // 
             // importSTLToolSplitButton1
             // 
@@ -1047,6 +1054,7 @@
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
             this.loggingToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.loggingToolStripMenuItem.Text = "Logging";
+            this.loggingToolStripMenuItem.Visible = false;
             this.loggingToolStripMenuItem.Click += new System.EventHandler(this.loggingToolStripMenuItem_Click);
             // 
             // manualControlToolStripMenuItem
@@ -1156,7 +1164,6 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
         private System.Windows.Forms.StatusStrip status;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -1254,7 +1261,6 @@
         public System.Windows.Forms.ToolStripMenuItem saveGCodeToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem saveNewSTLMenuItem11;
         private System.Windows.Forms.ToolStripMenuItem slicerToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem slicerSelectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gcodeEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stopSlicingProcessToolStripMenuItem;
         private System.Windows.Forms.ToolStripSplitButton modeToolStripSplitButton1;
@@ -1269,6 +1275,8 @@
         public System.Windows.Forms.ToolStripProgressBar toolProgress;
         private System.Windows.Forms.ToolStripMenuItem dViewSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem calibrateHeightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem printerSettings2ToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menu;
     }
 }
 

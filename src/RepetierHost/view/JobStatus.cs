@@ -61,7 +61,7 @@ namespace RepetierHost.view
             Printjob j = Main.connection.job;
             switch (j.mode)
             {
-                case 0:
+                case Printjob.jobMode.noJob:
                     labelStatus.Text = Trans.T("L_NO_JOB_DEFINED"); // "No job defined";
                     labelStartTime.Text = "-";
                     labelFinishTime.Text = "-";
@@ -69,7 +69,7 @@ namespace RepetierHost.view
                     labelLinesSend.Text = "-";
                     labelTotalLines.Text = "-";
                     break;
-                case 1: // Running
+                case Printjob.jobMode.printingJob: // Running
                     labelStatus.Text = Trans.T("L_RUNNING..."); // "Running ...";
                     labelStartTime.Text = j.jobStarted.ToLongTimeString();
                     labelFinishTime.Text = "-";
@@ -77,7 +77,7 @@ namespace RepetierHost.view
                     labelLinesSend.Text = j.linesSend.ToString();
                     labelTotalLines.Text = j.totalLines.ToString();
                     break;
-                case 2:
+                case Printjob.jobMode.finishedJob:
                     labelStatus.Text = Trans.T("L_FINISHED"); // "Finished";
                     labelStartTime.Text = j.jobStarted.ToLongTimeString();
                     labelFinishTime.Text = j.jobFinished.ToLongTimeString();
@@ -85,7 +85,7 @@ namespace RepetierHost.view
                     labelLinesSend.Text = j.linesSend.ToString();
                     labelTotalLines.Text = j.totalLines.ToString();
                     break;
-                case 3:
+                case Printjob.jobMode.abortedJob:
                     labelStatus.Text = Trans.T("L_ABORTED"); // "Aborted";
                     labelStartTime.Text = j.jobStarted.ToLongTimeString();
                     labelFinishTime.Text = j.jobFinished.ToLongTimeString();

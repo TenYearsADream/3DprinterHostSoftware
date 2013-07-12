@@ -779,6 +779,7 @@ namespace RepetierHost.view
             ini.add(ini2);
             ini.add(ini3);
             ini.AddSupportandRaft();
+            ini.CalibrateHeight();
             ini.flatten();
             ini.write(config);
             procConvert = new Process();

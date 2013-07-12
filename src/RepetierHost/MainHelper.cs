@@ -20,6 +20,7 @@ using RepetierHost.view.utils;
 using Microsoft.Win32;
 using System.Threading;
 using System.Diagnostics;
+using System.IO.Ports;
 
 namespace RepetierHost
 {
@@ -58,17 +59,36 @@ namespace RepetierHost
            SyncViews();
            UpdateConnections();
            UpdateProgressBar();
+           UpdateDeveloperMode();
            
            Update3D();
            updatePositionControlLocation();
        }
 
+        /// <summary>
+        /// Update the visible features in some of the forms. 
+        /// </summary>
+        private void UpdateDeveloperMode()
+        {
+            Main.main.UpdateMenuItemsForDeveloper();
+            Main.main.manulControl.UpdateItemsForDeveloper();
+           // throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Updates the progress bar information at the buttom of the main form. 
+        /// </summary>
         private void UpdateProgressBar()
         {
-            if(RepetierHost.Main.connection.job.mode !=1 )
+           // if (RepetierHost.Main.connection.job.mode != 1)
+            if (RepetierHost.Main.connection.job.mode != Printjob.jobMode.printingJob)
+            {
                 Main.main.toolProgress.Enabled = false;
+            }
             else
+            {
                 Main.main.toolProgress.Enabled = true;
+            }
             //throw new NotImplementedException();
         }
 
@@ -175,16 +195,35 @@ namespace RepetierHost
 
         }
 
+        public List<string> serialPortNames = new List<string>();
+       
         /// <summary>
         /// Updates the SplitButton Dropdown menu to include the recent printers that were used. 
         /// </summary>
         public void UpdateConnections()
         {
+            serialPortNames.Clear();
             main.connectToolStripSplitButton.DropDownItems.Clear();
-            foreach (string s in RepetierHost.Main.printerSettings.printerKey.GetSubKeyNames())
-           {
-                main.connectToolStripSplitButton.DropDownItems.Add(s, null, main.ConnectHandler);
+            //foreach (string s in RepetierHost.Main.printerSettings.printerKey.GetSubKeyNames())
+            //{
+            //    main.connectToolStripSplitButton.DropDownItems.Add(s, null, main.ConnectHandler);
+            //}
+
+            foreach (string p in SerialPort.GetPortNames())
+            {
+                main.connectToolStripSplitButton.DropDownItems.Add(p,null,main.ConnectHandler);
+                serialPortNames.Add(p);               
             }
+
+            if (main.connectToolStripSplitButton.DropDownItems.Count == 0)
+            {
+                main.connectToolStripSplitButton.DropDownItems.Add(Trans.T("M_NO_CONNECTIONS_AVAILABLE"), null, null);
+            }
+           
+            //foreach (object s in temp)
+            //{
+            //    main.connectToolStripSplitButton.DropDownItems.Add(s.ToString(), null, 
+            //}
 
             foreach (ToolStripItem it in main.connectToolStripSplitButton.DropDownItems)
             {
@@ -321,7 +360,8 @@ namespace RepetierHost
                     break;
             }
 
-            if (Main.connection.job.mode != 1) // if it is not printing. 1 = printing
+            if (Main.connection.job.mode != Printjob.jobMode.printingJob) // if it is not printing. 1 = printing
+                //if (Main.connection.job.mode != 1) // if it is not printing. 1 = printing
             {
                 Main.main.killJobToolStripMenuItem.Enabled = false;
                 //Main.main.printStripSplitButton4.Enabled = Main.conn.connected;

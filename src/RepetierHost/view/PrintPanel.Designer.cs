@@ -116,6 +116,7 @@
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "G-Code:";
+            this.label1.Visible = false;
             // 
             // textGCode
             // 
@@ -123,6 +124,7 @@
             this.textGCode.Name = "textGCode";
             this.textGCode.Size = new System.Drawing.Size(276, 20);
             this.textGCode.TabIndex = 0;
+            this.textGCode.Visible = false;
             this.textGCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textGCode_KeyDown);
             this.textGCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textGCode_KeyPress);
             // 
@@ -134,6 +136,7 @@
             this.buttonSend.TabIndex = 1;
             this.buttonSend.Text = "Send";
             this.buttonSend.UseVisualStyleBackColor = true;
+            this.buttonSend.Visible = false;
             this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
             // labelX
@@ -250,7 +253,7 @@
             this.groupExtruder.Controls.Add(this.buttonExtrude);
             this.groupExtruder.Controls.Add(this.labelExtruderTemp);
             this.groupExtruder.Controls.Add(this.switchExtruderHeatOn);
-            this.groupExtruder.Location = new System.Drawing.Point(434, 172);
+            this.groupExtruder.Location = new System.Drawing.Point(430, 8);
             this.groupExtruder.Name = "groupExtruder";
             this.groupExtruder.Size = new System.Drawing.Size(240, 171);
             this.groupExtruder.TabIndex = 41;
@@ -419,7 +422,7 @@
             this.groupPrintbed.Controls.Add(this.labelPrintbedTemp);
             this.groupPrintbed.Controls.Add(this.switchBedHeat);
             this.groupPrintbed.Controls.Add(this.labelTemp2);
-            this.groupPrintbed.Location = new System.Drawing.Point(680, 172);
+            this.groupPrintbed.Location = new System.Drawing.Point(430, 185);
             this.groupPrintbed.Name = "groupPrintbed";
             this.groupPrintbed.Size = new System.Drawing.Size(197, 79);
             this.groupPrintbed.TabIndex = 42;
@@ -467,12 +470,13 @@
             this.groupBox_Fan.Controls.Add(this.trackFanVoltage);
             this.groupBox_Fan.Controls.Add(this.labelVoltage);
             this.groupBox_Fan.Controls.Add(this.switchFanOn);
-            this.groupBox_Fan.Location = new System.Drawing.Point(680, 266);
+            this.groupBox_Fan.Location = new System.Drawing.Point(676, 15);
             this.groupBox_Fan.Name = "groupBox_Fan";
             this.groupBox_Fan.Size = new System.Drawing.Size(197, 87);
             this.groupBox_Fan.TabIndex = 43;
             this.groupBox_Fan.TabStop = false;
             this.groupBox_Fan.Text = "Fan";
+            this.groupBox_Fan.Visible = false;
             // 
             // labelVoltage
             // 
@@ -493,6 +497,7 @@
             this.buttonGoDisposeArea.TabIndex = 8;
             this.buttonGoDisposeArea.Text = "Park";
             this.buttonGoDisposeArea.UseVisualStyleBackColor = true;
+            this.buttonGoDisposeArea.Visible = false;
             this.buttonGoDisposeArea.Click += new System.EventHandler(this.buttonGoDisposeArea_Click);
             // 
             // buttonSimulateOK
@@ -516,6 +521,7 @@
             this.buttonStopMotor.TabIndex = 7;
             this.buttonStopMotor.Text = "Turn motor off";
             this.buttonStopMotor.UseVisualStyleBackColor = true;
+            this.buttonStopMotor.Visible = false;
             this.buttonStopMotor.Click += new System.EventHandler(this.buttonStopMotor_Click);
             // 
             // timer
@@ -620,6 +626,7 @@
             this.groupDebugOptions.TabIndex = 54;
             this.groupDebugOptions.TabStop = false;
             this.groupDebugOptions.Text = "Debug options";
+            this.groupDebugOptions.Visible = false;
             // 
             // groupSpeedMultiply
             // 
@@ -629,12 +636,13 @@
             this.groupSpeedMultiply.Controls.Add(this.numericUpDownSpeed);
             this.groupSpeedMultiply.Controls.Add(this.sliderFlowrate);
             this.groupSpeedMultiply.Controls.Add(this.sliderSpeed);
-            this.groupSpeedMultiply.Location = new System.Drawing.Point(434, 83);
+            this.groupSpeedMultiply.Location = new System.Drawing.Point(430, 270);
             this.groupSpeedMultiply.Name = "groupSpeedMultiply";
             this.groupSpeedMultiply.Size = new System.Drawing.Size(442, 83);
             this.groupSpeedMultiply.TabIndex = 55;
             this.groupSpeedMultiply.TabStop = false;
             this.groupSpeedMultiply.Text = "Speed Multiply";
+            this.groupSpeedMultiply.Visible = false;
             // 
             // labelFlowrate
             // 
@@ -1023,9 +1031,10 @@
             this.switchPower.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.switchPower.TextOff = "  Power";
             this.switchPower.TextOn = "  Power";
+            this.switchPower.Visible = false;
             this.switchPower.OnChange += new RepetierHost.view.SwitchEventHandler(this.switchPower_Change);
             // 
-            // PrintPanel
+            // ManualPrinterControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1059,8 +1068,8 @@
             this.Controls.Add(this.textGCode);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.switchPower);
-            this.Name = "PrintPanel";
-            this.Size = new System.Drawing.Size(884, 418);
+            this.Name = "ManualPrinterControl";
+            this.Size = new System.Drawing.Size(702, 362);
             this.Leave += new System.EventHandler(this.PrintPanel_Leave);
             this.groupExtruder.ResumeLayout(false);
             this.groupExtruder.PerformLayout();

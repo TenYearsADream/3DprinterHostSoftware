@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform.Windows;
-using OpenTK;
 using RepetierHost.model;
 
 namespace RepetierHost.view
@@ -29,25 +29,23 @@ namespace RepetierHost.view
         public static float nearDist, farDist, aspectRatio, nearHeight;
         public static float rotZ = 0, rotX = 0;
         public static int mode = 0;
-        public bool editor = false;
+       
+
         public bool autoupdateable = false;
         public int slowCounter = 0; // Indicates slow framerates
         public uint timeCall = 0;
         public bool objectsSelected = false;
         public LinkedList<ThreeDModel> models;
 
+        /// <summary>
+        /// Initializes a new instance of the ThreeDView class. 
+        /// </summary>
         public ThreeDView()
         {
             viewCenter = new Vector3(0, 0, 0);
             rotX = 25;
             userPosition = new Vector3(0f * ps.PrintAreaWidth, -1.6f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth + ps.PrintAreaHeight * ps.PrintAreaHeight), 0.0f * ps.PrintAreaHeight);
-            //userPosition = new Vector3(0, -1.7f * (float)Math.Sqrt(ps.PrintAreaDepth * ps.PrintAreaDepth + ps.PrintAreaWidth * ps.PrintAreaWidth), 0.0f * ps.PrintAreaHeight);
             models = new LinkedList<ThreeDModel>();
         }
-        public void SetEditor(bool ed)
-        {
-            editor = ed;
-        }
-
     }
 }
