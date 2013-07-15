@@ -179,6 +179,7 @@ namespace RepetierHost.model
             set { r = value; fields2 |= 4; ActivateV2OrForceAscii(); }
         }
         public bool isV2 { get { return (fields & 4096) != 0; } }
+
         /// <summary>
         /// Converts a gcode line into a binary representation.
         /// </summary>

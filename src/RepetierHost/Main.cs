@@ -323,6 +323,16 @@ namespace RepetierHost
 
 
         /// <summary>
+        /// Context Menu for the .stl list so that you can right click and delete.
+        /// </summary>
+        ContextMenu listSTLContextMenu;
+
+        /// <summary>
+        /// Menu item for the delete action that is part of the listSTLContextMenu
+        /// </summary>
+        MenuItem  delete;
+
+        /// <summary>
         /// Updates the live printing model while the printer is printing. 
         /// </summary>
         public class JobUpdater
@@ -416,6 +426,8 @@ namespace RepetierHost
         [System.Runtime.InteropServices.DllImport("libc")]
         static extern int uname(IntPtr buf);
 
+         EventHandler deleteSTL_OnClick;
+
         /// <summary>
         /// Initializes a new instance of the Main class. Part of the Windows form setup. Everything should be initialized in this function. 
         /// </summary>
@@ -463,8 +475,20 @@ namespace RepetierHost
 
             logform.Controls.Add(logView);
 
+       
+
             fileAddOrRemove = new FileAddOrRemove(this);
-            main.listSTLObjects.Visible = false;
+            this.listSTLObjects.Visible = false;
+
+            listSTLContextMenu = new ContextMenu();
+            listSTLContextMenu.MenuItems.Add(Trans.T("B_REMOVE_STL_OBJECT"), deleteSTL_OnClickEvent);
+            //deleteSTL_OnClick += deleteSTL_OnClickEvent();
+            // delete = new MenuItem(Trans.T("L_DELETE"), deleteSTL_OnClick);
+
+           // main.connectToolStripSplitButton.DropDownItems.Add(p, null, main.ConnectHandler);
+           // deleteSTL_OnClick += new System.EventHandler(this.deleteSTL_OnClickEvent);
+            // this.listSTLObjects.Controls.Add(this.listSTLContextMenu);
+            this.listSTLObjects.ContextMenu = listSTLContextMenu;
 
             WindowState = FormWindowState.Maximized;
 
@@ -503,7 +527,7 @@ namespace RepetierHost
                 }
             }
             connection.eventConnectionChange += OnPrinterConnectionChange;
-            connection.eventPrinterAction += OnPrinterAction;
+            connection.eventPrinterAction += OnPrinterAction; // Add the Function to the event que. 
             connection.eventJobProgress += OnJobProgress;
 
             manulControl = new ManualPrinterControl();
@@ -520,7 +544,7 @@ namespace RepetierHost
             logform.StartPosition = FormStartPosition.WindowsDefaultBounds;
             logform.Controls.Add(logView);
 
-            // TODO: Remomve this. 
+            
             skeinforge = new Skeinforge();
 
             slicerPanel = new SlicerPanel();
@@ -657,7 +681,13 @@ namespace RepetierHost
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
 
-        } // End Main()
+        } // End Main. 
+
+        private void deleteSTL_OnClickEvent(object sender, EventArgs e)
+        {
+            this.fileAddOrRemove.RemoveSTLObject();
+           
+        } 
 
         /// <summary>
         /// Control the Drag Enter actions. Basically copy the file to the clip board??
@@ -2031,7 +2061,6 @@ namespace RepetierHost
 
         /// <summary>
         /// What to do when the print button is clicked. 
-        /// TODO: Change the availablity of being able to click this and the image based on whether g-code that an be printed is avaible. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2189,6 +2218,9 @@ namespace RepetierHost
 
         Stopwatch developerModeWatch = new Stopwatch();
         int developerModeClickCount = 0;
+
+
+      
 
 
         /// <summary>

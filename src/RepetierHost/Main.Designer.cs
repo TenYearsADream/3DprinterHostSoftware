@@ -76,6 +76,7 @@
             this.extruder1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extruder2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.heatedBedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showTemperatureWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerInformationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jobStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,7 +144,6 @@
             this.openFileSTLorGcode = new System.Windows.Forms.OpenFileDialog();
             this.saveSTL = new System.Windows.Forms.SaveFileDialog();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.showTemperatureWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -536,6 +536,13 @@
             this.heatedBedToolStripMenuItem.Text = "Heated Bed";
             this.heatedBedToolStripMenuItem.Click += new System.EventHandler(this.heatedBedToolStripMenuItem_Click);
             // 
+            // showTemperatureWindowToolStripMenuItem
+            // 
+            this.showTemperatureWindowToolStripMenuItem.Name = "showTemperatureWindowToolStripMenuItem";
+            this.showTemperatureWindowToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.showTemperatureWindowToolStripMenuItem.Text = "Show Temperature Window";
+            this.showTemperatureWindowToolStripMenuItem.Click += new System.EventHandler(this.showTemperatureWindowToolStripMenuItem_Click);
+            // 
             // printerToolStripMenuItem
             // 
             this.printerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -891,7 +898,6 @@
             this.connectToolStripSplitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.connectToolStripSplitButton.ToolTipText = "Connect printer";
             this.connectToolStripSplitButton.ButtonClick += new System.EventHandler(this.connectToolStripSplitButton_ButtonClick);
-           // this.connectToolStripSplitButton.DropDownOpened += new System.EventHandler(this.connectToolStripSplitButton_DropDownOpened);
             this.connectToolStripSplitButton.MouseEnter += new System.EventHandler(this.connectToolStripSplitButton_MouseEnter);
             // 
             // importSTLToolSplitButton1
@@ -956,7 +962,7 @@
             // killJobToolStripMenuItem
             // 
             this.killJobToolStripMenuItem.Name = "killJobToolStripMenuItem";
-            this.killJobToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.killJobToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.killJobToolStripMenuItem.Text = "Kill Job";
             this.killJobToolStripMenuItem.Click += new System.EventHandler(this.killJobToolStripMenuItem_Click);
             // 
@@ -1125,13 +1131,6 @@
             this.saveSTL.DefaultExt = "stl";
             this.saveSTL.Filter = "STL-Files|*.stl;*.STL";
             this.saveSTL.Title = "Save composition";
-            // 
-            // showTemperatureWindowToolStripMenuItem
-            // 
-            this.showTemperatureWindowToolStripMenuItem.Name = "showTemperatureWindowToolStripMenuItem";
-            this.showTemperatureWindowToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.showTemperatureWindowToolStripMenuItem.Text = "Show Temperature Window";
-            this.showTemperatureWindowToolStripMenuItem.Click += new System.EventHandler(this.showTemperatureWindowToolStripMenuItem_Click);
             // 
             // Main
             // 

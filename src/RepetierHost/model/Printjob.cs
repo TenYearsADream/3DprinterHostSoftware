@@ -67,39 +67,47 @@ namespace RepetierHost.model
         public DateTime jobStarted, jobFinished;
         LinkedList<GCodeCompressed> jobList = new LinkedList<GCodeCompressed>();
         //LinkedList<PrintTime> times = new LinkedList<PrintTime>();
-        PrinterConnection con;
+        PrinterConnection connection;
         GCodeAnalyzer ana = null;
 
         public Printjob(PrinterConnection c)
         {
-            con = c;
+            connection = c;
         }
 
+        /// <summary>
+        /// Begins a new printing job. Resets many of the varriables. 
+        /// </summary>
         public void BeginJob()
         {
-            con.firePrinterAction(Trans.T("L_BUILDING_PRINT_JOB...")); //"Building print job...");
+            connection.firePrinterAction(Trans.T("L_BUILDING_PRINT_JOB...")); //"Building print job...");
             dataComplete = false;
             jobList.Clear();
             //times.Clear();
             totalLines = 0;
             linesSend = 0;
             computedPrintingTime = 0;
-            con.lastlogprogress = -1000;
+            connection.lastlogprogress = -1000;
             maxLayer = -1;
             mode = jobMode.printingJob;
             ana = new GCodeAnalyzer(true);
-            con.analyzer.StartJob();
+            connection.analyzer.StartJob();
             
             //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
             UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
             Main.main.Invoke(updateAll);
         }
+
+        /// <summary>
+        /// Ends the current printing job. If another one is in que then it resets some the the varriables. 
+        /// </summary>
         public void EndJob()
         {
+            // If no more jobs to do. 
             if (jobList.Count == 0)
             {
                 mode = 0;
-                con.firePrinterAction(Trans.T("L_IDLE"));
+                connection.firePrinterAction(Trans.T("L_IDLE"));
                 //Main.main.Invoke(Main.main.UpdateJobButtons);
                 //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
                 UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
@@ -108,9 +116,12 @@ namespace RepetierHost.model
                 Main.main.manulControl.Invoke(Main.main.manulControl.SetStatusJobFinished);
                 return;
             }
-            dataComplete = true;
-            jobStarted = DateTime.Now;
-            con.firePrinterAction(Trans.T("L_PRINTING..."));
+            else // if more jobs to do. 
+            {
+                dataComplete = true;
+                jobStarted = DateTime.Now;
+                connection.firePrinterAction(Trans.T("L_PRINTING..."));
+            }
         }
 
         /// <summary>
@@ -129,17 +140,17 @@ namespace RepetierHost.model
                 totalLines = linesSend;
             }
             exclusive = false;
-            con.injectManualCommandFirst("M29");
+            connection.injectManualCommandFirst("M29");
             foreach (GCodeShort code in Main.main.editor.getContentArray(3))
             {
-                con.injectManualCommand(code.text);
+                connection.injectManualCommand(code.text);
             }
             //Main.main.Invoke(Main.main.UpdateJobButtons);
             //Main.main.Invoke(Main.main.mainHelp.UpdateJobButtons);
             UpdateAll updateAll = Main.main.mainUpdaterHelper.UpdateEverythingInMain;
             Main.main.Invoke(updateAll);
 
-            con.firePrinterAction(Trans.T("L_JOB_KILLED")); //"Job killed");
+            connection.firePrinterAction(Trans.T("L_JOB_KILLED")); //"Job killed");
             DoEndKillActions();
             Main.main.manulControl.Invoke(Main.main.manulControl.SetStatusJobKilled);
         }
@@ -152,19 +163,19 @@ namespace RepetierHost.model
                 exclusive = false;
                 return;
             }
-            con.GetInjectLock();
-            if (con.afterJobDisableExtruder)
+            connection.GetInjectLock();
+            if (connection.afterJobDisableExtruder)
             {
                 for(int i=0;i<Main.connection.numberExtruder;i++) 
-                    con.injectManualCommand("M104 S0 T"+i.ToString());
+                    connection.injectManualCommand("M104 S0 T"+i.ToString());
             }
-            if(con.afterJobDisablePrintbed) 
-                con.injectManualCommand("M140 S0");
-            con.ReturnInjectLock();
-            if (con.afterJobGoDispose)
-                con.doDispose();
-            if(con.afterJobDisableMotors)
-                con.injectManualCommand("M84");
+            if(connection.afterJobDisablePrintbed) 
+                connection.injectManualCommand("M140 S0");
+            connection.ReturnInjectLock();
+            if (connection.afterJobGoDispose)
+                connection.doDispose();
+            if(connection.afterJobDisableMotors)
+                connection.injectManualCommand("M84");
         }
         public void PushData(string code)
         {
@@ -208,9 +219,18 @@ namespace RepetierHost.model
         {
             return linesSend < totalLines;
         }
+
+        /// <summary>
+        /// Shows the next value (Gcode object )in the jobList linked list, but does not increment or remove the value. 
+        /// </summary>
+        /// <returns>null if nothing to send, otherwise the next GCode</returns>
         public GCode PeekData()
         {
-            if (jobList.Count == 0) return null;
+            if (jobList.Count == 0)
+            {
+                return null;
+            }
+
             return new GCode(jobList.First.Value);
         }
         public GCode PopData()

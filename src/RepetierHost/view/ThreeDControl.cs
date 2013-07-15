@@ -456,6 +456,7 @@ namespace RepetierHost.view
                     new OpenTK.Graphics.Color4(255, 255, 255, 255));
 
                 // Drawing background skybox would probably be ok here. 
+
                 float dx1 = ps.DumpAreaLeft;
                 float dx2 = dx1 + ps.DumpAreaWidth;
                 float dy1 = ps.DumpAreaFront;
