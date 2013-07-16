@@ -61,6 +61,10 @@ namespace RepetierHost.model
         public event OnTempHistory eventTempHistory;
         TextWriter logWriter = null;
         public GCodeAnalyzer analyzer = new GCodeAnalyzer(false);
+
+        /// <summary>
+        /// Shows if the computer is connected and able to communicate with a printer. 
+        /// </summary>
         public bool connected = false;
         // ======== Printer data =============
         public string printerName = "default";

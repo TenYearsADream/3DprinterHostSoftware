@@ -22,6 +22,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.IO.Ports;
 
+
 namespace RepetierHost
 {
     /// <summary>
@@ -72,6 +73,8 @@ namespace RepetierHost
         {
             Main.main.UpdateMenuItemsForDeveloper();
             Main.main.manulControl.UpdateItemsForDeveloper();
+            RepetierHost.Main.globalSettings.UpdateDeveloperMode();
+           // main.globalSettings.UpdateDeveloperMode();
            // throw new NotImplementedException();
         }
 

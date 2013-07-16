@@ -58,7 +58,9 @@
             this.groupFilesAndDirectories.Controls.Add(this.labelOKMasg);
             this.groupFilesAndDirectories.Controls.Add(this.labelInfoWorkdir);
             this.groupFilesAndDirectories.Controls.Add(this.checkLogfile);
+            this.groupFilesAndDirectories.Controls.Add(this.buttonAbort);
             this.groupFilesAndDirectories.Controls.Add(this.buttonSearchWorkdir);
+            this.groupFilesAndDirectories.Controls.Add(this.buttonOK);
             this.groupFilesAndDirectories.Controls.Add(this.textWorkdir);
             this.groupFilesAndDirectories.Controls.Add(this.labelWorkdir);
             this.groupFilesAndDirectories.Location = new System.Drawing.Point(13, 12);
@@ -85,6 +87,7 @@
             this.labelInfoWorkdir.Size = new System.Drawing.Size(491, 52);
             this.labelInfoWorkdir.TabIndex = 4;
             this.labelInfoWorkdir.Text = resources.GetString("labelInfoWorkdir.Text");
+            this.labelInfoWorkdir.Visible = false;
             // 
             // checkLogfile
             // 
@@ -95,6 +98,7 @@
             this.checkLogfile.TabIndex = 2;
             this.checkLogfile.Text = "Log session";
             this.checkLogfile.UseVisualStyleBackColor = true;
+            this.checkLogfile.Visible = false;
             // 
             // buttonSearchWorkdir
             // 
@@ -125,7 +129,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(362, 392);
+            this.buttonOK.Location = new System.Drawing.Point(335, 120);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(80, 22);
             this.buttonOK.TabIndex = 0;
@@ -135,7 +139,7 @@
             // 
             // buttonAbort
             // 
-            this.buttonAbort.Location = new System.Drawing.Point(448, 392);
+            this.buttonAbort.Location = new System.Drawing.Point(421, 120);
             this.buttonAbort.Name = "buttonAbort";
             this.buttonAbort.Size = new System.Drawing.Size(80, 22);
             this.buttonAbort.TabIndex = 1;
@@ -157,6 +161,7 @@
             this.groupBehaviour.TabIndex = 2;
             this.groupBehaviour.TabStop = false;
             this.groupBehaviour.Text = "Behaviour";
+            this.groupBehaviour.Visible = false;
             // 
             // checkDisableQualityReduction
             // 
@@ -178,6 +183,7 @@
             this.groupGUI.TabIndex = 3;
             this.groupGUI.TabStop = false;
             this.groupGUI.Text = "GUI";
+            this.groupGUI.Visible = false;
             // 
             // checkRedGreenSwitch
             // 
@@ -204,7 +210,7 @@
             // 
             this.resetSoftware.Controls.Add(this.ResetWarninglabel1);
             this.resetSoftware.Controls.Add(this.resetSoftwarebutton1);
-            this.resetSoftware.Location = new System.Drawing.Point(12, 320);
+            this.resetSoftware.Location = new System.Drawing.Point(12, 333);
             this.resetSoftware.Name = "resetSoftware";
             this.resetSoftware.Size = new System.Drawing.Size(519, 53);
             this.resetSoftware.TabIndex = 4;
@@ -235,13 +241,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(544, 442);
+            this.ClientSize = new System.Drawing.Size(533, 176);
             this.ControlBox = false;
             this.Controls.Add(this.resetSoftware);
             this.Controls.Add(this.groupGUI);
             this.Controls.Add(this.groupBehaviour);
-            this.Controls.Add(this.buttonAbort);
-            this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupFilesAndDirectories);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -249,7 +253,7 @@
             this.MinimizeBox = false;
             this.Name = "GlobalSettings";
             this.ShowInTaskbar = false;
-            this.Text = "Repetier settings";
+            this.Text = "Software Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GlobalSettings_FormClosing);
             this.groupFilesAndDirectories.ResumeLayout(false);
             this.groupFilesAndDirectories.PerformLayout();

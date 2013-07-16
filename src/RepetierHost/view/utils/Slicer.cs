@@ -154,14 +154,14 @@ namespace RepetierHost.view.utils
                 if(value!=_ActiveSlicer) {
                     _ActiveSlicer = value;
                     Main.printerModel.ActiveSlicer = _ActiveSlicer;
-                    //Main.main.repetierKey.SetValue("ActiveSlicer", (int)_ActiveSlicer);
+                    Main.main.repetierKey.SetValue("ActiveSlicer", (int)_ActiveSlicer);
                 }
                 //Main.main.slic3rToolStripMenuItem.Checked= _ActiveSlicer == SlicerID.Slic3r;
                 //Main.main.skeinforgeToolStripMenuItem1.Checked = _ActiveSlicer == SlicerID.Skeinforge;
                 //Main.main.externalSlic3rToolStripMenuItem.Checked = _ActiveSlicer == SlicerID.Slic3rExternal;
                 //Main.main.stlComposer1.buttonSlice.Text = Trans.T1("L_SLICE_WITH", SlicerName);
-                //if( Main.main.slicerPanel!=null)
-                //    Main.main.slicerPanel.UpdateSelection();
+                if( Main.main.slicerPanel!=null)
+                    Main.main.slicerPanel.UpdateSelection();
             }
         }
         public void Update()
@@ -223,6 +223,7 @@ namespace RepetierHost.view.utils
                     break;
             }
         }
+
         public string SlicerName
         {
             get {

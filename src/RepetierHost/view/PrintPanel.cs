@@ -879,8 +879,27 @@ namespace RepetierHost.view
         private void arrowButtonZPlus_Click(object sender, EventArgs e)
         {
             float d = ((ArrowButton)sender).CurrentValueF;
-            if (ann.hasZHome && d + ann.z > Main.printerSettings.PrintAreaHeight) d = Main.printerSettings.PrintAreaHeight - ann.z;
-            moveHead("Z", d);
+
+            if (RepetierHost.Main.printerSettings.comboHomeZ.SelectedIndex == 1) // "MAX"
+            {
+                d = -d;
+                if (ann.hasZHome && d + ann.z < 0)
+                {
+                    d = -ann.z;
+                }
+                moveHead("Z", d);
+                return;
+            }
+            else
+            {
+
+                if (ann.hasZHome && d + ann.z > Main.printerSettings.PrintAreaHeight)
+                {
+                    d = Main.printerSettings.PrintAreaHeight - ann.z;
+                }
+
+                moveHead("Z", d);
+            }
 
         }
 
@@ -888,14 +907,40 @@ namespace RepetierHost.view
         {
             float d = -((ArrowButton)sender).CurrentValueF;
 
-            if ((FormPrinterSettings.ps.printerType != 3) &&
-                ann.hasZHome &&
-                (d + ann.z < 0))
+            if (RepetierHost.Main.printerSettings.comboHomeZ.SelectedIndex == 1) // "MAX"
             {
-                d = -ann.z;
+                d = -d;
+                if (ann.hasZHome && d + ann.z > Main.printerSettings.PrintAreaHeight)
+                {
+                    d = Main.printerSettings.PrintAreaHeight- ann.z; 
+                }
+                moveHead("Z", d);
+                return;
+            }
+            else
+            {
+
+                if (ann.hasZHome && (d + ann.z < 0))
+                {
+                    d = Main.printerSettings.PrintAreaHeight - ann.z;
+                }
+
+                moveHead("Z", d);
             }
 
-            moveHead("Z", d);
+            //if (RepetierHost.Main.printerSettings.comboHomeZ.SelectedIndex == 1) // "MAX"
+            //{
+            //    d = -d;
+            //}
+
+            //if ((FormPrinterSettings.ps.printerType != 3) &&
+            //    ann.hasZHome &&
+            //    (d + ann.z < 0))
+            //{
+            //    d = -ann.z;
+            //}
+
+            //moveHead("Z", d);
 
         }
 

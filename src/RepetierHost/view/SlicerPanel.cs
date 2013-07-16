@@ -326,17 +326,51 @@ namespace RepetierHost.view
             Main.main.skeinforge.RunSkeinforge();
         }
 
+        //private void toggleSlicer()
+        //{
+        //    if (switchSlic3rActive.On ==true)
+        //    //if (Main.slicer.ActiveSlicer == Slicer.SlicerID.Skeinforge)
+        //    {
+        //        Main.slicer.ActiveSlicer = Slicer.SlicerID.Slic3r;
+        //        //switchSlic3rActive.On = true;
+        //        switchSkeinforge.On = false;
+                
+        //    }
+        //    else// if(Main.slicer.ActiveSlicer == Slicer.SlicerID.Slic3r)
+        //    {
+        //        //Main.slicer.ActiveSlicer = Slicer.SlicerID.Skeinforge   ;
+        //        //switchSlic3rActive.On = false;
+        //        //switchSkeinforge.On = true;
+        //    }
+        //    //switchSlic3rActive.Invalidate();
+        //   // switchSkeinforge.Invalidate();
+
+
+        //}
         
         private void switchSlic3rActive_OnChange(SwitchButton button)
         {
-            if (updating || Main.slicer==null) return;
-                Main.slicer.ActiveSlicer = Slicer.SlicerID.Slic3r;
+            //// if (updating || Main.slicer==null) return;
+            if (updating || Main.slicer == null) return;
+
+
+                    Main.slicer.ActiveSlicer = Slicer.SlicerID.Slic3r;        
+
+           // UpdateSelection();
         }
 
         private void switchSkeinforge_OnChange(SwitchButton button)
         {
-            if (updating) return;
-            Main.slicer.ActiveSlicer = Slicer.SlicerID.Skeinforge;
+            //if (Main.slicer == null)
+            //{
+            //    return;
+            //}
+            if (updating || Main.slicer == null) return;
+
+
+            Main.slicer.ActiveSlicer = Slicer.SlicerID.Skeinforge;        
+            
+           // UpdateSelection();
         }
 
         private void buttonStartSlicing_Click(object sender, EventArgs e)
@@ -406,6 +440,26 @@ namespace RepetierHost.view
             Main.main.withRaftToolStripMenuItem1.Checked = generateRaftCheckbox.Checked;
             RegMemory.SetBool("generateRaft", this.generateSupportCheckbox.Checked);
             
+        }
+
+        private void switchSkeinforge_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void switchSlic3rActive_Load(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void switchSlic3rActive_Click(object sender, EventArgs e)
+        {
+            //toggleSlicer();
+        }
+
+        private void switchSkeinforge_Click(object sender, EventArgs e)
+        {
+           // toggleSlicer();
         }
 
        

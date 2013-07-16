@@ -191,6 +191,7 @@ namespace RepetierHost
         /// </summary>
         public void Slice()
         {
+            // Check to make sure the workind directory exists. 
             string dir = Main.globalSettings.Workdir;
             if (!Directory.Exists(dir))
             {
@@ -199,12 +200,20 @@ namespace RepetierHost
                 return;
             }
 
-            if (this.main.listSTLObjects.Items.Count == 0) return;
+            // Check to make sure that there are .stl models on the viritual printing bed
+            if (this.main.listSTLObjects.Items.Count == 0)
+            {
+                return;
+            }
+
+            // Check to see if items are outside the printing area. 
             bool itemsOutide = false;
             foreach (STL stl in this.main.listSTLObjects.Items)
             {
-                if (stl.outside) 
+                if (stl.outside)
+                {
                     itemsOutide = true;
+                }
             }
 
             if (itemsOutide)
@@ -213,12 +222,17 @@ namespace RepetierHost
                     return;
             }
 
+            // Set the the top left corner of the windows form to the name of the first .stl file + the number other .stl files. 
             string t = this.main.listSTLObjects.Items[0].ToString();
             if (this.main.listSTLObjects.Items.Count > 1)
                 t += " + " + (this.main.listSTLObjects.Items.Count - 1).ToString();
             Main.main.Title = t;
+
+            // Save all the .stl files as one huge combined .stl file called "composition.stl". Put it in the working directory. 
             dir += Path.DirectorySeparatorChar + "composition.stl";
             this.SaveComposition(dir);
+
+            // Run the slicer. 
             Main.slicer.RunSlice(dir); // Slice it and load
         }
 

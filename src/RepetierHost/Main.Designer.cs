@@ -40,7 +40,7 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.repetierSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.softwareSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.internalSlicingParameterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.slicerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -217,10 +217,10 @@
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.languageToolStripMenuItem,
             this.printerSettingsToolStripMenuItem,
-            this.repetierSettingsToolStripMenuItem,
             this.internalSlicingParameterToolStripMenuItem,
             this.soundConfigurationToolStripMenuItem,
             this.slicerToolStripMenuItem1,
+            this.softwareSettingsToolStripMenuItem,
             this.dViewSettingsToolStripMenuItem,
             this.calibrateHeightToolStripMenuItem,
             this.printerSettings2ToolStripMenuItem});
@@ -244,12 +244,12 @@
             this.printerSettingsToolStripMenuItem.Visible = false;
             this.printerSettingsToolStripMenuItem.Click += new System.EventHandler(this.printerSettingsToolStripMenuItem_Click);
             // 
-            // repetierSettingsToolStripMenuItem
+            // softwareSettingsToolStripMenuItem
             // 
-            this.repetierSettingsToolStripMenuItem.Name = "repetierSettingsToolStripMenuItem";
-            this.repetierSettingsToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-            this.repetierSettingsToolStripMenuItem.Text = "Software general configuration";
-            this.repetierSettingsToolStripMenuItem.Click += new System.EventHandler(this.repetierSettingsToolStripMenuItem_Click);
+            this.softwareSettingsToolStripMenuItem.Name = "softwareSettingsToolStripMenuItem";
+            this.softwareSettingsToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+            this.softwareSettingsToolStripMenuItem.Text = "Software general configuration";
+            this.softwareSettingsToolStripMenuItem.Click += new System.EventHandler(this.repetierSettingsToolStripMenuItem_Click);
             // 
             // internalSlicingParameterToolStripMenuItem
             // 
@@ -936,14 +936,14 @@
             // withRaftToolStripMenuItem1
             // 
             this.withRaftToolStripMenuItem1.Name = "withRaftToolStripMenuItem1";
-            this.withRaftToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.withRaftToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.withRaftToolStripMenuItem1.Text = "With Raft";
             this.withRaftToolStripMenuItem1.Click += new System.EventHandler(this.withRaftToolStripMenuItem1_Click);
             // 
             // withSupportsToolStripMenuItem1
             // 
             this.withSupportsToolStripMenuItem1.Name = "withSupportsToolStripMenuItem1";
-            this.withSupportsToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.withSupportsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.withSupportsToolStripMenuItem1.Text = "With Supports";
             this.withSupportsToolStripMenuItem1.Click += new System.EventHandler(this.withSupportsToolStripMenuItem1_Click);
             // 
@@ -962,7 +962,7 @@
             // killJobToolStripMenuItem
             // 
             this.killJobToolStripMenuItem.Name = "killJobToolStripMenuItem";
-            this.killJobToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.killJobToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.killJobToolStripMenuItem.Text = "Kill Job";
             this.killJobToolStripMenuItem.Click += new System.EventHandler(this.killJobToolStripMenuItem_Click);
             // 
@@ -1181,7 +1181,7 @@
         private System.Windows.Forms.ToolStripMenuItem printerSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printerInformationsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem repetierSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem softwareSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem jobStatusToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userManual2ToolStripMenuItem;
         public System.Windows.Forms.ToolStripStatusLabel fpsLabel;

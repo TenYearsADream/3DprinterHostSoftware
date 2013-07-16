@@ -38,12 +38,19 @@ namespace RepetierHost.view
         RegistryKey repetierKey;
 
         /// <summary>
+        /// Size to make the form when not indeveloper mode. 
+        /// </summary>
+        private System.Drawing.Size FormSize = new Size(539, 204);
+
+        /// <summary>
         /// Initialize the class by getting Registry key related to global settings and translating
         /// </summary>
         public GlobalSettings()
         {
             InitializeComponent();
+
             RegMemory.RestoreWindowPos("globalSettingsWindow", this);
+            this.Size = FormSize;
             repetierKey = Custom.BaseKey; // Registry.CurrentUser.CreateSubKey("SOFTWARE\\Repetier");
             RegToForm();
             translate();
@@ -55,7 +62,7 @@ namespace RepetierHost.view
         /// </summary>
         public void translate()
         {
-            Text = Trans.T("W_REPETIER_SETTINGS");
+            Text = Trans.T("M_SOFTWARE_GENERAL_SETTINGS");
             groupBehaviour.Text = Trans.T("L_BEHAVIOUR");
             groupFilesAndDirectories.Text = Trans.T("L_FILES_AND_DIRECTORIES");
             groupGUI.Text = Trans.T("L_GUI");
@@ -200,6 +207,28 @@ namespace RepetierHost.view
                     Main.main.Close(); // Not working right now. Becasue it tries to access teh registry while shutting down. 
                 }
         
+        }
+
+        internal void UpdateDeveloperMode()
+        {
+            bool currentDevMode = Main.main.DeveloperMode;
+            if (currentDevMode == true)
+            {
+                this.Size = new Size(550, 470);
+            }
+            else
+            {
+                this.Size = this.FormSize;
+            }
+
+            this.checkLogfile.Visible = currentDevMode;
+            this.labelInfoWorkdir.Visible = currentDevMode;
+
+            this.groupBehaviour.Visible = currentDevMode;
+            this.groupGUI.Visible = currentDevMode;
+            this.resetSoftware.Visible = currentDevMode;
+         
+
         }
     }
 }

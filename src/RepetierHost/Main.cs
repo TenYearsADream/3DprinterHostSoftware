@@ -444,8 +444,8 @@ namespace RepetierHost
             SplashScreen.run();
 
             // Temp change the directory which looks for translations. 
-            trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "Translation");
-            //            trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + "data" + Path.DirectorySeparatorChar + "translations");
+            //trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "Translation");
+                        trans = new Trans(Application.StartupPath + Path.DirectorySeparatorChar + "data" + Path.DirectorySeparatorChar + "translations");
             SwitchButton.imageOffset = RegMemory.GetInt("onOffImageOffset", 0);
             generator = new GCodeGenerator();
             globalSettings = new GlobalSettings();
@@ -473,9 +473,7 @@ namespace RepetierHost
             logView = new LogView();
             logform = new Form();
 
-            logform.Controls.Add(logView);
-
-       
+            logform.Controls.Add(logView);       
 
             fileAddOrRemove = new FileAddOrRemove(this);
             this.listSTLObjects.Visible = false;
@@ -683,6 +681,12 @@ namespace RepetierHost
 
         } // End Main. 
 
+
+        /// <summary>
+        /// Deletes the selected stl models in the list of stl models in the top right corner when you use the dropdown menu accessed from the right mouse click. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteSTL_OnClickEvent(object sender, EventArgs e)
         {
             this.fileAddOrRemove.RemoveSTLObject();
@@ -718,7 +722,7 @@ namespace RepetierHost
             this.calibrateHeightToolStripMenuItem.Text = Trans.T("M_CALIBRATE_HIEGHT");
             fileToolStripMenuItem.Text = Trans.T("M_FILE");
             settingsToolStripMenuItem.Text = Trans.T("M_CONFIG");
-            this.repetierSettingsToolStripMenuItem.Text = Trans.T("M_SOFTWARE_GENERAL_SETTINGS");
+            this.softwareSettingsToolStripMenuItem.Text = Trans.T("M_SOFTWARE_GENERAL_SETTINGS");
             this.slicerToolStripMenuItem1.Text = Trans.T("M_SLICER");
             //// this.slicerSelectionToolStripMenuItem.Text = Trans.T("M_SLICER_DIRECTORY_SETUP");
             this.slicerConfigurationToolStripMenuItem.Text = Trans.T("M_SLICER_CONFIGURATION");
@@ -913,6 +917,7 @@ namespace RepetierHost
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             connection.port = clickedItem.Text;
+            connection.printerName = "default";
             printerSettings.formToCon(); // so that we save the most the port name. 
            
             this.mainUpdaterHelper.UpdateEverythingInMain();
@@ -2377,7 +2382,7 @@ namespace RepetierHost
         internal void UpdateMenuItemsForDeveloper()
         {
             this.printerSettingsToolStripMenuItem.Visible = DeveloperMode;
-            this.repetierSettingsToolStripMenuItem.Visible = DeveloperMode;
+            // make always visiible // this.softwareSettingsToolStripMenuItem.Visible = DeveloperMode;
             this.internalSlicingParameterToolStripMenuItem.Visible = DeveloperMode;
             this.dViewSettingsToolStripMenuItem.Visible = DeveloperMode;
             this.printerSettings2ToolStripMenuItem.Visible = DeveloperMode;
