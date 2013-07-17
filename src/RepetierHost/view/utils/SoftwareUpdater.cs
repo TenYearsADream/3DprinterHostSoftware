@@ -80,7 +80,7 @@ namespace RepetierHost.view.utils
         //    error = 0;
         //};
 
-        public static ThreedPrinterUpdateXMLversion xmlUpdater = null;
+        public static UpdateSoftwareXML xmlUpdater = null;
 
         /// <summary>
         /// Reference to an isntance of itself
@@ -115,7 +115,7 @@ namespace RepetierHost.view.utils
             }
 
 
-            thread = new Thread(ThreedPrinterUpdateXMLversion.CheckForUpdatesXML);
+            thread = new Thread(UpdateSoftwareXML.CheckForUpdatesXML);
             // thread = new Thread(RHUpdater.CheckThread);
             running = true;
 
@@ -295,10 +295,10 @@ namespace RepetierHost.view.utils
         private void buttonDownload_Click(object sender, EventArgs e)
         {
             //string url = 
-            if (ThreedPrinterUpdateXMLversion.newestUpdate.webaddressToDownload != "" && 
-                ThreedPrinterUpdateXMLversion.newestUpdate.webaddressToDownload != null)
+            if (UpdateSoftwareXML.newestUpdate.webaddressToDownload != "" && 
+                UpdateSoftwareXML.newestUpdate.webaddressToDownload != null)
             {
-                Main.main.openLink(ThreedPrinterUpdateXMLversion.newestUpdate.webaddressToDownload);
+                Main.main.openLink(UpdateSoftwareXML.newestUpdate.webaddressToDownload);
             }
 
             this.Hide();
@@ -307,7 +307,7 @@ namespace RepetierHost.view.utils
 
         private void buttonSkipVersion_Click(object sender, EventArgs e)
         {
-            RegMemory.SetInt("checkUpdateSkipBuild", ThreedPrinterUpdateXMLversion.newestUpdate.buildnum);
+            RegMemory.SetInt("checkUpdateSkipBuild", UpdateSoftwareXML.newestUpdate.buildnum);
             this.Hide();
             this.Dispose();
         }       

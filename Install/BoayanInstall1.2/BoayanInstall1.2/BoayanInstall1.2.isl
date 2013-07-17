@@ -346,7 +346,6 @@
 		<row><td>API.dll</td><td>{11C976F8-167F-49B8-9639-6835BE756ACE}</td><td>_F7C428C727A7D81643B50B598197734</td><td>2</td><td/><td>api.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>B.dll</td><td>{126C19F6-3598-46CC-AE60-FAACF85DF05E}</td><td>_FA3F50B03F9CB0203031CF516AA3973</td><td>2</td><td/><td>b.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>BaoyanAutomationSoftware.exe</td><td>{04C5C4BE-AE8A-45A6-858C-CE52D026EA7C}</td><td>RELEASE</td><td>2</td><td/><td>baoyanautomationsoftware.exe</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>BaoyanAutomationSoftware.vshost.exe</td><td>{BF888C63-B3A1-423E-AE6C-E703154CC953}</td><td>RELEASE</td><td>2</td><td/><td>baoyanautomationsoftware.vsh1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Base64.dll</td><td>{99992AB9-E5DF-4CD7-8E79-D685E6EA245B}</td><td>_A02FE0B6C8A35FFBF56E88F9910ABEB</td><td>2</td><td/><td>base64.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Byte.dll</td><td>{378467AC-6AB7-4645-BBC4-88AF17764BF3}</td><td>_FF31EB32E672B10095DC07142EDA94E</td><td>2</td><td/><td>byte.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Bzip2.dll</td><td>{22111E63-0AF2-4897-B1A7-5D25446194A8}</td><td>EAA3F41565BF2FE58068D68F47A06165</td><td>2</td><td/><td>bzip2.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1128,7 +1127,7 @@
 		<row><td>LicenseAgreement</td><td>Back</td><td>NewDialog</td><td>InstallWelcome</td><td>1</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>ISPrintButton</td><td>DoAction</td><td>ISPrint</td><td>1</td><td>0</td></row>
-		<row><td>LicenseAgreement</td><td>Next</td><td>NewDialog</td><td>CustomerInformation</td><td>AgreeToLicense = "Yes"</td><td>0</td></row>
+		<row><td>LicenseAgreement</td><td>Next</td><td>NewDialog</td><td>ReadyToInstall</td><td>AgreeToLicense = "Yes"</td><td>0</td></row>
 		<row><td>MaintenanceType</td><td>Back</td><td>NewDialog</td><td>MaintenanceWelcome</td><td>1</td><td>0</td></row>
 		<row><td>MaintenanceType</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>MaintenanceType</td><td>Next</td><td>NewDialog</td><td>CustomSetup</td><td>_IsMaintenance = "Change"</td><td>12</td></row>
@@ -1159,7 +1158,7 @@
 		<row><td>ReadmeInformation</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>1</td></row>
 		<row><td>ReadmeInformation</td><td>Next</td><td>NewDialog</td><td>CustomerInformation</td><td>1</td><td>1</td></row>
 		<row><td>ReadyToInstall</td><td>Back</td><td>NewDialog</td><td>CustomSetup</td><td>Installed OR _IsSetupTypeMin = "Custom"</td><td>2</td></row>
-		<row><td>ReadyToInstall</td><td>Back</td><td>NewDialog</td><td>CustomerInformation</td><td>NOT Installed</td><td>1</td></row>
+		<row><td>ReadyToInstall</td><td>Back</td><td>NewDialog</td><td>LicenseAgreement</td><td>NOT Installed</td><td>1</td></row>
 		<row><td>ReadyToInstall</td><td>Back</td><td>NewDialog</td><td>MaintenanceType</td><td>Installed AND _IsMaintenance = "Reinstall"</td><td>3</td></row>
 		<row><td>ReadyToInstall</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>ReadyToInstall</td><td>InstallNow</td><td>EndDialog</td><td>Return</td><td>OutOfNoRbDiskSpace &lt;&gt; 1</td><td>0</td></row>
@@ -2224,7 +2223,6 @@
 		<row><td>AlwaysInstall</td><td>API.dll</td></row>
 		<row><td>AlwaysInstall</td><td>B.dll</td></row>
 		<row><td>AlwaysInstall</td><td>BaoyanAutomationSoftware.exe</td></row>
-		<row><td>AlwaysInstall</td><td>BaoyanAutomationSoftware.vshost.exe</td></row>
 		<row><td>AlwaysInstall</td><td>Base64.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Byte.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Bzip2.dll</td></row>
@@ -2441,11 +2439,6 @@
 		<row><td>baoyanautomationsoftware.exe</td><td>BaoyanAutomationSoftware.exe</td><td>BAOYAN~1.EXE|BaoyanAutomationSoftware.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\bin\Release\BaoyanAutomationSoftware.exe</td><td>1</td><td/></row>
 		<row><td>baoyanautomationsoftware.exe1</td><td>ISX_DEFAULTCOMPONENT</td><td>BAOYAN~1.CON|BaoyanAutomationSoftware.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\bin\Release\BaoyanAutomationSoftware.exe.config</td><td>1</td><td/></row>
 		<row><td>baoyanautomationsoftware.exe2</td><td>ISX_DEFAULTCOMPONENT</td><td>BAOYAN~1.MAN|BaoyanAutomationSoftware.exe.manifest</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\bin\Release\BaoyanAutomationSoftware.exe.manifest</td><td>1</td><td/></row>
-		<row><td>baoyanautomationsoftware.pdb</td><td>ISX_DEFAULTCOMPONENT</td><td>BAOYAN~1.PDB|BaoyanAutomationSoftware.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\bin\Release\BaoyanAutomationSoftware.pdb</td><td>1</td><td/></row>
-		<row><td>baoyanautomationsoftware.vsh</td><td>ISX_DEFAULTCOMPONENT</td><td>BAOYAN~1.APP|BaoyanAutomationSoftware.vshost.application</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\bin\Release\BaoyanAutomationSoftware.vshost.application</td><td>1</td><td/></row>
-		<row><td>baoyanautomationsoftware.vsh1</td><td>BaoyanAutomationSoftware.vshost.exe</td><td>BAOYAN~1.EXE|BaoyanAutomationSoftware.vshost.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\bin\Release\BaoyanAutomationSoftware.vshost.exe</td><td>1</td><td/></row>
-		<row><td>baoyanautomationsoftware.vsh2</td><td>ISX_DEFAULTCOMPONENT</td><td>BAOYAN~1.CON|BaoyanAutomationSoftware.vshost.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\bin\Release\BaoyanAutomationSoftware.vshost.exe.config</td><td>1</td><td/></row>
-		<row><td>baoyanautomationsoftware.vsh3</td><td>ISX_DEFAULTCOMPONENT</td><td>BAOYAN~1.MAN|BaoyanAutomationSoftware.vshost.exe.manifest</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\bin\Release\BaoyanAutomationSoftware.vshost.exe.manifest</td><td>1</td><td/></row>
 		<row><td>baoyanprintsettings.ini</td><td>ISX_DEFAULTCOMPONENT84</td><td>BAOYAN~1.INI|BaoyanPrintSettings.ini</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\AppData\Roaming\Slic3r2\print\BaoyanPrintSettings.ini</td><td>1</td><td/></row>
 		<row><td>baoyon1.ini</td><td>ISX_DEFAULTCOMPONENT83</td><td>Baoyon1.ini</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\AppData\Roaming\Slic3r2\filament\Baoyon1.ini</td><td>1</td><td/></row>
 		<row><td>base64.dll</td><td>Base64.dll</td><td>Base64.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Anthony G\Documents\Slic3r\Slic3r\lib\vrt\9a02fe0b6c8a35ffbf56e88f9910abeb\Base64.dll</td><td>1</td><td/></row>
@@ -2896,7 +2889,6 @@
 		<row><td>API.dll</td><td/><td/><td>_597B7A2A_D230_455F_BAF7_FF0EC224996C_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>B.dll</td><td/><td/><td>_E2787BB2_AD0B_487B_8674_7A2194B5A97D_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>BaoyanAutomationSoftware.exe</td><td/><td/><td>_E9984066_B87D_4B3D_B18F_BFDE4270D7E9_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>BaoyanAutomationSoftware.vshost.exe</td><td/><td/><td>_AEE54369_9177_4AE3_8A77_5E92E3F5CAA4_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Base64.dll</td><td/><td/><td>_165B0E79_8899_4484_8A77_811219BD74B6_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Byte.dll</td><td/><td/><td>_94822E84_A98F_4315_A788_FB384735FAA4_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Bzip2.dll</td><td/><td/><td>_4AB9FCC8_626A_4D6F_B2AB_7E28E36874DD_FILTER</td><td/><td/><td/><td/></row>
@@ -3706,7 +3698,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>2052</td><td>公司名称</td><td>0</td><td/><td>-2086554225</td></row>
+		<row><td>COMPANY_NAME</td><td>2052</td><td>公司名称</td><td>0</td><td/><td>-1952359567</td></row>
 		<row><td>DN_AlwaysInstall</td><td>2052</td><td>始终安装</td><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>2052</td><td>系统颜色设置不足以运行 [ProductName]。</td><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION35</td><td>2052</td><td>Microsoft .NET Framework 3.5 needs to be installed for this installation to continue.</td><td>0</td><td/><td>-2086556273</td></row>
@@ -4809,12 +4801,14 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>2052</td><td>对于运行 [ProductName] 处理器不足。</td><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>2052</td><td>对于运行 [ProductName] 内存量不足。</td><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>2052</td><td>对于运行 [ProductName] 屏幕分辨率不足。</td><td>0</td><td/><td>-2086554225</td></row>
-		<row><td>ID_STRING1</td><td>2052</td><td>NEWFOL~1|newfolder1</td><td>0</td><td/><td>-2086580082</td></row>
-		<row><td>ID_STRING2</td><td>2052</td><td/><td>0</td><td/><td>-2086554225</td></row>
+		<row><td>ID_STRING1</td><td>2052</td><td>slic3r</td><td>0</td><td/><td>-1952337135</td></row>
+		<row><td>ID_STRING2</td><td>2052</td><td>公司名称</td><td>0</td><td/><td>-1952359567</td></row>
 		<row><td>ID_STRING3</td><td>2052</td><td>LAUNCH~1.EXE|Launch BaoyanAutomationSoftware.exe</td><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>ID_STRING4</td><td>2052</td><td/><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>ID_STRING5</td><td>2052</td><td>3DPRIN~1|3D Printing Software</td><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>ID_STRING6</td><td>2052</td><td>3DPRIN~1|3D Printing Software</td><td>0</td><td/><td>-2086554225</td></row>
+		<row><td>ID_STRING7</td><td>1033</td><td/><td>0</td><td/><td>-1952339343</td></row>
+		<row><td>ID_STRING7</td><td>2052</td><td>http://www.公司名称.com</td><td>0</td><td/><td>-1952359567</td></row>
 		<row><td>ID_STRING8</td><td>2052</td><td>Slic3r</td><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>2052</td><td>系统将不安装此功能。</td><td>0</td><td/><td>-2086554225</td></row>
 		<row><td>NEW_STRING1</td><td>2052</td><td>.STL</td><td>0</td><td/><td>-2086554225</td></row>
@@ -5371,6 +5365,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ALLUSERS</td><td>1</td><td/></row>
 		<row><td>ARPINSTALLLOCATION</td><td/><td/></row>
 		<row><td>ARPSIZE</td><td/><td/></row>
+		<row><td>ARPURLINFOABOUT</td><td>##ID_STRING7##</td><td/></row>
 		<row><td>AgreeToLicense</td><td>No</td><td/></row>
 		<row><td>ApplicationUsers</td><td>AllUsers</td><td/></row>
 		<row><td>DWUSINTERVAL</td><td>30</td><td/></row>
@@ -5406,7 +5401,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>IS_SQLSERVER_SERVER</td><td/><td/></row>
 		<row><td>IS_SQLSERVER_USERNAME</td><td>sa</td><td/></row>
 		<row><td>InstallChoice</td><td>AR</td><td/></row>
-		<row><td>LAUNCHPROGRAM</td><td>1</td><td/></row>
 		<row><td>LAUNCHPROGRAMCOMPCODE</td><td>{04C5C4BE-AE8A-45A6-858C-CE52D026EA7C}</td><td/></row>
 		<row><td>LAUNCHPROGRAMFILEKEY</td><td>baoyanautomationsoftware.exe</td><td/></row>
 		<row><td>LAUNCHREADME</td><td>1</td><td/></row>
@@ -5452,7 +5446,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>RestartManagerOption</td><td>CloseRestart</td><td/></row>
 		<row><td>SERIALNUMBER</td><td/><td/></row>
 		<row><td>SERIALNUMVALSUCCESSRETVAL</td><td>1</td><td/></row>
-		<row><td>SHOWLAUNCHPROGRAM</td><td>-1</td><td/></row>
+		<row><td>SHOWLAUNCHPROGRAM</td><td>0</td><td/></row>
 		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION35SP1</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
@@ -5510,171 +5504,170 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="s72">Component_</col>
 		<col def="I4">ISAttributes</col>
 		<row><td>Registry1</td><td>1</td><td>Software\Baoyan</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry10</td><td>1</td><td>Software\Baoyan</td><td>logEnabled</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry100</td><td>1</td><td>Software\Baoyan\printer\default</td><td>travelFeedrate</td><td>4800</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry101</td><td>1</td><td>Software\Baoyan\printer\default</td><td>zAxisFeedrate</td><td>100</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry102</td><td>1</td><td>Software\Baoyan\printer\default</td><td>checkTemp</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry103</td><td>1</td><td>Software\Baoyan\printer\default</td><td>pingPong</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry104</td><td>1</td><td>Software\Baoyan\printer\default</td><td>checkTempInterval</td><td>#3</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry105</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disposeX</td><td>130</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry106</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disposeY</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry107</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disposeZ</td><td>100</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry108</td><td>1</td><td>Software\Baoyan\printer\default</td><td>goDisposeAfterJob</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry109</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disableHeatedBetAfterJob</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry11</td><td>1</td><td>Software\Baoyan</td><td>disableQualityReduction</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry110</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disableExtruderAfterJob</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry111</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disableMotorsAfterJob</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry112</td><td>1</td><td>Software\Baoyan\printer\default</td><td>receiveCacheSize</td><td>63</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry113</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printAreaWidth</td><td>180</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry114</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printAreaDepth</td><td>140</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry115</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printAreaHeight</td><td>138.8</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry116</td><td>1</td><td>Software\Baoyan\printer\default</td><td>dumpAreaLeft</td><td>125</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry117</td><td>1</td><td>Software\Baoyan\printer\default</td><td>dumpAreaFront</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry118</td><td>1</td><td>Software\Baoyan\printer\default</td><td>dumpAreaWidth</td><td>22</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry119</td><td>1</td><td>Software\Baoyan\printer\default</td><td>dumpAreaDepth</td><td>40</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry12</td><td>1</td><td>Software\Baoyan</td><td>reduceToolbarSize</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry120</td><td>1</td><td>Software\Baoyan\printer\default</td><td>defaultExtruderTemp</td><td>230</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry121</td><td>1</td><td>Software\Baoyan\printer\default</td><td>defaultHeatedBedTemp</td><td>110</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry122</td><td>1</td><td>Software\Baoyan\printer\default</td><td>filterPath</td><td>yourFilter #in #out</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry123</td><td>1</td><td>Software\Baoyan\printer\default</td><td>runFilterEverySlice</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry124</td><td>1</td><td>Software\Baoyan\printer\default</td><td>logM105</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry125</td><td>1</td><td>Software\Baoyan\printer\default</td><td>addPrintingTime</td><td>8</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry126</td><td>1</td><td>Software\Baoyan\printer\default</td><td>xhomeMax</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry127</td><td>1</td><td>Software\Baoyan\printer\default</td><td>yhomeMax</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry128</td><td>1</td><td>Software\Baoyan\printer\default</td><td>zhomeMax</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry129</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerXMax</td><td>200</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry13</td><td>1</td><td>Software\Baoyan</td><td>currentPrinter</td><td>default</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry130</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerXMin</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry131</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerYMax</td><td>200</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry132</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerYMin</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry133</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerBedLeft</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry134</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerBedFront</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry135</td><td>1</td><td>Software\Baoyan\printer\default</td><td>numExtruder</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry136</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerType</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry137</td><td>1</td><td>Software\Baoyan\printer\default</td><td>rostockHeight</td><td>340</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry138</td><td>1</td><td>Software\Baoyan\printer\default</td><td>rostockRadius</td><td>135</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry139</td><td>1</td><td>Software\Baoyan\printer\default</td><td>cncZTop</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry14</td><td>1</td><td>Software\Baoyan</td><td>logSend</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry140</td><td>1</td><td>Software\Baoyan\slic3r</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry141</td><td>1</td><td>Software\Baoyan\slic3r\default</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry142</td><td>1</td><td>Software\Baoyan\window</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry143</td><td>1</td><td>Software\Baoyan\window</td><td>tempZoomLevel</td><td>#5</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry144</td><td>1</td><td>Software\Baoyan\window</td><td>tempAverageSeconds</td><td>#60</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry145</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowExtruder</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry146</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowAverage</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry147</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowBed</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry148</td><td>1</td><td>Software\Baoyan\window</td><td>tempAutoscroll</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry149</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowOutput</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry15</td><td>1</td><td>Software\Baoyan</td><td>logErrors</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry150</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowTarget</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry152</td><td>1</td><td>Software\Baoyan\window</td><td>lastUpdateCheck</td><td>63508358310</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry153</td><td>1</td><td>Software\Baoyan\window</td><td>onOffImageOffset</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry154</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rConfigDir</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry155</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rExecutable</td><td>C:\Program Files (x86)\Slic3r\slic3r.exe</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry156</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rVersionGroup</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry157</td><td>1</td><td>Software\Baoyan\window</td><td>mainWindow</td><td>-1|-1|1033|587|Maximized</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry158</td><td>1</td><td>Software\Baoyan\window</td><td>mainWindowScreen</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry159</td><td>1</td><td>Software\Baoyan\window</td><td>globalSettingsWindow</td><td>50|50</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry16</td><td>1</td><td>Software\Baoyan</td><td>logWarning</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry160</td><td>1</td><td>Software\Baoyan\window</td><td>globalSettingsWindowScreen</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry161</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rPrinterSettings</td><td>BaoyanAutomation</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry162</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rPrintSettings</td><td>BaoyanPrintSettings</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry163</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rFilamentSettings</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry164</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rFilament2Settings</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry165</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rFilament3Settings</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry166</td><td>1</td><td>Software\Baoyan\window</td><td>skeinforgeProfile</td><td>ABS</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry167</td><td>1</td><td>Software\Baoyan\window</td><td>printerSettingsWindow</td><td>533|63</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry168</td><td>1</td><td>Software\Baoyan\window</td><td>printerSettingsWindowScreen</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry169</td><td>1</td><td>Software\Baoyan\window</td><td>soundPrintFinished</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry17</td><td>1</td><td>Software\Baoyan</td><td>logACK</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry170</td><td>1</td><td>Software\Baoyan\window</td><td>soundPrintPaused</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry171</td><td>1</td><td>Software\Baoyan\window</td><td>soundError</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry172</td><td>1</td><td>Software\Baoyan\window</td><td>soundSoundCommand</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry173</td><td>1</td><td>Software\Baoyan\window</td><td>soundPrintFinishedEnabled</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry174</td><td>1</td><td>Software\Baoyan\window</td><td>soundPrintPausedEnabled</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry175</td><td>1</td><td>Software\Baoyan\window</td><td>soundErrorEnabled</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry176</td><td>1</td><td>Software\Baoyan\window</td><td>soundSoundCommandEnabled</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry177</td><td>1</td><td>Software\Baoyan\window</td><td>generateRaft</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry178</td><td>1</td><td>Software\Baoyan\window</td><td>generateSupportMaterial</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry179</td><td>1</td><td>Software\Baoyan\window</td><td>lastLanguage</td><td>zh.xml</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry18</td><td>1</td><td>Software\Baoyan</td><td>logInfo</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry19</td><td>1</td><td>Software\Baoyan</td><td>logAutoscroll</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry2</td><td>1</td><td>Software\Baoyan</td><td>installPath</td><td>C:\Program Files (x86)\Baoyan Automation Ltd\3DPrintingSoftware\Release</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry20</td><td>1</td><td>Software\Baoyan</td><td>generateRaft</td><td>True</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry21</td><td>1</td><td>Software\Baoyan</td><td>generateSupportMaterial</td><td>True</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry22</td><td>1</td><td>Software\Baoyan\3D</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry23</td><td>1</td><td>Software\Baoyan\3D</td><td>backgroundColor</td><td>#-8355712</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry24</td><td>1</td><td>Software\Baoyan\3D</td><td>facesColor</td><td>#-65536</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry25</td><td>1</td><td>Software\Baoyan\3D</td><td>edgesColor</td><td>#-65536</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry26</td><td>1</td><td>Software\Baoyan\3D</td><td>selectedFacesColor</td><td>#-65281</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry27</td><td>1</td><td>Software\Baoyan\3D</td><td>printerBaseColor</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry28</td><td>1</td><td>Software\Baoyan\3D</td><td>filamenColor</td><td>#-16776961</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry29</td><td>1</td><td>Software\Baoyan\3D</td><td>filament2Color</td><td>#-16744320</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry30</td><td>1</td><td>Software\Baoyan\3D</td><td>filament3Color</td><td>#-2987746</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry31</td><td>1</td><td>Software\Baoyan\3D</td><td>hotFilamentColor</td><td>#-65536</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry32</td><td>1</td><td>Software\Baoyan\3D</td><td>travelColor</td><td>#-8388652</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry33</td><td>1</td><td>Software\Baoyan\3D</td><td>selectedFilamentColor</td><td>#-256</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry34</td><td>1</td><td>Software\Baoyan\3D</td><td>outsidePrintbedColor</td><td>#-8388652</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry35</td><td>1</td><td>Software\Baoyan\3D</td><td>showEdges</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry36</td><td>1</td><td>Software\Baoyan\3D</td><td>showFaces</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry37</td><td>1</td><td>Software\Baoyan\3D</td><td>pulseOutside</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry38</td><td>1</td><td>Software\Baoyan\3D</td><td>showPrintbed</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry39</td><td>1</td><td>Software\Baoyan\3D</td><td>disableFilamentVisualization</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry40</td><td>1</td><td>Software\Baoyan\3D</td><td>disableTravelVisualization</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry41</td><td>1</td><td>Software\Baoyan\3D</td><td>correctNormals</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry42</td><td>1</td><td>Software\Baoyan\3D</td><td>enableLight1</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry43</td><td>1</td><td>Software\Baoyan\3D</td><td>enableLight2</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry44</td><td>1</td><td>Software\Baoyan\3D</td><td>enableLight3</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry45</td><td>1</td><td>Software\Baoyan\3D</td><td>enableLight4</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry46</td><td>1</td><td>Software\Baoyan\3D</td><td>drawMethod</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry47</td><td>1</td><td>Software\Baoyan\3D</td><td>layerHeight</td><td>0.3</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry48</td><td>1</td><td>Software\Baoyan\3D</td><td>filamentDiameter</td><td>2.87</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry49</td><td>1</td><td>Software\Baoyan\3D</td><td>useLayerHeight</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry50</td><td>1</td><td>Software\Baoyan\3D</td><td>widthOverHeight</td><td>1.6</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry51</td><td>1</td><td>Software\Baoyan\3D</td><td>hotFilamentLength</td><td>1000</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry52</td><td>1</td><td>Software\Baoyan\3D</td><td>filamentVisualization</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry53</td><td>1</td><td>Software\Baoyan\3D</td><td>ambient1Color</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry54</td><td>1</td><td>Software\Baoyan\3D</td><td>diffuse1Color</td><td>#-3355444</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry55</td><td>1</td><td>Software\Baoyan\3D</td><td>specular1Color</td><td>#-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry56</td><td>1</td><td>Software\Baoyan\3D</td><td>ambient2Color</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry57</td><td>1</td><td>Software\Baoyan\3D</td><td>diffuse2Color</td><td>#-4473925</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry58</td><td>1</td><td>Software\Baoyan\3D</td><td>specular2Color</td><td>#-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry59</td><td>1</td><td>Software\Baoyan\3D</td><td>ambient3Color</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry6</td><td>1</td><td>Software\Baoyan</td><td>SkeinforgePython</td><td>C:\Python27\python.exe</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry60</td><td>1</td><td>Software\Baoyan\3D</td><td>diffuse3Color</td><td>#-3355444</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry61</td><td>1</td><td>Software\Baoyan\3D</td><td>specular3Color</td><td>#-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry62</td><td>1</td><td>Software\Baoyan\3D</td><td>ambient4Color</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry63</td><td>1</td><td>Software\Baoyan\3D</td><td>diffuse4Color</td><td>#-4473925</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry64</td><td>1</td><td>Software\Baoyan\3D</td><td>specular4Color</td><td>#-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry65</td><td>1</td><td>Software\Baoyan\3D</td><td>selectionBoxColor</td><td>#-14774017</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry66</td><td>1</td><td>Software\Baoyan\3D</td><td>light1X</td><td>-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry67</td><td>1</td><td>Software\Baoyan\3D</td><td>light1Y</td><td>-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry68</td><td>1</td><td>Software\Baoyan\3D</td><td>light1Z</td><td>2</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry69</td><td>1</td><td>Software\Baoyan\3D</td><td>light2X</td><td>1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry7</td><td>1</td><td>Software\Baoyan</td><td>SkeinforgePypy</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry70</td><td>1</td><td>Software\Baoyan\3D</td><td>light2Y</td><td>2</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry71</td><td>1</td><td>Software\Baoyan\3D</td><td>light2Z</td><td>3</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry72</td><td>1</td><td>Software\Baoyan\3D</td><td>light3X</td><td>1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry73</td><td>1</td><td>Software\Baoyan\3D</td><td>light3Y</td><td>-2</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry74</td><td>1</td><td>Software\Baoyan\3D</td><td>light3Z</td><td>2</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry75</td><td>1</td><td>Software\Baoyan\3D</td><td>light4X</td><td>1.7</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry76</td><td>1</td><td>Software\Baoyan\3D</td><td>light4Y</td><td>-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry77</td><td>1</td><td>Software\Baoyan\3D</td><td>light4Z</td><td>-2.5</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry78</td><td>1</td><td>Software\Baoyan\printer</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry87</td><td>1</td><td>Software\Baoyan\printer\default</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry88</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rPrint</td><td>RaftHoneyComb</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry89</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rPrinter</td><td>BaoyanAutomation</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry9</td><td>1</td><td>Software\Baoyan</td><td>ActiveSlicer</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry90</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rFilament1</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry91</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rFilament2</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry92</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rFilament3</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry93</td><td>1</td><td>Software\Baoyan\printer\default</td><td>skeinforgeProfile</td><td>ABS</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry94</td><td>1</td><td>Software\Baoyan\printer\default</td><td>activeSlicer</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry95</td><td>1</td><td>Software\Baoyan\printer\default</td><td>port</td><td>COM16</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry96</td><td>1</td><td>Software\Baoyan\printer\default</td><td>baud</td><td>250000</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry97</td><td>1</td><td>Software\Baoyan\printer\default</td><td>stopbits</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry98</td><td>1</td><td>Software\Baoyan\printer\default</td><td>parity</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
-		<row><td>Registry99</td><td>1</td><td>Software\Baoyan\printer\default</td><td>transferProtocol</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry10</td><td>1</td><td>Software\Baoyan</td><td>logInfo</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry100</td><td>1</td><td>Software\Baoyan\printer\default</td><td>runFilterEverySlice</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry101</td><td>1</td><td>Software\Baoyan\printer\default</td><td>logM105</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry102</td><td>1</td><td>Software\Baoyan\printer\default</td><td>addPrintingTime</td><td>8</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry103</td><td>1</td><td>Software\Baoyan\printer\default</td><td>xhomeMax</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry104</td><td>1</td><td>Software\Baoyan\printer\default</td><td>yhomeMax</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry105</td><td>1</td><td>Software\Baoyan\printer\default</td><td>zhomeMax</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry106</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerXMax</td><td>200</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry107</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerXMin</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry108</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerYMax</td><td>200</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry109</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerYMin</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry11</td><td>1</td><td>Software\Baoyan</td><td>logAutoscroll</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry110</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerBedLeft</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry111</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerBedFront</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry112</td><td>1</td><td>Software\Baoyan\printer\default</td><td>numExtruder</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry113</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printerType</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry114</td><td>1</td><td>Software\Baoyan\printer\default</td><td>rostockHeight</td><td>340</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry115</td><td>1</td><td>Software\Baoyan\printer\default</td><td>rostockRadius</td><td>135</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry116</td><td>1</td><td>Software\Baoyan\printer\default</td><td>cncZTop</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry117</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rPrint</td><td>RaftHoneyComb</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry118</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rPrinter</td><td>BaoyanAutomation</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry119</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rFilament1</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry120</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rFilament2</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry121</td><td>1</td><td>Software\Baoyan\printer\default</td><td>slic3rFilament3</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry122</td><td>1</td><td>Software\Baoyan\printer\default</td><td>skeinforgeProfile</td><td>ABS</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry123</td><td>1</td><td>Software\Baoyan\printer\default</td><td>activeSlicer</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry124</td><td>1</td><td>Software\Baoyan\printer\default</td><td>port</td><td>COM24</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry125</td><td>1</td><td>Software\Baoyan\printer\default</td><td>baud</td><td>250000</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry126</td><td>1</td><td>Software\Baoyan\printer\default</td><td>stopbits</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry127</td><td>1</td><td>Software\Baoyan\printer\default</td><td>parity</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry128</td><td>1</td><td>Software\Baoyan\printer\default</td><td>transferProtocol</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry129</td><td>1</td><td>Software\Baoyan\slic3r</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry13</td><td>1</td><td>Software\Baoyan</td><td>generateRaft</td><td>True</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry130</td><td>1</td><td>Software\Baoyan\slic3r\default</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry131</td><td>1</td><td>Software\Baoyan\window</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry132</td><td>1</td><td>Software\Baoyan\window</td><td>tempZoomLevel</td><td>#5</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry133</td><td>1</td><td>Software\Baoyan\window</td><td>tempAverageSeconds</td><td>#60</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry134</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowExtruder</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry135</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowAverage</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry136</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowBed</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry137</td><td>1</td><td>Software\Baoyan\window</td><td>tempAutoscroll</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry138</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowOutput</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry139</td><td>1</td><td>Software\Baoyan\window</td><td>tempShowTarget</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry14</td><td>1</td><td>Software\Baoyan</td><td>generateSupportMaterial</td><td>True</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry140</td><td>1</td><td>Software\Baoyan\window</td><td>lastUpdateCheck</td><td>63508358310</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry141</td><td>1</td><td>Software\Baoyan\window</td><td>onOffImageOffset</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry142</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rConfigDir</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry143</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rExecutable</td><td>C:\Program Files (x86)\Slic3r\slic3r.exe</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry144</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rVersionGroup</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry145</td><td>1</td><td>Software\Baoyan\window</td><td>mainWindow</td><td>-1|-1|1033|587|Maximized</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry146</td><td>1</td><td>Software\Baoyan\window</td><td>mainWindowScreen</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry147</td><td>1</td><td>Software\Baoyan\window</td><td>globalSettingsWindow</td><td>50|50</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry148</td><td>1</td><td>Software\Baoyan\window</td><td>globalSettingsWindowScreen</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry149</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rPrinterSettings</td><td>BaoyanAutomation</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry15</td><td>1</td><td>Software\Baoyan</td><td>SkeinforgePython</td><td>C:\Python27\python.exe</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry150</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rPrintSettings</td><td>BaoyanPrintSettings</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry151</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rFilamentSettings</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry152</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rFilament2Settings</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry153</td><td>1</td><td>Software\Baoyan\window</td><td>slic3rFilament3Settings</td><td>Baoyon1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry154</td><td>1</td><td>Software\Baoyan\window</td><td>skeinforgeProfile</td><td>ABS</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry155</td><td>1</td><td>Software\Baoyan\window</td><td>printerSettingsWindow</td><td>533|63</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry156</td><td>1</td><td>Software\Baoyan\window</td><td>printerSettingsWindowScreen</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry157</td><td>1</td><td>Software\Baoyan\window</td><td>soundPrintFinished</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry158</td><td>1</td><td>Software\Baoyan\window</td><td>soundPrintPaused</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry159</td><td>1</td><td>Software\Baoyan\window</td><td>soundError</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry16</td><td>1</td><td>Software\Baoyan</td><td>SkeinforgePypy</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry160</td><td>1</td><td>Software\Baoyan\window</td><td>soundSoundCommand</td><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry161</td><td>1</td><td>Software\Baoyan\window</td><td>soundPrintFinishedEnabled</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry162</td><td>1</td><td>Software\Baoyan\window</td><td>soundPrintPausedEnabled</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry163</td><td>1</td><td>Software\Baoyan\window</td><td>soundErrorEnabled</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry164</td><td>1</td><td>Software\Baoyan\window</td><td>soundSoundCommandEnabled</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry165</td><td>1</td><td>Software\Baoyan\window</td><td>generateRaft</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry166</td><td>1</td><td>Software\Baoyan\window</td><td>generateSupportMaterial</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry167</td><td>1</td><td>Software\Baoyan\window</td><td>lastLanguage</td><td>zh.xml</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry17</td><td>1</td><td>Software\Baoyan</td><td>ActiveSlicer</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry19</td><td>1</td><td>Software\Baoyan\3D</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry2</td><td>1</td><td>Software\Baoyan</td><td>logEnabled</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry20</td><td>1</td><td>Software\Baoyan\3D</td><td>backgroundColor</td><td>#-8355712</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry21</td><td>1</td><td>Software\Baoyan\3D</td><td>facesColor</td><td>#-16711936</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry22</td><td>1</td><td>Software\Baoyan\3D</td><td>edgesColor</td><td>#-65536</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry23</td><td>1</td><td>Software\Baoyan\3D</td><td>selectedFacesColor</td><td>#-16711681</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry24</td><td>1</td><td>Software\Baoyan\3D</td><td>printerBaseColor</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry25</td><td>1</td><td>Software\Baoyan\3D</td><td>filamenColor</td><td>#-16776961</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry26</td><td>1</td><td>Software\Baoyan\3D</td><td>filament2Color</td><td>#-16744320</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry27</td><td>1</td><td>Software\Baoyan\3D</td><td>filament3Color</td><td>#-2987746</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry28</td><td>1</td><td>Software\Baoyan\3D</td><td>hotFilamentColor</td><td>#-65536</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry29</td><td>1</td><td>Software\Baoyan\3D</td><td>travelColor</td><td>#-8388652</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry3</td><td>1</td><td>Software\Baoyan</td><td>disableQualityReduction</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry30</td><td>1</td><td>Software\Baoyan\3D</td><td>selectedFilamentColor</td><td>#-256</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry31</td><td>1</td><td>Software\Baoyan\3D</td><td>outsidePrintbedColor</td><td>#-8388652</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry32</td><td>1</td><td>Software\Baoyan\3D</td><td>showEdges</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry33</td><td>1</td><td>Software\Baoyan\3D</td><td>showFaces</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry34</td><td>1</td><td>Software\Baoyan\3D</td><td>pulseOutside</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry35</td><td>1</td><td>Software\Baoyan\3D</td><td>showPrintbed</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry36</td><td>1</td><td>Software\Baoyan\3D</td><td>disableFilamentVisualization</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry37</td><td>1</td><td>Software\Baoyan\3D</td><td>disableTravelVisualization</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry38</td><td>1</td><td>Software\Baoyan\3D</td><td>correctNormals</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry39</td><td>1</td><td>Software\Baoyan\3D</td><td>enableLight1</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry4</td><td>1</td><td>Software\Baoyan</td><td>reduceToolbarSize</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry40</td><td>1</td><td>Software\Baoyan\3D</td><td>enableLight2</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry41</td><td>1</td><td>Software\Baoyan\3D</td><td>enableLight3</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry42</td><td>1</td><td>Software\Baoyan\3D</td><td>enableLight4</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry43</td><td>1</td><td>Software\Baoyan\3D</td><td>drawMethod</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry44</td><td>1</td><td>Software\Baoyan\3D</td><td>layerHeight</td><td>0.3</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry45</td><td>1</td><td>Software\Baoyan\3D</td><td>filamentDiameter</td><td>2.87</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry46</td><td>1</td><td>Software\Baoyan\3D</td><td>useLayerHeight</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry47</td><td>1</td><td>Software\Baoyan\3D</td><td>widthOverHeight</td><td>1.6</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry48</td><td>1</td><td>Software\Baoyan\3D</td><td>hotFilamentLength</td><td>1000</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry49</td><td>1</td><td>Software\Baoyan\3D</td><td>filamentVisualization</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry5</td><td>1</td><td>Software\Baoyan</td><td>currentPrinter</td><td>default</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry50</td><td>1</td><td>Software\Baoyan\3D</td><td>ambient1Color</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry51</td><td>1</td><td>Software\Baoyan\3D</td><td>diffuse1Color</td><td>#-3355444</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry52</td><td>1</td><td>Software\Baoyan\3D</td><td>specular1Color</td><td>#-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry53</td><td>1</td><td>Software\Baoyan\3D</td><td>ambient2Color</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry54</td><td>1</td><td>Software\Baoyan\3D</td><td>diffuse2Color</td><td>#-4473925</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry55</td><td>1</td><td>Software\Baoyan\3D</td><td>specular2Color</td><td>#-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry56</td><td>1</td><td>Software\Baoyan\3D</td><td>ambient3Color</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry57</td><td>1</td><td>Software\Baoyan\3D</td><td>diffuse3Color</td><td>#-3355444</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry58</td><td>1</td><td>Software\Baoyan\3D</td><td>specular3Color</td><td>#-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry59</td><td>1</td><td>Software\Baoyan\3D</td><td>ambient4Color</td><td>#-16777216</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry6</td><td>1</td><td>Software\Baoyan</td><td>logSend</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry60</td><td>1</td><td>Software\Baoyan\3D</td><td>diffuse4Color</td><td>#-4473925</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry61</td><td>1</td><td>Software\Baoyan\3D</td><td>specular4Color</td><td>#-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry62</td><td>1</td><td>Software\Baoyan\3D</td><td>selectionBoxColor</td><td>#-14774017</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry63</td><td>1</td><td>Software\Baoyan\3D</td><td>light1X</td><td>-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry64</td><td>1</td><td>Software\Baoyan\3D</td><td>light1Y</td><td>-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry65</td><td>1</td><td>Software\Baoyan\3D</td><td>light1Z</td><td>2</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry66</td><td>1</td><td>Software\Baoyan\3D</td><td>light2X</td><td>1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry67</td><td>1</td><td>Software\Baoyan\3D</td><td>light2Y</td><td>2</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry68</td><td>1</td><td>Software\Baoyan\3D</td><td>light2Z</td><td>3</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry69</td><td>1</td><td>Software\Baoyan\3D</td><td>light3X</td><td>1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry7</td><td>1</td><td>Software\Baoyan</td><td>logErrors</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry70</td><td>1</td><td>Software\Baoyan\3D</td><td>light3Y</td><td>-2</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry71</td><td>1</td><td>Software\Baoyan\3D</td><td>light3Z</td><td>2</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry72</td><td>1</td><td>Software\Baoyan\3D</td><td>light4X</td><td>1.7</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry73</td><td>1</td><td>Software\Baoyan\3D</td><td>light4Y</td><td>-1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry74</td><td>1</td><td>Software\Baoyan\3D</td><td>light4Z</td><td>-2.5</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry75</td><td>1</td><td>Software\Baoyan\printer</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry76</td><td>1</td><td>Software\Baoyan\printer\default</td><td/><td/><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry77</td><td>1</td><td>Software\Baoyan\printer\default</td><td>travelFeedrate</td><td>4800</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry78</td><td>1</td><td>Software\Baoyan\printer\default</td><td>zAxisFeedrate</td><td>100</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry79</td><td>1</td><td>Software\Baoyan\printer\default</td><td>checkTemp</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry8</td><td>1</td><td>Software\Baoyan</td><td>logWarning</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry80</td><td>1</td><td>Software\Baoyan\printer\default</td><td>pingPong</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry81</td><td>1</td><td>Software\Baoyan\printer\default</td><td>checkTempInterval</td><td>#3</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry82</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disposeX</td><td>130</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry83</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disposeY</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry84</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disposeZ</td><td>100</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry85</td><td>1</td><td>Software\Baoyan\printer\default</td><td>goDisposeAfterJob</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry86</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disableHeatedBetAfterJob</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry87</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disableExtruderAfterJob</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry88</td><td>1</td><td>Software\Baoyan\printer\default</td><td>disableMotorsAfterJob</td><td>#0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry89</td><td>1</td><td>Software\Baoyan\printer\default</td><td>receiveCacheSize</td><td>63</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry9</td><td>1</td><td>Software\Baoyan</td><td>logACK</td><td>#1</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry90</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printAreaWidth</td><td>180</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry91</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printAreaDepth</td><td>140</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry92</td><td>1</td><td>Software\Baoyan\printer\default</td><td>printAreaHeight</td><td>138.8</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry93</td><td>1</td><td>Software\Baoyan\printer\default</td><td>dumpAreaLeft</td><td>125</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry94</td><td>1</td><td>Software\Baoyan\printer\default</td><td>dumpAreaFront</td><td>0</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry95</td><td>1</td><td>Software\Baoyan\printer\default</td><td>dumpAreaWidth</td><td>22</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry96</td><td>1</td><td>Software\Baoyan\printer\default</td><td>dumpAreaDepth</td><td>40</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry97</td><td>1</td><td>Software\Baoyan\printer\default</td><td>defaultExtruderTemp</td><td>230</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry98</td><td>1</td><td>Software\Baoyan\printer\default</td><td>defaultHeatedBedTemp</td><td>110</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
+		<row><td>Registry99</td><td>1</td><td>Software\Baoyan\printer\default</td><td>filterPath</td><td>yourFilter #in #out</td><td>ISX_DEFAULTCOMPONENT4</td><td>0</td></row>
 	</table>
 
 	<table name="RemoveFile">

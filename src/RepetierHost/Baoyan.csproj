@@ -147,7 +147,7 @@
     <Compile Include="model\STL.cs" />
     <Compile Include="model\TemperatureHistory.cs" />
     <Compile Include="model\ThreeDModel.cs" />
-    <Compile Include="model\ThreedPrinterUpdateXMLversion.cs" />
+    <Compile Include="model\UpdateSoftwareXML.cs" />
     <Compile Include="model\ThreeDView.cs" />
     <Compile Include="model\Translation.cs" />
     <Compile Include="model\VirtualPrinter.cs" />

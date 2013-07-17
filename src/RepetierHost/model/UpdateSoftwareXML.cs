@@ -34,16 +34,14 @@ namespace RepetierHost.view.utils
         public string language;
         public string updateTextExplanation;
         public string webaddressToDownload;
-
-
     }
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class ThreedPrinterUpdateXMLversion
+    public class UpdateSoftwareXML
     {
-        public ThreedPrinterUpdateXMLversion()
+        public UpdateSoftwareXML()
         {
             CheckForUpdatesXMLOnStartup();
         }
@@ -197,11 +195,11 @@ namespace RepetierHost.view.utils
             if (RHUpdater.form == null)
                 RHUpdater.form = new RHUpdater();
 
-            RHUpdater.form.labelInstalledVersion.Text = ThreedPrinterUpdateXMLversion.currentBuildNumber.ToString();
-            RHUpdater.form.labelAvailableVersion.Text = ThreedPrinterUpdateXMLversion.updateBuildNumber.ToString();
-            RHUpdater.form.textUpdate.Text = ThreedPrinterUpdateXMLversion.updateExplanationText;
+            RHUpdater.form.labelInstalledVersion.Text = UpdateSoftwareXML.currentBuildNumber.ToString();
+            RHUpdater.form.labelAvailableVersion.Text = UpdateSoftwareXML.updateBuildNumber.ToString();
+            RHUpdater.form.textUpdate.Text = UpdateSoftwareXML.updateExplanationText;
 
-            if (ThreedPrinterUpdateXMLversion.newUpdatesToDown == false)
+            if (UpdateSoftwareXML.newUpdatesToDown == false)
                 RHUpdater.form.buttonDownload.Enabled = false;
             
             RHUpdater.form.Show();
