@@ -526,6 +526,14 @@ namespace RepetierHost.view
             {
                 Autoposition();
             }
+
+            //xTransValue.Value = (Main.main.listSTLObjects.SelectedItem).
+            STL stl2 = (STL)Main.main.listSTLObjects.SelectedItem;
+            if (stl2 == null) return;
+            xTransValue.Value =(decimal) stl2.Position.x;
+            updateSTLState(stl2);
+
+
             Main.main.mainUpdaterHelper.UpdateEverythingInMain();
             Main.main.threedview.UpdateChanges();
         }

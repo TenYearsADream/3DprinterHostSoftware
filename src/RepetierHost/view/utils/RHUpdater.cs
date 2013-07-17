@@ -75,6 +75,12 @@ namespace RepetierHost.view.utils
                 MessageBox.Show(Trans.T("L_UPDATE_NO_CONNECTION"), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             error = 0;
         };
+
+
+        /// <summary>
+        /// Checks for updates. 
+        /// </summary>
+        /// <param name="silent"></param>
         public static void checkForUpdates(bool silent) {
             RHUpdater.silent = silent;
             if (Custom.GetBool("removeUpdates", false)) return; // Do not try to look for updates.
@@ -87,14 +93,14 @@ namespace RepetierHost.view.utils
             //    url = "http://www.repetier.com/updates/rh/version_linux.txt";
             //url = Custom.GetString("updateUrl", url);
 
-            //long lastcheck = RegMemory.GetLong("lastUpdateCheck", 0);
-            //if (silent && timeInSeconds() - lastcheck < 86400 * 7) return; // Test only once a week silently
-            ////if (!pingServer("176.9.149.139")) return; // No network
+            long lastcheck = RegMemory.GetLong("lastUpdateCheck", 0);
+            if (silent && timeInSeconds() - lastcheck < 86400 * 7) return; // Test only once a week silently
+            //if (!pingServer("176.9.149.139")) return; // No network
 
-            //thread = new Thread(RHUpdater.CheckThread);
-            //running = true;
-            //Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
-            //thread.Start();
+            thread = new Thread(RHUpdater.CheckThread);
+            running = true;
+            Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
+            thread.Start();
         }
         
         public static void CheckThread() {
