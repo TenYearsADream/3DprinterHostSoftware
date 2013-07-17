@@ -36,7 +36,6 @@
             this.buttonSkipVersion = new System.Windows.Forms.Button();
             this.buttonRemindMe = new System.Windows.Forms.Button();
             this.buttonDownload = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.labelInstalledVersion = new System.Windows.Forms.Label();
             this.labelAvailableVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -110,15 +109,6 @@
             this.buttonDownload.UseVisualStyleBackColor = true;
             this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
             // 
-            // panel1
-            // 
-            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Location = new System.Drawing.Point(317, 11);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(64, 64);
-            this.panel1.TabIndex = 4;
-            // 
             // labelInstalledVersion
             // 
             this.labelInstalledVersion.AutoSize = true;
@@ -144,7 +134,6 @@
             this.ClientSize = new System.Drawing.Size(397, 340);
             this.Controls.Add(this.labelAvailableVersion);
             this.Controls.Add(this.labelInstalledVersion);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonDownload);
             this.Controls.Add(this.buttonRemindMe);
             this.Controls.Add(this.buttonSkipVersion);
@@ -154,7 +143,7 @@
             this.Controls.Add(this.labelInstalled);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RHUpdater";
-            this.Text = "Repetier-Host Update check";
+            this.Text = "Software Updates";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,12 +154,11 @@
         private System.Windows.Forms.Label labelInstalled;
         private System.Windows.Forms.Label labelAvailable;
         private System.Windows.Forms.Label labelInformationOnUpdate;
-        private System.Windows.Forms.TextBox textUpdate;
         private System.Windows.Forms.Button buttonSkipVersion;
         private System.Windows.Forms.Button buttonRemindMe;
         private System.Windows.Forms.Button buttonDownload;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label labelInstalledVersion;
-        private System.Windows.Forms.Label labelAvailableVersion;
+        public System.Windows.Forms.TextBox textUpdate;
+        public System.Windows.Forms.Label labelInstalledVersion;
+        public System.Windows.Forms.Label labelAvailableVersion;
     }
 }

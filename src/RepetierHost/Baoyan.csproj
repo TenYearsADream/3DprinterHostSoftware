@@ -147,6 +147,7 @@
     <Compile Include="model\STL.cs" />
     <Compile Include="model\TemperatureHistory.cs" />
     <Compile Include="model\ThreeDModel.cs" />
+    <Compile Include="model\ThreedPrinterUpdateXMLversion.cs" />
     <Compile Include="model\ThreeDView.cs" />
     <Compile Include="model\Translation.cs" />
     <Compile Include="model\VirtualPrinter.cs" />
@@ -290,8 +291,8 @@
       <DependentUpon>PauseInfo.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\utils\RHUpdater.resx">
-      <DependentUpon>RHUpdater.cs</DependentUpon>
+    <EmbeddedResource Include="view\utils\SoftwareUpdater.resx">
+      <DependentUpon>SoftwareUpdater.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="view\utils\SlicingInfo.resx">
@@ -542,11 +543,11 @@
     <Compile Include="view\utils\RHOpenGL.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="view\utils\RHUpdater.cs">
+    <Compile Include="view\utils\SoftwareUpdater.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="view\utils\RHUpdater.Designer.cs">
-      <DependentUpon>RHUpdater.cs</DependentUpon>
+    <Compile Include="view\utils\SoftwareUpdater.Designer.cs">
+      <DependentUpon>SoftwareUpdater.cs</DependentUpon>
     </Compile>
     <Compile Include="view\utils\Slicer.cs" />
     <Compile Include="view\utils\SlicingInfo.cs">
@@ -567,6 +568,9 @@
     <Compile Include="view\utils\StringInput.Designer.cs">
       <DependentUpon>StringInput.cs</DependentUpon>
     </Compile>
+    <Content Include="Update\update.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Translation\en.xml">

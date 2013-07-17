@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<updateDoc revision="9" language="English" author="Anthony G">
+  <version number ="0.001" buildnumber="1" language="zh" downloadURL ="">First version of the new software</version>
+  <version number ="0.002" buildnumber="2" language="zh" downloadURL ="">Second version of the new software</version>
+
+  </updateDoc>

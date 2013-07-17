@@ -620,7 +620,7 @@ namespace RepetierHost
             }
 
             // Don't check for updates because we want our own custom software to be sent to customers. 
-            RHUpdater.checkForUpdates(true);
+            //RHUpdater.checkForUpdates(true);
 
             // Update everything. 
             UpdateToolbarSize();
