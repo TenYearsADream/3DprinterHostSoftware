@@ -87,6 +87,7 @@
             this.buttonSkipVersion.TabIndex = 3;
             this.buttonSkipVersion.Text = "Skip this version";
             this.buttonSkipVersion.UseVisualStyleBackColor = true;
+            this.buttonSkipVersion.Visible = false;
             this.buttonSkipVersion.Click += new System.EventHandler(this.buttonSkipVersion_Click);
             // 
             // buttonRemindMe
@@ -97,6 +98,7 @@
             this.buttonRemindMe.TabIndex = 3;
             this.buttonRemindMe.Text = "Remind me later";
             this.buttonRemindMe.UseVisualStyleBackColor = true;
+            this.buttonRemindMe.Visible = false;
             this.buttonRemindMe.Click += new System.EventHandler(this.buttonRemindMe_Click);
             // 
             // buttonDownload
@@ -156,9 +158,9 @@
         private System.Windows.Forms.Label labelInformationOnUpdate;
         private System.Windows.Forms.Button buttonSkipVersion;
         private System.Windows.Forms.Button buttonRemindMe;
-        private System.Windows.Forms.Button buttonDownload;
         public System.Windows.Forms.TextBox textUpdate;
         public System.Windows.Forms.Label labelInstalledVersion;
         public System.Windows.Forms.Label labelAvailableVersion;
+        public System.Windows.Forms.Button buttonDownload;
     }
 }

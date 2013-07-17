@@ -94,7 +94,7 @@ namespace RepetierHost.view.utils
         public static void checkForUpdates(bool silent)
         {
 
-            RHUpdater.silent = true;
+            //RHUpdater.silent = true;
             if (Custom.GetBool("removeUpdates", false)) return; // Do not try to look for updates.           
 
 
@@ -111,7 +111,7 @@ namespace RepetierHost.view.utils
             if (RHUpdater.form == null)
             {
                 RHUpdater.form = new RHUpdater();
-                RHUpdater.xmlUpdater = new ThreedPrinterUpdateXMLversion();
+                //RHUpdater.xmlUpdater = new ThreedPrinterUpdateXMLversion();
             }
 
 
@@ -119,7 +119,7 @@ namespace RepetierHost.view.utils
             // thread = new Thread(RHUpdater.CheckThread);
             running = true;
 
-
+            // This prevvents someone from trying to accessed a disposed form. Probably not the best way to do it. 
             Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
             thread.Start();
         }
@@ -294,7 +294,13 @@ namespace RepetierHost.view.utils
 
         private void buttonDownload_Click(object sender, EventArgs e)
         {
-            Main.main.openLink(""); 
+            //string url = 
+            if (ThreedPrinterUpdateXMLversion.newestUpdate.webaddressToDownload != "" && 
+                ThreedPrinterUpdateXMLversion.newestUpdate.webaddressToDownload != null)
+            {
+                Main.main.openLink(ThreedPrinterUpdateXMLversion.newestUpdate.webaddressToDownload);
+            }
+
             this.Hide();
             this.Dispose();
         }
@@ -304,9 +310,7 @@ namespace RepetierHost.view.utils
             RegMemory.SetInt("checkUpdateSkipBuild", ThreedPrinterUpdateXMLversion.newestUpdate.buildnum);
             this.Hide();
             this.Dispose();
-        }   
-      
-        
+        }       
         
     
     }
