@@ -59,7 +59,7 @@ namespace RepetierHost.view.utils
         /// <summary>
         /// The current build number. Used to determine if we need to update. 
         /// </summary>
-        public static int currentBuildNumber = 1;
+        public static int currentBuildNumber = 2;
 
         /// <summary>
         /// The newest build number that is available for download. This must be stored as a seperate value from an instance of the update class becaue objects
