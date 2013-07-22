@@ -95,13 +95,13 @@ namespace RepetierHost.view.utils
             {
 
                 // Local computer for debugging. 
-                 string url=@"C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\Update\update.xml";
+              //  string url=@"C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\Update\update.xml";
 
                 // GIt hub
                // string url = @"https://raw.github.com/garland3/3DprinterHostSoftware/master/src/RepetierHost/Update/update.xml";
 
                 // Google doc storage and app engine    // Contact garland3@gmail.com for help.
-                //string url = @"http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fupdate.xml";
+                string url = @"http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fupdate.xml";
 
 
 
@@ -204,8 +204,7 @@ namespace RepetierHost.view.utils
         private static void MessageUserToUpdate()
         {
 
-            // This prevvents someone from trying to accessed a disposed form. Probably not the best way to do it. 
-            Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
+          
 
 
                 Main.main.Invoke(ShowUpdateFormToUser);
@@ -217,10 +216,10 @@ namespace RepetierHost.view.utils
         public static MethodInvoker ShowUpdateFormToUser = delegate
         {
 
-            if (RHUpdater.form == null)
-            {
-                RHUpdater.form = new RHUpdater();
-            }
+            //if (RHUpdater.form == null)
+            //{
+            //    RHUpdater.form = new RHUpdater();
+            //}
 
             RHUpdater.form.labelInstalledVersion.Text = UpdateSoftwareXML.currentBuildNumber.ToString();
             RHUpdater.form.labelAvailableVersion.Text = UpdateSoftwareXML.updateBuildNumber.ToString();
@@ -233,6 +232,8 @@ namespace RepetierHost.view.utils
             
             RHUpdater.form.Show();
 
+            // This prevvents someone from trying to accessed a disposed form. Probably not the best way to do it. 
+            Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
         };
     }
 }
