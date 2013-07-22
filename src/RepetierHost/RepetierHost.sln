@@ -3,19 +3,44 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baoyan", "Baoyan.csproj", "{B118044A-6AC1-407D-8CE9-A624810BEE0C}"
 EndProject
+Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "BoayanInstall1.2", "..\..\Install\BoayanInstall1.2\BoayanInstall1.2\BoayanInstall1.2.isproj", "{DD9B954C-F530-4303-9AD7-7D026C40280E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B118044A-6AC1-407D-8CE9-A624810BEE0C} = {B118044A-6AC1-407D-8CE9-A624810BEE0C}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CD_ROM|Any CPU = CD_ROM|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		DVD-5|Any CPU = DVD-5|Any CPU
 		MacOSX|Any CPU = MacOSX|Any CPU
 		Release|Any CPU = Release|Any CPU
+		SingleImage|Any CPU = SingleImage|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.CD_ROM|Any CPU.ActiveCfg = MacOSX|Any CPU
+		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.CD_ROM|Any CPU.Build.0 = MacOSX|Any CPU
 		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
 		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.MacOSX|Any CPU.ActiveCfg = MacOSX|Any CPU
 		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.MacOSX|Any CPU.Build.0 = MacOSX|Any CPU
 		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.SingleImage|Any CPU.ActiveCfg = MacOSX|Any CPU
+		{B118044A-6AC1-407D-8CE9-A624810BEE0C}.SingleImage|Any CPU.Build.0 = MacOSX|Any CPU
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.CD_ROM|Any CPU.Build.0 = CD_ROM
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.Debug|Any CPU.ActiveCfg = DVD-5
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.Debug|Any CPU.Build.0 = DVD-5
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.DVD-5|Any CPU.ActiveCfg = DVD-5
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.DVD-5|Any CPU.Build.0 = DVD-5
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.MacOSX|Any CPU.ActiveCfg = SingleImage
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.MacOSX|Any CPU.Build.0 = SingleImage
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.Release|Any CPU.ActiveCfg = SingleImage
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.SingleImage|Any CPU.ActiveCfg = SingleImage
+		{DD9B954C-F530-4303-9AD7-7D026C40280E}.SingleImage|Any CPU.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

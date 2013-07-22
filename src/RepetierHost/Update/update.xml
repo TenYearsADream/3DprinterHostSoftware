@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <updateDoc revision="9" language="English" author="Anthony G">
   <version number ="0.001" buildnumber="1" language="zh" downloadURL ="http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fsetup.exe">First version of the new software</version>
-  <version number ="0.002" buildnumber="2" language="zh" downloadURL ="http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fsetup.exe">- Fixed the bug related to the side view button. 
+  <version number ="0.002" buildnumber="2" language="zh" downloadURL ="http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fsetup2.exe">- Fixed the bug related to the side view button. 
 - Updated the update mechanism</version>
 
 </updateDoc>
