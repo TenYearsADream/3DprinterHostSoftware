@@ -421,6 +421,10 @@ namespace RepetierHost
         private void Main_Load(object sender, EventArgs e)
         {
            mainUpdaterHelper.UpdateEverythingInMain();
+
+
+           // Check for updates
+           RHUpdater.checkForUpdates(true);
         }
 
         [System.Runtime.InteropServices.DllImport("libc")]
@@ -619,8 +623,7 @@ namespace RepetierHost
                 Text = basicTitle;
             }
 
-            // Don't check for updates because we want our own custom software to be sent to customers. 
-            //RHUpdater.checkForUpdates(true);
+         
 
             // Update everything. 
             UpdateToolbarSize();
@@ -678,6 +681,7 @@ namespace RepetierHost
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
+
 
         } // End Main. 
 
@@ -1729,6 +1733,8 @@ namespace RepetierHost
         private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RHUpdater.checkForUpdates(false);
+            UpdateSoftwareXML.clickedUpdateButton = true;
+
         }
 
 

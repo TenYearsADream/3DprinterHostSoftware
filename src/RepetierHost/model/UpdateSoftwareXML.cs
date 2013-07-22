@@ -79,10 +79,14 @@ namespace RepetierHost.view.utils
 
 
         public static string updateExplanationText = null;
-        public static bool beSilent = false;
+      
+
+        public static bool clickedUpdateButton = false;
 
 
-
+        /// <summary>
+        /// Tries to access an xmml file online that holds information about the newest updates
+        /// </summary>
         public static void CheckForUpdatesXML()
         {
             // WARNING, be sure to upload new update.xml files and change the build number declared above before releasing the software. 
@@ -91,13 +95,13 @@ namespace RepetierHost.view.utils
             {
 
                 // Local computer for debugging. 
-                // string url=@"C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\Update\update.xml";
+                 string url=@"C:\Users\Anthony G\Documents\GitHub\Repetier-Host-mod\src\RepetierHost\Update\update.xml";
 
                 // GIt hub
-                //string url = @"https://raw.github.com/garland3/3DprinterHostSoftware/master/src/RepetierHost/Update/update.xml";
+               // string url = @"https://raw.github.com/garland3/3DprinterHostSoftware/master/src/RepetierHost/Update/update.xml";
 
                 // Google doc storage and app engine    // Contact garland3@gmail.com for help.
-                string url = @"http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fupdate.xml";
+                //string url = @"http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fupdate.xml";
 
 
 
@@ -140,9 +144,29 @@ namespace RepetierHost.view.utils
 
                 }
             }
-            catch (Exception e)
+
+                // catch the exeption where we can't connect to the internet for some reason. If they clicked update while not connected, than this is a  problem
+            catch (WebException e)
             {
-                MessageBox.Show("Error trying to check for updates. You may need to manually check for updates");
+                if (clickedUpdateButton == true)
+                {
+                    string message = "A error was happened while attempting to connect to the update site online. Please check that you are connected to the internet";
+                    string caption = "Connnection error"; //Trans.T("B_EXIT");
+                    var result = MessageBox.Show(message, caption,
+                                                 MessageBoxButtons.OK
+                                                 );
+                 
+                }
+
+                return;
+            }
+            catch (Exception e)
+            {               
+                string caption = "Connnection error"; //Trans.T("B_EXIT");
+                var result = MessageBox.Show(e.Message, caption,
+                                             MessageBoxButtons.OK
+                                             );
+                return;
             }
 
             foreach (update update in listOfUpdates)
@@ -157,50 +181,55 @@ namespace RepetierHost.view.utils
                    
                 }
 
-
+              
                 if (update.buildnum > currentBuildNumber)
                 {
                     newUpdatesToDown = true;
+                    
                 }
-
             }
 
-            //if (newestBuildAvailable > buildNumberForXMLUpdater && RHUpdater.silent == true)
-            //{
 
-            MessageUserToUpdate();
-            //}
-
-
+            // IF a new update exists, or if the user clicked on the update button, then show the message box showing them an update. 
+            if ((newUpdatesToDown == true)|| (clickedUpdateButton == true))            {
+               
+                MessageUserToUpdate();
+            }
         }
 
+        /// <summary>
+        /// Invokes the method that will show the form which lets the user update. 
+        /// We must invoke the message becasue the updater is running on a different thread
+        /// </summary>
         private static void MessageUserToUpdate()
         {
 
-           // ThreedPrinterUpdateXMLversion updater = new ThreedPrinterUpdateXMLversion();
+            // This prevvents someone from trying to accessed a disposed form. Probably not the best way to do it. 
+            Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
 
-            if (beSilent == false)
-            {
 
-                //if (RHUpdater.silent && RegMemory.GetInt("checkUpdateSkipBuild", 0) == ThreedPrinterUpdateXMLversion.newestBuildAvailable)
-                //    return; // User didn't want to see this update.
-                Main.main.Invoke(Execute);
-            }
-
+                Main.main.Invoke(ShowUpdateFormToUser);
         }
 
-        public static MethodInvoker Execute = delegate
+        /// <summary>
+        /// Updates the information in the updater form so that the user can see an update if it exists
+        /// </summary>
+        public static MethodInvoker ShowUpdateFormToUser = delegate
         {
 
             if (RHUpdater.form == null)
+            {
                 RHUpdater.form = new RHUpdater();
+            }
 
             RHUpdater.form.labelInstalledVersion.Text = UpdateSoftwareXML.currentBuildNumber.ToString();
             RHUpdater.form.labelAvailableVersion.Text = UpdateSoftwareXML.updateBuildNumber.ToString();
             RHUpdater.form.textUpdate.Text = UpdateSoftwareXML.updateExplanationText;
 
             if (UpdateSoftwareXML.newUpdatesToDown == false)
+            {
                 RHUpdater.form.buttonDownload.Enabled = false;
+            }
             
             RHUpdater.form.Show();
 

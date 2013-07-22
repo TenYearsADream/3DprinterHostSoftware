@@ -1608,7 +1608,7 @@ namespace RepetierHost.view
         public void GoToSideView()
         {
             RepetierHost.view.ThreeDView    .rotX = 0;
-            RepetierHost.view.ThreeDView.rotZ = 90;
+            RepetierHost.view.ThreeDView.rotZ = 270;
             RepetierHost.view.ThreeDView.zoom = 1.0f;
 
             RepetierHost.view.ThreeDView.viewCenter = new Vector3(0f * ps.PrintAreaWidth, ps.PrintAreaDepth * 0.25f, 0.0f * ps.PrintAreaHeight);

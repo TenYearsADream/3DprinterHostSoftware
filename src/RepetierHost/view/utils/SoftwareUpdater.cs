@@ -22,7 +22,7 @@ namespace RepetierHost.view.utils
         //public static string newestVersion = "";
         //public static int newestBuildVersion = 0;
         //public static string updateText = "";
-        public static bool silent = false;
+        
         //public static string downloadUrl = Custom.GetString("downloadUrl", "http://www.repetier.com/download/");
         public static bool running = false;
         public static Thread thread = null;
@@ -95,7 +95,7 @@ namespace RepetierHost.view.utils
         {
 
             //RHUpdater.silent = true;
-            if (Custom.GetBool("removeUpdates", false)) return; // Do not try to look for updates.           
+            //if (Custom.GetBool("removeUpdates", false)) return; // Do not try to look for updates.           
 
 
             //url = "http://www.repetier.com/updates/rh/version_windows.txt";
@@ -103,8 +103,8 @@ namespace RepetierHost.view.utils
             //    url = "http://www.repetier.com/updates/rh/version_linux.txt";
             //url = Custom.GetString("updateUrl", url);
 
-            long lastcheck = RegMemory.GetLong("lastUpdateCheck", 0);
-            if (silent && timeInSeconds() - lastcheck < 86400 * 7) return; // Test only once a week silently
+            //long lastcheck = RegMemory.GetLong("lastUpdateCheck", 0);
+            //if (silent && timeInSeconds() - lastcheck < 86400 * 7) return; // Test only once a week silently
             //if (!pingServer("176.9.149.139")) return; // No network
 
 
@@ -119,8 +119,7 @@ namespace RepetierHost.view.utils
             // thread = new Thread(RHUpdater.CheckThread);
             running = true;
 
-            // This prevvents someone from trying to accessed a disposed form. Probably not the best way to do it. 
-            Main.main.checkForUpdatesToolStripMenuItem.Enabled = false;
+         
             thread.Start();
         }
 
