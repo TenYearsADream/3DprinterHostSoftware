@@ -15,19 +15,14 @@ using System.Xml;
 
 namespace RepetierHost.view.utils
 {
+    /// <summary>
+    /// TODO: this should probably be merged with the update software XML
+    /// </summary>
     public partial class RHUpdater : Form
-    {
-        //public static string currentVersion = "0.0.1";
-        //public static int buildVersion = 5;
-        //public static string newestVersion = "";
-        //public static int newestBuildVersion = 0;
-        //public static string updateText = "";
-        
-        //public static string downloadUrl = Custom.GetString("downloadUrl", "http://www.repetier.com/download/");
+    {        
         public static bool running = false;
         public static Thread thread = null;
-        //public static string url = "";
-        //public static int error = 0;
+        
         public RHUpdater()
         {
             InitializeComponent();

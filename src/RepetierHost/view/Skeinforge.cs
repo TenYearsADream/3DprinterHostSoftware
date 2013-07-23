@@ -278,7 +278,7 @@ winding	False
             profileConfig.setValue("milling", "False");
             profileConfig.setValue("extrusion", "True");
             profileConfig.setValue("winding", "False");
-            profileConfig.writeModified();
+                profileConfig.writeModified();
             // Set used profile
             extrusionConfig.setValue("Profile Selection:", profile);
             extrusionConfig.writeModified();

@@ -54,6 +54,11 @@ namespace RepetierHost
     public partial class Main : Form
     {
         /// <summary>
+        /// The current build number
+        /// </summary>
+        public static int buildNumber = 3;
+
+        /// <summary>
         /// Defines the event when the user changes the language. 
         /// </summary>
         public event languageChangedEvent languageChanged;
@@ -319,18 +324,12 @@ namespace RepetierHost
         /// <summary>
         /// Allows a developer to access advanced options. Not in use right now. 
         /// </summary>
-        public bool DeveloperMode = false;
-
+        public bool DeveloperMode = false;       
 
         /// <summary>
         /// Context Menu for the .stl list so that you can right click and delete.
         /// </summary>
-        ContextMenu listSTLContextMenu;
-
-        /// <summary>
-        /// Menu item for the delete action that is part of the listSTLContextMenu
-        /// </summary>
-        MenuItem  delete;
+        ContextMenu listSTLContextMenu;     
 
         /// <summary>
         /// Updates the live printing model while the printer is printing. 
@@ -454,6 +453,8 @@ namespace RepetierHost
             generator = new GCodeGenerator();
             globalSettings = new GlobalSettings();
             connection = new PrinterConnection();
+
+
             printerSettings = new FormPrinterSettings();
             printerModel = new PrinterModel();
             connection.analyzer.start();
@@ -546,7 +547,9 @@ namespace RepetierHost
             logform.StartPosition = FormStartPosition.WindowsDefaultBounds;
             logform.Controls.Add(logView);
 
-            
+
+          
+
             skeinforge = new Skeinforge();
 
             slicerPanel = new SlicerPanel();
@@ -913,16 +916,16 @@ namespace RepetierHost
         }
 
         /// <summary>
-        /// When clicking on recent printers/printer settings update the printer settings objects. Provides an action for clicking on recent printers. 
+        /// When clicking on the COM part options in the connections dropdown item list do this action. 
         /// </summary>
         /// <param name="sender">Sending Button</param>
         /// <param name="e">Event arguments</param>
         public void ConnectHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            connection.port = clickedItem.Text;
-            connection.printerName = "default";
-            printerSettings.formToCon(); // so that we save the most the port name. 
+            printerSettings.comboPort.Text = clickedItem.Text; // in the printer settings put the selected COM port name
+           
+            printerSettings.formToCon(); // save the printer settings and send them to the Main static connection
            
             this.mainUpdaterHelper.UpdateEverythingInMain();
             connection.open();

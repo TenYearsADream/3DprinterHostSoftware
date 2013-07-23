@@ -40,13 +40,13 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.softwareSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.internalSlicingParameterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.soundConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.slicerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.slicerConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gcodeEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopSlicingProcessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.softwareSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dViewSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calibrateHeightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerSettings2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -244,13 +244,6 @@
             this.printerSettingsToolStripMenuItem.Visible = false;
             this.printerSettingsToolStripMenuItem.Click += new System.EventHandler(this.printerSettingsToolStripMenuItem_Click);
             // 
-            // softwareSettingsToolStripMenuItem
-            // 
-            this.softwareSettingsToolStripMenuItem.Name = "softwareSettingsToolStripMenuItem";
-            this.softwareSettingsToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-            this.softwareSettingsToolStripMenuItem.Text = "Software general configuration";
-            this.softwareSettingsToolStripMenuItem.Click += new System.EventHandler(this.repetierSettingsToolStripMenuItem_Click);
-            // 
             // internalSlicingParameterToolStripMenuItem
             // 
             this.internalSlicingParameterToolStripMenuItem.Name = "internalSlicingParameterToolStripMenuItem";
@@ -296,6 +289,13 @@
             this.stopSlicingProcessToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.stopSlicingProcessToolStripMenuItem.Text = "Stop Slicing Process";
             this.stopSlicingProcessToolStripMenuItem.Click += new System.EventHandler(this.stopSlicingProcessToolStripMenuItem_Click);
+            // 
+            // softwareSettingsToolStripMenuItem
+            // 
+            this.softwareSettingsToolStripMenuItem.Name = "softwareSettingsToolStripMenuItem";
+            this.softwareSettingsToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+            this.softwareSettingsToolStripMenuItem.Text = "Software general configuration";
+            this.softwareSettingsToolStripMenuItem.Click += new System.EventHandler(this.repetierSettingsToolStripMenuItem_Click);
             // 
             // dViewSettingsToolStripMenuItem
             // 
@@ -936,14 +936,14 @@
             // withRaftToolStripMenuItem1
             // 
             this.withRaftToolStripMenuItem1.Name = "withRaftToolStripMenuItem1";
-            this.withRaftToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.withRaftToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.withRaftToolStripMenuItem1.Text = "With Raft";
             this.withRaftToolStripMenuItem1.Click += new System.EventHandler(this.withRaftToolStripMenuItem1_Click);
             // 
             // withSupportsToolStripMenuItem1
             // 
             this.withSupportsToolStripMenuItem1.Name = "withSupportsToolStripMenuItem1";
-            this.withSupportsToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.withSupportsToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.withSupportsToolStripMenuItem1.Text = "With Supports";
             this.withSupportsToolStripMenuItem1.Click += new System.EventHandler(this.withSupportsToolStripMenuItem1_Click);
             // 
@@ -1144,7 +1144,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Name = "Main";
-            this.Text = "Baoyan Automation v2 beta";
+            this.Text = "Baoyan Automation ";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Activated += new System.EventHandler(this.Main_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);

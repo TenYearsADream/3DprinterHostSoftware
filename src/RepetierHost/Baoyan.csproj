@@ -146,6 +146,7 @@
     <Compile Include="model\SkeinConfig.cs" />
     <Compile Include="model\STL.cs" />
     <Compile Include="model\TemperatureHistory.cs" />
+    <Compile Include="model\TextWriter.cs" />
     <Compile Include="model\ThreeDModel.cs" />
     <Compile Include="model\UpdateSoftwareXML.cs" />
     <Compile Include="model\ThreeDView.cs" />
@@ -219,8 +220,8 @@
       <DependentUpon>PrinterInfo.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\PrintPanel.resx">
-      <DependentUpon>PrintPanel.cs</DependentUpon>
+    <EmbeddedResource Include="view\ManualPrinterControl.resx">
+      <DependentUpon>ManualPrinterControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="view\RepetierEditor.resx">
@@ -415,11 +416,11 @@
     <Compile Include="view\PrinterInfo.Designer.cs">
       <DependentUpon>PrinterInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="view\PrintPanel.cs">
+    <Compile Include="view\ManualPrinterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="view\PrintPanel.Designer.cs">
-      <DependentUpon>PrintPanel.cs</DependentUpon>
+    <Compile Include="view\ManualPrinterControl.Designer.cs">
+      <DependentUpon>ManualPrinterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="view\RepetierEditor.cs">
       <SubType>UserControl</SubType>

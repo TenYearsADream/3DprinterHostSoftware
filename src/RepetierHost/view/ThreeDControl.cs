@@ -186,11 +186,18 @@ namespace RepetierHost.view
         private ThreeDView view = null;
 
         /// <summary>
+        /// Textwriter used to show if wer are in developer mode. 
+        /// </summary>
+        private  MyTextWriter modeText;
+
+        /// <summary>
         /// Initializes a new instance of the ThreeDControl class which is the top level wrapper or controller for the openTK or openGL code
         /// </summary>
         public ThreeDControl()
         {
             InitializeComponent();
+
+
             gl.MouseWheel += gl_MouseWheel;
             timer.Start();
             translate();
@@ -354,6 +361,11 @@ namespace RepetierHost.view
 
                 // Draw the background gradient before we draw the 3D view. 
                 DrawBackGroundGradient();
+
+                if (Main.main.DeveloperMode == true)
+                {
+                    modeText.Draw(); //
+                }
 
                 // Switch to projection mode and setup our projection matrix. 
                 GL.Enable(EnableCap.DepthTest); // Renable 3D
@@ -1003,6 +1015,8 @@ namespace RepetierHost.view
             GL.Color3(Color.LightBlue);
             GL.Vertex2(w, 0);
             GL.End();
+
+            
         }
 
         /// <summary>
@@ -1080,6 +1094,12 @@ namespace RepetierHost.view
 
             loaded = true;
             SetupViewport();
+
+
+            modeText = new MyTextWriter(new Size(gl.Width, gl.Height), new Size(gl.Width, gl.Height));
+            modeText.AddLine("Developer mode, 开发模式", new PointF(gl.Width / 2, gl.Height / 4), new SolidBrush(Color.Orange));
+           // modeText.AddLine("开发模式", new PointF(gl.Width / 2, gl.Height*3/4), new SolidBrush(Color.Black));
+            //modeText.Update(0, "current mode");
         }
 
         /// <summary>
