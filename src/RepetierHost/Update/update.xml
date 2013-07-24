@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <updateDoc revision="9" language="English" author="Anthony G">
-  <version number ="0.001" buildnumber="1" language="zh" downloadURL ="http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fsetup.exe">First version of the new software</version>
+  <version number ="0.001" buildnumber="1" language="zh" downloadURL ="none">First version of the new software</version>
   <version number ="0.002" buildnumber="2" language="zh" downloadURL ="http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fsetup2.exe">- Fixed the bug related to the side view button. 
 - Updated the update mechanism</version>
-  <!--   <version number ="0.003" buildnumber="3" language="en" downloadURL ="http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fsetup3.exe">- Fixed the bug related connecting to the 3D printer
-- Updated so other small issues
-  </version> -->
+  <version number ="0.003" buildnumber="3" language="zh" downloadURL ="http://commondatastorage.googleapis.com/software3dprinting-ant-garl%2Fsetup.exe">- Fixed the bug related to connecting to the 3D printer
+- Updated some graphics issues to work better and communicate more clearly
+- Skeinforge is installed along with the 3D printer software
+- Configuration files for Skeinforge are installed as well
+- The Raft and Support options will modify both the Skeinforge and Slic3r 
+- The height calibration will modify Skeinforge settings to give the correct height. 
+  </version>
 
 </updateDoc>
