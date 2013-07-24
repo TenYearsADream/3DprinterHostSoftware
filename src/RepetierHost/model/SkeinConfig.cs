@@ -22,30 +22,83 @@ using System.IO;
 
 namespace RepetierHost.model
 {
+    /// <summary>
+    /// Helps manipulate the configuration files for skeinforge by reading, modifiiying, and writing them. 
+    /// TODO: Currently it uses a array of strings in the "line" field. However a dictionary would work better. It kind of reinvents the wheel right now. 
+    /// </summary>
     public class SkeinConfig
     {
+        /// <summary>
+        /// All the lines that make up the configuration file
+        /// </summary>
         string[] lines;
+
+        /// <summary>
+        /// A copy of "lines[]" that holds the unmodified orignal
+        /// </summary>
         string[] orig;
+
+        /// <summary>
+        /// Path to the configuration file (including the file name)
+        /// </summary>
         string path;
+
+        /// <summary>
+        /// Shows if the file exists. True if it exists, otherwise false. 
+        /// </summary>
         bool exists;
+
+        /// <summary>
+        /// Initializes a new instance of the SkeinConfig class. Check if the file exists and readsa all the lines. 
+        /// </summary>
+        /// <param name="_path"></param>
         public SkeinConfig(string _path)
         {
             path = _path;
             exists = File.Exists(path);
-            if (!exists) return;
+            if (!exists)
+            {
+                return;
+            }
+
             lines = File.ReadAllLines(path);
             orig = (string[])lines.Clone();
         }
+
+        /// <summary>
+        /// Writes all of the lines to the file. We assume that the lines have modified, but they may have not been modified
+        /// Uses the same file path/name used during initialization
+        /// </summary>
         public void writeModified()
         {
-            if (!exists) return;
+            if (!exists)
+            {
+                return;
+            }
+
             File.WriteAllLines(path, lines);
         }
+
+        /// <summary>
+        /// Writes the original file back to its original location. 
+        /// Uses the same file path/name used during initialization
+        /// </summary>
         public void writeOriginal()
         {
-            if (!exists) return;
+            if (!exists)
+            {
+                return;
+            }
+
             File.WriteAllLines(path, orig);
         }
+
+        /// <summary>
+        /// Finds the line number on which a string "key" exists. If the key is not found then return -1
+        /// The format should be : key (TAB) value
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         private int lineForKey(string key)
         {
             key += "\t";
@@ -53,20 +106,51 @@ namespace RepetierHost.model
             {
                 if(lines[i].StartsWith(key)) return i;
             }
+
             return -1;
         }
+
+        /// <summary>
+        /// Gets the value associated with a key. REturn Null if key is now found
+        /// The format should be : key (TAB) value
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public string getValue(string key)
         {
-            if (!exists) return null;
+            if (!exists)
+            {
+                return null;
+            }
+
             int idx = lineForKey(key);
-            if (idx < 0) return null;
+            if (idx < 0)
+            {
+                return null;
+            }
+
             return lines[idx].Substring(key.Length + 1);
         }
+
+        /// <summary>
+        /// Sets the value associated with a key.  REturn Null if key is now found
+        ///  The format should be : key (TAB) value
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
         public void setValue(string key, string val)
         {
-            if (!exists) return;
+            if (!exists)
+            {
+                return;
+            }
+
             int idx = lineForKey(key);
-            if (idx < 0) return;
+            if (idx < 0)
+            {
+                return;
+            }
+
             lines[idx] = key + "\t" + val;
         }
     }

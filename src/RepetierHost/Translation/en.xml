@@ -39,7 +39,7 @@
   <t id="M_VIEW_LOGGING" ver="1">View Logging</t>
   <t id="M_MANUAL_CONTROL" ver="1">Manual Control</t>
 
-  <t id="L_INFORMATION_ABOUT_SUPPORTS_AND_RAFT_CHECKBOXES" ver="1">The support and raft checkboxes will over ride specific slic3r configurations. Advanced users should uncheck the boxes and use their own custom slic3r settings.</t>
+  <t id="L_INFORMATION_ABOUT_SUPPORTS_AND_RAFT_CHECKBOXES" ver="1">The support and raft checkboxes will over ride specific slic3r or Skeinforge configurations. Advanced users should uncheck the boxes and use their own custom slic3r or Skeinforge settings.</t>
   <t id="CB_SUPPORT_CHECKBOX" ver="1">Generate Supports</t>
   <t id="CB_RAFT_CHECKBOX" ver="1">Generate Raft</t>
   <t id="L_EXIT_AUTO_SAVED" ver="1">Changes Are Automatically Saved</t>

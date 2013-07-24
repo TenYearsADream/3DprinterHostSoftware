@@ -37,7 +37,7 @@
   <t id="M_VIEW_LOGGING" ver="1">历史记录</t>
   <t id="M_MANUAL_CONTROL" ver="1">手动控制</t>
 
-  <t id="L_INFORMATION_ABOUT_SUPPORTS_AND_RAFT_CHECKBOXES" ver="1">支撑与底座选项将会覆盖原来切片配置，高级人员可以选择使用自己切片配置。</t>
+  <t id="L_INFORMATION_ABOUT_SUPPORTS_AND_RAFT_CHECKBOXES" ver="1">支撑与底座的参数将会覆盖原来切片参数配置，高级用户可以选择使用自己的切片参数配置。</t>
   <t id="CB_SUPPORT_CHECKBOX" ver="1">基本支撑</t>
   <t id="CB_RAFT_CHECKBOX" ver="1">基本底座</t>
   <t id="L_EXIT_AUTO_SAVED" ver="1">退出</t>

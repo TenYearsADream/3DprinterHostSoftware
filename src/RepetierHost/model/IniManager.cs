@@ -164,6 +164,9 @@ namespace RepetierHost.model
             File.WriteAllLines(path, lines.ToArray());
         }
 
+        /// <summary>
+        /// Adds raft or support configuration if they are checked
+        /// </summary>
         internal void AddSupportandRaft()
         {
             if (Main.main.slicerPanel.generateSupportCheckbox.Checked == true)
@@ -174,6 +177,9 @@ namespace RepetierHost.model
             // throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Add raft configuration to the ini
+        /// </summary>
         private void addRaft()
         {
             foreach (IniSection s in sections.Values)
@@ -183,6 +189,9 @@ namespace RepetierHost.model
 
         }
         
+        /// <summary>
+        /// Add support material to the ini
+        /// </summary>
         private void addSupportMaterial()
         {
 

@@ -40,6 +40,7 @@ namespace RepetierHost.view
         SkeinConfig exportConfig = null;
         SkeinConfig extrusionConfig = null;
         SkeinConfig multiplyConfig = null;
+        SkeinConfig raftAndSupportConfig = null;
         string name = "Skeinforge";
 
         public Skeinforge()
@@ -244,30 +245,35 @@ namespace RepetierHost.view
                 MessageBox.Show(Trans.T("L_SKEIN_STILL_RUNNING") /*"Last slice job still running. Slicing of new job is canceled."*/,Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             string py = PyPy;
             if (py == null)
             {
                 MessageBox.Show(Trans.T("L_PYPY_NOT_FOUND"), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             string craft = findCraft();
             if (craft == null)
             {
                 MessageBox.Show(Trans.T("L_SKEINCRAFT_NOT_FOUND"), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             string profdir = findSkeinforgeProfiles();
             if (profdir == null)
             {
                 MessageBox.Show(Trans.T("L_SKEINCRAFT_PROFILES_NOT_FOUND"), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             profileConfig = new SkeinConfig(Path.Combine(profdir,"skeinforge_profile.csv"));
             extrusionConfig = new SkeinConfig(Path.Combine(profdir,"extrusion.csv"));
-            exportConfig = new SkeinConfig(Path.Combine(profdir,"extrusion" +
-                Path.DirectorySeparatorChar + profile + Path.DirectorySeparatorChar + "export.csv"));
+            exportConfig = new SkeinConfig(Path.Combine(profdir,"extrusion" +   Path.DirectorySeparatorChar + profile + Path.DirectorySeparatorChar + "export.csv"));
             multiplyConfig = new SkeinConfig(Path.Combine(profdir,"extrusion" +
                 Path.DirectorySeparatorChar + profile + Path.DirectorySeparatorChar + "multiply.csv"));
+            raftAndSupportConfig = new SkeinConfig(Path.Combine(profdir, "extrusion" +
+                Path.DirectorySeparatorChar + profile + Path.DirectorySeparatorChar + "raft.csv"));
             // Set profile to extrusion
             /* cutting	False
 extrusion	True
@@ -299,7 +305,16 @@ winding	False
 
             string target = StlToGCode(file);
             if (File.Exists(target))
+            {
                 File.Delete(target);
+            }
+
+            // Modify Start Code, Raft, and Support settings to reflect the current user settings
+            CalibrateHeightStartGcode(profdir);
+            AddRaftConfiguration(raftAndSupportConfig);
+            AddSupportConfiguration(raftAndSupportConfig);
+            raftAndSupportConfig.writeModified(); // write the modified raft.csv 
+
             procConvert = new Process();
             try
             {
@@ -329,6 +344,100 @@ winding	False
                 RestoreConfigs();
             }
         }
+
+        /// <summary>
+        /// Adds the support settings to true of false to the configRaftSuppor SkeinConfig object. 
+        /// </summary>
+        /// <param name="configRaftSupport"></param>
+        private void AddSupportConfiguration(SkeinConfig configRaftSupport)
+        {
+            if (Main.main.slicerPanel.generateSupportCheckbox.Checked == true)
+            {
+                configRaftSupport.setValue("None", "False");
+                configRaftSupport.setValue("Empty Layers Only", "False");
+                configRaftSupport.setValue("Exterior Only", "False");
+                configRaftSupport.setValue("Everywhere", "True");
+                
+            }
+            else
+            {
+                configRaftSupport.setValue("None", "True");
+                configRaftSupport.setValue("Everywhere", "False");
+                configRaftSupport.setValue("Empty Layers Only", "False");
+                configRaftSupport.setValue("Exterior Only", "False");
+
+            }
+            
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Adds the Raft configuration to true or false based on the main printer settings. Modifies the SkienConfig object. 
+        /// </summary>
+        /// <param name="configRaftSupport"></param>
+        private void AddRaftConfiguration( SkeinConfig configRaftSupport)
+        {
+            if (Main.main.slicerPanel.generateRaftCheckbox.Checked == true)
+            {
+                configRaftSupport.setValue("Activate Raft", "True");
+                configRaftSupport.setValue("Add Raft, Elevate Nozzle, Orbit:", "True");
+                configRaftSupport.setValue("Base Layers (integer):", "5");
+                configRaftSupport.setValue("Interface Layers (integer):", "3");    
+
+            }
+            else
+            {
+                // These must be true, to allow support generation, but we will set the raft to 0 to remove the raft. 
+                configRaftSupport.setValue("Activate Raft", "True");
+                configRaftSupport.setValue("Add Raft, Elevate Nozzle, Orbit:", "True");
+                configRaftSupport.setValue("Base Layers (integer):", "0");
+                configRaftSupport.setValue("Interface Layers (integer):", "0");    
+                ////configRaftSupport.setValue("Activate Raft", "False");
+                ////configRaftSupport.setValue("Add Raft, Elevate Nozzle, Orbit:", "False"); 
+
+            }
+
+           // throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Totally replaces the C:\Users\USERNAME\.skeinforge\alterations\start.gcode with the correct start G-code or Baoyan Automation
+        /// The important change it he custom height that was set during calibration. 
+        /// </summary>
+        private void CalibrateHeightStartGcode(string profileDirectory)
+        {
+            string startGcode = @"  M92 E92
+
+M109 S230
+M190 S60
+G21           ;set units to mm
+G90           ;set to absolute positioning
+;M80
+M107
+G92 E0		;reset extruder 
+G28 X0 Y0 Z0
+G92 Z{0}
+G1 Z0.2 F400
+G1 X20 E4 F100
+G1 Y3 E6 F100
+G1 X0 E10
+G92 E0  
+M140 S90";
+
+            // Make the substitution
+            string newGocdeSTart = String.Format(startGcode, Main.printerSettings.textPrintAreaHeight.Text);
+
+            // Find the path to the start.gocde
+            string path = profileDirectory + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "alterations" + Path.DirectorySeparatorChar + "start.gcode";
+           
+            // Write the new text document start.gcode
+            System.IO.File.WriteAllText(path, newGocdeSTart);
+
+       
+           // throw new NotImplementedException();
+        }
+
+
         public delegate void LoadGCode(String myString);
         private void ConversionExited(object sender, System.EventArgs e)
         {

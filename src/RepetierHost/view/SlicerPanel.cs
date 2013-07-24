@@ -46,9 +46,9 @@ namespace RepetierHost.view
                 {
                     //Controls.Remove(panelSlic3rPos);
                     //Controls.Remove(panelTop);
-                    Controls.Remove(panelSkeinforgePos);
+                    //Controls.Remove(panelSkeinforgePos);
                     Controls.Add(panelSlic3rPos);
-                    Controls.Add(panelSkeinforgePos);
+                   // Controls.Add(panelSkeinforgePos);
                     //Controls.Add(panelTop);
                 }
                 if (Custom.GetBool("removeSkeinforge", false))
