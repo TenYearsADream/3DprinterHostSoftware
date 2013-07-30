@@ -145,6 +145,8 @@
             this.comboHomeY = new System.Windows.Forms.ComboBox();
             this.labelHomeZ = new System.Windows.Forms.Label();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBoxPostSliceFilter = new System.Windows.Forms.GroupBox();
             this.labelFilterInfo = new System.Windows.Forms.Label();
             this.checkRunFilterEverySlice = new System.Windows.Forms.CheckBox();
@@ -155,8 +157,6 @@
             this.buttonAbort = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panelPrinterSelect.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageConnection.SuspendLayout();
@@ -171,10 +171,10 @@
             this.panelTotalArea.SuspendLayout();
             this.panelPrinterType.SuspendLayout();
             this.tabAdvanced.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBoxPostSliceFilter.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelPrinterSelect
@@ -1215,7 +1215,8 @@
             this.textPrintAreaWidth.Name = "textPrintAreaWidth";
             this.textPrintAreaWidth.Size = new System.Drawing.Size(106, 20);
             this.textPrintAreaWidth.TabIndex = 0;
-            this.textPrintAreaWidth.Text = "180";
+            this.textPrintAreaWidth.Text = "160";
+            this.textPrintAreaWidth.TextChanged += new System.EventHandler(this.textPrintAreaWidth_TextChanged);
             this.textPrintAreaWidth.Validating += new System.ComponentModel.CancelEventHandler(this.float_Validating);
             // 
             // labelBedFront
@@ -1410,6 +1411,26 @@
             this.tabAdvanced.Text = "Advanced";
             this.tabAdvanced.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Location = new System.Drawing.Point(9, 187);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(463, 131);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Translation Folder";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(22, 24);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // groupBoxPostSliceFilter
             // 
             this.groupBoxPostSliceFilter.Controls.Add(this.labelFilterInfo);
@@ -1506,26 +1527,6 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Location = new System.Drawing.Point(9, 187);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(463, 131);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Translation Folder";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(22, 24);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // FormPrinterSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1568,12 +1569,12 @@
             this.panelPrinterType.ResumeLayout(false);
             this.panelPrinterType.PerformLayout();
             this.tabAdvanced.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBoxPostSliceFilter.ResumeLayout(false);
             this.groupBoxPostSliceFilter.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }

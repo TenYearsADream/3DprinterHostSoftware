@@ -713,19 +713,33 @@ namespace RepetierHost.view
             }
             return null;
         }
+
+
+        /// <summary>
+        /// Runs the slicer
+        /// </summary>
+        /// <param name="file">path to .stl file to slice</param>
+        /// <param name="centerx"></param>
+        /// <param name="centery"></param>
+        /// <returns></returns>
         public bool RunSliceNew(string file, float centerx, float centery)
         {
+            // check to make sure the slicer isn't still running from last time
             if (procConvert != null)
             {
                 MessageBox.Show(Trans.T("L_LAST_SLICE_RUNNING"), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+
+            // Make sure we have the path to the slicer and it is valid
             string exe = findSlic3rExecutable();
             if (exe == null)
             {
                 MessageBox.Show(Trans.T("L_SLIC3R_NOT_FOUND"), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+
+            // Get the print settings and add the information to the slicing info panal. Analyze the .stl 
             FormPrinterSettings ps = Main.printerSettings;
             SlicingInfo.Start("Slic3r");
             SlicingInfo.SetAction(Trans.T("L_ANALYSING_STL"));
@@ -748,6 +762,9 @@ namespace RepetierHost.view
                 SlicingInfo.Stop();
                 return false;
             }
+
+
+
             SlicingInfo.SetAction(Trans.T("L_SLICING_STL"));
             string dir = Main.globalSettings.Workdir;
             string config = dir + Path.DirectorySeparatorChar + "slic3r.ini";
@@ -778,8 +795,13 @@ namespace RepetierHost.view
             //    ini3.merge(ini3_3);
             ini.add(ini2);
             ini.add(ini3);
-            ini.AddSupportandRaft();
-            ini.CalibrateHeight();
+
+            // If we are in developer mode then don't add support or rafts or calibrate the height
+            if (!Main.main.DeveloperMode)
+            {
+                ini.AddSupportandRaft();
+                ini.CalibrateHeight();
+            }
             ini.flatten();
             ini.write(config);
             procConvert = new Process();

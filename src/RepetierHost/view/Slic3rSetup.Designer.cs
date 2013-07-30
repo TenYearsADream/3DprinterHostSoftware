@@ -30,9 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Slic3rSetup));
             this.groupSlic3rSetup = new System.Windows.Forms.GroupBox();
+            this.comboVersion = new System.Windows.Forms.ComboBox();
             this.labelSlic3rInfo = new System.Windows.Forms.Label();
             this.labelLeaveBlankBundle = new System.Windows.Forms.Label();
             this.labelSlic3rLeaveBlankConfig = new System.Windows.Forms.Label();
+            this.labelSlic3rVersion = new System.Windows.Forms.Label();
             this.labelSlic3rExecutable = new System.Windows.Forms.Label();
             this.labelSlic3rConfigDir = new System.Windows.Forms.Label();
             this.buttonBrowseExecutable = new System.Windows.Forms.Button();
@@ -43,8 +45,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.labelSlic3rVersion = new System.Windows.Forms.Label();
-            this.comboVersion = new System.Windows.Forms.ComboBox();
+            this.checkBoxManulPaths = new System.Windows.Forms.CheckBox();
             this.groupSlic3rSetup.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,12 +62,24 @@
             this.groupSlic3rSetup.Controls.Add(this.buttonBrowseConfigDir);
             this.groupSlic3rSetup.Controls.Add(this.textExecutable);
             this.groupSlic3rSetup.Controls.Add(this.textSlic3rConfigDir);
-            this.groupSlic3rSetup.Location = new System.Drawing.Point(13, 13);
+            this.groupSlic3rSetup.Location = new System.Drawing.Point(12, 38);
             this.groupSlic3rSetup.Name = "groupSlic3rSetup";
             this.groupSlic3rSetup.Size = new System.Drawing.Size(433, 298);
             this.groupSlic3rSetup.TabIndex = 0;
             this.groupSlic3rSetup.TabStop = false;
             this.groupSlic3rSetup.Text = "Slic3r setup";
+            // 
+            // comboVersion
+            // 
+            this.comboVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboVersion.FormattingEnabled = true;
+            this.comboVersion.Items.AddRange(new object[] {
+            "0.9.9 or higher",
+            "0.9.0 - 0.9.8"});
+            this.comboVersion.Location = new System.Drawing.Point(7, 166);
+            this.comboVersion.Name = "comboVersion";
+            this.comboVersion.Size = new System.Drawing.Size(314, 21);
+            this.comboVersion.TabIndex = 9;
             // 
             // labelSlic3rInfo
             // 
@@ -93,6 +106,16 @@
             this.labelSlic3rLeaveBlankConfig.Size = new System.Drawing.Size(184, 13);
             this.labelSlic3rLeaveBlankConfig.TabIndex = 7;
             this.labelSlic3rLeaveBlankConfig.Text = "Leave blank to use guessed location.";
+            // 
+            // labelSlic3rVersion
+            // 
+            this.labelSlic3rVersion.AutoSize = true;
+            this.labelSlic3rVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSlic3rVersion.Location = new System.Drawing.Point(3, 149);
+            this.labelSlic3rVersion.Name = "labelSlic3rVersion";
+            this.labelSlic3rVersion.Size = new System.Drawing.Size(85, 13);
+            this.labelSlic3rVersion.TabIndex = 0;
+            this.labelSlic3rVersion.Text = "Slic3r Version";
             // 
             // labelSlic3rExecutable
             // 
@@ -150,7 +173,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(226, 338);
+            this.buttonOK.Location = new System.Drawing.Point(225, 363);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -160,7 +183,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(343, 338);
+            this.buttonCancel.Location = new System.Drawing.Point(342, 363);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
@@ -176,34 +199,24 @@
             // 
             this.folderBrowser.RootFolder = System.Environment.SpecialFolder.ApplicationData;
             // 
-            // labelSlic3rVersion
+            // checkBoxManulPaths
             // 
-            this.labelSlic3rVersion.AutoSize = true;
-            this.labelSlic3rVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSlic3rVersion.Location = new System.Drawing.Point(3, 149);
-            this.labelSlic3rVersion.Name = "labelSlic3rVersion";
-            this.labelSlic3rVersion.Size = new System.Drawing.Size(85, 13);
-            this.labelSlic3rVersion.TabIndex = 0;
-            this.labelSlic3rVersion.Text = "Slic3r Version";
-            // 
-            // comboVersion
-            // 
-            this.comboVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboVersion.FormattingEnabled = true;
-            this.comboVersion.Items.AddRange(new object[] {
-            "0.9.9 or higher",
-            "0.9.0 - 0.9.8"});
-            this.comboVersion.Location = new System.Drawing.Point(7, 166);
-            this.comboVersion.Name = "comboVersion";
-            this.comboVersion.Size = new System.Drawing.Size(314, 21);
-            this.comboVersion.TabIndex = 9;
+            this.checkBoxManulPaths.AutoSize = true;
+            this.checkBoxManulPaths.Location = new System.Drawing.Point(12, 12);
+            this.checkBoxManulPaths.Name = "checkBoxManulPaths";
+            this.checkBoxManulPaths.Size = new System.Drawing.Size(211, 17);
+            this.checkBoxManulPaths.TabIndex = 2;
+            this.checkBoxManulPaths.Text = "Manually Set Paths (not recommended)";
+            this.checkBoxManulPaths.UseVisualStyleBackColor = true;
+            this.checkBoxManulPaths.CheckStateChanged += new System.EventHandler(this.checkBoxManulPaths_CheckStateChanged);
             // 
             // Slic3rSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(461, 390);
+            this.ClientSize = new System.Drawing.Size(461, 396);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxManulPaths);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupSlic3rSetup);
@@ -214,6 +227,7 @@
             this.groupSlic3rSetup.ResumeLayout(false);
             this.groupSlic3rSetup.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -235,5 +249,6 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowser;
         private System.Windows.Forms.ComboBox comboVersion;
         private System.Windows.Forms.Label labelSlic3rVersion;
+        private System.Windows.Forms.CheckBox checkBoxManulPaths;
     }
 }

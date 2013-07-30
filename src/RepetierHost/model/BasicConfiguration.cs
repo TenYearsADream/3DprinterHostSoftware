@@ -37,10 +37,20 @@ namespace RepetierHost.model
         private string slic3rFilament2Settings = "";
         private string slic3rFilament3Settings = "";
         private string slic3rExecutable = "";
+        private bool slic3rManuallySetPaths = false;
+
+      
         private int slic3rVersionGroup = 1;
         private string skeinforgeProfile = "";
         private string skeinforgeProfileDir = "";
         private bool internalSlic3rUseBundledVersion = true;
+
+        public bool Slic3rManuallySetPaths
+        {
+            get { return slic3rManuallySetPaths; }
+            set { slic3rManuallySetPaths = value; RegMemory.SetBool("slic3rManuallySetPathes", slic3rManuallySetPaths);
+            }
+        }
 
         /// <summary>
         /// Instance of the basic configuration class related to slicer configuration referencing itself. 
@@ -66,6 +76,7 @@ namespace RepetierHost.model
             externalSlic3rPath = RegMemory.GetString("externalSlic3rPath", externalSlic3rPath);
             externalSlic3rIniFile = RegMemory.GetString("externalSlic3rIniFile", externalSlic3rIniFile);
             internalSlic3rUseBundledVersion = RegMemory.GetBool("internalSlic3rUseBundledVersion", internalSlic3rUseBundledVersion);
+            slic3rManuallySetPaths = RegMemory.GetBool("slic3rManuallySetPathes", slic3rManuallySetPaths);
         }
 
         public string Slic3rExecutable

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Windows.Forms;
 using RepetierHost.model;
 
@@ -29,8 +30,37 @@ namespace RepetierHost.view
             InitializeComponent();
             LoadData();
             translate();
+            this.EnableButtonsAndText();
+            this.UpdateAutoPaths();
             Main.main.languageChanged += translate;
         }
+
+        /// <summary>
+        /// Enables or disables the ability to edit the items in the group box based on the checkbox Manual paths value. 
+        /// </summary>
+        private void EnableButtonsAndText()
+        {           
+              groupSlic3rSetup.Enabled = this.checkBoxManulPaths.Checked;              
+        }
+
+        /// <summary>
+        /// Automatically fills the executable path for the slic3r.exe
+        /// </summary>
+        private void UpdateAutoPaths()
+        {
+            if (!this.checkBoxManulPaths.Checked)
+            {
+                string basePath = Directory.GetParent(Directory.GetParent(Application.StartupPath).FullName).FullName;
+                string slic3rPAth = basePath + Path.DirectorySeparatorChar + "Slic3r" + Path.DirectorySeparatorChar + "slic3r.exe";
+                this.textExecutable.Text = slic3rPAth;
+            }
+
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Translates the texts
+        /// </summary>
         private void translate()
         {
             Text = Trans.T("W_SLIC3R_SETUP");
@@ -45,7 +75,10 @@ namespace RepetierHost.view
             buttonBrowseExecutable.Text = Trans.T("B_BROWSE");
             buttonCancel.Text = Trans.T("B_CANCEL");
             buttonOK.Text = Trans.T("B_OK");
+            this.checkBoxManulPaths.Text = Trans.T("C_CHECKBOX_MANUAL_PATHS");
         }
+
+
         private void LoadData()
         {
             BasicConfiguration b = BasicConfiguration.basicConf;
@@ -54,6 +87,7 @@ namespace RepetierHost.view
             textSlic3rConfigDir.Text = b.Slic3rConfigDir;
             textExecutable.Text = b.Slic3rExecutable;
             comboVersion.SelectedIndex = comboVersion.Items.Count - b.Slic3rVersionGroup - 1;
+            this.checkBoxManulPaths.Checked = b.Slic3rManuallySetPaths;
             //checkBoxUseBundledVersion.Checked = b.InternalSlic3rUseBundledVersion;
         }
        /* private void buttonBrowseSlic3r_Click(object sender, EventArgs e)
@@ -78,6 +112,7 @@ namespace RepetierHost.view
             b.Slic3rConfigDir = textSlic3rConfigDir.Text;
             b.Slic3rExecutable = textExecutable.Text;
             b.Slic3rVersionGroup = comboVersion.Items.Count - 1 - comboVersion.SelectedIndex;
+            b.Slic3rManuallySetPaths = this.checkBoxManulPaths.Checked;
             Hide();
             Main.slicer.Update();
             //Main.main.slicerPanel.UpdateSelection();
@@ -99,6 +134,12 @@ namespace RepetierHost.view
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
                 textExecutable.Text = openFileDialog.FileName;
+        }
+
+        private void checkBoxManulPaths_CheckStateChanged(object sender, EventArgs e)
+        {
+            this.UpdateAutoPaths();
+            this.EnableButtonsAndText();
         }
     }
 }

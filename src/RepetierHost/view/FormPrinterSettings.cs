@@ -641,5 +641,10 @@ namespace RepetierHost.view
         {
 
         }
+
+        private void textPrintAreaWidth_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

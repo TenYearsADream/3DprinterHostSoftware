@@ -2,7 +2,7 @@
 <translation revision="9" language="English" languageInEnglish="English" author="Anthony G">
 <t id="M_FILE" ver="1">File</t>
 
-  
+    <t id="START NEW TEXT" ver="1"></t>
   
 <t id="M_LOAD_GCODE_OR_STL_FILE" ver="1">Load G-code or .stl File</t>
 <t id="M_SOFTWARE_GENERAL_SETTINGS" ver="1">Software General Settings</t>
@@ -31,31 +31,24 @@
   <t id="M_LOAD_A_FILE" ver="1">Load a File</t>
   <t id="M_STL_EDITOR" ver="1">STL Editor</t>
   <t id="M_GCODE_VIEW" ver="1">Gcode Visualization</t>
-  <t id="M_LIVE_PRINTING" ver="1">Live Printing Visualization</t>
-  
+  <t id="M_LIVE_PRINTING" ver="1">Live Printing Visualization</t>  
   <t id="M_ADVANCED" ver="1">Advanced</t>
   <t id="M_SAVE_GCODE" ver="1">Save G-Code to a File</t>
   <t id="M_SAVE_NEW_STL" ver="1">Save STL Composition to File</t>
   <t id="M_VIEW_LOGGING" ver="1">View Logging</t>
   <t id="M_MANUAL_CONTROL" ver="1">Manual Control</t>
-
   <t id="L_INFORMATION_ABOUT_SUPPORTS_AND_RAFT_CHECKBOXES" ver="1">The support and raft checkboxes will over ride specific slic3r or Skeinforge configurations. Advanced users should uncheck the boxes and use their own custom slic3r or Skeinforge settings.</t>
   <t id="CB_SUPPORT_CHECKBOX" ver="1">Generate Supports</t>
   <t id="CB_RAFT_CHECKBOX" ver="1">Generate Raft</t>
   <t id="L_EXIT_AUTO_SAVED" ver="1">Changes Are Automatically Saved</t>
   <t id="B_EXIT" ver="1">Exit</t>
   <t id="M_SURE_TO_EXIT" ver="1">Are you sure that you would to exit?</t>
-
   <t id="M_RESET_WARNING_QUESTION" ver="1">Are you sure that you would like to reset everything? The program must restart immediately if you select yes.</t>
   <t id="B_RESET" ver="1">Reset</t>
   <t id="L_RESET_EXPLANATION" ver="1">Erases all the saved configuration information</t>
   <t id="L_X_AXIS" ver="1">X-Axis</t>
   <t id="L_Y_AXIS" ver="1">Y-Axis</t>
   <t id="L_Z_AXIS" ver="1">Z-Axis</t>
-  <t id="" ver="1"></t>
-
-  <t id="START NEW TEXT" ver="1"></t>
-
   <t id="M_NO_CONNECTIONS_AVAILABLE" ver="1">No Printer Connections Available</t>
   <t id="L_CONNECT_A_PRINTER" ver="1">Please Connect a printer before calibrating its height.</t>
   <t id="L_CALIBRATION_WIZARD_STEP1" ver="1">This Wizard will guide you through the process of calibrating the height of your 3D printer.
@@ -84,6 +77,8 @@
   <t id="" ver="1"></t>
   <t id="" ver="1"></t>
   <t id="M_CALIBRATE_HIEGHT" ver="1">Calibrate Z Height</t>
+  <t id="C_CHECKBOX_MANUAL_PATHS" ver="1">Manually set file paths (NOT Recommended)</t>
+
   
   <t id="END NEW TEXT" ver="1"></t>
  

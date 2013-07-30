@@ -11,10 +11,10 @@
     <RootNamespace>Baoyan</RootNamespace>
     <AssemblyName>BaoyanAutomationSoftware</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <ManifestCertificateThumbprint>4D8B5380D7CB00A0A95794AAA4F075AF1C54B30F</ManifestCertificateThumbprint>
-    <ManifestKeyFile>RepetierHost_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestCertificateThumbprint>9DC392520B28F9A4877F6A2F79459A8600625209</ManifestCertificateThumbprint>
+    <ManifestKeyFile>Baoyan_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>
     </ApplicationIcon>
@@ -68,13 +68,17 @@
     <WarningLevel>4</WarningLevel>
     <Commandlineparameters>-macosx</Commandlineparameters>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <Win32Resource>
     </Win32Resource>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>sgKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -314,6 +318,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="Baoyan_TemporaryKey.pfx" />
     <None Include="licenseBaoyan.rtf" />
     <None Include="Properties\DataSources\RepetierHost.view.RepetierEditor.datasource" />
     <None Include="Properties\Settings.settings">
@@ -569,9 +574,12 @@
     <Compile Include="view\utils\StringInput.Designer.cs">
       <DependentUpon>StringInput.cs</DependentUpon>
     </Compile>
+    <Content Include="Translation\jp.xml" />
+    <Content Include="Translation\ko.xml" />
     <Content Include="Update\update.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="sgKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Translation\en.xml">

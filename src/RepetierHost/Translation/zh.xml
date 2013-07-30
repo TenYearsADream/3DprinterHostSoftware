@@ -47,10 +47,7 @@
   <t id="L_Y_AXIS" ver="1">Y轴</t>
   <t id="L_Z_AXIS" ver="1">Z轴</t>
 
-  <t id="END NEW TEXT" ver="1"></t>
-  
-  
-  <t id="START NEW TEXT" ver="1"></t>
+
 
   <t id="M_NO_CONNECTIONS_AVAILABLE" ver="1">无打印机连接</t>
   <t id="L_CONNECT_A_PRINTER" ver="1">请在测量喷头高度前先与一台打印机进行连接。</t>
@@ -83,6 +80,7 @@
   <t id="Z_Height_Calibration_Wizard" ver="1">Z轴高度测量向导</t>
   <t id="L_STEP" ver="1">步数</t>
   <t id="M_CALIBRATE_HIEGHT" ver="1">高度测量</t>
+  <t id="C_CHECKBOX_MANUAL_PATHS" ver="1">手动设置的文件路径（不推荐)</t>
   <t id="" ver="1"></t>
   <t id="" ver="1"></t>
 

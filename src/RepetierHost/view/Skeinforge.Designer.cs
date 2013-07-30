@@ -55,6 +55,7 @@
             this.buttonBrosePyPy = new System.Windows.Forms.Button();
             this.labelPypyInfo = new System.Windows.Forms.Label();
             this.labelWorkdirInfo = new System.Windows.Forms.Label();
+            this.checkBoxManualSetPaths = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // openFile
@@ -65,7 +66,7 @@
             // labelApplication
             // 
             this.labelApplication.AutoSize = true;
-            this.labelApplication.Location = new System.Drawing.Point(14, 13);
+            this.labelApplication.Location = new System.Drawing.Point(13, 67);
             this.labelApplication.Name = "labelApplication";
             this.labelApplication.Size = new System.Drawing.Size(115, 13);
             this.labelApplication.TabIndex = 0;
@@ -73,14 +74,14 @@
             // 
             // textSkeinforge
             // 
-            this.textSkeinforge.Location = new System.Drawing.Point(144, 13);
+            this.textSkeinforge.Location = new System.Drawing.Point(143, 67);
             this.textSkeinforge.Name = "textSkeinforge";
             this.textSkeinforge.Size = new System.Drawing.Size(401, 20);
             this.textSkeinforge.TabIndex = 0;
             // 
             // buttonSerach
             // 
-            this.buttonSerach.Location = new System.Drawing.Point(553, 13);
+            this.buttonSerach.Location = new System.Drawing.Point(552, 67);
             this.buttonSerach.Name = "buttonSerach";
             this.buttonSerach.Size = new System.Drawing.Size(80, 22);
             this.buttonSerach.TabIndex = 1;
@@ -90,7 +91,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(74, 308);
+            this.buttonOK.Location = new System.Drawing.Point(73, 362);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(80, 22);
             this.buttonOK.TabIndex = 12;
@@ -100,7 +101,7 @@
             // 
             // buttonAbort
             // 
-            this.buttonAbort.Location = new System.Drawing.Point(503, 306);
+            this.buttonAbort.Location = new System.Drawing.Point(502, 360);
             this.buttonAbort.Name = "buttonAbort";
             this.buttonAbort.Size = new System.Drawing.Size(80, 22);
             this.buttonAbort.TabIndex = 13;
@@ -110,7 +111,7 @@
             // 
             // textPython
             // 
-            this.textPython.Location = new System.Drawing.Point(144, 188);
+            this.textPython.Location = new System.Drawing.Point(143, 242);
             this.textPython.Name = "textPython";
             this.textPython.Size = new System.Drawing.Size(401, 20);
             this.textPython.TabIndex = 8;
@@ -118,7 +119,7 @@
             // labelPython
             // 
             this.labelPython.AutoSize = true;
-            this.labelPython.Location = new System.Drawing.Point(17, 188);
+            this.labelPython.Location = new System.Drawing.Point(16, 242);
             this.labelPython.Name = "labelPython";
             this.labelPython.Size = new System.Drawing.Size(93, 13);
             this.labelPython.TabIndex = 10;
@@ -126,7 +127,7 @@
             // 
             // buttonSerachPy
             // 
-            this.buttonSerachPy.Location = new System.Drawing.Point(553, 188);
+            this.buttonSerachPy.Location = new System.Drawing.Point(552, 242);
             this.buttonSerachPy.Name = "buttonSerachPy";
             this.buttonSerachPy.Size = new System.Drawing.Size(80, 22);
             this.buttonSerachPy.TabIndex = 9;
@@ -142,7 +143,7 @@
             // labelCraft
             // 
             this.labelCraft.AutoSize = true;
-            this.labelCraft.Location = new System.Drawing.Point(14, 38);
+            this.labelCraft.Location = new System.Drawing.Point(13, 92);
             this.labelCraft.Name = "labelCraft";
             this.labelCraft.Size = new System.Drawing.Size(85, 13);
             this.labelCraft.TabIndex = 12;
@@ -150,14 +151,14 @@
             // 
             // textSkeinforgeCraft
             // 
-            this.textSkeinforgeCraft.Location = new System.Drawing.Point(144, 38);
+            this.textSkeinforgeCraft.Location = new System.Drawing.Point(143, 92);
             this.textSkeinforgeCraft.Name = "textSkeinforgeCraft";
             this.textSkeinforgeCraft.Size = new System.Drawing.Size(401, 20);
             this.textSkeinforgeCraft.TabIndex = 2;
             // 
             // buttonSearchCraft
             // 
-            this.buttonSearchCraft.Location = new System.Drawing.Point(553, 38);
+            this.buttonSearchCraft.Location = new System.Drawing.Point(552, 92);
             this.buttonSearchCraft.Name = "buttonSearchCraft";
             this.buttonSearchCraft.Size = new System.Drawing.Size(80, 22);
             this.buttonSearchCraft.TabIndex = 3;
@@ -167,14 +168,14 @@
             // 
             // textWorkingDirectory
             // 
-            this.textWorkingDirectory.Location = new System.Drawing.Point(144, 64);
+            this.textWorkingDirectory.Location = new System.Drawing.Point(143, 118);
             this.textWorkingDirectory.Name = "textWorkingDirectory";
             this.textWorkingDirectory.Size = new System.Drawing.Size(401, 20);
             this.textWorkingDirectory.TabIndex = 4;
             // 
             // buttonBrowseWorkingDirectory
             // 
-            this.buttonBrowseWorkingDirectory.Location = new System.Drawing.Point(553, 64);
+            this.buttonBrowseWorkingDirectory.Location = new System.Drawing.Point(552, 118);
             this.buttonBrowseWorkingDirectory.Name = "buttonBrowseWorkingDirectory";
             this.buttonBrowseWorkingDirectory.Size = new System.Drawing.Size(80, 22);
             this.buttonBrowseWorkingDirectory.TabIndex = 5;
@@ -185,7 +186,7 @@
             // labelWorkingDirectory
             // 
             this.labelWorkingDirectory.AutoSize = true;
-            this.labelWorkingDirectory.Location = new System.Drawing.Point(14, 64);
+            this.labelWorkingDirectory.Location = new System.Drawing.Point(13, 118);
             this.labelWorkingDirectory.Name = "labelWorkingDirectory";
             this.labelWorkingDirectory.Size = new System.Drawing.Size(93, 13);
             this.labelWorkingDirectory.TabIndex = 12;
@@ -197,14 +198,14 @@
             // 
             // textProfilesDir
             // 
-            this.textProfilesDir.Location = new System.Drawing.Point(144, 112);
+            this.textProfilesDir.Location = new System.Drawing.Point(143, 166);
             this.textProfilesDir.Name = "textProfilesDir";
             this.textProfilesDir.Size = new System.Drawing.Size(401, 20);
             this.textProfilesDir.TabIndex = 6;
             // 
             // buttonBrowseProfilesDir
             // 
-            this.buttonBrowseProfilesDir.Location = new System.Drawing.Point(553, 112);
+            this.buttonBrowseProfilesDir.Location = new System.Drawing.Point(552, 166);
             this.buttonBrowseProfilesDir.Name = "buttonBrowseProfilesDir";
             this.buttonBrowseProfilesDir.Size = new System.Drawing.Size(80, 22);
             this.buttonBrowseProfilesDir.TabIndex = 7;
@@ -215,7 +216,7 @@
             // labelProfilesDirectory
             // 
             this.labelProfilesDirectory.AutoSize = true;
-            this.labelProfilesDirectory.Location = new System.Drawing.Point(14, 112);
+            this.labelProfilesDirectory.Location = new System.Drawing.Point(13, 166);
             this.labelProfilesDirectory.Name = "labelProfilesDirectory";
             this.labelProfilesDirectory.Size = new System.Drawing.Size(87, 13);
             this.labelProfilesDirectory.TabIndex = 12;
@@ -223,17 +224,17 @@
             // 
             // labelProfdirInfo
             // 
-            this.labelProfdirInfo.Location = new System.Drawing.Point(144, 139);
+            this.labelProfdirInfo.Location = new System.Drawing.Point(143, 193);
             this.labelProfdirInfo.Name = "labelProfdirInfo";
             this.labelProfdirInfo.Size = new System.Drawing.Size(429, 46);
             this.labelProfdirInfo.TabIndex = 13;
             this.labelProfdirInfo.Text = "Select the profiles subdirectory in the skeinforge configuration directory. This " +
-                "is normally\r\n HOME/.skeinforge/profiles. For some custom versions like SFACT the" +
-                " path may vary.";
+    "is normally\r\n HOME/.skeinforge/profiles. For some custom versions like SFACT the" +
+    " path may vary.";
             // 
             // textPypy
             // 
-            this.textPypy.Location = new System.Drawing.Point(144, 214);
+            this.textPypy.Location = new System.Drawing.Point(143, 268);
             this.textPypy.Name = "textPypy";
             this.textPypy.Size = new System.Drawing.Size(401, 20);
             this.textPypy.TabIndex = 10;
@@ -241,7 +242,7 @@
             // labelPypy
             // 
             this.labelPypy.AutoSize = true;
-            this.labelPypy.Location = new System.Drawing.Point(17, 214);
+            this.labelPypy.Location = new System.Drawing.Point(16, 268);
             this.labelPypy.Name = "labelPypy";
             this.labelPypy.Size = new System.Drawing.Size(34, 13);
             this.labelPypy.TabIndex = 10;
@@ -249,7 +250,7 @@
             // 
             // buttonBrosePyPy
             // 
-            this.buttonBrosePyPy.Location = new System.Drawing.Point(553, 214);
+            this.buttonBrosePyPy.Location = new System.Drawing.Point(552, 268);
             this.buttonBrosePyPy.Name = "buttonBrosePyPy";
             this.buttonBrosePyPy.Size = new System.Drawing.Size(80, 22);
             this.buttonBrosePyPy.TabIndex = 11;
@@ -259,7 +260,7 @@
             // 
             // labelPypyInfo
             // 
-            this.labelPypyInfo.Location = new System.Drawing.Point(144, 239);
+            this.labelPypyInfo.Location = new System.Drawing.Point(143, 293);
             this.labelPypyInfo.Name = "labelPypyInfo";
             this.labelPypyInfo.Size = new System.Drawing.Size(401, 58);
             this.labelPypyInfo.TabIndex = 13;
@@ -268,18 +269,30 @@
             // labelWorkdirInfo
             // 
             this.labelWorkdirInfo.AutoSize = true;
-            this.labelWorkdirInfo.Location = new System.Drawing.Point(144, 90);
+            this.labelWorkdirInfo.Location = new System.Drawing.Point(143, 144);
             this.labelWorkdirInfo.Name = "labelWorkdirInfo";
             this.labelWorkdirInfo.Size = new System.Drawing.Size(317, 13);
             this.labelWorkdirInfo.TabIndex = 14;
             this.labelWorkdirInfo.Text = "The working directory determines, where SFACT will store profiles!";
             // 
+            // checkBoxManualSetPaths
+            // 
+            this.checkBoxManualSetPaths.AutoSize = true;
+            this.checkBoxManualSetPaths.Location = new System.Drawing.Point(18, 22);
+            this.checkBoxManualSetPaths.Name = "checkBoxManualSetPaths";
+            this.checkBoxManualSetPaths.Size = new System.Drawing.Size(240, 17);
+            this.checkBoxManualSetPaths.TabIndex = 15;
+            this.checkBoxManualSetPaths.Text = "Manually determine paths (not recommended)";
+            this.checkBoxManualSetPaths.UseVisualStyleBackColor = true;
+            this.checkBoxManualSetPaths.CheckStateChanged += new System.EventHandler(this.checkBoxAutoPath_CheckStateChanged);
+            // 
             // Skeinforge
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(643, 369);
+            this.ClientSize = new System.Drawing.Size(643, 462);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxManualSetPaths);
             this.Controls.Add(this.labelWorkdirInfo);
             this.Controls.Add(this.labelPypyInfo);
             this.Controls.Add(this.labelProfdirInfo);
@@ -344,5 +357,6 @@
         private System.Windows.Forms.Button buttonBrosePyPy;
         private System.Windows.Forms.Label labelPypyInfo;
         private System.Windows.Forms.Label labelWorkdirInfo;
+        private System.Windows.Forms.CheckBox checkBoxManualSetPaths;
     }
 }

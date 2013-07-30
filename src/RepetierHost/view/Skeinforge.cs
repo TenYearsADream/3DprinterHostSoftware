@@ -55,7 +55,49 @@ namespace RepetierHost.view
             else
                 name = "Skeinforge";
             Main.main.languageChanged += translate;
+            this.UpdateEnabledButtonsAndText();
+            this.AutoFillPaths();
         }
+
+        /// <summary>
+        /// Updates the buttonns and text aviable 
+        /// </summary>
+        private void UpdateEnabledButtonsAndText()
+        {
+            labelApplication.Enabled = checkBoxManualSetPaths.Checked;
+            labelCraft.Enabled = checkBoxManualSetPaths.Checked;
+            labelProfdirInfo.Enabled = checkBoxManualSetPaths.Checked;
+            labelProfilesDirectory.Enabled = checkBoxManualSetPaths.Checked;
+            labelPypy.Enabled = checkBoxManualSetPaths.Checked;
+            labelPypyInfo.Enabled = checkBoxManualSetPaths.Checked;
+            labelPython.Enabled = checkBoxManualSetPaths.Checked;
+            labelWorkdirInfo.Enabled = checkBoxManualSetPaths.Checked;
+            labelWorkingDirectory.Enabled = checkBoxManualSetPaths.Checked;
+            //openFile.Enabled = checkBoxAutoPath.Checked;
+            //openPython.Enabled = checkBoxAutoPath.Checked;
+
+            //buttonAbort.Enabled = checkBoxAutoPath.Checked;
+           // buttonOK.Enabled = checkBoxManualSetPaths.Checked;
+
+            buttonSearchCraft.Enabled = checkBoxManualSetPaths.Checked;
+            buttonSerach.Enabled = checkBoxManualSetPaths.Checked;
+            buttonSerachPy.Enabled = checkBoxManualSetPaths.Checked;
+            buttonBrosePyPy.Enabled = checkBoxManualSetPaths.Checked;
+            buttonBrowseProfilesDir.Enabled = checkBoxManualSetPaths.Checked;
+            buttonBrowseWorkingDirectory.Enabled = checkBoxManualSetPaths.Checked;
+
+            textSkeinforge.Enabled = checkBoxManualSetPaths.Checked;
+            textSkeinforgeCraft.Enabled = checkBoxManualSetPaths.Checked;
+            textWorkingDirectory.Enabled = checkBoxManualSetPaths.Checked;
+            textProfilesDir.Enabled = checkBoxManualSetPaths.Checked;
+            textPython.Enabled = checkBoxManualSetPaths.Checked;
+            textPypy.Enabled = checkBoxManualSetPaths.Checked;
+            //throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Translate the texts of the buttons. 
+        /// </summary>
         private void translate()
         {
             Text = Trans.T("W_SKEIN_SETTINGS");
@@ -78,6 +120,7 @@ namespace RepetierHost.view
             buttonBrosePyPy.Text = Trans.T("B_BROWSE");
             buttonBrowseProfilesDir.Text = Trans.T("B_BROWSE");
             buttonBrowseWorkingDirectory.Text = Trans.T("B_BROWSE");
+            this.checkBoxManualSetPaths.Text = Trans.T("C_CHECKBOX_MANUAL_PATHS");
             
         }
         public string wrapQuotes(string text)
@@ -309,11 +352,15 @@ winding	False
                 File.Delete(target);
             }
 
-            // Modify Start Code, Raft, and Support settings to reflect the current user settings
-            CalibrateHeightStartGcode(profdir);
-            AddRaftConfiguration(raftAndSupportConfig);
-            AddSupportConfiguration(raftAndSupportConfig);
-            raftAndSupportConfig.writeModified(); // write the modified raft.csv 
+            // If we are in developer mode then don't add support or rafts or calibrate the height
+            if (!Main.main.DeveloperMode)
+            {
+                // Modify Start Code, Raft, and Support settings to reflect the current user settings
+                CalibrateHeightStartGcode(profdir);
+                AddRaftConfiguration(raftAndSupportConfig);
+                AddSupportConfiguration(raftAndSupportConfig);
+                raftAndSupportConfig.writeModified(); // write the modified raft.csv 
+            }
 
             procConvert = new Process();
             try
@@ -483,8 +530,14 @@ M140 S90";
             if (export == null || export != "True") export = ""; else export = "_export";
             return stl + export + "." + extension;
         }
+
+        /// <summary>
+        /// Get data from the registry to the form. 
+        /// </summary>
         private void regToForm()
         {
+             //checkPingPong.Checked = ((int)repetierKey.GetValue("SkeinforgeAutoPath", checkBox1.Checked ? 1 : 0)) == 1 ? true : false;
+             this.checkBoxManualSetPaths.Checked = ((int)repetierKey.GetValue("SkeinforgeAutoPath", checkBoxManualSetPaths.Checked ? 1 : 0)) == 1 ? true : false;
 
             textSkeinforge.Text = (string)repetierKey.GetValue("SkeinforgePath", textSkeinforge.Text);
             textSkeinforgeCraft.Text = (string)repetierKey.GetValue("SkeinforgeCraftPath", textSkeinforgeCraft.Text);
@@ -495,8 +548,12 @@ M140 S90";
             textWorkingDirectory.Text = (string)repetierKey.GetValue("SkeinforgeWorkdir", textWorkingDirectory.Text);
             textProfilesDir.Text = BasicConfiguration.basicConf.SkeinforgeProfileDir;
         }
+
+        /// <summary>
+        /// Saves data to the registry
+        /// </summary>
         private void FormToReg()
-        {
+        {          
             BasicConfiguration.basicConf.SkeinforgeProfileDir = textProfilesDir.Text;
             repetierKey.SetValue("SkeinforgePath", textSkeinforge.Text);
             repetierKey.SetValue("SkeinforgeCraftPath", textSkeinforgeCraft.Text);
@@ -505,7 +562,10 @@ M140 S90";
             //repetierKey.SetValue("SkeinforgeExtension", textExtension.Text);
             //repetierKey.SetValue("SkeinforgePostfix", textPostfix.Text);
             repetierKey.SetValue("SkeinforgeWorkdir", textWorkingDirectory.Text);
+            repetierKey.SetValue("SkeinforgeAutoPath", checkBoxManualSetPaths.Checked ? 1 : 0);
         }
+
+
         private void buttonAbort_Click(object sender, EventArgs e)
         {
             regToForm();
@@ -580,6 +640,42 @@ M140 S90";
             openPython.Title = Trans.T("L_SKEIN_OPEN_PYPY");
             if (openPython.ShowDialog() == DialogResult.OK)
                 textPypy.Text = openPython.FileName;
+        }
+
+        /// <summary>
+        /// Events for changing the autopath check box. Calls the update enabled texts and buttons. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxAutoPath_CheckStateChanged(object sender, EventArgs e)
+        {
+            this.UpdateEnabledButtonsAndText();
+            this.AutoFillPaths();
+        }
+
+        private void AutoFillPaths()
+        {
+            if (!this.checkBoxManualSetPaths.Checked)
+            {
+                //string basePath = Application.StartupPath +
+                //    Path.DirectorySeparatorChar +
+                //    ".." +
+                //     Path.DirectorySeparatorChar +
+                //    "..";
+                string basePath = Directory.GetParent(Directory.GetParent(Application.StartupPath).FullName).FullName;
+                string skeinforgePath = basePath + Path.DirectorySeparatorChar + "Skeinforge" + Path.DirectorySeparatorChar + "skeinforge_application" + Path.DirectorySeparatorChar + "skeinforge.py";
+                string craftPAth = basePath + Path.DirectorySeparatorChar + "Skeinforge" + Path.DirectorySeparatorChar + "skeinforge_application" + Path.DirectorySeparatorChar +
+                    "skeinforge_utilities" + Path.DirectorySeparatorChar + "skeinforge_craft.py";
+                string pythonPAth = basePath + Path.DirectorySeparatorChar + "python" + Path.DirectorySeparatorChar + "pythonw.exe";
+                string psycoPythonPAth = basePath + Path.DirectorySeparatorChar + "pypy" + Path.DirectorySeparatorChar + "pypy.exe";
+
+                this.textSkeinforge.Text = skeinforgePath;
+                this.textSkeinforgeCraft.Text = craftPAth;
+                this.textPython.Text = pythonPAth;
+                this.textPypy.Text = psycoPythonPAth;
+            }
+
+            //throw new NotImplementedException();
         }
     }
 }
